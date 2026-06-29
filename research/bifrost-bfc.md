@@ -50,35 +50,65 @@
 - **통합 체인 9개:** Bifrost, Ethereum, BSC, Polygon, Base, Arbitrum, Bitcoin, Core, Oasys.
 - **신뢰도:** 높음 (GitHub README + API 확인).
 
-### ⚠️ 미확인 (다음 루프에서 보완 필요)
-- **TVL, 일일 트랜잭션 볼륨, BFC 총공급량/유통량, 활성 검증자 수** — 요청된 영역이나 검증된 수치 확보 못함.
-  (스테이킹 메커니즘과 체인 구조만 확인됨.) DefiLlama, 익스플로러, CMC 등에서 별도 확인 필요.
+### 1.4 온체인 인프라 (조회 대상)
+- **메인넷 익스플로러:** `explorer.mainnet.bifrostnetwork.com` (**Blockscout** 기반 → REST API v2 보유).
+- **테스트넷 익스플로러:** `explorer.testnet.bifrostnetwork.com`.
+- **공개 RPC(JSON-RPC):** `public-01/02.mainnet.bifrostnetwork.com/rpc` (thirdweb 등에도 등재).
+- **BFC ERC-20(이더리움):** `0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c` — 브릿지된 BFC, Etherscan 추적 가능.
+
+### ⚠️ 온체인 분석 가능성 / 현재 환경 제약 (★ 중요)
+현재 이 실행 환경에서는 **직접 온체인 조회가 막혀 있음** (2026-06-29 테스트):
+- **직접 `curl`:** 네트워크 정책 allowlist가 GitHub·패키지 레지스트리만 허용 →
+  RPC/익스플로러/CoinGecko/DefiLlama 모두 **403 정책 차단(connect_rejected)**.
+- **WebFetch:** Anthropic 인프라 경유로 일반 웹은 되지만, 익스플로러·Etherscan·CoinGecko API는
+  **안티봇(Cloudflare)으로 403** → 원시 트랜잭션/브릿지 로그 조회 불가.
+- **WebSearch:** 요약 스니펫만 가능, 원시 온체인 쿼리 불가.
+- **결론:** 트랜잭션·브릿지 기록·`eth_getLogs` 같은 **실제 온체인 분석은 현재 환경에선 불가.**
+  → 이를 풀려면 **환경의 네트워크 정책을 완화**(전체 egress 또는 커스텀 allowlist에
+  `*.bifrostnetwork.com`, `api.coingecko.com`, `api.llama.fi`, `api.etherscan.io` 추가)해야 함.
+  정책 완화 후엔 RPC `POST`(eth_getBlockByNumber/eth_getLogs/eth_call)와 Blockscout API로 정밀 분석 가능.
+
+### ⚠️ 미확인 (네트워크 정책 완화 후 보완)
+- **TVL, 일일 트랜잭션 볼륨, BFC 총/유통 공급량, 활성 검증자 수** — 요청 영역이나 환경 제약으로 미확보.
 
 ---
 
 ## 2. GitHub 개발 활동 (영역 2)
 
-### 2.1 조직: `bifrost-platform`
-- **공개 레포 34개.** topics에 `bfc`, `bifrost`, `cross-chain-communication-protocol`, `evm`, `rust` 등 →
-  **BNC가 아닌 BFC 프로젝트임을 명확히 확인.**
-- 구성: 활발한 Rust 인프라(node, relayer, snapshots) 집중 / 약 14개는 외부 프로젝트 포크
-  (polkadot-sdk, Frontier, Substrate, ethers-rs, subxt 등) / 약 9개는 아카이브.
+> 아래는 **공개 GitHub REST API 직접 조회**(2026-06-29 실측) 기반. MCP 스코프(`tkdrn416/-` 한정)와
+> 무관하게 `curl api.github.com/...`로 전수 조회 가능함(레이트리밋 15,000/시간). 시간에 따라 수치는 변동.
 
-### 2.2 코어 노드: `bifrost-node`
-- 언어: **Rust 64.6% / TypeScript 31.7% / Solidity 3.3%**.
-- 커밋 **318개**, 스타 39, 포크 16.
-- 최신 릴리스 **v2.2.0 (2026-06-24)**, 마지막 푸시 2026-06-25/26 → **리서치 시점 기준 활발.**
+### 2.1 조직: `bifrost-platform` (org id 45643413)
+- **공개 레포 34개** = 비포크 활성 ~13개 + 포크 ~12개(polkadot-sdk, bifrost-frontier, ethers-rs, subxt,
+  evm, DefiLlama-Adapters, rust-bitcoincore-rpc 등) + 아카이브 ~9개.
+- topics: `bfc`, `bifrost`, `cross-chain-communication-protocol`, `evm`, `rust` → **BNC 아닌 BFC 확정.**
 
-### 2.3 릴레이어: `bifrost-relayer.rs`
-- 언어: Rust. 커밋 **225개**, 릴리스 15개, 최신 **v3.0.0 (2026-06-24)**, 스타 12, 포크 6, 마지막 푸시 2026-06-26.
-- `bifrost-relayer.py`(구버전)는 아카이브됨(마지막 푸시 2025-04).
+### 2.2 코어 노드: `bifrost-node` (★ 가장 활발)
+- 언어: **Rust 64.6% / TS 31.7% / Solidity 3.3%**. 커밋 **318개**, 스타 39, 포크 16.
+- 릴리스: **v2.2.0 (2026-06-24)**, v2.1.0 (2025-09-11), v2.0.1 (2024-12-02) → 연 2~3회 메이저, 마이너 잦음.
+- 최근 커밋: 2026-06-25 "deps: update docker setup", 메인넷 런타임 v2045 (2026-06-16) → **리서치 시점 활발.**
 
-### 2.4 BiFi 관련
-- `BiFi-staking-protocol` (Solidity, BSD-3-Clause, 스타 10/포크 3).
-- **마지막 코드 푸시 2022-01** → 노드/릴레이어 대비 상대적으로 **휴면/비활성**. BiFi는 구(舊) 제품으로 추정.
+### 2.3 릴레이어: `bifrost-relayer.rs` (CCCP 크로스체인)
+- Rust. 커밋 **225개**, 릴리스 최신 **v3.0.0 (2026-06-24)**, v2.2.3 (2026-05-06). 스타 12, 포크 6.
+- 🔑 최근 커밋 "**fix: sign psbt through snapshot members**" (2026-06-18) → **비트코인 PSBT 멀티시그/임계서명**
+  기반 BTC 브릿지 구현 정황. btcUSD/BTCFi(SBI 협력)와 코드 레벨에서 연결됨.
+- 구버전 `bifrost-relayer.py`는 아카이브(2025-04).
 
-> 참고: 이 세션의 GitHub MCP 접근 권한은 `tkdrn416/-` 저장소로 한정 → `bifrost-platform` 조직은
-> MCP로 직접 조회 불가. 위 수치는 웹 검색/페치(GitHub API 스냅샷) 기반이며 시간에 따라 변동됨.
+### 2.4 기타 활성 레포
+- `asset-info-v2` (Python, 56커밋, v3.0.7 2026-03): 자산 메타데이터 레지스트리. 미러봇 태깅 자동화.
+- `bifrost-snapshots` (4커밋, 2026-03): 노드 체인 스냅샷 배포.
+- `Bifrost-Node-AdminPanel` (JS, 25커밋, 2026-02): **withdraw(브릿지 출금) UI** 포함 관리 패널.
+- `bifrost-frontier` (Rust 포크, 2026-03): EVM 레이어(Frontier) 커스텀.
+
+### 2.5 BiFi 관련 (레거시)
+- `BIFI`(15커밋, 전부 2021, 스타27 — Theori/CertiK 감사보고서), `BiFi-staking-protocol`(2022-01 푸시 후 휴면),
+  `BiFi-X`, `BiFi-Bifrost-Extension-Contract` 등 → 모두 **2021~22년 이후 정체**. BiFi는 구 제품, BTCFi로 이행.
+
+### 2.6 개발 인력 구조 (주목)
+- **핵심 기여자 `dnjscksdn98`** 이 노드(262/318)·릴레이어(156/225) **양대 핵심 레포 모두에서 압도적 1위**
+  → 소수 코어팀 집중, **버스 팩터(bus factor) 리스크** 존재.
+- 보조: `alstjd0921`(노드53/릴레이어58), `Alex Won`(머지/PR 관리), `noah-jang`, `jormal`(asset-info),
+  `woogie96`(admin panel), `pilab-*` 계정(파이랩 직원), `jonghyuplee`(초기 BiFi).
 
 ---
 
@@ -138,6 +168,8 @@
   당시 매우 신선했음(node v2.2.0, relayer v3.0.0 모두 2026-06-24 릴리스).
 - **docs.bifrostnetwork.com 직접 페치는 HTTP 403(안티봇)** → 인용은 검색 인덱스 스니펫 경유(verbatim·교차확인됨).
 - **정체성 구분:** BFC(파이랩 Bifrost Network) ≠ BNC(폴카닷 Bifrost Finance 파라체인) — 반복 확인됨.
+- **데이터 접근 경로(이 환경):** GitHub 공개 API는 직접 `curl` 가능(권장). 그 외 일반 웹은 WebFetch/WebSearch.
+  온체인 RPC·익스플로러·시세 API는 네트워크 정책+안티봇으로 현재 차단 → §1.4 참조.
 
 ---
 
