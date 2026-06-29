@@ -2,6 +2,10 @@
 
 > 작성일: 2026-06-29 · 목적: 향후 루프 작업(온체인 분석, GitHub, 일본 기관, 기업 협력)을 위한 배경지식 베이스
 > 대상: **한국 파이랩테크놀로지(Pi Lab Technology)의 Bifrost Network, 티커 BFC (바이프로스트)**
+>
+> 📎 **심화/정정판은 [`bifrost-bfc-research-followup.md`](./bifrost-bfc-research-followup.md) 참조** — 온체인 실측, 전체 컨트랙트 주소 풀셋, 일본 사업 타임라인, 검증/정정 사항이 들어 있습니다. 아래 본문과 후속 문서가 충돌하면 **후속 문서가 우선**합니다.
+>
+> **주요 정정 (후속 조사 결과):** ① BSC에 공식 BFC 토큰은 **존재하지 않음**(소스로 확정). ② Fantom `0x84c882...`는 자체 발행이 아닌 **Anyswap 브릿지 래퍼**. ③ eBTC/BitVM(bifrost.blue)은 **파이랩 제품 아님**(동명 별개 프로젝트). ④ JPYSC ↔ Bifrost **직접 연결 없음**(단 SBI Digital Finance와는 별도 제휴). ⑤ MJPY/MKRW/MUSD는 **상표 출원 단계**(실제 스테이블코인은 BtcUSD). ⑥ BFC 공급: 2022년 40%(16억) 소각 + 메인넷서 캡 폐지 → 인플레이션(메인넷 코드 13% 고정).
 
 ---
 
