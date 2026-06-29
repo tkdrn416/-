@@ -31,7 +31,7 @@
 | 9 | `0xcbe7d8f55aafa79821f504a992aa5c0f495f8714` | 68,537,888 | 1.71 | EOA |
 | 10 | `0xa2a1a561719cef0225f951a6d2bdde80ef4a1b76` | 60,000,000 | 1.50 | EOA |
 
-(11~30위는 2천만 BFC 이하 — 전체 표는 `bifrost-bfc-research-followup.md` 참조 불필요, 잔액 변동만 추적)
+(11~30위는 2천만 BFC 이하 — 잔액 변동만 추적)
 
 **디프 대상:** ① 각 주소 `rawBalance`/`share` 증감, ② top30 신규 진입자, ③ 이탈자, ④ 순위 변동. **1순위 알림:** #2 Vault·#1 소각·#3 컨트랙트 잔액 변화(토크노믹스/브릿지 이벤트), `holdersCount` 큰 변동.
 
@@ -171,20 +171,37 @@ curl -s "https://api.github.com/orgs/bifrost-platform/repos?sort=created&directi
 
 # 차원 8 (추가) — 한국 거래소(업비트/빗썸) BFC 보유량
 
-**★ 핵심:** 업비트/빗썸의 알려진 이더리움 핫·콜드월렛은 **BFC ERC-20을 0 보유**(직접 확인). 거래소 BFC는 **네이티브 Bifrost 메인넷(3068)**에 있음 → ETH만 보면 안 잡힘.
+**★ 핵심 2가지:**
+1. 업비트/빗썸의 알려진 **이더리움** 핫·콜드월렛은 **BFC ERC-20을 0 보유**(직접 확인). 거래소 BFC는 **네이티브 Bifrost 메인넷(3068)**에 있음 → ETH만 보면 안 잡힘.
+2. 네이티브 Bifrost 체인은 **Arkham·Nansen·Etherscan이 인덱싱하지 않고, 익스플로러에도 거래소 라벨이 없음** → 공개 출처로 "업비트/빗썸"을 **확정 귀속 불가**. 행태 기반 후보만 가능. **정확 확정은 테스트 입금(소액 입금 후 집결 주소 관찰)이 유일.**
 
-**현재 가능한 것:**
-- ETH ERC-20 거래소 라벨 주소 모니터링(만일의 이동 대비, 현재 0):
-  - Bithumb Hot `0x17e5545b11b468072283cee1f066a059fb0dbf24`, Bithumb `0x88d34944cf554e9cccf4a24292d891f620e9c94f`
+## 백엔드 API (확보 완료)
+- 익스플로러 백엔드(Blockscout): **`https://explorer-backend.mainnet.thebifrost.io`** (프론트 SPA 우회용)
+- 리치리스트: `GET /api/v2/addresses` · 주소 카운터: `GET /api/v2/addresses/{addr}/counters` · 잔액: `GET /api/v2/addresses/{addr}`
+- 통계: `GET /api/v2/stats` (코인가격, 시총, 총 tx 등)
+
+## 네이티브 BFC 리치리스트 베이스라인 (2026-06-29, 가스코인=네이티브 BFC)
+| # | 주소 | 잔액(BFC) | 실제 tx수 | 라벨/패턴 |
+|---|---|---:|---:|---|
+| 1 | `0x50F187Ef4447dA6e5Ff1D740439e91175BAC955E` | 332,484,206 | 742 | 다수유입/2곳유출 = **콜드/트레저리 후보** |
+| 2 | `0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935` | 137,482,292 | **6,732** | 유입多/유출少 = **입금집계 핫월렛 후보(최우선)** |
+| 3 | `0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee` | 87,424,912 | 1,448 | 미상 |
+| 4 | `0xAe172D8c5E428D4b7C70f9E593b207F9daC9BF3e` | 40,342,392 | 0 | **Unified BFC 컨트랙트**(거래소 아님) |
+| - | `0x081a4ee55739F0DA8abB8af40D07687527a268c3` | 15,377,787 | 1,099 | #1과 거래관계(동일 클러스터?) |
+| - | `0x39528D59132920Ab0a637129D90CF9fB3650084D` | 6,264,119 | **2,920** | 고빈도 핫월렛 패턴(거래소/MM/릴레이어 미구분) |
+| - | `0x09FCED818439182812F13b006114da4382c4470E` | 4,408,286 | 1,851 | 미상 |
+
+> ⚠️ **어느 주소도 업비트/빗썸으로 확정되지 않음**(웹·Arkham·Xangle 모두 귀속 정보 0건). 위 라벨은 전부 행태 추정. 확정하려면 테스트 입금 필요.
+
+## 루프 비교 방법
+- **재실행:** `curl https://explorer-backend.mainnet.thebifrost.io/api/v2/addresses` → 상위 잔액·신규 진입자 diff (위 표 기준)
+- **개별 감시:** 위 후보(특히 #1 332M, #2 137M)의 `/api/v2/addresses/{addr}` 잔액 + `/counters` tx수 일별 델타 → 큰 이동 시 알림 (거래소든 아니든 대형 물량 변동 자체가 신호)
+- **ETH 거래소 라벨주소(현재 BFC 0, 만일의 이동 대비):** `https://api.ethplorer.io/getAddressInfo/{ADDR}?apiKey=freekey`
+  - Bithumb `0x17e5545b11b468072283cee1f066a059fb0dbf24`, `0x88d34944cf554e9cccf4a24292d891f620e9c94f`
   - Upbit `0x390de26d772d2e2005c6d1d24afc902bae37a4bb`, `0xba826fec90cefdf6706858e5fbafcb27a290fbe0`, `0x5e032243d507c743b061ef021e2ec7fcc6d3ab89`
-  - 재실행: `https://api.ethplorer.io/getAddressInfo/{ADDR}?apiKey=freekey` → tokens[]에서 BFC balance
-- (참고) ETH 상위홀더 중 거래소 라벨은 KuCoin `0x2677c4c8757da1857cc7cc4071e0e0dd32ccb975`(BFC ~4.5M), Gate `0x0d0707963952f2fba59dd06f2b425ace40b492fe`(BFC 0)
+- **빗썸 공시(미해결):** Xangle `xangle.io/assets/BFC`·증빙센터 모두 JS 동적로딩이라 정적 수치 미노출. 백엔드 JSON 엔드포인트 추가 탐색 필요.
 
-**미해결 (후속 과제):**
-1. **네이티브 Bifrost 체인의 업비트/빗썸 입금/핫월렛 주소 확정** — 익스플로러가 Next.js SPA라 표준 Blockscout API(`/api/v2/...`, `/api?module=...`)가 HTML 반환. **별도 API 백엔드 호스트 탐색 필요**(예: blockscout 백엔드 서브도메인) 또는 익스플로러 UI에서 리치리스트/라벨 수동 확보.
-2. 빗썸 증빙센터(`bithumb.com/customer_support/proof`)는 클라이언트 렌더(503/빈본문) → 백엔드 JSON 엔드포인트 탐색 필요. 업비트 투명성보고서는 코인별 수치 없음.
-
-**확정 후 디프:** 네이티브 거래소 주소 잔액 일별 델타 = 순유입(+, 매도압력)/순유출(−) 프록시.
+**확정(테스트입금 후) 디프:** 거래소 핫월렛 잔액 일별 델타 = 순유입(+, 매도압력)/순유출(−) 프록시.
 
 ---
 
@@ -197,6 +214,6 @@ curl -s "https://api.github.com/orgs/bifrost-platform/repos?sort=created&directi
 4. **차원5** github API → 커밋 SHA/릴리스/신규레포 diff
 5. **차원6** medium-kr + telegram + 검색 → 워터마크 2026-06-02 이후 신규
 6. **차원7** 파트너별 URL → 표의 "감시 신호" (특히 HashPort TVL, BitTrade BFC 상장)
-7. **차원8** ethplorer 거래소주소(현 0) + [후속] 네이티브 거래소주소 확정
+7. **차원8** explorer-backend API 리치리스트 diff(후보 #1 332M·#2 137M) + ethplorer ETH거래소주소(현 0). 확정 귀속은 테스트입금 필요
 
 변화 발견 시에만 보고 + 본 문서 기준값 갱신. 항상 BNC/Polkadot 항목 필터링.
