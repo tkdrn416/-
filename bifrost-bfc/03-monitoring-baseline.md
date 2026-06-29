@@ -169,39 +169,55 @@ curl -s "https://api.github.com/orgs/bifrost-platform/repos?sort=created&directi
 
 ---
 
-# 차원 8 (추가) — 한국 거래소(업비트/빗썸) BFC 보유량
+# 차원 8 (추가) — 한국 거래소(업비트/빗썸) BFC 보유량 ★확정★
 
-**★ 핵심 2가지:**
-1. 업비트/빗썸의 알려진 **이더리움** 핫·콜드월렛은 **BFC ERC-20을 0 보유**(직접 확인). 거래소 BFC는 **네이티브 Bifrost 메인넷(3068)**에 있음 → ETH만 보면 안 잡힘.
-2. 네이티브 Bifrost 체인은 **Arkham·Nansen·Etherscan이 인덱싱하지 않고, 익스플로러에도 거래소 라벨이 없음** → 공개 출처로 "업비트/빗썸"을 **확정 귀속 불가**. 행태 기반 후보만 가능. **정확 확정은 테스트 입금(소액 입금 후 집결 주소 관찰)이 유일.**
+**★ 핵심:** 거래소 BFC는 **이더리움 ERC-20이 아니라 네이티브 Bifrost 메인넷(3068)**에 있음. 사용자 제보(업비트 출금 이력) + 빗썸 앱 공시값과의 온체인 교차검증으로 **두 거래소 클러스터를 확정**함.
 
 ## 백엔드 API (확보 완료)
 - 익스플로러 백엔드(Blockscout): **`https://explorer-backend.mainnet.thebifrost.io`** (프론트 SPA 우회용)
-- 리치리스트: `GET /api/v2/addresses` · 주소 카운터: `GET /api/v2/addresses/{addr}/counters` · 잔액: `GET /api/v2/addresses/{addr}`
-- 통계: `GET /api/v2/stats` (코인가격, 시총, 총 tx 등)
+- 리치리스트 `GET /api/v2/addresses` · 잔액 `GET /api/v2/addresses/{addr}` · 카운터 `GET /api/v2/addresses/{addr}/counters` · 입출금 `GET /api/v2/addresses/{addr}/transactions?filter=to|from` · 통계 `GET /api/v2/stats`
 
-## 네이티브 BFC 리치리스트 베이스라인 (2026-06-29, 가스코인=네이티브 BFC)
-| # | 주소 | 잔액(BFC) | 실제 tx수 | 라벨/패턴 |
-|---|---|---:|---:|---|
-| 1 | `0x50F187Ef4447dA6e5Ff1D740439e91175BAC955E` | 332,484,206 | 742 | 다수유입/2곳유출 = **콜드/트레저리 후보** |
-| 2 | `0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935` | 137,482,292 | **6,732** | 유입多/유출少 = **입금집계 핫월렛 후보(최우선)** |
-| 3 | `0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee` | 87,424,912 | 1,448 | 미상 |
-| 4 | `0xAe172D8c5E428D4b7C70f9E593b207F9daC9BF3e` | 40,342,392 | 0 | **Unified BFC 컨트랙트**(거래소 아님) |
-| - | `0x081a4ee55739F0DA8abB8af40D07687527a268c3` | 15,377,787 | 1,099 | #1과 거래관계(동일 클러스터?) |
-| - | `0x39528D59132920Ab0a637129D90CF9fB3650084D` | 6,264,119 | **2,920** | 고빈도 핫월렛 패턴(거래소/MM/릴레이어 미구분) |
-| - | `0x09FCED818439182812F13b006114da4382c4470E` | 4,408,286 | 1,851 | 미상 |
+## 🟢 업비트(Upbit) 클러스터 — [확인됨, 높은 신뢰도]
+근거: 사용자가 "업비트에서 주로 출금"한 지갑(`0xaDF77D87…55e43`)에 입금한 주소 5개가 모두 아래 콜드허브(`0x50F187Ef`)에서 자금을 공급받음.
 
-> ⚠️ **어느 주소도 업비트/빗썸으로 확정되지 않음**(웹·Arkham·Xangle 모두 귀속 정보 0건). 위 라벨은 전부 행태 추정. 확정하려면 테스트 입금 필요.
+| 역할 | 주소 | 잔액(2026-06-29) |
+|---|---|---:|
+| **콜드/분배 허브** | `0x50F187Ef4447dA6e5Ff1D740439e91175BAC955E` | **332,484,206** |
+| 핫(유저 직접출금 7회) | `0x081a4ee55739F0DA8abB8af40D07687527a268c3` | 15,377,787 |
+| 핫(콜드서 111.6M 수령) | `0x0056a1438fDDb84a2f40A696Cb38D3B717CD3D0e` | 0 (순환) |
+| 핫 | `0x6C9b71C49FA61e176F99ab6297dfc12De70a4E85` | 0 (순환) |
+| 핫 | `0x97e9b4C0e8275aC8F549A72C73bD92598DFe1645` | 0 (순환) |
+| | **업비트 합계** | **≈ 347.9M BFC** (최대 보유 거래소) |
+
+## 🟢 빗썸(Bithumb) 클러스터 — [확인됨, 공시값과 일치]
+근거: 빗썸 앱 "내부 유통량" **143,666,510 BFC** ≈ 아래 콜드+핫 온체인 합계 **143.8M** (거의 정확히 일치). 업비트 클러스터와 거래 겹침 없음.
+
+| 역할 | 주소 | 잔액(2026-06-29) |
+|---|---|---:|
+| **콜드/허브** | `0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935` | **137,482,292** |
+| 핫(콜드서 117.6M 수령, 2,920tx) | `0x39528D59132920Ab0a637129D90CF9fB3650084D` | 6,264,119 |
+| | **빗썸 합계** | **≈ 143.7M BFC** (= 공시 143,666,510 ✓) |
+
+> 빗썸 앱 공시(거래소정보 탭) 추가 지표: BFC 보유자 **45,296명**, 순입금(24H), 전일대비 유통량(%), 최상위회원 보유/거래 비중. 앱/웹(`bithumb.com` BFC 정보)에서 확인. (웹은 JS 렌더라 자동 수집 시 백엔드 JSON 탐색 필요)
+
+## 미식별 대형 주소 (거래소 아님으로 추정 / 추적만)
+- `0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee` (87.4M) · `0x09FCED81…4470E` (4.4M) — 클러스터 미연결, 운영/마켓메이커 가능성
+- `0xAe172D8c5E428D4b7C70f9E593b207F9daC9BF3e` (40.3M) = **Unified BFC 컨트랙트**(거래소 아님)
 
 ## 루프 비교 방법
-- **재실행:** `curl https://explorer-backend.mainnet.thebifrost.io/api/v2/addresses` → 상위 잔액·신규 진입자 diff (위 표 기준)
-- **개별 감시:** 위 후보(특히 #1 332M, #2 137M)의 `/api/v2/addresses/{addr}` 잔액 + `/counters` tx수 일별 델타 → 큰 이동 시 알림 (거래소든 아니든 대형 물량 변동 자체가 신호)
-- **ETH 거래소 라벨주소(현재 BFC 0, 만일의 이동 대비):** `https://api.ethplorer.io/getAddressInfo/{ADDR}?apiKey=freekey`
-  - Bithumb `0x17e5545b11b468072283cee1f066a059fb0dbf24`, `0x88d34944cf554e9cccf4a24292d891f620e9c94f`
-  - Upbit `0x390de26d772d2e2005c6d1d24afc902bae37a4bb`, `0xba826fec90cefdf6706858e5fbafcb27a290fbe0`, `0x5e032243d507c743b061ef021e2ec7fcc6d3ab89`
-- **빗썸 공시(미해결):** Xangle `xangle.io/assets/BFC`·증빙센터 모두 JS 동적로딩이라 정적 수치 미노출. 백엔드 JSON 엔드포인트 추가 탐색 필요.
-
-**확정(테스트입금 후) 디프:** 거래소 핫월렛 잔액 일별 델타 = 순유입(+, 매도압력)/순유출(−) 프록시.
+```bash
+API=https://explorer-backend.mainnet.thebifrost.io
+# 업비트 보유 (콜드+핫 합)
+for a in 0x50F187Ef4447dA6e5Ff1D740439e91175BAC955E 0x081a4ee55739F0DA8abB8af40D07687527a268c3 \
+         0x0056a1438fDDb84a2f40A696Cb38D3B717CD3D0e 0x6C9b71C49FA61e176F99ab6297dfc12De70a4E85 \
+         0x97e9b4C0e8275aC8F549A72C73bD92598DFe1645; do curl -s $API/api/v2/addresses/$a | jq .coin_balance; done
+# 빗썸 보유 (콜드+핫 합)
+for a in 0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935 0x39528D59132920Ab0a637129D90CF9fB3650084D; do
+  curl -s $API/api/v2/addresses/$a | jq .coin_balance; done
+```
+- **디프 대상:** 각 클러스터 합계 잔액 일별 델타 = **거래소 순유입(+, 매도압력)/순유출(−)** 프록시. 빗썸은 앱 공시값(143.6M)과 온체인 합 대조로 자가검증.
+- **신규 핫월렛 출현 감시:** 콜드허브(0x50F187/0xDCd52f5f)의 outgoing 신규 수신주소 → 새 거래소 핫월렛일 수 있음(클러스터 확장).
+- **재검증 팁:** 거래소가 지갑을 바꾸면 클러스터가 깨질 수 있음 → 빗썸은 공시값과 온체인 합이 벌어지면, 업비트는 콜드허브 outgoing 패턴 변화로 감지.
 
 ---
 
