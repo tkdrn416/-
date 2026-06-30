@@ -32,6 +32,8 @@ WATCH=[
  ("InvestVault 0xbc0995ca","0xbc0995cae2218203262ed1b8557b7886d579e985","BiFi볼트"),
  ("BiFi BFC풀 0x4bAE7","0x4bae7ba39e4e71660307dce780f1ec9b7b7666ee","BiFi풀"),
  ("일본 JPYC venue 0x6894Ae31","0x6894ae31cae97f228590f6dc7bbea7449f4db980","일본"),
+ ("BtcUSD시드 0x85b44cf6","0x85b44cf6d007e8a6ca16ee277e33c3223bb7db92","BtcUSD시드"),
+ ("BtcUSD시드 0xcca25978","0xcca259780b2fbfa18f4ce3afb868f1be53220df6","BtcUSD시드"),
 ]
 # 토큰 잔액 감시(네이티브 아님): (라벨, 토큰주소, 보유주소) — 일본/BtcUSD 추세
 TOKEN_WATCH=[

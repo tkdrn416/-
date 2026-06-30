@@ -260,3 +260,14 @@ BiFi BFC풀 `0x4bAE7…66Ee`(#3) · BiFi BtcUSD풀 `0xcF2FC1d3…` · BiFi wstBF
 - Manager: `0x6541342bc39a399c274092652b5c50890dca6fca` (handler `getMarketManagerAddr()`)
 - `getUserLimitIntraAsset(addr)→(차입한도USD, 청산임계값USD)` · `getUserTotalIntraCreditAsset(addr)→(한도, 현재차입USD)` · 핸들러 `getUserAmount(addr)→(예치,차입)`
 - → 임의 주소의 BiFi 건전성·청산가 즉시 산출 가능.
+
+# BtcUSD 당일 대형 상환 주체 추적 (2026-06-30, 루프 발견)
+오늘 BtcUSD -1,958,349 소각(8.06M→6.11M, -24%). 소각자 9개 EOA, **상위 2곳이 82%**:
+| 주소 | 소각 | 활동개시 | BFC가스 root | 비고 |
+|---|---|---|---|---|
+| `0x85b44cf6` | -1.19M | **2025-07-18(StableDAO 출범일)** | 재단분배자 `0x3ba7d96c` | 최대 상환자 |
+| `0xcca25978` | -408K | 2025-01-07 | 재단분배자 `0x3ba7d96c` | 동일 루트 |
+- **두 계정 공통 funder `0xdd88ffe1` 공유**(서로 직접거래 없음) + 동일 재단분배자 가스 루트 → **연결된 재단/시드 계정**.
+- 나머지 7곳 = BTCFi CDP 민터(브릿지볼트 경유). 그중 `0x08ff598c`(BFC 902K)·`0xf0585acc`(BFC 791K)는 고래.
+- **해석:** 오늘 BTC 담보 회수는 **외부 유저 이탈이 아니라 재단/시드 계정의 BtcUSD CDP 언와인드**(BtcUSD 96% 인프라/재단 보유와 일관). 시드 유동성 회수 정황.
+- 감시대상 추가: `0x85b44cf6`·`0xcca25978`·공통 funder `0xdd88ffe1`·중계 `0x9b5eb52f`·`0x831da993`.

@@ -273,7 +273,7 @@
     <li>v2.1.0(2025-09)부터 <b>BLAZE 팔레트</b>(고급 UTXO 관리)</li>
     <li><b>BtcUSD</b>(btcfi.one): 네이티브 BTC 담보 CDP → BTC 백드 스테이블 민트, 고정 3.5%. 외부 연계 Core·Stacks(STX/aBTC/sBTC)·XLink/ALEX. Oasys 자동브릿지(Gaming DEX 풀, 최대 ~40% APY)</li>
   </ul>
-  <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 당일 대형 상환 포착:</b> 총공급 <b>6.11M</b>. <b>정정: 점진 수축이 아니라 오늘(2026-06-30) 하루 -1.96M 단일 소각</b>(전일 ~8.06M→오늘 6.11M, -24%). 소각 주체 = <b>EOA 6곳가량이 BtcUSD 상환</b>(0x85b44cf6 -1.19M·0xcca25978 -408K·0xed4c0f59 -302K 등) = 보유자 상환/언와인드 웨이브. 분포 극집중: 브릿지볼트 <code>0xD85EB87c</code> 61% + <code>0x840Cf452</code> 24% + BiFi풀 0.76M → 상위 3곳 ~96%, 실제 분산 사용자 보유 미미. <b>모니터링이 실시간 포착한 라이브 이벤트</b> — BtcUSD 발행량 반등/재소각 추이 감시 필요(`tools/monitor.py`).</div>
+  <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 당일 대형 상환 포착:</b> 총공급 <b>6.11M</b>. <b>정정: 점진 수축이 아니라 오늘(2026-06-30) 하루 -1.96M 단일 소각</b>(전일 ~8.06M→오늘 6.11M, -24%). 소각 주체 = 9개 EOA. <b>★ 상위 2곳이 82%이며 둘 다 재단 연결 계정</b>: <code>0x85b44cf6</code>(-1.19M, <b>활동개시 2025-07-18=StableDAO 출범일</b>, BFC가스 출처=재단분배자 <code>0x3ba7d96c</code>) + <code>0xcca25978</code>(-408K, 동일 재단분배자 루트) — <b>공통 funder <code>0xdd88ffe1</code> 공유 = 연결된 계정</b>. 나머지 7곳은 BTCFi CDP 민터(브릿지볼트 경유), 그중 2곳(<code>0x08ff598c</code>·<code>0xf0585acc</code>)은 BFC 79~90만 보유 고래. <b>해석: 오늘 BTC 회수는 외부 일반유저 이탈이 아니라 재단/시드 계정의 BtcUSD CDP 언와인드</b>(BtcUSD가 96% 인프라/재단 보유라는 사실과 일관). 분포 극집중: 브릿지볼트 <code>0xD85EB87c</code> 61% + <code>0x840Cf452</code> 24% + BiFi풀 0.76M. <b>모니터 실시간 포착</b> — 재발행/재소각 추이 감시(`tools/monitor.py`).</div>
 
   <!-- 8 DEFI -->
   <h2 class="sec" id="defi"><span class="n">8</span>온체인 DeFi 레이어 <span class="badge b-warn">재조사 정정</span></h2>
