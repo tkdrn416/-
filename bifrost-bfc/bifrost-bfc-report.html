@@ -549,8 +549,9 @@
     <tr><td><b>③ 운용자 네트워크</b></td><td class="wrap">가스허브 <code>0x81c22bec</code> 최근송신 <b>2026-06-29(어제)</b>·볼트운용 <code>0xaff29bed</code> 2026-05-29·컨트롤 <code>0xb878526f</code> 2026-04-30</td><td class="wrap"><b>현재 유일하게 살아있는 온체인 활동.</b> 물밑 활동은 여기로 봐야 함</td></tr>
     <tr><td><b>④ 스테이징 껍데기</b></td><td class="wrap">11개 업그레이더블 프록시 볼트 <b>전부 token_xfers=0·잔액=0</b></td><td class="wrap">신규 제품 자금 미투입 = <b>런칭 아직 없음</b></td></tr>
   </table>
-  <p class="small"><b>가스허브 <code>0x81c22bec</code> 현재 행태(2026-06 실측):</b> ~15개 지갑에 300~5,000 BFC 정기 살포(순수 전송). 정기 대형수취 <code>0xCD95FA…</code>(누적 39.4K)·<code>0x935f88…</code>(30K)·<code>0xB454DD…</code>(16.5K)=릴레이어 가스 유지보수. <b>★ 결정적: 가스허브가 재단 DeFi 라우터 Everdex <code>0x7Ace89E2</code>에도 3,500 BFC 가스공급</b> → 운용자망 ↔ 재단 DeFi 수트 직접 연결 확인(가스공급≠소유 원칙은 유지하되 정황이 한 단계 강화).</p>
-  <p class="small muted">현 국면 트리거 3개: (a) Treasury 첫 출금 (b) 껍데기 11개 중 자금 유입 (c) 가스허브가 <b>새 주소군</b>에 살포 개시(신규 릴레이어/제품 온보딩) → 모두 <code>tools/monitor.py</code> 자동 감지.</p>
+  <p class="small"><b>가스허브 <code>0x81c22bec</code> 정체 규명(2026-06-30 실측):</b> 정기 대형수취 EOA를 추적하니 <b>전부 초고빈도 릴레이어/오라클</b>이었다 — <code>0xB454DD…</code>(<b>989,802 tx</b>)·<code>0xCD95FA…</code>(<b>905,581 tx</b>)·<code>0xC9B111…</code>(124,378)·<code>0xA4aF08…</code>(104,636)이 각각 짝 컨트랙트에 <code>0xc9807539</code>를 수십만~약100만회 제출. <b>Bifrost 공식문서상 CCCP 릴레이어가 "가격정보 피드"를 전파하고 오라클이 "검증자 구조에 내장"</b>(외부 오라클 미사용)되는데, 이 EOA들이 바로 그 <b>프로토콜 핵심 릴레이어/오라클 운영자</b>. → <b>가스허브 = 팀의 릴레이어/오라클 가스 트레저리</b>(크로스체인 프로토콜을 돌리는 ~6 릴레이어를 상시 충전).</p>
+  <div class="callout bad"><b>⚠️ 직전 라운드 과대해석 정정:</b> "가스허브가 Everdex 라우터 <code>0x7Ace89E2</code>에 가스공급 → 재단 DeFi 직접연결 <b>결정적</b>"은 <b>과장</b>이라 철회. <code>0x7Ace89E2</code>는 온체인 name=None(Everdex 라벨은 이전 추정)·85,639tx의 또다른 고빈도 컨트랙트로 DeFi 라우터 단정 불가. 가스허브의 본질은 <b>프로토콜 릴레이어/오라클 인프라 충전</b>이다. 따라서 이 가스 활동은 <b>정상 운영(물밑 아님)</b> — 진짜 감시대상은 볼트운용 EOA의 신규배포·스테이징 껍데기 11개로 좁혀진다.</div>
+  <p class="small muted">현 국면 트리거 3개: (a) Treasury 첫 출금 (b) 껍데기 11개 중 자금 유입 (c) 볼트운용 EOA(<code>0xaff29bed</code>·<code>0xb878526f</code>)의 신규 컨트랙트 배포 → 모두 <code>tools/monitor.py</code> 자동 감지.</p>
 
   <h4>TOP100 자금출처 귀속 (물량이 어디서 왔나)</h4>
   <table>
