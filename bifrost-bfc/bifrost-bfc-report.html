@@ -271,7 +271,8 @@
     <li><b>BTC vault = 정적 주소 아님</b> — 릴레이어 그룹 공개키를 모은 <b>임계치(threshold) 멀티시그 + PSBT 동적 vault</b>(taproot/musig). 사용자/라운드별 동적 생성. config에 하드코딩 BTC 주소 없음 → 온체인 BTC 추적은 Registration Pool 이벤트 기반</li>
     <li><b>입금 흐름:</b> BTC 입금 → <code>registration_pool</code>로 vault↔사용자 Bifrost 주소 매핑 → <code>bitcoin_socket</code> 릴레이어 투표 집계 → UTXO 릴레이. 출금은 <code>relay_executive</code>만 PSBT 서명</li>
     <li>v2.1.0(2025-09)부터 <b>BLAZE 팔레트</b>(고급 UTXO 관리)</li>
-    <li><b>BtcUSD</b>(btcfi.one): 네이티브 BTC 담보 CDP → BTC 백드 스테이블 민트, 고정 3.5%. 외부 연계 Core·Stacks(STX/aBTC/sBTC)·XLink/ALEX. Oasys 자동브릿지(Gaming DEX 풀, 최대 ~40% APY)</li>
+    <li><b>BtcUSD</b>(btcfi.one): 네이티브 BTC 담보 CDP → BTC 백드 스테이블 민트, 고정 3.5%. <b>담보비율 최대 50%(LTV 50%)</b> — BTC 예치액의 최대 절반까지 BtcUSD 민트. 외부 연계 Core·Stacks(STX/aBTC/sBTC)·XLink/ALEX. Oasys 자동브릿지(Gaming DEX 풀, 최대 ~40% APY). 사전출시(2024-03) 120+ BTC 예치로 시작.</li>
+    <li><b>BTC측 추적 한계(실측):</b> Bitcoin소켓 <code>0x73A9E443</code>는 활성(3,118tx)이나 호출자가 <b>릴레이어 ~14곳</b>뿐 — 일반 유저는 직접 호출 안 함. BTC↔Bifrost 매핑은 <b>registration_pool 팔레트(EVM 밖)</b>라 <b>예치자의 BTC 담보 출처는 Bifrost EVM으로 추적 불가</b>(BTC 메인넷 PSBT vault UTXO 분석 필요). → 가령 오늘 redeemer 0x85b44cf6의 1.42M BtcUSD 민트 = LTV 50% 기준 <b>~$2.84M(≈47 BTC) 담보</b>이나 그 BTC 출처는 EVM서 안 보임.</li>
   </ul>
   <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 당일 대형 상환 포착:</b> 총공급 <b>6.11M</b>. <b>정정: 점진 수축이 아니라 오늘(2026-06-30) 하루 -1.96M 단일 소각</b>(전일 ~8.06M→오늘 6.11M, -24%). 소각 주체 = 9개 EOA, 상위 2곳이 82%(<code>0x85b44cf6</code> -1.19M + <code>0xcca25978</code> -408K). <b>★ 정체 재추적(가스 배제):</b><br>
   ① <b>가스≠소유</b>: 두 계정이 재단분배자 루트로 받은 BFC는 <b>110·210 BFC(순수 가스)뿐</b>. 온보딩 가스 relay <code>0x9b5eb52f</code>는 <b>21개 계정에 가스 살포</b>(=VIP 온보딩 relay, 고객 독립) → 가스로는 재단 소유 단정 불가.<br>
