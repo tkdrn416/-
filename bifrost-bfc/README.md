@@ -35,7 +35,7 @@
 
 **제품:** Bifrost Network(EVM L1, chainId 3068, DPoS+Aura/GRANDPA, Substrate+Frontier) · **BTCFi/BtcUSD**(네이티브 BTC 담보 스테이블, 3.5%, CDP $9.17M) · **BiFi**(렌딩 $6.94M) · **Biquid**(리퀴드스테이킹 $3.17M, stBFC) · **Everdex**(DEX $2.69M) · Biport/Pockie(지갑) · The BIFROST Bridge(CCCP, 9체인).
 
-**토큰:** BFC. ERC-20 `0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c`. 메인넷 네이티브 가스코인. 시총 ~$16.6M(2026-06). 공급: 40억 발행 → 2022년 40%(16억) 소각 → 메인넷서 캡 폐지·인플레이션(코드 13%) → StableDAO 소각. 상장 업비트·빗썸·코빗·HTX.
+**토큰:** BFC. ERC-20 `0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c`. 메인넷 네이티브 가스코인. 시총 ~$16.6M(2026-06). 공급: 40억 발행 → 2022년 40%(16억) 소각 → 메인넷서 캡 폐지·인플레이션(코드 13%). (StableDAO 소각은 계획 발표만, 집행 미확인). 상장 업비트·빗썸·코빗·HTX.
 
 **일본 전략(BTCFi 축):** HashPort Wallet(JPYC 4% 렌딩) · DJT N.suite · SBI Digital Finance · Animoca Brands Japan · AI Fusion Capital(검증자) · BitTrade(검증자) · JOC·MOIN · 협회(JCBA/FAJ/BCCC). **JPYC는 활용만, 발행 아님. JPYSC와는 무관.**
 
