@@ -1,7 +1,8 @@
 # Bifrost (BFC) 리서치 — 파이랩테크놀로지 · 인덱스
 
 > 한국 **파이랩테크놀로지(Pi Lab Technology)**의 **Bifrost Network / BFC (바이프로스트)** 리서치 모음.
-> 최종 갱신: **2026-06-29** · 용도: 정기 모니터링 루프의 배경지식 + 기준값(baseline).
+> 최종 갱신: **2026-06-30** · 용도: 정기 모니터링 루프의 배경지식 + 기준값(baseline).
+> 📖 **처음 읽는 순서:** 이 README(전체 그림) → `01-overview`(기본) → `02-deep-dive`(정밀) → `03-monitoring-baseline`(루프용).
 
 ## ⚠️ 절대 혼동 금지
 | ✅ 우리 대상 | ❌ 혼동 대상 |
@@ -20,7 +21,8 @@
 |---|---|---|
 | **[01-overview.md](./01-overview.md)** | 회사·토큰·메인넷·브릿지·GitHub·일본 기관 기본 정리 + 연혁 | 전체 그림 파악 |
 | **[02-deep-dive.md](./02-deep-dive.md)** | 온체인 실측, **전체 컨트랙트 주소 풀셋**, BTC vault 구조, 토크노믹스, 일본 사업 타임라인, **검증/정정** | 정확한 사실·주소 확인 |
-| **[03-monitoring-baseline.md](./03-monitoring-baseline.md)** | **8개 차원 기준값 + 매 루프 재실행 쿼리/디프 대상** | 루프 돌릴 때 매번 |
+| **[03-monitoring-baseline.md](./03-monitoring-baseline.md)** | **10개 차원 기준값 + 매 루프 재실행 쿼리/디프 대상** (+부록: 체크리스트·확장후보) | 루프 돌릴 때 매번 |
+| **[data/validators-snapshot.md](./data/validators-snapshot.md)** | 검증자 24개 온체인 주소(controller/stash) | 노드 변동 대조용 |
 
 충돌 시 우선순위: **03 > 02 > 01** (최신·정정 반영순).
 
@@ -84,7 +86,12 @@
 - 빗썸 정확 공시값(내부유통량/보유자/순입금)은 **로그인+봇차단**으로 자동수집 불가 → **온체인 클러스터 합**(143.7M)으로 대체(공시 143.67M과 일치).
 - 공개 API는 자동수집 OK: 빗썸 `api.bithumb.com/public/ticker/BFC_KRW`·`/assetsstatus/BFC_KRW`(입출금 중단 감지), 업비트 `api.upbit.com/v1/ticker?markets=BTC-BFC`(BTC마켓만).
 
-## 미해결 / 후속 과제
-- BtcUSD 토큰 컨트랙트 주소 (네이티브 L1 발행이라 외부 인덱싱 제한)
+## 10개 모니터링 차원 (03 문서)
+1 상위홀더(ETH) · 2 노드/검증자 · 3 브릿지+Vault TVL+BtcUSD · 4 트랜잭션 · 5 GitHub · 6 뉴스 · 7 일본파트너 · 8 한국거래소(업비트/빗썸) · 9 글로벌거래소 · 10 소셜
+
+## 미해결 / 후속 과제 (난이도 높음)
+- 온체인 거버넌스(제안/투표) 추적 가능 여부
+- 토큰 언락/베스팅 일정 (대형 컨트랙트 해제 패턴)
 - BTC vault 멀티시그 임계값(M-of-N)
 - 미식별 대형 콜드 `0x4bAE7…6Ee`(87M, 유출 0) 정체
+- 검증자 실명↔주소 매핑(Substrate identity 부재로 원천 제약)
