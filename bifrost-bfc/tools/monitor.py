@@ -42,6 +42,9 @@ TOKEN_WATCH=[
  # ★ 브릿지 테스트 신규자산 — 공급 급증=신담보/신제품 출시 신호
  ("Unified cbBTC(테스트)","0x74b73fd2ee237e9219df30dffdb206d237cbfc00",None),
  ("BrBTC 네이티브BTC브릿지(테스트)","0xcb4e4f67b33eebfc17c82cf6e8c0b56d269aeb79",None),
+ # ★ Biquid 유동스테이킹 — stBFC 공급(=검증자 위임의 ~78%) 급변=위임 대이동 신호
+ ("stBFC 유동스테이킹총량","0xeff8378c6419b50c9d87f749f6852d96d4cc5ae4",None),
+ ("wstBFC 래핑총량","0x386f2f5d9a97659c86f3ca9b8b11fc3f76efddae",None),
 ]
 def get(u):
     for _ in range(3):

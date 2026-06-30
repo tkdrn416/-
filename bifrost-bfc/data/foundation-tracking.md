@@ -300,6 +300,18 @@ BiFi BFC풀 `0x4bAE7…66Ee`(#3) · BiFi BtcUSD풀 `0xcF2FC1d3…` · BiFi wstBF
 **① 국고: 축적만, 미집행(7.70M, 출금 0). ② 공식 배포자: 휴면. ③ 실활동: 운용자/가스허브 네트워크가 릴레이어·Everdex 라우터 가스를 정기 충전하는 "유지보수 모드". ④ 신제품 껍데기: 11개 전부 대기.**
 → **현재는 "물밑 신규 런칭 없이 기존 인프라 유지" 국면.** 트리거 3개: (a) Treasury 첫 출금 (b) 껍데기 11개 중 자금 유입 (c) 가스허브가 *새* 주소군에 살포 개시(신규 릴레이어/제품 온보딩).
 
+# ★ Biquid 유동스테이킹 구조 규명 (2026-06-30 신규, 새 각도)
+
+> 새 각도: BiFi 외 프로토콜인 **Biquid 유동스테이킹(stBFC/wstBFC)** 온체인 실태 측정. 검증자 위임·Boost 볼트와 단일 수익 스택으로 연결됨을 규명.
+
+- **총 유동스테이킹 `stBFC.totalPooledBFC()` = 268,800,232 BFC**(stBFC 1:1 rebasing, 발행 268.8M·홀더 130 / wstBFC reward-bearing, 발행 232.6M·홀더 112).
+- **환율 `wstBFC.stBFCPerToken()` = 1.136696 실측** → 청산식에서 쓴 "wstBFC=BFC×1.137" **정확 검증**(4자리 일치).
+- **래핑 98.4%:** `stBFC.balanceOf(wstBFC)` = 264.4M → stBFC의 98.4%가 wstBFC로 래핑(거의 전부 DeFi 담보용).
+- **Boost 볼트 집중 56%:** wstBFC 232.6M 중 **131.7M(=149.7M BFC상당)이 bvBasewstBFC `0xbC0995Ca`**(=청산분석 "InvestVault 고래" 149.5M와 일치) → 운용 EOA(0xaff29bed·0xb878526f) 운용.
+- **★ 검증자 위임과 연결:** Biquid 공식문서 "BFC를 가장 수익성높고 신뢰받는 검증자에 내부위임" + 268.8M이 §검증자 위임 344.76M의 **~78%** → **네트워크 위임의 대부분이 직접위임이 아니라 Biquid LST 풀 경유.** 실질 위임 주체는 stBFC 홀더 130명으로 집약.
+- **수익 스택 전체상:** 사용자 BFC → Biquid 스테이킹(stBFC) → 래핑(wstBFC) → Boost 볼트/BiFi wstBFC핸들러 담보 → 차입/스왑(Everdex). 한 자산이 4개 프로토콜을 관통(TVL 중복의 원인이자, 운용망이 이 스택 중심에 위치).
+- **감시:** stBFC totalPooledBFC 급변 = 위임 대이동/언스테이킹 러시 신호. monitor.py 토큰와치 추가(stBFC·wstBFC).
+
 # BiFi Manager (청산/계정 조회 핵심)
 - Manager: `0x6541342bc39a399c274092652b5c50890dca6fca` (handler `getMarketManagerAddr()`)
 - `getUserLimitIntraAsset(addr)→(차입한도USD, 청산임계값USD)` · `getUserTotalIntraCreditAsset(addr)→(한도, 현재차입USD)` · 핸들러 `getUserAmount(addr)→(예치,차입)`

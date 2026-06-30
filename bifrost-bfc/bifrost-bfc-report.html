@@ -304,12 +304,15 @@
     <tr><th>프로토콜</th><th>카테고리</th><th>TVL</th><th>핵심 컨트랙트 / 구성</th></tr>
     <tr><td><b>BTCFi CDP</b></td><td>CDP</td><td>$9.17M</td><td class="wrap">BtcUSD <code>0x6906Ccda…d555</code>(발행 8.06M·홀더 481). BTC 담보 $6.45M(Bitcoin)+Bifrost $2.65M. 고정 3.5%</td></tr>
     <tr><td><b>BiFi</b> (렌딩)</td><td>Lending</td><td>$6.94M</td><td class="wrap">예치 구성: <b>wstBFC $3.07M</b>·BtcUSD $1.90M(<code>0xcF2FC1d3…</code>)·BFC $1.03M(<code>0x4bAE7…</code> 87M)·ETH·USDC·BNB. url bifi.finance · Unified BiFi <code>0x047938C3…0003</code></td></tr>
-    <tr><td><b>Biquid</b> (리퀴드스테이킹)</td><td>Liquid Staking</td><td>$3.17M</td><td class="wrap"><b>stBFC</b> <code>0xEff8378C…5aE4</code>(발행 268.8M) · <b>wstBFC</b> <code>0x386f2F5d…DdaE</code>(발행 232.6M). url biquid.io. 네트워크 스테이킹 406M 중 상당분 경유</td></tr>
+    <tr><td><b>Biquid</b> (리퀴드스테이킹)</td><td>Liquid Staking</td><td>$3.17M</td><td class="wrap"><b>stBFC</b> <code>0xEff8378C…5aE4</code>(rebasing, 발행 268.8M·홀더 130) · <b>wstBFC</b> <code>0x386f2F5d…DdaE</code>(reward-bearing, 발행 232.6M·홀더 112). <b>★ totalPooledBFC() 실측 = 268,800,232 BFC</b>(=총 유동스테이킹). <b>환율 stBFCPerToken()=1.136696 검증</b>(청산식 "BFC×1.137"과 일치). url biquid.io</td></tr>
     <tr><td><b>Everdex</b> (DEX/AMM)</td><td>Dexs</td><td>$2.69M</td><td class="wrap">Uniswap V2 포크 라우터 <code>0x7Ace89E2…</code>(85,638tx·<b>2026-06-30 활성</b>). 풀: <b>BtcUSD/UnifiedUSDC</b> <code>0x4E4156F7</code>(2.46M·홀더25)·<b>stBFC/WBFC</b> <code>0x4e4fDaB2</code>(1.41M, =BiFi 담보 EverStableLP)·USDC/USDT/DAI 3pool <code>0xADA89c67</code>(소량)·LP <code>0x840Cf452</code>. WBFC <code>0x1c1b0640</code>(8.39M·홀더27)</td></tr>
     <tr><td><b>BTCFi Boost</b> (수익볼트)</td><td>Yield Vault</td><td>~$1.8M</td><td class="wrap">Bifrost 원클릭 수익상품(boost.btcfi.one). <b>bvBasewstBFC</b> <code>0xbC0995Ca…</code>(131.7M wstBFC·홀더 37) + bvBaseBFC <code>0x09B8B667…</code>(빈 볼트) · JPYC 4% 렌딩 venue <code>0x6894Ae31…</code>(65.5M JPYC) · 운용 EOA <code>0xaff29bedb24c</code>·<code>0xb878526f</code>(92컨트랙트)</td></tr>
     <tr><td>WBFC / claim</td><td>유틸</td><td>8.4M / 6.2M</td><td>WBFC <code>0x1c1b0640…</code> · claim <code>0xD3351BAA…</code></td></tr>
   </table>
   <p class="small">BtcUSD 멀티체인: BSC <code>0x4F2c9962…</code>·Base <code>0xe4b20925…</code>·Core <code>0xad0c524C…</code>·Oasys <code>0x4Cda2D68…</code>. 출처 DefiLlama(btcfi-cdp·bifi·biquid·everdex)·docs. <b>BiFi/Biquid/BTCFi/Everdex 배포자 다수 = 0xA30B97a5(현행 DeFi 스위트).</b></p>
+  <div class="callout ok"><b>★ Biquid 유동스테이킹 ↔ 검증자 위임 ↔ Boost 볼트 구조 규명(2026-06-30 실측·신규):</b>
+  <b>① 총 유동스테이킹 268.8M BFC</b>(<code>totalPooledBFC()</code>). Biquid 공식문서: "BFC는 가장 수익성 높고 신뢰받는 검증자에 내부 위임"(docs) → <b>이 268.8M이 §21에서 측정한 검증자 위임 344.76M의 약 78%</b> = 네트워크 위임의 대부분이 <b>직접 위임이 아니라 Biquid 유동스테이킹 풀 경유</b>(앞서 "retail 위임"으로 본 것의 상당분이 LST 라우팅). 실질 위임자는 stBFC 홀더 130명 수준으로 집약.
+  <b>② 98.4% 래핑:</b> stBFC 268.8M 중 <b>264.4M(98.4%)이 wstBFC로 래핑</b>(<code>stBFC.balanceOf(wstBFC)</code> 실측) → 거의 전부가 DeFi 담보용. <b>③ 56% 집중:</b> 전체 wstBFC 232.6M 중 <b>131.7M(=149.7M BFC상당)이 Boost 볼트 <code>0xbC0995Ca</code>(=청산분석의 "InvestVault 고래" 149.5M와 일치)</b>에 집결 → Biquid→wstBFC→Boost 볼트→BiFi 담보로 이어지는 <b>단일 수익 스택</b>. 운용 EOA(<code>0xaff29bed</code>·<code>0xb878526f</code>)가 이 볼트 운용.</div>
   <div class="callout info"><b>BiFi 개인 예치/대출 추적</b> — BiFi는 표준 영수증토큰(iToken) 미발행(커스텀 내부장부)이라 <code>balanceOf</code> 불가 → <b>마켓 컨트랙트 입출금 netting</b>으로 추적. 마켓: wstBFC <code>0xf9b2f6d2…</code> · BtcUSD <code>0xcF2FC1d3…</code> · BFC <code>0x4bAE7…</code> · USDC <code>0x168b2d7d…</code>. 예치 method <code>0x9a408321</code>(deposit). <br><span class="small">예시(사용자 지갑): wstBFC ~2.04M 담보 공급 + BtcUSD ~2.95만 차입 = 담보대출 포지션. 흐름 netting으로 산출 → data/native-holders-analysis 7차.</span></div>
 
   <!-- 9 GITHUB -->
@@ -872,6 +875,7 @@
     <tr><td><b>D. retail 인기노드</b></td><td class="wrap">B1~B7 · F1 <code>0x7CE6C4</code> · F3 <code>0xE4A4A8</code> · F4 <code>0x03FCBa</code> · F7 <code>0x222561</code></td><td>0.4~3.15M</td><td><b>1,670~2,022</b></td><td class="wrap">위임자 수천명 = 일반 사용자 위임 집중. 시장신뢰 높은 공개노드</td></tr>
   </table>
   <p class="small"><b>시스템 총계: self-bond 60.89M(15.0%) / 위임 344.76M(85.0%) / 총 405.65M.</b> 위임의 ~60M은 C형(기관집중)·~280M은 D형(retail). 팀 직영(A) 12M + 팀운영 추정(B) 50M = <b>최소 ~62M(15%)가 팀/재단 영향권 자기본딩</b>.</p>
+  <div class="callout info"><b>★ 위임의 정체 = 대부분 Biquid 유동스테이킹(2026-06-30 실측):</b> Biquid LST 풀이 <code>totalPooledBFC()</code> <b>268.8M BFC</b>를 검증자에 내부 위임(공식문서 확인) → <b>위임 344.76M의 약 78%가 직접 위임이 아니라 Biquid 풀 경유.</b> 즉 "D형 retail 위임"의 상당분은 개별 사용자가 아니라 <b>stBFC 홀더(130명)가 맡긴 LST 물량</b>이 검증자로 재위임된 것. (§8 Biquid 참조)</div>
   <h4>자금출처·시점 보조단서 (위 분류와 교차)</h4>
   <table>
     <tr><th>단서</th><th>노드</th><th>근거</th></tr>
