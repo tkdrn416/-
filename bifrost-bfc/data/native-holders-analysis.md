@@ -266,3 +266,38 @@
 - BiFi TVL `api.llama.fi/protocol/bifi`(현 $6.94M) · Biquid `…/biquid`($3.17M) · BTCFi CDP `…/btcfi-cdp`($9.17M) · Everdex `…/everdex`($2.69M) · 체인 `…/v2/chains`(Bifrost Network $11.84M)
 - stBFC/wstBFC totalSupply(RPC 0x18160ddd) = 리퀴드스테이킹 성장
 - BiFi 예치 구성 변화(wstBFC·BtcUSD·BFC 비중) = 렌딩 수요 추적
+
+---
+
+# 심화 분석 (7차) — BiFi 개인 예치/대출 추적 (2026-06-30)
+
+> 사용자 지갑(`0xaDF77D87…55e43`)을 예제로 BiFi 예치/대출 추적법 확립. stBFC/wstBFC 등 BiFi 예치는 **지갑 token-balances에 안 보임**(컨트랙트로 이동) → 마켓 컨트랙트 입출금 netting으로 추적.
+
+## BiFi 렌딩 마켓 컨트랙트 (자산별 풀)
+| 자산 | 마켓 컨트랙트 | 비고 |
+|---|---|---|
+| wstBFC | `0xf9b2f6d2a61923e61ad9f6daa78f52b7e1722b12` | 최대 예치자산($3.07M) |
+| BtcUSD | `0xcF2FC1d354018A39D5Ef036aA865Ad8cbF7B611E` | (앞서 식별) |
+| BFC | `0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee` | #3, 87M BFC |
+| USDC | `0x168b2d7dd6b9812392f99ba01a14db03ed06dedc` | |
+
+## 추적 방법 (개인/전체 공통)
+- BiFi는 **표준 ERC20 영수증(iToken/bvToken) 미발행** → `balanceOf` 안 됨(커스텀 내부 장부).
+- **방법:** 대상 주소의 token-transfers에서 위 마켓 컨트랙트로의 흐름을 netting.
+  - 예치 method **`0x9a408321`**(deposit)·`0xba3c3e90` → 마켓으로 송금 = 공급/담보
+  - 마켓→사용자 수신 = 출금 또는 **대출(borrow) 인출**
+  - 순공급 = (사용자→마켓) − (마켓→사용자), 음수면 **대출 우위**(차입)
+- 재실행: `GET /api/v2/addresses/{addr}/token-transfers` → 토큰별·마켓별 in/out 합산.
+
+## 예제: 사용자 0xaDF77D87… BiFi 포지션 (2026-06-30)
+| 자산 | 사용자→마켓(예치) | 마켓→사용자(환수/차입) | 순포지션 |
+|---|---:|---:|---|
+| wstBFC | 2,041,216 | 100 | **+2,041,116 공급(담보)** |
+| USDC | 10,037 | 0 | +10,037 공급 |
+| BtcUSD | 12,577 | 42,086 | **−29,510 = 대출(borrow)** |
+→ 해석: wstBFC ~2.04M 담보 공급 + BtcUSD ~2.95만 차입(담보대출). 지갑엔 stBFC 113.55·Unified BiFi 2.06M 별도 보유.
+
+## 모니터링 활용
+- **BiFi 마켓별 총예치/대출**: 각 마켓 컨트랙트의 토큰 잔액(공급) + 누적 흐름으로 추정. 마켓 잔액 급변 = 예치/인출 러시.
+- **고래 포지션 추적**: 특정 주소의 마켓 netting으로 담보·차입 규모 산출(청산 리스크 모니터링 가능).
+- ⚠️ 정확한 이자/청산가는 컨트랙트 내부함수(ABI 필요) — 흐름 netting은 원금 기준 근사.

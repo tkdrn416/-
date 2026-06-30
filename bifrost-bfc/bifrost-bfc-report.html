@@ -279,6 +279,7 @@
     <tr><td>WBFC / claim</td><td>유틸</td><td>8.4M / 6.2M</td><td>WBFC <code>0x1c1b0640…</code> · claim <code>0xD3351BAA…</code></td></tr>
   </table>
   <p class="small">BtcUSD 멀티체인: BSC <code>0x4F2c9962…</code>·Base <code>0xe4b20925…</code>·Core <code>0xad0c524C…</code>·Oasys <code>0x4Cda2D68…</code>. 출처 DefiLlama(btcfi-cdp·bifi·biquid·everdex)·docs. <b>BiFi/Biquid/BTCFi/Everdex 배포자 다수 = 0xA30B97a5(현행 DeFi 스위트).</b></p>
+  <div class="callout info"><b>BiFi 개인 예치/대출 추적</b> — BiFi는 표준 영수증토큰(iToken) 미발행(커스텀 내부장부)이라 <code>balanceOf</code> 불가 → <b>마켓 컨트랙트 입출금 netting</b>으로 추적. 마켓: wstBFC <code>0xf9b2f6d2…</code> · BtcUSD <code>0xcF2FC1d3…</code> · BFC <code>0x4bAE7…</code> · USDC <code>0x168b2d7d…</code>. 예치 method <code>0x9a408321</code>(deposit). <br><span class="small">예시(사용자 지갑): wstBFC ~2.04M 담보 공급 + BtcUSD ~2.95만 차입 = 담보대출 포지션. 흐름 netting으로 산출 → data/native-holders-analysis 7차.</span></div>
 
   <!-- 9 GITHUB -->
   <h2 class="sec" id="github"><span class="n">9</span>GitHub — bifrost-platform</h2>
