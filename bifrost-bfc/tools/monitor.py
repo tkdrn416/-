@@ -46,6 +46,25 @@ def snapshot():
     snap["_total_addr"]=st.get('total_addresses')
     for lab,a,cat in WATCH: snap[a]=bal(a)
     return snap
+# 운용자(0xb878526f)가 2026 배포한 빈 업그레이더블-프록시 볼트 껍데기.
+# 자금/토큰 받기 시작(token_transfers_count>0 or 잔액>0) = 신제품 런칭 신호.
+STAGED_SHELLS=[
+ "0xF4394659BB0303fa7bc69295F6115771198F718D","0x94B9A18CfB4b7D21a86b909871fd3d7898fb2bba",
+ "0xB9b05cEeABd239A86CdA0bD5cd4aBa3eBB0F5f4C","0x6dedf09e8Fd216B823f63959d8daC25FBBfb6E25",
+ "0x3f0BA9107758FACBad8948E138a71e18778Cb9DF","0xd7768f3477531FF5990735287E8fDd5a6a43B2bd",
+ "0xD06B9B6A4A4F2FF72Fc2C7F9101E54f85F8a4e68","0xF2C269184F002677CC40099171470BB5f80e2719",
+ "0x11d91B18bCE6bB6fF63F23Ee7b2B7660697daCFd","0xb0dd98593B4e353D682Be495C80D4928fA512B3b",
+ "0x4a6dDEeC476073173CAB6f7Ff023f89CdB198931",
+]
+def shell_check():
+    print("\n# 스테이징 껍데기 활성화 점검 (토큰유입=신제품 런칭 신호):")
+    act=0
+    for a in STAGED_SHELLS:
+        c=get(f"/api/v2/addresses/{a}/counters")
+        tt=int(c.get('token_transfers_count') or 0); bl=bal(a)
+        if tt>0 or bl>0:
+            act+=1; print(f"  ⚠️ 활성화! {a[:12]} token_xfers={tt} bal={bl:,.0f}BFC ← 신제품 런칭 가능")
+    if act==0: print("  전부 빈 상태 유지(런칭 신호 없음).")
 def fmt(v): return f"{v:+,.0f}" if v else "0"
 def main():
     save="--no-save" not in sys.argv
@@ -70,6 +89,7 @@ def main():
         for c,d in sorted(cat_delta.items(),key=lambda x:-abs(x[1])):
             sig="유입(매도압?)" if (c=='거래소' and d>0) else ("출금" if c=='거래소' and d<0 else "")
             print(f"  {c}: {fmt(d)} BFC  {sig}")
+    shell_check()
     if save:
         os.makedirs(os.path.dirname(BASE),exist_ok=True)
         json.dump(cur,open(BASE,"w"))
