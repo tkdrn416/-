@@ -128,7 +128,7 @@
   </div>
   <div class="card">
     <p><b>한 줄 요약</b> — 파이랩테크놀로지의 EVM 호환 L1 <b>Bifrost Network</b>는 멀티체인 미들웨어에서 출발해 현재 <b>"기관용 비트코인 금융(BTCFi) + 스테이블코인 인프라"</b>로 재포지셔닝. 핵심 자산은 네이티브 코인 <b>BFC</b>와 BTC 담보 스테이블코인 <b>BtcUSD</b>. <b>일본 시장</b>(JPYC 렌딩·기관 BTC 재무)이 전략 축. 온체인 유통은 <b>국내 거래소(업비트·빗썸)에 절반 이상 집중</b>.</p>
-    <p style="margin-bottom:0"><b>투자/리스크 관점</b> — ⊕ BTCFi(BtcUSD 발행·홀더)·일본 렌딩 수요가 성장 동력 · ⊖ 유통 상당 부분이 거래소·초기배분 휴면물량에 묶여 실유통(free float) 적음 · ⊖ 시총 대비 행보는 활발하나 토큰 가격 반영 제한적 · ⊖ 다수 핵심 컨트랙트 미검증.</p>
+    <p style="margin-bottom:0"><b>투자/리스크 관점</b> — ⊕ BTCFi(BtcUSD 발행·홀더)·일본 렌딩 수요가 성장 동력 · ⊖ 유통 상당 부분이 거래소·초기배분 휴면물량에 묶여 실유통(free float) 적음 · ⊖ 시총 대비 행보는 활발하나 토큰 가격 반영 제한적 · ⊖ 다수 핵심 컨트랙트 미검증 · ⊖ <b>TVL이 단일 수익 스택(BFC→stBFC→wstBFC→Boost→BiFi)으로 재귀 누적</b> = 자산 중복·순환 레버리지 구조라 외부 신규자금 유입 없이 같은 BFC가 여러 번 계상(BFC 급락 시 스택 전체 연쇄 리스크).</p>
   </div>
   <div class="callout info"><b>📌 온체인 심층조사 종합 (2026-06-30) — 이번 라운드 핵심 발견</b>
   <ol style="margin:6px 0 0 0">
@@ -144,6 +144,27 @@
     <li><b>BtcUSD "점진 수축"→"오늘 단일 -1.96M 상환"으로 정정:</b> 전일까지 8.06M, 오늘 하루 redemption 웨이브.</li>
     <li><b>"청산이벤트 0건 확정" 철회:</b> 최근 로그만 스캔, 미식별 희귀이벤트 존재 → 키퍼 비활성은 '정황'(미청산 잔존 사실)이지 확정 아님.</li>
   </ol></div>
+
+  <div class="callout ok"><b>🧩 구조적 종합 — 심층 라운드 결정판 (2026-06-30)</b>
+  <ol style="margin:6px 0 0 0">
+    <li><b>검증자 위임구조 실측(<code>candidate_state</code>):</b> 총 405.65M = self-bond 60.89M(15%)+위임 344.76M(85%). 위임자수로 4분류 — <b>A 순수 팀자체</b>(F13~15, self-bond 정확히 4.00M·위임자 0)·<b>B 팀운영 대형</b>(F2/F5/F6, 6.8M)·<b>C 기관집중</b>(위임자 4~405명·건당 거액)·<b>D retail</b>(1,670~2,022명). <b>팀/재단 영향권 자기본딩 최소 ~62M(15%)</b>. → §21</li>
+    <li><b>★ 위임의 정체 = Biquid 유동스테이킹:</b> Biquid <code>totalPooledBFC()</code> <b>268.8M</b>이 검증자에 내부위임 → <b>위임 344.76M의 약 78%가 직접위임이 아닌 LST 풀 경유</b>(실질 위임주체 stBFC 홀더 130명). → §8·§21</li>
+    <li><b>★ 단일 수익 스택:</b> 한 BFC가 <b>스테이킹→stBFC→wstBFC(98.4% 래핑)→Boost볼트(56% 집중, =청산 "고래" 149.5M)→BiFi 담보→Everdex 스왑</b>으로 4~5개 프로토콜을 관통(아래 흐름도). TVL 중복의 원인이자 운용망이 그 중심.</li>
+    <li><b>재단 온체인 활동 = "인프라 유지보수" 국면:</b> Treasury 축적만(7.70M·EVM tx 0·출금 0)·공식 배포자 휴면(2025)·휴면 초기배분 지갑 전부 미이동. <b>현재 살아있는 활동은 운용망 가스허브 <code>0x81c22bec</code> 하나</b>(어제도 활동) — 추적하니 <b>릴레이어/오라클</b>(989K·905K tx EOA에 가스공급=CCCP 정상운영)+볼트운용 충전. <b>신제품 껍데기 11개 전부 빈 상태(런칭 신호 0)</b>. → §15-F</li>
+  </ol>
+  <div style="margin:10px 0 2px"><svg viewBox="0 0 760 96" width="100%" style="max-width:760px;background:#0d1117;border:1px solid #1f2937;border-radius:8px" font-family="ui-sans-serif,system-ui">
+  <text x="12" y="20" fill="#e5e7eb" font-size="12" font-weight="700">단일 수익 스택 — 한 BFC가 관통하는 경로 (2026-06-30 실측)</text>
+  <g font-size="10.5" text-anchor="middle">
+  <rect x="12" y="38" width="96" height="34" rx="6" fill="#1d2531" stroke="#34d399"/><text x="60" y="52" fill="#cbd5e1">BFC 스테이킹</text><text x="60" y="65" fill="#6b7280" font-size="9">검증자 위임</text>
+  <rect x="132" y="38" width="96" height="34" rx="6" fill="#1d2531" stroke="#4da3ff"/><text x="180" y="52" fill="#cbd5e1">stBFC 268.8M</text><text x="180" y="65" fill="#6b7280" font-size="9">Biquid LST</text>
+  <rect x="252" y="38" width="96" height="34" rx="6" fill="#1d2531" stroke="#4da3ff"/><text x="300" y="52" fill="#cbd5e1">wstBFC 232.6M</text><text x="300" y="65" fill="#6b7280" font-size="9">98.4% 래핑</text>
+  <rect x="372" y="38" width="100" height="34" rx="6" fill="#1d2531" stroke="#fbbf24"/><text x="422" y="52" fill="#cbd5e1">Boost 볼트</text><text x="422" y="65" fill="#6b7280" font-size="9">131.7M(56%)</text>
+  <rect x="496" y="38" width="96" height="34" rx="6" fill="#1d2531" stroke="#fbbf24"/><text x="544" y="52" fill="#cbd5e1">BiFi 담보</text><text x="544" y="65" fill="#6b7280" font-size="9">차입</text>
+  <rect x="616" y="38" width="96" height="34" rx="6" fill="#1d2531" stroke="#b794ff"/><text x="664" y="52" fill="#cbd5e1">Everdex</text><text x="664" y="65" fill="#6b7280" font-size="9">스왑/LP</text>
+  <text x="120" y="58" fill="#475569">▶</text><text x="240" y="58" fill="#475569">▶</text><text x="360" y="58" fill="#475569">▶</text><text x="484" y="58" fill="#475569">▶</text><text x="604" y="58" fill="#475569">▶</text>
+  </g>
+  <text x="12" y="89" fill="#6b7280" font-size="9.5">운용 EOA(0xaff29bed·0xb878526f)가 Boost 볼트군 운용 · 가스허브 0x81c22bec가 릴레이어/오라클+볼트 가스 충전</text>
+  </svg></div></div>
 
   <!-- TIMELINE -->
   <h2 class="sec" id="timeline">프로젝트 연혁 (2017→2026)</h2>
