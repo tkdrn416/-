@@ -296,9 +296,14 @@
     <tr><th>주소</th><th>잔액</th><th>정체</th></tr>
     <tr><td><code>0x1c1b0640…E3B9</code></td><td>8.4M</td><td><code>deposit()/withdraw()</code> → <b>Wrapped BFC (WBFC)</b></td></tr>
     <tr><td><code>0xD3351BAA…7Ad05</code></td><td>6.2M</td><td><code>claim()</code> → <b>에어드랍/리워드 클레임</b></td></tr>
-    <tr><td><code>0x4bAE7ba3…66Ee</code> (#3)</td><td>87.4M</td><td>다수 입금 수집(OUT 0) → <b>스테이킹/락업/에스크로 리저브</b></td></tr>
+    <tr><td><code>0x4bAE7ba3…66Ee</code> (#3)</td><td>87.4M</td><td><b>신규 리저브</b> — 2026-06-04 생성(BTCFi기), 다수 입금 수집(OUT 0) → BFC 스테이킹/락업 추정</td></tr>
   </table>
-  <div class="callout warn"><b>초기/제네시스 배분 정황</b> — TOP50 중 <b>14개 지갑이 ~3.25M BFC 균등 청크</b>(다층 분배자 EOA → 휴면 지갑). 분배자 정상 입금내역이 비어 자금이 제네시스/내부 tx로 유입 → <b>초기 토큰 배분(투자자·팀·생태계)</b>으로 강하게 추정. 대부분 장기 휴면 = <b>잠재 매도압력 풀</b>(대량 이동 시 언락 신호).</div>
+  <div class="callout ok"><b>초기 배분 확정 (잔액이력으로 검증)</b> — TOP50 중 <b>14개 지갑이 ~3.25M BFC 균등 청크</b>. 잔액이력이 <b>단 1건(블록 613703, 2023-02-03 = 메인넷 직후)</b> → 1회 수령 후 3년 휴면. 루트 분배 컨트랙트 <code>0x4077aE70</code>(내부tx로 80M 팬아웃) → 분배자 EOA → 3.25M 휴면. = <b>초기 토큰 배분</b> 확정. 대량 이동 시 언락/매도 신호.</div>
+  <div class="callout info"><b>팀 배포자 2명 식별 (creator 필드)</b><br>
+    • <code>0xDd505f3e…de369</code> — 제네시스기(2023) 운영 EOA, 루트 분배 컨트랙트 배포<br>
+    • <code>0xA30B97a5…BB7a9B</code> — BTCFi기(2025~26) 배포자, <b>#3 리저브·WBFC·호출자 컨트랙트</b> 배포<br>
+    <span class="muted">실세계 신원(팀/재단/투자자)은 온체인만으로 귀속 불가.</span></div>
+  <p class="muted">방법론: 리치리스트·counters·2hop 흐름·메서드 시그니처 + <b>internal-tx·잔액이력·creator·chain_spec</b>(2차→3차 추가). 막힌 것: 실 genesis 명단(raw chainspec 비공개)·컨트랙트 소스 미검증·배포자 신원.</p>
 
   <!-- EXCHANGE -->
   <h2 class="sec" id="exch">🟢 거래소 보유 클러스터 (온체인 확정)</h2>
