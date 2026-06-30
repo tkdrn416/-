@@ -82,6 +82,31 @@ curl -s -X POST https://public-01.mainnet.bifrostnetwork.com/rpc -H "Content-Typ
 
 **디프 대상:** Socket txn 카운트 델타(브릿지 사용량), 신규 체인/자산 등재, **CCCP v2 메인넷 전환 여부**(주목 이벤트).
 
+## 브릿지 Vault 락업자산(TVL) 베이스라인 (2026-06-29) — 신규
+브릿지 실제 락업액. 각 체인 Vault 주소(02 B-1)의 보유자산 = 브릿지 TVL 대리지표.
+
+**ETH Vault `0x2F95C102Cc26875406BC689Fb01aE382B82AA535`** (ethplorer getAddressInfo):
+| 자산 | 수량 | ≈USD |
+|---|---:|---:|
+| BFC | 863,522,304 | ~$10.2M |
+| USDC | 607,025 | ~$607K |
+| BIFI | 136,968,328 | ~$232K |
+| WBTC | 0.13 | ~$7.5K |
+| USDT | 4,302 | ~$4.3K |
+| **JPYC** | **3,989** | ~$24 (소액이나 JPYC 브릿지 존재 확인) |
+| ETH | 193.3 | — |
+
+**BSC Vault `0x78ae4c0FD4f02CA79A2d8738d3369A4Bc5D4E323`** (BSC RPC `eth_call balanceOf`):
+| 자산 | 수량 |
+|---|---:|
+| BTCB | **44.3** (~$4.7M) |
+| BNB | 115.2 |
+
+**Bifrost 네이티브 Vault `0xD85EB87caB9041ad00764b95796702b1104F42D7`:** 75.6 BFC (아웃바운드용, 잔액 낮음 정상)
+
+- **재실행:** ETH=`api.ethplorer.io/getAddressInfo/0x2F95C102…?apiKey=freekey` · BSC=`bsc-dataseed.bnbchain.org` `eth_call`(BTCB balanceOf vault) · 네이티브=explorer-backend
+- **디프 대상:** Vault별 자산 수량 델타(브릿지 순유입/출), 특히 BFC·USDC·BTCB·**JPYC** 증감.
+
 ---
 
 # 차원 4 — 트랜잭션 변화 [ETH ERC-20]
@@ -236,6 +261,38 @@ for a in 0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935 0x39528D59132920Ab0a637129D9
 
 ## 미식별 대형 콜드 (추적만)
 - `0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee` (87.4M): **유출 0, 소액 입금만 축적** = 장기 콜드/커스터디 추정(거래소 단정 불가). 대량 유출 발생 시 주목.
+
+---
+
+# 차원 9 — 글로벌 거래소 유동성 (한국 외)
+
+**기준값 (2026-06-29, 공개 API):**
+| 거래소 | 마켓 | 가격 | 24h 거래량 | 비고 |
+|---|---|---|---|---|
+| **HTX(Huobi)** | BFC/USDT | $0.01183 | ~**$2.2M** | 글로벌 주력 |
+| Gate.io | BFC/USDT | $0.01201 | ~$3K(quote) | 미미 |
+| Coinone(KR) | — | 미상장 | — | BFC 마켓 없음 |
+| (참고 국내) 업비트 | **BTC-BFC만** | — | — | KRW 마켓 없음 |
+| (참고 국내) 빗썸 | BFC/KRW | 17.74원 | ~₩2.08억 | KRW 주력 |
+
+- **재실행:** HTX `api.huobi.pro/market/detail/merged?symbol=bfcusdt` · Gate `api.gateio.ws/api/v4/spot/tickers?currency_pair=BFC_USDT` · 업비트 `api.upbit.com/v1/ticker?markets=BTC-BFC` · 빗썸 `api.bithumb.com/public/ticker/BFC_KRW`
+- **디프 대상:** 거래소간 가격 괴리(차익/김프), 거래량 급증, **신규 상장/상폐**(마켓 목록 변화).
+
+---
+
+# 차원 10 — 소셜 모멘텀
+
+**기준값 (2026-06-29):**
+| 채널 | 수치 | 비고 |
+|---|---|---|
+| Telegram `Bifrost_Notice` | **860 subscribers** | 공식 KR 공지 |
+| X `@Bifrost_Network` | (수집중) | 페이지 존재(200) |
+| Medium `medium.com/bifrost` | (수집중) | 공식 |
+
+- **재실행:** `https://t.me/s/Bifrost_Notice`(구독자수 grep) · X는 nitter/검색 보조
+- **디프 대상:** 구독자/팔로워 급증(관심도), 공지 빈도 변화.
+
+> ※ 차원 9·10은 보조 신호. 핵심은 1~8.
 
 ---
 
