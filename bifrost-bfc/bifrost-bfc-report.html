@@ -539,6 +539,19 @@
     <tr><td><b>분배자 네트워크 재가동</b></td><td class="wrap">휴면 분배자 EOA 대량 이동 = 신규 배분/매도</td></tr>
     <tr><td><b>DeFi 컨트랙트군 잔액 급변·신규 볼트</b></td><td class="wrap">BiFi/Biquid/BTCFi TVL 급증·bvVault류 신규 수익상품 컨트랙트</td></tr>
   </table>
+
+  <h4>★ 재단 온체인 활동 대시보드 — 실측 (2026-06-30 기준)</h4>
+  <div class="callout ok">"재단이 지금 무엇을 하나"를 4축으로 같은 날짜 실측. <b>결론: 공식 배포자·국고는 휴면/축적만, 현재 살아있는 활동은 운용자/가스허브 네트워크 한 곳뿐인 "인프라 유지보수" 국면.</b></div>
+  <table>
+    <tr><th>축</th><th>실측(2026-06-30)</th><th>해석</th></tr>
+    <tr><td><b>① Treasury 국고</b></td><td class="wrap">잔액 <b>7,700,602 BFC</b>(직전 7.699M→<b>+1,454</b>). <code>transactions_count=0</code>·수신0·<b>출금0</b></td><td class="wrap">적립은 Substrate 인플레 팔레트(EVM 밖)로 잔액만 증가. <b>여전히 단 한 번도 미집행</b> — 첫 출금이 최우선 신호</td></tr>
+    <tr><td><b>② 공식 배포자</b></td><td class="wrap">BTCFi배포자 <code>0xA30B97a5</code> 최근송신 <b>2025-08-07</b>(휴면 11개월)·제네시스 <code>0xDd505f3</code> 2025-06</td><td class="wrap">재단 "공식" 배포자는 전부 휴면 확정</td></tr>
+    <tr><td><b>③ 운용자 네트워크</b></td><td class="wrap">가스허브 <code>0x81c22bec</code> 최근송신 <b>2026-06-29(어제)</b>·볼트운용 <code>0xaff29bed</code> 2026-05-29·컨트롤 <code>0xb878526f</code> 2026-04-30</td><td class="wrap"><b>현재 유일하게 살아있는 온체인 활동.</b> 물밑 활동은 여기로 봐야 함</td></tr>
+    <tr><td><b>④ 스테이징 껍데기</b></td><td class="wrap">11개 업그레이더블 프록시 볼트 <b>전부 token_xfers=0·잔액=0</b></td><td class="wrap">신규 제품 자금 미투입 = <b>런칭 아직 없음</b></td></tr>
+  </table>
+  <p class="small"><b>가스허브 <code>0x81c22bec</code> 현재 행태(2026-06 실측):</b> ~15개 지갑에 300~5,000 BFC 정기 살포(순수 전송). 정기 대형수취 <code>0xCD95FA…</code>(누적 39.4K)·<code>0x935f88…</code>(30K)·<code>0xB454DD…</code>(16.5K)=릴레이어 가스 유지보수. <b>★ 결정적: 가스허브가 재단 DeFi 라우터 Everdex <code>0x7Ace89E2</code>에도 3,500 BFC 가스공급</b> → 운용자망 ↔ 재단 DeFi 수트 직접 연결 확인(가스공급≠소유 원칙은 유지하되 정황이 한 단계 강화).</p>
+  <p class="small muted">현 국면 트리거 3개: (a) Treasury 첫 출금 (b) 껍데기 11개 중 자금 유입 (c) 가스허브가 <b>새 주소군</b>에 살포 개시(신규 릴레이어/제품 온보딩) → 모두 <code>tools/monitor.py</code> 자동 감지.</p>
+
   <h4>TOP100 자금출처 귀속 (물량이 어디서 왔나)</h4>
   <table>
     <tr><th>출처</th><th class="num">물량</th><th class="num">비중</th></tr>
@@ -843,21 +856,30 @@
 
   <h2 class="sec" id="validators"><span class="n">21</span>검증자 24 — 전체 주소</h2>
   <table>
-    <tr><th>항목</th><td colspan="2">24개(Full 15+Basic 9), 라운드 2524. 총 스테이킹 ≈406M(self-bond ~60.9M + 위임 ~345.2M), 위임자 27,387명, 비율 ~29.3%. 기명(공지): BitTrade·AI Fusion Capital·KICA(한국정보인증)·DeSpread</td></tr>
+    <tr><th>항목</th><td colspan="2">24개(Full 15+Basic 9), 라운드 2524. 총 스테이킹 405.65M(self-bond 60.89M·15% + 위임 344.76M·85%), 위임자 27,387명(노드별 0~2,022). 기명(공지): BitTrade·AI Fusion Capital·KICA(한국정보인증)·DeSpread</td></tr>
   </table>
-  <div class="callout ok"><b>★ BfcStaking precompile 실측(2026-06-30) — 스테이킹 분포·검증:</b> <code>0x0000…0400</code>가 EVM 호출 가능(이전 "팔레트라 불가" 정정). <code>candidate_count()</code>=<b>24</b>·<code>latest_round()</code>=<b>2525</b>·<code>candidate_pool()</code>로 검증자별 총스테이크(self+위임) 산출. <b>총 405,645,895 BFC</b>(기존 ~406M 정밀확인). <b>분포 균등 — 단일 지배 검증자 없음(최대 6.1%)</b>, 상위5 <b>30.4%</b>·상위10 <b>59.8%</b>. 티어 분리 뚜렷: 상위~12개 ≈24M(6%, Full급)·하위~12개 ≈9.6M(Basic급). → DPoS 24노드 기준 <b>비교적 탈중앙(노드별 ≤6%)</b>, 단 앞서 본 대로 일부 노드는 운용/Boost망 가스충전 릴레이어. 감시: precompile로 candidate set·round·스테이크 변동 직접 추적 가능.</div>
-  <div class="callout warn">⚠️ Bifrost는 Substrate라 <b>온체인 identity 필드가 없어 실명↔주소 1:1 매핑 원천 불가</b>. 게다가 stash는 staking pallet/genesis로 자금받아 EVM funder가 대부분 안 잡힘. 아래는 funder·최초tx·자기본딩으로 분류한 <b>정황 추정</b>(실명 확정 아님).</div>
-  <h4>★ 검증자 식별(네이밍) 최대치 — 정황 추정 (2026-06-30)</h4>
+  <div class="callout ok"><b>★ BfcStaking precompile 실측(2026-06-30) — 스테이킹 분포·검증:</b> <code>0x0000…0400</code>가 EVM 호출 가능(이전 "팔레트라 불가" 정정). <code>candidate_count()</code>=<b>24</b>·<code>latest_round()</code>=<b>2525</b>·<code>candidate_pool()</code>로 검증자별 총스테이크(self+위임) 산출. <b>총 405,645,895 BFC</b>(기존 ~406M 정밀확인). <b>분포 균등 — 단일 지배 검증자 없음(최대 6.1%)</b>, 상위5 <b>30.4%</b>·상위10 <b>59.8%</b>. 티어 분리 뚜렷: 상위~12개 ≈24M(6%, Full급)·하위~12개 ≈9.6M(Basic급). → DPoS 24노드 기준 <b>비교적 탈중앙(노드별 ≤6%)</b>, 단 앞서 본 대로 일부 노드는 운용/Boost망 가스충전 릴레이어. <b>추가: <code>candidate_state(address)</code> 24노드 전수조회로 노드별 self-bond·위임자수 실측 완료</b> → self-bond 60.89M(15%)/위임 344.76M(85%). 감시: precompile로 candidate set·round·스테이크·<b>위임자수 변동</b> 직접 추적 가능.</div>
+  <div class="callout warn">⚠️ Bifrost는 Substrate라 <b>온체인 identity 필드가 없어 실명↔주소 1:1 매핑 원천 불가</b>. 단 precompile <code>candidate_state(address)</code>로 <b>노드별 self-bond·위임총량·위임자 수</b>를 실측 → <b>위임구조(retail vs 기관 vs 팀자체)</b>로 네이밍 해상도를 크게 강화했다(실명 확정은 여전히 불가).</div>
+  <div class="callout bad"><b>⚠️ 기존 표 정정:</b> 직전 보고서는 F13/F14/F15를 "거대 자기본딩 6.6~6.8M"로 적었으나 <b>오류</b>. <code>candidate_state</code> 24노드 전수조회 결과 F13/14/15는 <b>정확히 4.00M·위임 0·위임자 0</b>(순수 팀 자체노드)이고, <b>6.8M 자기본딩 노드는 F2/F5/F6</b>(각 위임자 ~1,680명 동반)였다.</div>
+  <h4>★ candidate_state 실측 — 위임구조 4분류 (라운드 2526, 2026-06-30)</h4>
   <table>
-    <tr><th>분류</th><th>노드(stash)</th><th>근거</th></tr>
-    <tr><td><b>재단/팀 플래그십</b></td><td class="wrap">F13 <code>0x355b78</code>(6.67M)·F14 <code>0xffFaAC</code>(6.85M)·F15 <code>0x330d76</code>(6.78M)</td><td class="wrap">거대 자기본딩(6.6~6.8M)·EVM funder 없음</td></tr>
-    <tr><td><b>재단/제네시스 초기집합</b></td><td class="wrap">B1~B6·B9·F2·F3(2023-02)·F4·F5·F6·F9·F11(2023-02)</td><td class="wrap">메인넷 초기 활성, funder 없음(pallet/genesis)</td></tr>
-    <tr><td><b>운용/BTCFi Boost망 릴레이어</b></td><td class="wrap">B7·B8 <code>0x6c7C33</code>·F8·F10·F12 (←<code>0x52c78774</code> 등 클러스터, 2025)</td><td class="wrap">Boost 운용망이 free잔액 충전 → 팀/운용 릴레이어군(gas충전≠소유)</td></tr>
-    <tr><td><b>BitTrade 후보(시점일치)</b></td><td class="wrap">F1 <code>0x56a942</code></td><td class="wrap">최초tx <b>2024-11-22</b> ≈ BitTrade 발표 2024-11-29(정황·미확정)</td></tr>
-    <tr><td><b>신규 검증자(2026)</b></td><td class="wrap">F7 <code>0x4F53ce</code></td><td class="wrap">최초tx <b>2026-04-13</b> 최근 합류 → 감시대상</td></tr>
+    <tr><th>프로필</th><th>노드(controller/stash)</th><th>self-bond</th><th>위임자수</th><th>해석</th></tr>
+    <tr><td><b>A. 순수 팀 자체노드</b></td><td class="wrap">F13 <code>0x544b0c</code>/<code>0x355b78</code> · F14 <code>0x400343</code>/<code>0xffFaAC</code> · F15 <code>0x94dc00</code>/<code>0x330d76</code></td><td><b>정확히 4.00M (정액)</b></td><td><b>0</b></td><td class="wrap">위임 0·완전 동일한 4,002,78x 정액 = 재단/팀 직영 플래그십(자기자본만)</td></tr>
+    <tr><td><b>B. 고자기본딩+공개위임</b></td><td class="wrap">F2 <code>0x81bd2b</code> · F5 <code>0xC3Aa59</code> · F6 <code>0xAc4186</code></td><td><b>6.82~6.84M</b></td><td>~1,680</td><td class="wrap">retail형의 2배+ 자기본딩에 대중위임 동반 = 팀운영 추정 대형노드</td></tr>
+    <tr><td><b>C. 기관집중 위임(소수·거액)</b></td><td class="wrap">F9 <code>0x37e4C9</code>(4명) · F10 <code>0x416227</code>(11) · F12 <code>0x30f9C4</code>(14) · B9 <code>0xB680eD</code>(16) · F11 <code>0x6bEf93</code>(33) · F8 <code>0x5623c7</code>(366) · B8 <code>0x53D7ae</code>(405)</td><td>0.4~2.0M</td><td><b>4~405</b></td><td class="wrap">위임자 극소수인데 총위임 6~12M = <b>건당 거액 = 기관/내부 위임</b>. retail 불가능 구조</td></tr>
+    <tr><td><b>D. retail 인기노드</b></td><td class="wrap">B1~B7 · F1 <code>0x7CE6C4</code> · F3 <code>0xE4A4A8</code> · F4 <code>0x03FCBa</code> · F7 <code>0x222561</code></td><td>0.4~3.15M</td><td><b>1,670~2,022</b></td><td class="wrap">위임자 수천명 = 일반 사용자 위임 집중. 시장신뢰 높은 공개노드</td></tr>
+  </table>
+  <p class="small"><b>시스템 총계: self-bond 60.89M(15.0%) / 위임 344.76M(85.0%) / 총 405.65M.</b> 위임의 ~60M은 C형(기관집중)·~280M은 D형(retail). 팀 직영(A) 12M + 팀운영 추정(B) 50M = <b>최소 ~62M(15%)가 팀/재단 영향권 자기본딩</b>.</p>
+  <h4>자금출처·시점 보조단서 (위 분류와 교차)</h4>
+  <table>
+    <tr><th>단서</th><th>노드</th><th>근거</th></tr>
+    <tr><td><b>재단/제네시스 초기집합</b></td><td class="wrap">B1~B6·F3(2023-02)·F4(2023-03)·F11(2023-02)</td><td class="wrap">메인넷 초기 활성, funder 없음(pallet/genesis)</td></tr>
+    <tr><td><b>운용/BTCFi Boost망 릴레이어</b></td><td class="wrap">B7·B8·F8·F10·F12 (←<code>0x52c78774</code> 등, 2025)</td><td class="wrap">Boost 운용망이 free잔액 충전 → 팀/운용 릴레이어군. <b>C형(소수위임)과 다수 겹침</b> = 운용노드가 내부물량 위임받는 구조(gas충전≠소유)</td></tr>
+    <tr><td><b>BitTrade 후보(시점일치)</b></td><td class="wrap">F1 <code>0x56a942</code></td><td class="wrap">최초tx <b>2024-11-22</b>≈발표 2024-11-29. 단 F1은 D형(retail 1,858명)이라 단독노드로 보긴 어려움(미확정)</td></tr>
+    <tr><td><b>신규 검증자(2026)</b></td><td class="wrap">F7 <code>0x4F53ce</code></td><td class="wrap">최초tx <b>2026-04-13</b> 합류·이미 retail 1,996명 확보 = 빠른 신뢰. 감시대상</td></tr>
     <tr><td>기명(주소 미공개)</td><td class="wrap">BitTrade·AI Fusion Capital·KICA·DeSpread</td><td class="wrap">발표만, 주소 비공개 → 정확매핑 불가</td></tr>
   </table>
-  <p class="small muted">시사점: <b>0x52c78774(Boost 운용망)이 다수 Full(릴레이어)의 free잔액을 충전</b> = 릴레이어 인프라 상당부분이 팀/운용망 운영 정황. 신규 stash 등장+기명 발표 시점 교차로 추후 매핑 정밀화 가능.</p>
+  <p class="small muted">감시: ① 신규 stash 등장(F7형)+기명 발표(KICA/DeSpread/AIF) 시점 교차 ② A형(F13~15) 위임자수 0→양수 = 외부개방 신호 ③ C형 위임자수 급변 = 기관 진입/이탈 신호.</p>
   <div class="two">
   <div>
     <h4>Basic 노드 (9) — controller / stash</h4>
@@ -896,7 +918,7 @@
     </table>
   </div>
   </div>
-  <p class="small muted">[추정] Full 13~15는 자기본딩 400만 정액·위임 0·낮은 productivity로 재단/팀 자체노드 가능성. 전체 풀 주소는 <code>data/validators-snapshot.md</code>.</p>
+  <p class="small muted">[실측확정] Full 13~15 = self-bond 정확히 4,002,78x BFC 정액·위임 0·위임자 0 → 재단/팀 자체노드(candidate_state A형). 전체 풀 주소+위임구조는 <code>data/validators-snapshot.md</code>.</p>
 
   <!-- ===== 레퍼런스 ===== -->
   <h2 class="sec" id="ref-contracts">📌 레퍼런스 — 컨트랙트 풀셋</h2>
