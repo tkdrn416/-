@@ -655,8 +655,13 @@
   </table>
   <p class="small"><b>내부 wstBFC 흐름(실측):</b> 0xbb9f0294→0xeb76c926 <b>15.35M</b> · 0x0c791e90→0x4d0bbd3b <b>9.70M</b> · 0x4d0bbd3b→0xc7275255 <b>6.84M</b> · 0x0c791e90→0x9610386e <b>4.62M</b> · 0xda50a0ff↔0x6666a49b 0.45M. → EOA가 wstBFC를 받아 share컨트랙트로 연쇄 이전, BiFi 예치. <b>UNDERWATER 부실(0xd7c19693·0xeb76c926·0x5e5cc1a3)이 이 클러스터에 집중.</b></p>
   <div class="callout info"><b>InvestVault/1 정체:</b> <code>0xbc0995ca</code>는 <b>검증 안 된(소스 비공개) 컨트랙트</b>, 노출 ABI 없음. wstBFC 유입원=wstBFC핸들러(wrap) 32.9M + 자매볼트 <code>0x3aba7600</code> 17.1M(동일 운용자). <b>공개 문서화된 Bifrost 제품(BiFi·Biquid·Everdex·BTCFi) 아님</b> → "처음 듣는 게 정상". <b>재단 직속 여부 미확정</b>(운용자 네트워크 소속, 자금 내부순환). 즉 비공식 관리형 볼트.</div>
-  <h4>재단 클러스터 최근 활동 (신규배분/매도 신호)</h4>
-  <p class="small">Treasury 출금 0 · DeFi배포자 0xA30B97a5 <b>2025-08 후 휴면</b> · 분배자 네트워크 대부분 2025중반 후 휴면(0x54c29770만 2025-12). → <b>현재 신규 배분/매도 신호 없음.</b> 2026 성장은 기배포 컨트랙트로 진행. <b>이 휴면 지갑들의 재가동이 차기 프로젝트/매도 핵심 트리거.</b></p>
+  <h4>재단 클러스터 최근 활동 (재가동 점검 · 2026-06-30 실측)</h4>
+  <table>
+    <tr><th>유형</th><th>지갑</th><th class="num">잔액</th><th>최근활동</th></tr>
+    <tr><td>클래식 분배망</td><td class="wrap">Treasury(출금0)·제네시스배포 Dd505f3·루트 0x4077·DeFi배포 A30B97a5·분배자 0x3ba7d96c/0x704cb96d/0xe071967d/0x7de4806a/0x3ad3b4df</td><td class="num">—</td><td><b>전부 2025 휴면</b>(최근=0x54c29770 2025-12-30)</td></tr>
+    <tr><td><b>Boost 운용망</b></td><td class="wrap">가스허브 <code>0x81c22bec</code> · 볼트운용 <code>0xaff29bed</code> · 컨트롤러 <code>0xb878526f</code></td><td class="num">49K/0.6K/0.6K</td><td><b>2026 활발</b>: 가스허브 <b>2026-06-29</b>·볼트운용 2026-05-29·컨트롤러 2026-04-30</td></tr>
+  </table>
+  <p class="small"><b>★ 핵심:</b> 재단 관련 온체인 활동이 <b>클래식 분배망(전부 2025 휴면) → BTCFi Boost 운용망(2026 현재까지 활발)으로 완전히 이동.</b> 즉 지금 "재단 움직임"을 보려면 클래식 분배자가 아니라 <b>Boost 운용망(가스허브 0x81c22bec)</b>을 봐야 함. 클래식 분배자/Treasury 재가동은 여전히 별도 트리거(매도/언락 overhang).</p>
   <p class="small muted">캐비엇: 재단 origin 추정은 funder 기반(일부 거래소출금/OTC 혼재 가능). 0xA30B97a5 외 신규 운영지갑 존재 가능 → 신규 배포자 추적으로 보완. 상세 <code>data/foundation-tracking.md</code>.</p>
 
   <h2 class="sec" id="liquidation"><span class="n">15-L</span>BiFi 청산 분석 (ABI 실측 · 2026-06-30 정정판)</h2>
