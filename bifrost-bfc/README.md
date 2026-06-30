@@ -70,7 +70,8 @@
 - 브릿지 Vault TVL: ETH **BFC 863.5M**+USDC$607K · BSC **BTCB 44.3**(~$4.7M)
 - **DeFi:** BTCFi CDP $9.17M · **BiFi 렌딩 $6.94M** · **Biquid 리퀴드스테이킹 $3.17M**(stBFC) · Everdex $2.69M · 체인 TVL $11.84M
 - **BtcUSD: 6.11M**(8.06M서 -24% 수축, 최근 순소각) · 상위 3곳 96% 집중(브릿지볼트 61%)
-- **★ 일본 JPYC 온체인:** Unified JPYC **65.5M(~$440K)** Bifrost에 브릿지존재(Polygon/ETH발) · venue `0x6894Ae31`(2026-02 배포, LIVE)가 99.99% 보유 · venue가 운용자 가스허브 `0x81c22bec` 자금 = **JPYC 통합도 동일 운용망이 운영**
+- **★ 일본 JPYC 온체인:** Unified JPYC **65.5M(~$440K)** Bifrost에 브릿지존재(Polygon/ETH발) · venue `0x6894Ae31`(2026-02 배포, LIVE)가 99.99% 보유 = **HashPort 4% 렌딩 예치풀 추정**(입금자 5개 컨트랙트, 일반예치자는 HashPort레이어라 온체인 개별식별 불가). ⚠️"운용망이 운영"은 과대해석이라 철회
+- **★ BtcUSD 당일 상환:** 오늘(2026-06-30) 하루 **-1.96M 소각**(8.06M→6.11M, EOA 6곳 redeem) — 모니터 실시간 포착
 - 소셜: TG Notice 860/Global 7,129 · Medium 7,500 · X ~82K
 
 ### 🔔 최우선 감시 신호
