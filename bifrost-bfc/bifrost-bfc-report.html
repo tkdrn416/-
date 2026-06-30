@@ -268,7 +268,7 @@
   <h2 class="sec" id="bridge"><span class="n">6</span>브릿지 (The BIFROST Bridge / CCCP)</h2>
   <p>연결 9체인(Bifrost·Bitcoin·Ethereum·Base·Arbitrum·Core·BSC·Polygon·Oasys), 자산 BFC·BiFi·ETH·USDC·USDT·WBTC. 수수료 0.005%, 최대 ~15분. 구조: 각 체인 Socket + Relayer(=검증자) → CCC 이벤트 → 다수결 서명 → primary relayer 일괄 제출. Oracle Service가 BTC 블록해시·가격 제출(reorg-aware).</p>
   <div class="callout info"><b>CCCP v2/Hook</b>(Hook Executor·Price Deviation Checker·브릿지자산 가격책정)은 relayer v3.0.0에 포함. <b>★ 업데이트(커밋 #219, 2026-06-17):</b> <code>CCCPRelayQueue</code>가 메인넷 바이너리에 탑재되고 <b>"enabled일 때만 spawn"(flag-gated)</b> — 즉 testnet 전용이 아니라 <b>설정 플래그만 켜면 메인넷 활성</b> 단계. <b>플래그 on = 최우선 주목 이벤트.</b></div>
-  <div class="callout ok"><b>★ 브릿지 가동 실측(2026-06-30):</b> Socket <code>0xd551F33C</code> 누적 <b>5,388,111 tx</b>(릴레이어 라운드 heartbeat 포함이라 tx수≠유저볼륨), <b>최근 tx 11:31(분단위 가동)</b>, 릴레이어 caller ~15(=Full노드 릴레이어군). Vault <code>0xD85EB87c</code> 토큰전송 누적 55,436. <b>당일 실제 자산 흐름</b>: <b>BrJPYC 800,869 in/out(통과)</b> — JPYC가 브릿지로 활발히 유입(렌딩 캠페인과 일관) · <b>BtcUSD 746,930 out</b>(오늘 BtcUSD 활동과 연동) · 토큰전송 46건(6-30). → <b>브릿지는 휴면 아닌 LIVE 제품</b>, 현재 주력 흐름은 JPYC 유입·BtcUSD 유출. ⚠️ "Bifrost Wallet"(XRP/Flare 등 14체인)은 <b>별개 프로젝트</b> — 파이랩은 <b>Biport</b>(ETH/BSC/Avax/BTC).</div>
+  <div class="callout ok"><b>★ 브릿지 가동 실측(2026-06-30):</b> Socket <code>0xd551F33C</code> 누적 <b>5,388,111 tx</b>(릴레이어 라운드 heartbeat 포함이라 tx수≠유저볼륨), <b>최근 tx 11:31(분단위 가동)</b>, 릴레이어 caller ~15(=Full노드 릴레이어군). Vault <code>0xD85EB87c</code> 토큰전송 누적 55,436. <b>당일(6-30) 실제 자산 흐름</b>: <b>BrJPYC 800,869 in/out(당일 통과량)</b> — JPYC가 브릿지로 활발히 유입(렌딩 캠페인과 일관) · <b>BtcUSD 746,930 out</b>(오늘 BtcUSD 활동과 연동) · 토큰전송 46건(6-30). <span class="muted">(아래 테스트 표의 "BrJPYC 88M"은 누적 Vault 전송량으로 당일치와 다른 지표)</span> → <b>브릿지는 휴면 아닌 LIVE 제품</b>, 현재 주력 흐름은 JPYC 유입·BtcUSD 유출. ⚠️ "Bifrost Wallet"(XRP/Flare 등 14체인)은 <b>별개 프로젝트</b> — 파이랩은 <b>Biport</b>(ETH/BSC/Avax/BTC).</div>
   <div class="callout warn"><b>🔭 브릿지 테스트 흔적 = 출시 임박 자산 엿보기 (Vault 3,000건 자산별 분석):</b> 통합토큰(Unified) 모델로 Base/Arbitrum/BSC/ETH/Polygon발 자산을 래핑. <b>소액 반복 브릿지 = 출시 전 테스트 신호</b>(JPYC를 폴리곤서 소액 테스트하다 HashPort 렌딩으로 출시한 선례). 현재 테스트 정황 신규자산:
   <table style="margin-top:6px">
     <tr><th>자산</th><th>주소</th><th>테스트 기간</th><th>규모</th><th>해석</th></tr>
@@ -310,11 +310,16 @@
     <li><b>BtcUSD</b>(btcfi.one): 네이티브 BTC 담보 CDP → BTC 백드 스테이블 민트, 고정 3.5%. <b>담보비율 최대 50%(LTV 50%)</b> — BTC 예치액의 최대 절반까지 BtcUSD 민트. 외부 연계 Core·Stacks(STX/aBTC/sBTC)·XLink/ALEX. Oasys 자동브릿지(Gaming DEX 풀, 최대 ~40% APY). 사전출시(2024-03) 120+ BTC 예치로 시작.</li>
     <li><b>BTC측 추적 한계(실측):</b> Bitcoin소켓 <code>0x73A9E443</code>는 활성(3,118tx)이나 호출자가 <b>릴레이어 ~14곳</b>뿐 — 일반 유저는 직접 호출 안 함. BTC↔Bifrost 매핑은 <b>registration_pool 팔레트(EVM 밖)</b>라 <b>예치자의 BTC 담보 출처는 Bifrost EVM으로 추적 불가</b>(BTC 메인넷 PSBT vault UTXO 분석 필요). → 가령 오늘 redeemer 0x85b44cf6의 1.42M BtcUSD 민트 = LTV 50% 기준 <b>~$2.84M(≈47 BTC) 담보</b>이나 그 BTC 출처는 EVM서 안 보임.</li>
   </ul>
-  <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 당일 대형 상환 포착:</b> 총공급 <b>6.11M</b>. <b>정정: 점진 수축이 아니라 오늘(2026-06-30) 하루 -1.96M 단일 소각</b>(전일 ~8.06M→오늘 6.11M, -24%). 소각 주체 = 9개 EOA, 상위 2곳이 82%(<code>0x85b44cf6</code> -1.19M + <code>0xcca25978</code> -408K). <b>★ 정체 재추적(가스 배제):</b><br>
-  ① <b>가스≠소유</b>: 두 계정이 재단분배자 루트로 받은 BFC는 <b>110·210 BFC(순수 가스)뿐</b>. 온보딩 가스 relay <code>0x9b5eb52f</code>는 <b>21개 계정에 가스 살포</b>(=VIP 온보딩 relay, 고객 독립) → 가스로는 재단 소유 단정 불가.<br>
-  ② <b>실질 자산은 자체</b>: BtcUSD 3.0M·0.58M을 <b>본인이 BTCFi CDP 민팅 + BiFi 차입</b>으로 조달. 공유 BTC핸들러 <code>0x59d36e5c</code>(BTCFi 유저 ~18명 공용) 사용. <b>거래소 접점 0</b>(캐시아웃 안함) → <b>리테일 아닌 기관형 BTCFi 유저</b> 행태.<br>
-  ③ <b>2계정은 한 주체가 공동관리</b>: 전용 가스관리 <code>0xdd88ffe1</code>가 이 둘에만 50회 가스충전, 그 <code>0xdd88ffe1</code>은 자매클러스터 <code>0x736b617c</code>(Boost 가스허브에도 자금공급)에서 2만 BFC 수령 → <b>운용/Boost VIP orbit과 가스 인프라로 연결</b>(단 가스라 약한 근거).<br>
-  <b>결론:</b> 오늘 BTC 회수 = <b>운용/VIP orbit 내 공동관리 기관형 계정 2개가 자기담보 BtcUSD ~$1.6M를 생태계 내에서 언와인드</b>. <b>재단 자체 데스크인지 가스후원 B2B/VIP 고객인지는 가스만으론 구분 불가</b>(소유 단정 보류). 나머지 7곳=CDP 민터, 2곳은 BFC 79~90만 고래. 감시 `tools/monitor.py`.</div>
+  <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 당일 대형 상환 포착:</b> 총공급 <b>6.11M</b>(홀더 481). <b>점진 수축이 아니라 오늘 하루 -1.96M 단일 소각</b>(전일 8.06M→6.11M, -24%). <span class="muted">추이 맥락: 2024-03 사전출시 120+ BTC 예치로 시작 → 최근 8.06M → 오늘 6.11M. 단일일 -24%는 점진추세가 아닌 <b>특정 주체의 일회성 언와인드</b>로, 추세 하락인지 판단하려면 향후 발행량 재측정 필요.</span>
+  <p class="small" style="margin:4px 0 2px"><b>당일 소각 주체 = 9개 EOA, 상위 2곳이 82%:</b></p>
+  <table>
+    <tr><th>계정</th><th class="num">소각</th><th>자산 조달</th><th>가스 출처</th></tr>
+    <tr><td><code>0x85b44cf6</code></td><td class="num">−1.19M</td><td class="wrap">BtcUSD 3.0M 본인이 CDP 민팅+BiFi 차입</td><td class="wrap">재단분배자 루트 110 BFC(가스만)</td></tr>
+    <tr><td><code>0xcca25978</code></td><td class="num">−408K</td><td class="wrap">BtcUSD 0.58M 자체 조달, 공유 BTC핸들러 <code>0x59d36e5c</code></td><td class="wrap">동 루트 210 BFC(가스만)</td></tr>
+    <tr><td>나머지 7곳</td><td class="num">−362K</td><td class="wrap">CDP 민터(2곳은 BFC 79~90만 고래)</td><td>—</td></tr>
+  </table>
+  <p class="small"><b>정체 재추적(가스 배제 원칙):</b> ① <b>가스≠소유</b> — 두 계정이 받은 BFC는 110·210(순수 가스)뿐, 온보딩 relay <code>0x9b5eb52f</code>가 21개 계정에 가스 살포(VIP 온보딩·고객 독립). ② <b>실질 자산 자체조달</b> — 거래소 접점 0(캐시아웃 안함) = 리테일 아닌 <b>기관형 BTCFi 유저</b> 행태. ③ <b>2계정 공동관리</b> — 전용 가스관리 <code>0xdd88ffe1</code>가 이 둘에만 50회 충전, 운용/Boost orbit과 가스로 연결(약한 근거).<br>
+  <b>결론:</b> 오늘 BTC 회수 = <b>운용/VIP orbit 내 공동관리 기관형 계정 2개의 자기담보 BtcUSD ~$1.6M 언와인드</b>. 재단 데스크인지 가스후원 B2B/VIP 고객인지는 <b>가스만으론 구분 불가</b>(소유 단정 보류).</p></div>
 
   <!-- 8 DEFI -->
   <h2 class="sec" id="defi"><span class="n">8</span>온체인 DeFi 레이어 <span class="badge b-warn">재조사 정정</span></h2>
@@ -440,8 +445,17 @@
 
   <!-- ===== 온체인 심층분석 ===== -->
   <h2 class="sec" id="native-holders"><span class="n">15</span>실질 BFC 익스포저 TOP100 (BiFi 예치·스테이킹 합산) <span class="badge b-info">재단 탐지</span></h2>
-  <p class="small muted">랭킹 기준 = <b>네이티브 잔액 + BiFi 예치(wstBFC×1.13, BFC) + 스테이킹(stBFC/wstBFC) + bvVault 지분</b> (인프라 컨트랙트 제외, 주소 병합). 지갑 BFC를 스테이킹→BiFi 예치하면 네이티브 잔액엔 안 잡히므로 이를 합산한 <b>실보유 랭킹</b>. ◆=재단 연관. 합계 1.11B BFC, 100위 컷 ~2.97M.<br><b>「← 원천」</b> = BiFi 예치자가 예치 전 <b>물량을 받아온 출처</b>(재귀 funder 추적, 최대 7홉·순환감지). <b>「다홉」=여러 중간지갑을 거침</b>(예: A→B→C→빗썸 = 3홉; 직접 아니라 단계적으로 도달). 분류: <b>★재단 분배망</b>=재단 배포망 origin · <b>빗썸 인출(다홉)</b>=결국 거래소발 · <b>순환 클러스터(관리형)</b>=서로 wstBFC 돌리는 연관 지갑군(독립 외부 아님, 재단분배자 0x313b1578 연결·가스허브 0x81c22bec 충전) · <b>DEX 경유</b>=Everdex 라우터 경유(단, 결제자금 자체가 재단/운용지갑발 — 외부 신규자금 아님).</p>
-  <div class="callout warn"><b>캐비엇:</b> wstBFC→BFC 1.13x 가정(시점변동) · 대출(borrow) 미차감(총공급 기준) · BiFi BtcUSD/USDC 풀 예치는 BFC 아니라 제외 · "네이티브 보유" EOA의 재단◆는 초기배분 추정(funder 미전수검증, 거래소출금/OTC 일부 가능) · BiFi예치/스테이커는 외부 유저 다수(재단 미플래그).</div>
+  <p class="small muted">랭킹 기준 = <b>네이티브 잔액 + BiFi 예치(wstBFC×1.137, BFC) + 스테이킹(stBFC/wstBFC) + bvVault 지분</b>(인프라 컨트랙트 제외·주소 병합). 지갑 BFC를 스테이킹→BiFi 예치하면 네이티브 잔액엔 안 잡혀, 이를 합산한 <b>실보유 랭킹</b>. ◆=재단 연관. 합계 1.11B BFC, 100위 컷 ~2.97M.</p>
+  <table>
+    <tr><th>용어</th><th>의미</th></tr>
+    <tr><td><b>「← 원천」</b></td><td class="wrap">BiFi 예치자가 예치 전 물량을 받아온 출처(재귀 funder 추적, 최대 7홉·순환감지)</td></tr>
+    <tr><td><b>「다홉」</b></td><td class="wrap">여러 중간지갑을 거침(예: A→B→C→빗썸 = 3홉; 직접 아니라 단계적 도달)</td></tr>
+    <tr><td><b>★재단 분배망</b></td><td class="wrap">재단 배포망 origin(루트→분배자 EOA→수령)</td></tr>
+    <tr><td><b>빗썸 인출(다홉)</b></td><td class="wrap">결국 거래소발(빗썸 핫/콜드에서 인출)</td></tr>
+    <tr><td><b>순환 클러스터(관리형)</b></td><td class="wrap">서로 wstBFC 돌리는 연관 지갑군(독립 외부 아님; 재단분배자 <code>0x313b1578</code> 연결·가스허브 <code>0x81c22bec</code> 충전)</td></tr>
+    <tr><td><b>DEX 경유</b></td><td class="wrap">Everdex 라우터 경유(단 결제자금 자체가 재단/운용지갑발 = 외부 신규자금 아님)</td></tr>
+  </table>
+  <div class="callout warn"><b>캐비엇:</b> wstBFC→BFC 1.137x 가정(시점변동) · 대출(borrow) 미차감(총공급 기준) · BiFi BtcUSD/USDC 풀 예치는 BFC 아니라 제외 · "네이티브 보유" EOA의 재단◆는 초기배분 추정(funder 미전수검증, 거래소출금/OTC 일부 가능) · BiFi예치/스테이커는 외부 유저 다수(재단 미플래그). <b>※ 「검증자 stash」 행(#35 <code>0xffFaAC</code>·#36 <code>0x330d76</code>·#39 <code>0x355b78</code> = F14/F15/F13)의 ~6.7~6.8M은 stash 계정의 네이티브 잔액으로, candidate_state self-bond(정확히 4.00M, §21)와는 다른 지표</b>(잔액≠본딩액). §21이 정정한 "6.8M 자기본딩" 오류와 혼동 말 것.</div>
   <table>
     <tr><th>#</th><th class="num">eff BFC</th><th>재단</th><th>분류</th><th>주소</th><th>소스</th></tr>
     <tr><td>1</td><td class="num">332,484,206</td><td></td><td class="wrap">업비트콜드</td><td><code>0x50f187ef4447da6e5ff1d740439e91175bac955e</code></td><td class="small">네이티브</td></tr>
