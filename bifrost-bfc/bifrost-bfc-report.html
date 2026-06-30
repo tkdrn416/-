@@ -120,7 +120,7 @@
   <h2 class="sec" id="summary">핵심 요약 · KPI</h2>
   <div class="grid">
     <div class="kpi"><div class="v">$0.0118</div><div class="l">BFC 가격 · 시총 ~$16.6M (#~900) · FDV $28.3M</div></div>
-    <div class="kpi"><div class="v">8.06M</div><div class="l">BtcUSD 발행 · 홀더 481 · 전송 195,729</div></div>
+    <div class="kpi"><div class="v">6.11M ▼</div><div class="l">BtcUSD 발행(8.06M→6.11M 수축) · 홀더 481 · 61% 브릿지볼트</div></div>
     <div class="kpi"><div class="v">24</div><div class="l">검증자 Full15/Basic9 · 스테이킹 406M(~29.3%)</div></div>
     <div class="kpi"><div class="v">54.7%</div><div class="l">TOP50 거래소 집중(업비트38.7+빗썸16)</div></div>
     <div class="kpi"><div class="v">$11.84M</div><div class="l">체인 TVL net · BTCFi $9.2M·BiFi $6.9M·Biquid $3.2M·DEX $2.7M(중복조정)</div></div>
@@ -130,6 +130,15 @@
     <p><b>한 줄 요약</b> — 파이랩테크놀로지의 EVM 호환 L1 <b>Bifrost Network</b>는 멀티체인 미들웨어에서 출발해 현재 <b>"기관용 비트코인 금융(BTCFi) + 스테이블코인 인프라"</b>로 재포지셔닝. 핵심 자산은 네이티브 코인 <b>BFC</b>와 BTC 담보 스테이블코인 <b>BtcUSD</b>. <b>일본 시장</b>(JPYC 렌딩·기관 BTC 재무)이 전략 축. 온체인 유통은 <b>국내 거래소(업비트·빗썸)에 절반 이상 집중</b>.</p>
     <p style="margin-bottom:0"><b>투자/리스크 관점</b> — ⊕ BTCFi(BtcUSD 발행·홀더)·일본 렌딩 수요가 성장 동력 · ⊖ 유통 상당 부분이 거래소·초기배분 휴면물량에 묶여 실유통(free float) 적음 · ⊖ 시총 대비 행보는 활발하나 토큰 가격 반영 제한적 · ⊖ 다수 핵심 컨트랙트 미검증.</p>
   </div>
+  <div class="callout info"><b>📌 온체인 심층조사 종합 (2026-06-30) — 이번 라운드 핵심 발견</b>
+  <ol style="margin:6px 0 0 0">
+    <li><b>거래소 보유 확정:</b> 업비트 ≈348M(콜드 <code>0x50F187Ef</code> 332M)·빗썸 ≈143.7M(콜드 <code>0xDCd52f5f</code>+핫). 빗썸 핫→콜드 통합 관측(총량 불변). → §17</li>
+    <li><b>BiFi 청산 분석 전면 정정:</b> 초판은 12시장 중 4개만 조회해 과대산출. 정정 후 <b>3% 하락=신규청산 1건($1.4K)뿐</b>. 깊은 하락(~49%)도 대부분 <code>InvestVault</code> 풀 1개. 별도 <b>32건·52M BFC가 이미 청산권인데 미청산</b>(청산이벤트 0건=키퍼 비활성, 운용클러스터 자기포지션). → §15-L</li>
+    <li><b>BiFi 예치자 38명 원천 재귀추적:</b> 재단 배포망 42% + <b>관리형 순환클러스터 30%</b> + 거래소 24% + DEX 5%. 외부 실수요 기반 제한적(~70%가 재단/관리형). → §15-F</li>
+    <li><b>★ 운용자 네트워크 발견:</b> 가스허브 <code>0x81c22bec</code> → 운용EOA 2개(<code>0xaff29bedb24c</code>·<code>0xb878526f</code>) → 각 40~49개 컨트랙트 → 순환클러스터+InvestVault. <b>배포 시점이 BTCFi/StableDAO기(2025-07)와 일치, 2026-04까지 활발</b>(클래식 재단분배자는 휴면). 팀배포자 0xA30B97a5와 정황 연결. → §15-F</li>
+    <li><b>물밑 프로젝트 신호:</b> 운용자가 <b>2026년 빈 업그레이더블-프록시 볼트 껍데기 11개</b>를 미리 배포·소유권설정만 하고 자금 미투입 = <b>런칭 대비 스테이징</b>. <b>이 껍데기가 자금 받는 순간 = 신제품 출시</b> → <code>tools/monitor.py</code> 자동 감지. → §15-F</li>
+    <li><b>★ 일본 JPYC 온체인 가동 확인:</b> <b>Unified JPYC 65.5M(~$440K)</b>이 Polygon/ETH에서 Bifrost로 브릿지돼 실재. 예치 venue <code>0x6894Ae31</code>(2026-02-19 배포, 현재도 활발)가 99.99% 보유. <b>이 venue 생성자가 운용자 가스허브 0x81c22bec에서 자금받음 = JPYC 통합도 동일 운용망이 2026-02에 구축.</b> 단 <b>BtcUSD는 8.06M→6.11M 수축</b>(상위 3곳 96% 집중). → 일본 사업은 온체인 가동 중이나 초기·소규모. → §13·§7</li>
+  </ol></div>
 
   <!-- TIMELINE -->
   <h2 class="sec" id="timeline">프로젝트 연혁 (2017→2026)</h2>
@@ -259,6 +268,7 @@
     <li>v2.1.0(2025-09)부터 <b>BLAZE 팔레트</b>(고급 UTXO 관리)</li>
     <li><b>BtcUSD</b>(btcfi.one): 네이티브 BTC 담보 CDP → BTC 백드 스테이블 민트, 고정 3.5%. 외부 연계 Core·Stacks(STX/aBTC/sBTC)·XLink/ALEX. Oasys 자동브릿지(Gaming DEX 풀, 최대 ~40% APY)</li>
   </ul>
+  <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 수축 신호:</b> 총공급 <b>6.11M</b>(앞선 8.06M 대비 <b>약 -24% 수축</b>), 최근 스캔구간 <b>순소각 -1.96M</b>(발행보다 상환·소각 우세). 홀더 481명이나 <b>분포 극집중</b>: 브릿지볼트 <code>0xD85EB87c</code> 3.71M(61%) + <code>0x840Cf452</code> 1.49M(24%) + BiFi BtcUSD풀 <code>0xcF2FC1d3</code> 0.76M → 상위 3곳이 ~96%. <b>실제 분산 사용자 보유는 미미.</b> → 일본 BTCFi 제품의 현 수요는 <b>성장 아닌 축소 국면</b>(StableDAO 진척 더디다는 정황과 일치).</div>
 
   <!-- 8 DEFI -->
   <h2 class="sec" id="defi"><span class="n">8</span>온체인 DeFi 레이어 <span class="badge b-warn">재조사 정정</span></h2>
@@ -345,6 +355,18 @@
     <tr><td>Bifrost 연관</td><td>✅ <b>활용</b>(발행 아님) — HashPort 4% 렌딩·DJT N.suite, 예치·수익 venue</td><td>❌ <b>직접 연관 없음</b>(단 SBI Digital Finance와 별도 제휴)</td></tr>
   </table>
   <p class="small"><b>JPYC 현황:</b> 일본 최초 규제준수 엔화SC, 제2종 자금이동업(송금 상한 10만엔). 누적 발행 ~21억엔(2026-04)→<b>30억엔 돌파(2026-05말)</b>, 활성지갑 13.7만/계좌 1.9만. 목표 1조엔(→3년 10조엔). JPYC사 Series B 총 ~46억엔(Metaplanet·北洋은행·住友生命·Sony Bank 등). <b>※ Bifrost는 JPYC 발행체인 아님 — 예치·수익 venue일 뿐.</b></p>
+
+  <h4>★ JPYC 온체인 흔적 (Bifrost 3068 실측, 2026-06-30)</h4>
+  <div class="callout ok"><b>JPYC가 실제로 Bifrost 체인에 브릿지되어 존재함을 온체인 확인</b> — "활용(발행 아님)" 주장이 실측으로 뒷받침됨.
+  <table style="margin-top:6px">
+    <tr><th>토큰</th><th>주소</th><th class="num">공급</th><th>비고</th></tr>
+    <tr><td><b>Unified JPYC</b></td><td><code>0x84122a4a75Bfe65eF455dBA5F6d43D61359ca77e</code></td><td class="num">65.54M</td><td class="wrap">CCCP 통합 JPYC(≈6,554만엔·~$440K). 홀더 8</td></tr>
+    <tr><td>Bridged Polygon JPYC</td><td><code>0x16638b94f9e8…</code></td><td class="num">65.53M</td><td class="wrap">물량 대부분이 <b>Polygon발</b> 브릿지인</td></tr>
+    <tr><td>Bridged Ethereum JPYC</td><td><code>0xbFad87bFEdc0…</code></td><td class="num">3,381</td><td class="wrap">ETH발 소량</td></tr>
+  </table>
+  <p class="small" style="margin:6px 0 0 0"><b>예치 venue:</b> <code>0x6894Ae31Cae9…</code>(미검증 컨트랙트)가 <b>JPYC 99.99%(65.5M) 보유</b>, 토큰전송 1,045건 유입, <b>2026-06에도 활발(최근 수일 1,000+ 전송)= LIVE.</b> 2026-02-19 배포.<br>
+  <b>★★ 운용자 네트워크 소속 확인:</b> 이 venue 생성자 <code>0xB2068b56</code>가 <b>운용자 가스허브 <code>0x81c22bec</code>로부터 자금 수령</b> → <b>JPYC 통합도 BiFi 볼트/순환클러스터와 동일한 관리형 운용 네트워크가 2026-02에 구축·운영</b>. 일본 사업이 추상적 제휴가 아니라 <b>온체인에서 실제 가동 중</b>(단 규모 ~$440K로 초기).<br>
+  <span class="muted">캐비엇: venue 컨트랙트 미검증이라 "4% 렌딩" 여부는 코드 확인 불가 · 전체 브릿지 히스토리는 전송 195K+로 일부만 스캔 · holders 8 = 극초기.</span></p></div>
 
   <h2 class="sec" id="japan-strategy"><span class="n">14</span>전략 해석 — 왜 일본인가</h2>
   <ol>
@@ -894,6 +916,8 @@
     <li><b>BFC의 BitTrade(일본) 상장</b> · 빗썸/업비트 입출금 중단(<code>assetsstatus</code>=0) · 글로벌 신규상장/상폐</li>
     <li>HashPort/N.suite JPYC 렌딩 <b>첫 TVL 수치</b> + <b>BtcUSD 발행량·홀더수 급증</b>(교차검증)</li>
     <li><b>CCCP v2 메인넷 전환</b> · 검증자 집합 변동 · 신규 GitHub 릴리스/레포 · 워터마크(2026-06-02) 이후 신규 뉴스</li>
+    <li><b>★ 운용자 네트워크</b>: 가스허브 <code>0x81c22bec</code>·운용EOA <code>0xb878526f</code>/<code>0xaff29bedb24c</code> 신규배포·잔액급변 · <b>2026 빈 프록시 껍데기 11개에 자금 유입=신제품 런칭</b>(<code>tools/monitor.py</code> shell_check 자동경보)</li>
+    <li><b>★ 일본 JPYC venue</b> <code>0x6894Ae31</code> 잔액·전송 급변(JPYC 65.5M 증감=일본 수요 변화) · <b>BtcUSD 발행량 반등 여부</b>(현재 6.11M 수축 중)</li>
   </ol></div>
 
   <!-- ===== 부록 ===== -->

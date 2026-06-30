@@ -31,6 +31,12 @@ WATCH=[
  ("클러스터컨트롤러 0xb878526f","0xb878526f6d1174be9e75d1f617ae9271e4f42285","운용자네트워크"),
  ("InvestVault 0xbc0995ca","0xbc0995cae2218203262ed1b8557b7886d579e985","BiFi볼트"),
  ("BiFi BFC풀 0x4bAE7","0x4bae7ba39e4e71660307dce780f1ec9b7b7666ee","BiFi풀"),
+ ("일본 JPYC venue 0x6894Ae31","0x6894ae31cae97f228590f6dc7bbea7449f4db980","일본"),
+]
+# 토큰 잔액 감시(네이티브 아님): (라벨, 토큰주소, 보유주소) — 일본/BtcUSD 추세
+TOKEN_WATCH=[
+ ("Unified JPYC 총공급","0x84122a4a75bfe65ef455dba5f6d43d61359ca77e",None),
+ ("BtcUSD 총공급","0x6906ccda405926fc3f04240187dd4fad5df6d555",None),
 ]
 def get(u):
     for _ in range(3):
@@ -65,6 +71,17 @@ def shell_check():
         if tt>0 or bl>0:
             act+=1; print(f"  ⚠️ 활성화! {a[:12]} token_xfers={tt} bal={bl:,.0f}BFC ← 신제품 런칭 가능")
     if act==0: print("  전부 빈 상태 유지(런칭 신호 없음).")
+def token_supply(addr):
+    t=get(f"/api/v2/tokens/{addr}")
+    return int(t.get('total_supply') or 0)/10**int(t.get('decimals') or 18), t.get('holders')
+def token_check(old):
+    print("\n# 일본/스테이블 토큰 공급 추세:")
+    snap={}
+    for lab,addr,_ in TOKEN_WATCH:
+        sup,hld=token_supply(addr); snap[addr]=sup
+        d=sup-old.get("tok_"+addr,sup) if old else 0
+        print(f"  {lab:<22} {sup:>16,.0f}  (홀더 {hld})  Δ{fmt(d)}")
+    return snap
 def fmt(v): return f"{v:+,.0f}" if v else "0"
 def main():
     save="--no-save" not in sys.argv
@@ -89,6 +106,8 @@ def main():
         for c,d in sorted(cat_delta.items(),key=lambda x:-abs(x[1])):
             sig="유입(매도압?)" if (c=='거래소' and d>0) else ("출금" if c=='거래소' and d<0 else "")
             print(f"  {c}: {fmt(d)} BFC  {sig}")
+    toksnap=token_check(old)
+    for k,v in toksnap.items(): cur["tok_"+k]=v
     shell_check()
     if save:
         os.makedirs(os.path.dirname(BASE),exist_ok=True)

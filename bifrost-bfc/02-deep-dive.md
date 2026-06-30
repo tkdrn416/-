@@ -182,8 +182,17 @@
 - **제품화 진척은 2026-06 현재 미확인.**
 - 전략적 위치: SBI는 USDC(Circle JV)+JPYSC(자체 엔화)로 **발행 진영**. Bifrost는 경쟁자가 아닌 **"BTC 담보 수익·기관 BTC 관리" 보완재**.
 
+### F-4b. ★ 일본 사업 온체인 흔적 (Bifrost 3068 실측, 2026-06-30)
+**JPYC가 실제로 Bifrost 체인에 브릿지돼 존재함을 온체인 확인** — "활용(발행 아님)" 주장 실측 검증.
+- **Unified JPYC** `0x84122a4a75Bfe65eF455dBA5F6d43D61359ca77e`: 공급 **65.54M**(≈6,554만엔·~$440K), 홀더 8. CCCP 통합 토큰.
+  - 출처: **Bridged Polygon JPYC** `0x16638b94…` 65.53M(대부분) + **Bridged Ethereum JPYC** `0xbFad87bF…` 3,381. → JPYC를 Polygon/ETH에서 브릿지인.
+- **예치 venue** `0x6894Ae31Cae97F228590F6dC7BBea7449F4DB980`(미검증): JPYC **99.99%(65.5M) 보유**, 토큰전송 1,045건 유입, 2026-06 현재도 활발(LIVE). **2026-02-19 배포.**
+- **★★ 운용자 네트워크 소속:** venue 생성자 `0xB2068b5633AD6fF61ED3646f3edaAF684A9FDf45`가 **운용자 가스허브 `0x81c22bec`로부터 자금 수령**(2026-02-19 4개 컨트랙트 동시 배포). → **JPYC 통합도 BiFi 볼트·순환클러스터와 동일한 관리형 운용 네트워크가 2026-02에 구축·운영.** 일본 사업이 온체인에서 실제 가동 중(단 규모 ~$440K 초기).
+- **BtcUSD 수축:** 총공급 8.06M→**6.11M**(-24%), 최근 순소각 -1.96M. 분포 극집중(브릿지볼트 61%+0x840Cf452 24%+BiFi풀 = 상위 3곳 96%). 일본 BTCFi 제품 현 수요는 **축소 국면**.
+- 캐비엇: venue 미검증→"4% 렌딩" 코드확인 불가 · 전체 브릿지 히스토리는 전송 195K+로 일부만 스캔 · 감시: JPYC venue 잔액·BtcUSD 공급 추세(`tools/monitor.py`).
+
 ### F-5. JPYC 자체 현황 (★ Bifrost는 발행체인 아님)
-- **JPYC는 Bifrost Network에서 네이티브 발행되지 않음.** 발행 체인 = Ethereum/Polygon/Avalanche(+Kaia). Bifrost는 JPYC를 **"예치→수익" 자산으로 쓰는 렌딩 venue**일 뿐.
+- **JPYC는 Bifrost Network에서 네이티브 발행되지 않음.** 발행 체인 = Ethereum/Polygon/Avalanche(+Kaia). Bifrost는 JPYC를 **"예치→수익" 자산으로 쓰는 렌딩 venue**일 뿐. (온체인 확인: 위 F-4b — Polygon/ETH발 브릿지 토큰)
 - JPYC 출시 2025-10-27 (일본 최초 규제준수 엔화 SC, 제2종 자금이동업, 송금 상한 10만엔).
 - 발행량: 누적 ~21억엔(2026-04) → **30억엔 돌파(2026-05말)**. 활성지갑 13.7만. 목표 1조엔(→3년 10조엔).
 - JPYC사 Series B 총 ~46억엔 (Metaplanet·北洋은행·住友生命·Sony Bank 등 참여).

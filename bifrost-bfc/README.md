@@ -68,7 +68,9 @@
 - 거래소 보유: **업비트 ≈348M · 빗썸 ≈143.7M** (클러스터 잔액 합)
 - 검증자: **24개**(Full15/Basic9), 스테이킹 **406M BFC** · 주소목록 [data/validators-snapshot.md](./data/validators-snapshot.md)
 - 브릿지 Vault TVL: ETH **BFC 863.5M**+USDC$607K · BSC **BTCB 44.3**(~$4.7M)
-- **DeFi:** BTCFi CDP $9.17M(BtcUSD 8.06M) · **BiFi 렌딩 $6.94M** · **Biquid 리퀴드스테이킹 $3.17M**(stBFC) · Everdex $2.69M · 체인 TVL $11.84M
+- **DeFi:** BTCFi CDP $9.17M · **BiFi 렌딩 $6.94M** · **Biquid 리퀴드스테이킹 $3.17M**(stBFC) · Everdex $2.69M · 체인 TVL $11.84M
+- **BtcUSD: 6.11M**(8.06M서 -24% 수축, 최근 순소각) · 상위 3곳 96% 집중(브릿지볼트 61%)
+- **★ 일본 JPYC 온체인:** Unified JPYC **65.5M(~$440K)** Bifrost에 브릿지존재(Polygon/ETH발) · venue `0x6894Ae31`(2026-02 배포, LIVE)가 99.99% 보유 · venue가 운용자 가스허브 `0x81c22bec` 자금 = **JPYC 통합도 동일 운용망이 운영**
 - 소셜: TG Notice 860/Global 7,129 · Medium 7,500 · X ~82K
 
 ### 🔔 최우선 감시 신호
