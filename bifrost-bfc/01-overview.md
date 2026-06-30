@@ -72,7 +72,7 @@
   - ⚠️ **BSC의 `0xf4b5cd30bb12955ab54e106003e79223639009ec` 는 가짜** ("HelloBEP20", 총공급 1만개). BFC로 취급 금지. 공식 BSC 컨트랙트는 미확정.
 - **공급량:** 초기 설계 40억(4B) → 현재 시장데이터(CMC/CG) 총공급 약 23.7억~25.8억, 유통 약 13.8억, 최대공급 ∞ (DPoS 인플레이션). 정확값은 CG/CMC 실시간 확인 권장.
 - **BFC vs BIFI:** BFC = 네이티브 코인(가스/스테이킹/거버넌스/검증자 인센티브). BIFI = DeFi 앱 BiFi의 거버넌스 토큰(별도). BiFi 사용 시 BFC 락업/지불 필요. BIFI 총발행 10억.
-- **상장:** 업비트(BTC/KRW, 메인), 빗썸(KRW), HTX(USDT), Upbit Indonesia
+- **상장:** 업비트(BTC-BFC), 빗썸(KRW), **코빗(KRW)**, HTX(USDT), Gate(USDT) — 국내 3대 거래소 모두. (업비트는 BTC마켓만, KRW마켓 없음)
 
 출처: [Etherscan](https://etherscan.io/token/0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c) · [CoinGecko](https://www.coingecko.com/en/coins/bifrost) · [CoinMarketCap](https://coinmarketcap.com/currencies/bifrost/)
 
