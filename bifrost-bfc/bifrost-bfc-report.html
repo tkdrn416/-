@@ -550,7 +550,7 @@
     <tr><td><b>④ 스테이징 껍데기</b></td><td class="wrap">11개 업그레이더블 프록시 볼트 <b>전부 token_xfers=0·잔액=0</b></td><td class="wrap">신규 제품 자금 미투입 = <b>런칭 아직 없음</b></td></tr>
   </table>
   <p class="small"><b>가스허브 <code>0x81c22bec</code> 정체 규명(2026-06-30 실측):</b> 정기 대형수취 EOA를 추적하니 <b>전부 초고빈도 릴레이어/오라클</b>이었다 — <code>0xB454DD…</code>(<b>989,802 tx</b>)·<code>0xCD95FA…</code>(<b>905,581 tx</b>)·<code>0xC9B111…</code>(124,378)·<code>0xA4aF08…</code>(104,636)이 각각 짝 컨트랙트에 <code>0xc9807539</code>를 수십만~약100만회 제출. <b>Bifrost 공식문서상 CCCP 릴레이어가 "가격정보 피드"를 전파하고 오라클이 "검증자 구조에 내장"</b>(외부 오라클 미사용)되는데, 이 EOA들이 바로 그 <b>프로토콜 핵심 릴레이어/오라클 운영자</b>. → <b>가스허브 = 팀의 릴레이어/오라클 가스 트레저리</b>(크로스체인 프로토콜을 돌리는 ~6 릴레이어를 상시 충전).</p>
-  <div class="callout bad"><b>⚠️ 직전 라운드 과대해석 정정:</b> "가스허브가 Everdex 라우터 <code>0x7Ace89E2</code>에 가스공급 → 재단 DeFi 직접연결 <b>결정적</b>"은 <b>과장</b>이라 철회. <code>0x7Ace89E2</code>는 온체인 name=None(Everdex 라벨은 이전 추정)·85,639tx의 또다른 고빈도 컨트랙트로 DeFi 라우터 단정 불가. 가스허브의 본질은 <b>프로토콜 릴레이어/오라클 인프라 충전</b>이다. 따라서 이 가스 활동은 <b>정상 운영(물밑 아님)</b> — 진짜 감시대상은 볼트운용 EOA의 신규배포·스테이징 껍데기 11개로 좁혀진다.</div>
+  <div class="callout warn"><b>⚠️ 정정의 정정(2회 검증):</b> 직전 라운드 "가스허브→Everdex <b>결정적 연결</b>"을 과장이라 철회했으나, <b>재검증 결과 Everdex 자체는 실재·가동 확정</b>: <code>0x7Ace89E2</code> 호출 메서드가 <code>0x38ed1739</code>(swapExactTokensForTokens)·<code>0x7ff36ab5</code>(swapExactETHForTokens) 등 <b>Uniswap-V2 라우터 시그니처</b>이고, <b>2026-06-30 오늘도 다수 유저가 스왑</b>(token_transfers 272,957·공식문서 docs.bifrostnetwork.com/everdex). 정확한 결론: <b>Everdex는 실가동 DEX가 맞고, 다만 가스허브의 <i>본질</i>은 릴레이어/오라클 충전이며 Everdex로 간 3,500 BFC는 부수적 소액 토핑</b>(이걸 "결정적 연결"로 비중둔 게 과장이었음). 진짜 감시대상은 볼트운용 EOA 신규배포·스테이징 껍데기 11개.</div>
   <p class="small muted">현 국면 트리거 3개: (a) Treasury 첫 출금 (b) 껍데기 11개 중 자금 유입 (c) 볼트운용 EOA(<code>0xaff29bed</code>·<code>0xb878526f</code>)의 신규 컨트랙트 배포 → 모두 <code>tools/monitor.py</code> 자동 감지.</p>
 
   <h4>TOP100 자금출처 귀속 (물량이 어디서 왔나)</h4>
@@ -676,7 +676,7 @@
 <line x1="520" y1="86" x2="615" y2="250" stroke="#4da3ff" stroke-width="1.6" marker-end="url(#a)" stroke-dasharray="3 3"/>
 <text x="20" y="430" fill="#9ca3af" font-size="10">● 5개 share컨트랙트 = 동일 배포자 0x23E016E0e5(컨트롤러 0xb878526f) · ● EOA 7개 = 가스허브 0x81c22bec가 가스충전</text>
 <text x="20" y="447" fill="#9ca3af" font-size="10">● 초록=wstBFC 내부순환(BiFi 예치 경유) · 노랑 점선=재단분배자 0x313b1578 연결 · 파랑 점선=가스 공급</text>
-<text x="20" y="464" fill="#f87171" font-size="10">● 0xeb76c926·0xd7c19693(별도) 등 UNDERWATER 포지션이 이 클러스터에 집중 → 미청산 부실</text>
+<text x="20" y="464" fill="#f87171" font-size="10">● 0xeb76c926 UNDERWATER 확정(차입$217.6K>임계$205.5K, 미청산) · 0xd7c19693은 포지션 청산종료(현재 0)</text>
 </svg></div>
   <table>
     <tr><th>구성</th><th>멤버</th><th>역할</th></tr>
@@ -685,7 +685,8 @@
     <tr><td>share 컨트랙트 5</td><td class="wrap"><code>0xc7275255</code>·<code>0x9610386e</code>·<code>0x2b674561</code>·<code>0xb6bd9f06</code>·<code>0x8c5ce7cd</code></td><td class="wrap">포지션 보유 컨트랙트(wstBFC 예치). 0xb6bd9f06·0x8c5ce7cd는 재단분배자 0x313b1578 경유</td></tr>
     <tr><td>공급 EOA 7</td><td class="wrap"><code>0x0c791e90</code>·<code>0x4d0bbd3b</code>·<code>0xeb76c926</code>·<code>0xbb9f0294</code>·<code>0x5e5cc1a3</code>·<code>0x6666a49b</code>·<code>0xda50a0ff</code></td><td class="wrap">가스허브 0x81c22bec가 가스충전. 서로 wstBFC 전달(아래 흐름)</td></tr>
   </table>
-  <p class="small"><b>내부 wstBFC 흐름(실측):</b> 0xbb9f0294→0xeb76c926 <b>15.35M</b> · 0x0c791e90→0x4d0bbd3b <b>9.70M</b> · 0x4d0bbd3b→0xc7275255 <b>6.84M</b> · 0x0c791e90→0x9610386e <b>4.62M</b> · 0xda50a0ff↔0x6666a49b 0.45M. → EOA가 wstBFC를 받아 share컨트랙트로 연쇄 이전, BiFi 예치. <b>UNDERWATER 부실(0xd7c19693·0xeb76c926·0x5e5cc1a3)이 이 클러스터에 집중.</b></p>
+  <p class="small"><b>내부 wstBFC 흐름(실측):</b> 0xbb9f0294→0xeb76c926 <b>15.35M</b> · 0x0c791e90→0x4d0bbd3b <b>9.70M</b> · 0x4d0bbd3b→0xc7275255 <b>6.84M</b> · 0x0c791e90→0x9610386e <b>4.62M</b> · 0xda50a0ff↔0x6666a49b 0.45M. → EOA가 wstBFC를 받아 share컨트랙트로 연쇄 이전, BiFi 예치. <b>현재 wstBFC핸들러 예치 재측정(2026-06-30): 0x0c791e90 15.0M·0xeb76c926 15.7M·0x4d0bbd3b 5.0M·0x5e5cc1a3 3.5M(합 ~39M).</b> 클러스터가 BiFi 대형 포지션을 계속 보유 중임을 재확인(단 일부 멤버 0xbb9f0294·0xc7275255·0x9610386e·0x2b674561는 현재 예치 0=동적 운용).</p>
+  <div class="callout warn"><b>★ 청산건전성 교차검증(2026-06-30, Manager getUserLimitIntraAsset/getUserTotalIntraCreditAsset):</b> <code>0xeb76c926</code> 차입 <b>$217,596 &gt; 청산임계 $205,462</b> = <b>실제 청산권인데 미청산</b>(키퍼 비활성 정황 재확인). 반면 <code>0x0c791e90</code>(임계$1.44M&gt;차입$0.93M)·<code>0x4d0bbd3b</code>(임계$1.26M&gt;차입$0.76M)는 <b>건전(SAFE)</b>. <b>직전 "최대 UNDERWATER"로 지목했던 <code>0xd7c19693</code>(18.8M)은 현재 BiFi 포지션 전부 0 = 청산/상환 종료(정정).</b> → 부실은 0xeb76c926 등 소수 소액에 국한(달러규모 작아 시스템 위협 아님) 결론 유지.</div>
   <div class="callout info"><b>InvestVault/1 정체:</b> <code>0xbc0995ca</code>는 <b>검증 안 된(소스 비공개) 컨트랙트</b>, 노출 ABI 없음. wstBFC 유입원=wstBFC핸들러(wrap) 32.9M + 자매볼트 <code>0x3aba7600</code> 17.1M(동일 운용자). <b>공개 문서화된 Bifrost 제품(BiFi·Biquid·Everdex·BTCFi) 아님</b> → "처음 듣는 게 정상". <b>재단 직속 여부 미확정</b>(운용자 네트워크 소속, 자금 내부순환). 즉 비공식 관리형 볼트.</div>
   <h4>재단 클러스터 최근 활동 (재가동 점검 · 2026-06-30 실측)</h4>
   <table>
