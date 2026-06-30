@@ -414,6 +414,25 @@
   </table>
   <p class="small"><b>전수 집계:</b> 거래소 8주소 ~491.6M · 컨트랙트 5(리저브·Unified·WBFC·claim·BtcUSD담보) ~142M · 검증자 stash 3 ~20.3M · Treasury 1 7.5M · <b>초기배분/휴면 홀딩 ~30주소 ~230M</b> · 액티브/DeFi/OTC 소수. → TOP50 중 약 절반이 tx 0~5 장기 휴면. 거래소+휴면배분이 유통 대부분. (DEX 라우터 <code>0x7Ace89E2…</code>는 잔액0이라 리치리스트 외)</p>
 
+  <h3>실질 BFC 익스포저 — 스테이킹/BiFi 합산 (TOP100 기반) <span class="badge b-info">확장</span></h3>
+  <p class="small muted">네이티브 잔액 리치리스트는 <b>스테이킹(stBFC/wstBFC)·BiFi 예치분 누락</b>(지갑 BFC를 스테이킹→래핑→예치하면 지갑잔액↓). 환산 합산: native + BiFi wstBFC예치×1.13 + 직접 wstBFC×1.13 + stBFC×1.0 + bvBasewstBFC 볼트지분.</p>
+  <div class="callout info"><b>숨은 스테이킹/BiFi 레이어</b> — stBFC 264M(거의 전량 wstBFC 래핑) · wstBFC 229M 중 <b>228.98M을 BiFi 마켓이 보유 ≈ 263M BFC 상당</b>(업비트 콜드 332M 다음 규모). wstBFC→BFC <b>≈1.13x</b>(사용자값, 시점변동).</div>
+  <table>
+    <tr><th>#</th><th class="num">effBFC</th><th>주소</th><th>소스</th><th>비고</th></tr>
+    <tr><td>1</td><td class="num">332,484,206</td><td><code>0x50F187Ef…955E</code></td><td>native</td><td>업비트 콜드(커스터디)</td></tr>
+    <tr><td>2</td><td class="num">137,482,292</td><td><code>0xDCd52f5f…8935</code></td><td>native</td><td>빗썸 콜드(커스터디)</td></tr>
+    <tr><td>3</td><td class="num">87,424,912</td><td><code>0x4bAE7ba3…66Ee</code></td><td>native</td><td>BiFi BFC풀(인프라·미분해)</td></tr>
+    <tr><td>4</td><td class="num">40,342,392</td><td><code>0xAe172D8c…9BF3e</code></td><td>native</td><td>Unified BFC(인프라)</td></tr>
+    <tr><td>5</td><td class="num">18,686,164</td><td><code>0xd7c19693…C391</code></td><td><b>BiFi예치</b></td><td><span class="badge b-warn">★신규</span> 네이티브 미포착</td></tr>
+    <tr><td>6</td><td class="num">17,762,447</td><td><code>0xeb76c926…63a5</code></td><td><b>BiFi예치</b></td><td><span class="badge b-warn">★신규</span></td></tr>
+    <tr><td>7</td><td class="num">16,970,324</td><td><code>0x0c791e90…d6d2</code></td><td>BiFi예치+stBFC</td><td><span class="badge b-warn">★신규</span></td></tr>
+    <tr><td>12</td><td class="num">12,195,316</td><td><code>0xd05aa73e…7005</code></td><td>BiFi예치+stBFC</td><td><span class="badge b-warn">★신규</span></td></tr>
+    <tr><td>14</td><td class="num">11,221,667</td><td><code>0x412b9646…fc6e</code></td><td>bvVault</td><td><span class="badge b-warn">★신규</span> 볼트분해</td></tr>
+    <tr><td>17~20</td><td class="num">~10.1~10.5M</td><td><code>0x91c4094b…</code> 외 3</td><td>bvVault</td><td><span class="badge b-warn">★신규</span></td></tr>
+    <tr><td>26</td><td class="num">8,531,010</td><td><code>0xfd561fbd…5818</code></td><td>BiFi예치</td><td><span class="badge b-warn">★신규</span></td></tr>
+  </table>
+  <p class="small"><b>요지:</b> 네이티브 TOP100에 없던 <b>★신규 대형 보유자 20여 명</b>(BiFi 예치자·bvVault 홀더, 각 8~19M BFC상당)이 실질 익스포저 상위권 진입. 거래소·인프라 컨트랙트(#1~4) 제외 시 이들이 실질 대형 개인/기관 홀더. <span class="muted">캐비엇: BiFi BFC풀(#3)·BtcUSD/USDC풀 예치자 미분해(추가 netting 필요)·교환비 1.13 가정·대출(borrow) 미반영. 상세 → data/native-holders-analysis 8차.</span></p>
+
   <h2 class="sec" id="eth-holders"><span class="n">16</span>ETH ERC-20 홀더 (보조 — 브릿지/원장)</h2>
   <p class="small">홀더 ~3,619명 · totalSupply 40억(소각분 포함) · 전송누계 111,008 / txs 56,044.</p>
   <table>
