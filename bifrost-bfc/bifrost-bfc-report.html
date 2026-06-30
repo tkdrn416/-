@@ -358,44 +358,44 @@
 
   <!-- ===== 온체인 심층분석 ===== -->
   <h2 class="sec" id="native-holders"><span class="n">15</span>실질 BFC 익스포저 TOP100 (BiFi 예치·스테이킹 합산) <span class="badge b-info">재단 탐지</span></h2>
-  <p class="small muted">랭킹 기준 = <b>네이티브 잔액 + BiFi 예치(wstBFC×1.13, BFC) + 스테이킹(stBFC/wstBFC) + bvVault 지분</b> (인프라 컨트랙트 제외, 주소 병합). 지갑 BFC를 스테이킹→BiFi 예치하면 네이티브 잔액엔 안 잡히므로 이를 합산한 <b>실보유 랭킹</b>. ◆=재단 연관. 합계 1.11B BFC, 100위 컷 ~2.97M.</p>
+  <p class="small muted">랭킹 기준 = <b>네이티브 잔액 + BiFi 예치(wstBFC×1.13, BFC) + 스테이킹(stBFC/wstBFC) + bvVault 지분</b> (인프라 컨트랙트 제외, 주소 병합). 지갑 BFC를 스테이킹→BiFi 예치하면 네이티브 잔액엔 안 잡히므로 이를 합산한 <b>실보유 랭킹</b>. ◆=재단 연관. 합계 1.11B BFC, 100위 컷 ~2.97M.<br><b>「← 원천」</b> = BiFi 예치자가 예치 전 <b>물량을 받아온 출처</b>(funder 1~2홉 추적): <b>★재단 분배자</b>=재단 배포망 origin · <b>빗썸핫 인출</b>=거래소발 외부유저 · <b>DEX 매수</b>=Everdex 취득 · <b>스테이킹라우터/민팅</b>=wrap·스테이킹 경로.</p>
   <div class="callout warn"><b>캐비엇:</b> wstBFC→BFC 1.13x 가정(시점변동) · 대출(borrow) 미차감(총공급 기준) · BiFi BtcUSD/USDC 풀 예치는 BFC 아니라 제외 · "네이티브 보유" EOA의 재단◆는 초기배분 추정(funder 미전수검증, 거래소출금/OTC 일부 가능) · BiFi예치/스테이커는 외부 유저 다수(재단 미플래그).</div>
   <table>
     <tr><th>#</th><th class="num">eff BFC</th><th>재단</th><th>분류</th><th>주소</th><th>소스</th></tr>
     <tr><td>1</td><td class="num">332,484,206</td><td></td><td class="wrap">업비트콜드</td><td><code>0x50f187ef4447da6e5ff1d740439e91175bac955e</code></td><td class="small">네이티브</td></tr>
     <tr><td>2</td><td class="num">137,482,292</td><td></td><td class="wrap">빗썸콜드</td><td><code>0xdcd52f5f5af5022edefd59fd5353f4da3f2c8935</code></td><td class="small">네이티브</td></tr>
-    <tr><td>3</td><td class="num">21,640,284</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x0c791e902d08b916218317d308156eb6a8a2d6d2</code></td><td class="small">BiFi+stake</td></tr>
-    <tr><td>4</td><td class="num">20,180,371</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xfd561fbd4dd43ea04733adfa31949b25c0595818</code></td><td class="small">BiFi</td></tr>
-    <tr><td>5</td><td class="num">18,686,164</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xd7c19693f9ca21511847b1707242773d37c1c391</code></td><td class="small">BiFi</td></tr>
-    <tr><td>6</td><td class="num">17,762,447</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xeb76c926e848e0bab9323e998eea16c9076563a5</code></td><td class="small">BiFi</td></tr>
+    <tr><td>3</td><td class="num">21,640,284</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 0x52C78774 경유(혼합)</span></td><td><code>0x0c791e902d08b916218317d308156eb6a8a2d6d2</code></td><td class="small">BiFi+stake</td></tr>
+    <tr><td>4</td><td class="num">20,180,371</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 빗썸핫 인출</span></td><td><code>0xfd561fbd4dd43ea04733adfa31949b25c0595818</code></td><td class="small">BiFi</td></tr>
+    <tr><td>5</td><td class="num">18,686,164</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 스테이킹라우터/민팅</span></td><td><code>0xd7c19693f9ca21511847b1707242773d37c1c391</code></td><td class="small">BiFi</td></tr>
+    <tr><td>6</td><td class="num">17,762,447</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 스테이킹라우터/민팅</span></td><td><code>0xeb76c926e848e0bab9323e998eea16c9076563a5</code></td><td class="small">BiFi</td></tr>
     <tr><td>7</td><td class="num">16,494,730</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x5eeffdbcdf6d269ae249e445b95bffadc0673cc7</code></td><td class="small">네이티브</td></tr>
     <tr><td>8</td><td class="num">15,377,787</td><td></td><td class="wrap">업비트핫</td><td><code>0x081a4ee55739f0da8abb8af40d07687527a268c3</code></td><td class="small">네이티브</td></tr>
     <tr><td>9</td><td class="num">14,017,724</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xb68a0a0121be78f25a7d147394d90c35f2e34c5d</code></td><td class="small">네이티브</td></tr>
     <tr><td>10</td><td class="num">14,001,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xf6ac30649a26130e2d1c6875e935a1fa67cee76c</code></td><td class="small">네이티브</td></tr>
-    <tr><td>11</td><td class="num">12,195,316</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xd05aa73ec4adfda929c52ef03db6e27f21da7005</code></td><td class="small">BiFi+stake</td></tr>
-    <tr><td>12</td><td class="num">12,000,000</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xbbcc95860e9a60b12dca99c78f82dda32dec6337</code></td><td class="small">BiFi</td></tr>
+    <tr><td>11</td><td class="num">12,195,316</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 빗썸핫 인출</span></td><td><code>0xd05aa73ec4adfda929c52ef03db6e27f21da7005</code></td><td class="small">BiFi+stake</td></tr>
+    <tr><td>12</td><td class="num">12,000,000</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자(0x3Ad3B4df)</span></td><td><code>0xbbcc95860e9a60b12dca99c78f82dda32dec6337</code></td><td class="small">BiFi</td></tr>
     <tr><td>13</td><td class="num">11,810,189</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x5dec180f0d414b4f3606e759c408a6b3561b1b2e</code></td><td class="small">네이티브</td></tr>
-    <tr><td>14</td><td class="num">11,221,667</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x412b9646515cdb87d58041d31aa7f1f016b6fc6e</code></td><td class="small">볼트</td></tr>
+    <tr><td>14</td><td class="num">11,221,667</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 0xbbcc9586(재단계열) 경유</span></td><td><code>0x412b9646515cdb87d58041d31aa7f1f016b6fc6e</code></td><td class="small">볼트</td></tr>
     <tr><td>15</td><td class="num">11,000,500</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xd7c451b4a52dafd95be3302d05ee70d097139a87</code></td><td class="small">네이티브</td></tr>
     <tr><td>16</td><td class="num">10,809,131</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xc8beda62ee1cdf299a96be7c5d48d9b3956bc571</code></td><td class="small">네이티브</td></tr>
-    <tr><td>17</td><td class="num">10,474,673</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x91c4094bb5e97a1c8968add7499b16e3bc2c3a87</code></td><td class="small">볼트</td></tr>
-    <tr><td>18</td><td class="num">10,225,873</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x6abaa3950d0e0f0b731d8e453ec0b2ca0237bc26</code></td><td class="small">볼트</td></tr>
-    <tr><td>19</td><td class="num">10,143,850</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x80e9701c2a522967f26c48762a821b90355b1b71</code></td><td class="small">볼트</td></tr>
-    <tr><td>20</td><td class="num">10,143,850</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x0e9b3cfab21f9b31d797fae2b34928ce38496b88</code></td><td class="small">볼트</td></tr>
+    <tr><td>17</td><td class="num">10,474,673</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자</span></td><td><code>0x91c4094bb5e97a1c8968add7499b16e3bc2c3a87</code></td><td class="small">볼트</td></tr>
+    <tr><td>18</td><td class="num">10,225,873</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자(경유)</span></td><td><code>0x6abaa3950d0e0f0b731d8e453ec0b2ca0237bc26</code></td><td class="small">볼트</td></tr>
+    <tr><td>19</td><td class="num">10,143,850</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자(경유)</span></td><td><code>0x80e9701c2a522967f26c48762a821b90355b1b71</code></td><td class="small">볼트</td></tr>
+    <tr><td>20</td><td class="num">10,143,850</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자</span></td><td><code>0x0e9b3cfab21f9b31d797fae2b34928ce38496b88</code></td><td class="small">볼트</td></tr>
     <tr><td>21</td><td class="num">10,100,100</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x456b4e4e67eb60c9594f135c2d54ec8f6e746157</code></td><td class="small">네이티브</td></tr>
     <tr><td>22</td><td class="num">10,000,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xbb677177e68baf15e32ee17833dbcce85f9fa234</code></td><td class="small">네이티브</td></tr>
     <tr><td>23</td><td class="num">10,000,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x137b14ca112d911c2309076394f91cfb09bc7883</code></td><td class="small">네이티브</td></tr>
     <tr><td>24</td><td class="num">9,606,633</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x41c2ceb45eae87355b7e3fce88db134da1c0bdaa</code></td><td class="small">네이티브</td></tr>
-    <tr><td>25</td><td class="num">9,500,052</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xbabdc92221b4de2d8413412b6aa9798dd54afcbf</code></td><td class="small">볼트</td></tr>
-    <tr><td>26</td><td class="num">8,951,898</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x10982101db09142dfdec7ad75712093c45c075b3</code></td><td class="small">BiFi</td></tr>
-    <tr><td>27</td><td class="num">8,523,512</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x2a3e8fd86a304168b8e7d187b63c07feb5efef83</code></td><td class="small">볼트</td></tr>
+    <tr><td>25</td><td class="num">9,500,052</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자(경유)</span></td><td><code>0xbabdc92221b4de2d8413412b6aa9798dd54afcbf</code></td><td class="small">볼트</td></tr>
+    <tr><td>26</td><td class="num">8,951,898</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 빗썸핫 인출</span></td><td><code>0x10982101db09142dfdec7ad75712093c45c075b3</code></td><td class="small">BiFi</td></tr>
+    <tr><td>27</td><td class="num">8,523,512</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 0x98807783(재단분배자) 경유</span></td><td><code>0x2a3e8fd86a304168b8e7d187b63c07feb5efef83</code></td><td class="small">볼트</td></tr>
     <tr><td>28</td><td class="num">8,500,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x9825f45906387bdcae71832ee274cd76d33d8ca6</code></td><td class="small">네이티브</td></tr>
-    <tr><td>29</td><td class="num">8,385,624</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x902a21c0fa4e223e07d51ac2608fc19b7c303582</code></td><td class="small">네이티브+stake</td></tr>
-    <tr><td>30</td><td class="num">7,729,062</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xc7275255ae6da1bc1e103d6b5d16d39f7f252204</code></td><td class="small">볼트</td></tr>
+    <tr><td>29</td><td class="num">8,385,624</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: DEX(Everdex) 매수</span></td><td><code>0x902a21c0fa4e223e07d51ac2608fc19b7c303582</code></td><td class="small">네이티브+stake</td></tr>
+    <tr><td>30</td><td class="num">7,729,062</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 0x0c791e90 경유</span></td><td><code>0xc7275255ae6da1bc1e103d6b5d16d39f7f252204</code></td><td class="small">볼트</td></tr>
     <tr><td>31</td><td class="num">7,699,148</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">Treasury재단</td><td><code>0x6d6f646c70792f74727372790000000000000000</code></td><td class="small">네이티브</td></tr>
     <tr><td>32</td><td class="num">7,001,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xc1f8b8048e187df9c7847e639a867f843083dc29</code></td><td class="small">네이티브</td></tr>
-    <tr><td>33</td><td class="num">6,948,222</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xb6bd9f069ef653999ced2c8c7b0b8ec45f553fb5</code></td><td class="small">볼트</td></tr>
-    <tr><td>34</td><td class="num">6,929,861</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xc54347d6d873875795a49465fda7a047fb1d1b8b</code></td><td class="small">볼트</td></tr>
+    <tr><td>33</td><td class="num">6,948,222</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 0x313b1578(재단분배자) 경유</span></td><td><code>0xb6bd9f069ef653999ced2c8c7b0b8ec45f553fb5</code></td><td class="small">볼트</td></tr>
+    <tr><td>34</td><td class="num">6,929,861</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 0x5ceef3ca 경유</span></td><td><code>0xc54347d6d873875795a49465fda7a047fb1d1b8b</code></td><td class="small">볼트</td></tr>
     <tr><td>35</td><td class="num">6,845,339</td><td></td><td class="wrap">검증자 stash</td><td><code>0xfffaac4ea0972c21c2834a0410a0582e4abff741</code></td><td class="small">네이티브</td></tr>
     <tr><td>36</td><td class="num">6,777,852</td><td></td><td class="wrap">검증자 stash</td><td><code>0x330d76197a25721357e05368179eba8d0be9be0e</code></td><td class="small">네이티브</td></tr>
     <tr><td>37</td><td class="num">6,711,547</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x7af4307bc3511b91ae452c514590b74f122761d3</code></td><td class="small">네이티브</td></tr>
@@ -499,27 +499,37 @@
   <p class="small">Treasury 출금 0 · DeFi배포자 0xA30B97a5 <b>2025-08 후 휴면</b> · 분배자 네트워크 대부분 2025중반 후 휴면(0x54c29770만 2025-12). → <b>현재 신규 배분/매도 신호 없음.</b> 2026 성장은 기배포 컨트랙트로 진행. <b>이 휴면 지갑들의 재가동이 차기 프로젝트/매도 핵심 트리거.</b></p>
   <p class="small muted">캐비엇: 재단 origin 추정은 funder 기반(일부 거래소출금/OTC 혼재 가능). 0xA30B97a5 외 신규 운영지갑 존재 가능 → 신규 배포자 추적으로 보완. 상세 <code>data/foundation-tracking.md</code>.</p>
 
-  <h2 class="sec" id="liquidation"><span class="n">15-L</span>BiFi 청산 분석 (ABI 실측)</h2>
-  <p class="small muted">BiFi 컨트랙트 직접 호출로 차입자별 담보·부채·청산가 산출. 사용자 가설(wstBFC 담보+스테이블 차입)이 다수 패턴임을 확인.</p>
+  <h2 class="sec" id="liquidation"><span class="n">15-L</span>BiFi 청산 분석 (ABI 실측 · 2026-06-30 정정판)</h2>
+  <p class="small muted">BiFi Manager·핸들러 직접 호출로 차입자별 담보·부채·청산가 산출. <b>초판은 BiFi 담보시장을 4개만 조회해 과대 산출 → 12개 전체 반영해 정정.</b></p>
+  <div class="callout warn" style="margin-bottom:10px"><b>⚠️ 초판 정정(중요):</b> BiFi 담보시장은 <b>12개</b>(BFC·wstBFC·ETH·BNB·POL·USDC·USDT·DAI·WBTC·BTCB·BtcUSD·<b>EverStableLP</b>)인데 초판은 4개만 조회. 그 결과 ①대형 차입자의 <b>비(非)BFC 담보(EverStable LP·스테이블 $1.2M+급)를 못 봐</b> 청산가를 과대 산출, ②<b>이미 청산권(health≥1)</b> 포지션을 모든 하락구간에 중복 집계 → "3% 하락에 51.8M BFC 청산" 같은 잘못된 수치가 나왔음. 아래는 12개 시장 전부 반영 + 3분류 정정판.</div>
   <table>
     <tr><th>항목</th><td>값</td></tr>
-    <tr><th>핵심 컨트랙트</th><td>Manager <code>0x6541342bc39a399c274092652b5c50890dca6fca</code> · 핸들러 wstBFC <code>0xf9b2f6d2…</code>·BFC <code>0x4bAE7…</code>·BtcUSD <code>0xcF2FC1d3…</code>·USDC <code>0x168b2d7d…</code></td></tr>
-    <tr><th>조회 함수</th><td><code>getUserLimitIntraAsset(addr)→(차입한도, 청산임계값USD)</code> · <code>getUserTotalIntraCreditAsset(addr)→(한도, 현재차입USD)</code> · <code>getUserAmount(addr)→(예치,차입)</code></td></tr>
-    <tr><th>청산 파라미터(실측)</th><td>wstBFC/BFC marginCall <b>0.97</b>·borrowLimit 0.40 · USDC/BtcUSD 0.95 · 청산패널티 5%</td></tr>
-    <tr><th>차입 포지션</th><td><b>70개, 총 차입 ~$3.8M</b></td></tr>
+    <tr><th>핵심 컨트랙트</th><td>Manager <code>0x6541342bc39a399c274092652b5c50890dca6fca</code> · 담보시장 핸들러 <b>12개</b>(0:BFC <code>0x4bAE7…</code> · 10:wstBFC <code>0xf9b2f6d2…</code> · 11:EverStableLP <code>0x9491297f…</code> · ETH/BNB/POL/USDC/USDT/DAI/WBTC/BTCB/BtcUSD)</td></tr>
+    <tr><th>조회 함수</th><td><code>getTokenHandlersLength()</code>=12 · <code>getTokenHandlerInfo(i)</code>(시장열거) · <code>getTokenHandlerPrice(i)</code>(오라클가) · <code>getUserTotalIntraCreditAsset(addr)→(한도,현재차입USD)</code> · <code>getUserLimitIntraAsset(addr)→(차입한도,청산임계값USD)</code> · 핸들러 <code>getUserAmount(addr)→(예치,차입)</code></td></tr>
+    <tr><th>가격에 민감한 담보</th><td><b>BFC($0.0118)·wstBFC($0.0134=BFC×1.137)뿐.</b> ETH·BNB·BTC·스테이블·EverStableLP는 BFC 하락과 무관 → 청산 완충재 역할</td></tr>
+    <tr><th>청산 파라미터(실측)</th><td>wstBFC/BFC marginCall(청산임계) <b>0.97</b>(순 wstBFC담보 포지션서 검증) · borrowLimit 0.40 · 청산패널티 5%</td></tr>
+    <tr><th>차입 포지션</th><td><b>70개, 총 차입 ~$3.80M</b></td></tr>
   </table>
-  <p class="small"><b>청산식:</b> <code>P_liq = (차입 − 비BFC담보분) / (BFC담보 × 0.97)</code> (전 자산 담보 Manager 합산)</p>
-  <h4>정밀 청산곡선 (BFC 가격↓ 누적 청산)</h4>
+  <p class="small"><b>청산식:</b> <code>P_liq = 현재가 × (차입 − 비BFC담보 청산여력) / (BFC담보가치 × 0.97)</code>. 차입 ≤ 비BFC담보 청산여력이면 <b>BFC가 0이 돼도 청산 안 됨</b>.</p>
+  <h4>차입 포지션 3분류 (70건)</h4>
   <table>
-    <tr><th>BFC가격</th><th>하락</th><th class="num">청산건수</th><th class="num">청산담보(BFC)</th><th class="num">청산부채</th></tr>
-    <tr><td>$0.0115</td><td>3%↓</td><td class="num">33</td><td class="num">51.8M</td><td class="num">$0.73M</td></tr>
-    <tr><td>$0.0100</td><td>15%↓</td><td class="num">36</td><td class="num">68.1M</td><td class="num">$0.89M</td></tr>
-    <tr><td>$0.0090</td><td>24%↓</td><td class="num">43</td><td class="num">73.1M</td><td class="num">$0.95M</td></tr>
-    <tr><td>$0.0070</td><td>41%↓</td><td class="num">50</td><td class="num">79.4M</td><td class="num">$1.01M</td></tr>
-    <tr><td><b>$0.0060</b></td><td><b>49%↓</b></td><td class="num"><b>58</b></td><td class="num"><b>245.9M</b></td><td class="num"><b>$2.04M</b></td></tr>
-    <tr><td>$0.0040</td><td>66%↓</td><td class="num">62</td><td class="num">259.4M</td><td class="num">$2.11M</td></tr>
+    <tr><th>분류</th><th class="num">건수</th><th class="num">BFC담보</th><th class="num">부채</th><th>설명</th></tr>
+    <tr><td><b>이미 청산권(UNDERWATER)</b></td><td class="num">32</td><td class="num">52.0M</td><td class="num">$0.73M</td><td class="small">현재가에서 이미 차입≥청산임계. <b>BiFi 청산봇 비활성으로 미청산 방치된 기존 부실</b>(대부분 소액)</td></tr>
+    <tr><td><b>BFC하락 시 신규청산(atrisk)</b></td><td class="num">33</td><td class="num">210.1M</td><td class="num">$1.39M</td><td class="small">BFC 추가 하락 시 청산. 아래 곡선 대상</td></tr>
+    <tr><td><b>비BFC담보로 안전(SAFE)</b></td><td class="num">5</td><td class="num">23.2M</td><td class="num">$1.69M</td><td class="small">EverStableLP·스테이블 담보가 부채 초과 → <b>BFC→0이어도 청산 안 됨</b>(예: <code>0x0c791e90</code> 비BFC담보 $1.24M&gt;차입 $0.93M, <code>0x4d0bbd3b</code> $1.19M&gt;$0.76M)</td></tr>
   </table>
-  <div class="callout warn"><b>핵심:</b> ~33건(51.8M BFC)은 <b>이미 건전성 경계</b>(health≥1, 소형체인 청산봇 비활성으로 미청산 추정). <b>~50% 하락($0.006)에 거대 청산 클러스터</b>(담보 79M→246M 급증) — 대형 wstBFC 차입자 다수가 이 구간 집중. 임의 주소 건전성·청산가는 위 Manager 함수로 즉시 산출 가능.<br><span class="small">캐비엇: wstBFC→BFC 1.13·오라클가 시점값 · health≥1 미청산분은 청산봇 활성도/이자 영향 · 후보 189명(wstBFC마켓+BFC풀) 기준.</span></div>
+  <h4>신규 청산곡선 (atrisk 33건만 · BFC 하락 시 누적)</h4>
+  <table>
+    <tr><th>BFC가격</th><th>하락</th><th class="num">신규청산</th><th class="num">청산담보(BFC)</th><th class="num">청산부채</th></tr>
+    <tr><td>$0.0115</td><td>3%↓</td><td class="num">1</td><td class="num">0.11M</td><td class="num">$0.001M</td></tr>
+    <tr><td>$0.0100</td><td>15%↓</td><td class="num">4</td><td class="num">16.5M</td><td class="num">$0.17M</td></tr>
+    <tr><td>$0.0090</td><td>24%↓</td><td class="num">11</td><td class="num">21.4M</td><td class="num">$0.22M</td></tr>
+    <tr><td>$0.0080</td><td>32%↓</td><td class="num">14</td><td class="num">23.8M</td><td class="num">$0.26M</td></tr>
+    <tr><td>$0.0070</td><td>41%↓</td><td class="num">18</td><td class="num">27.7M</td><td class="num">$0.28M</td></tr>
+    <tr><td><b>$0.0060</b></td><td><b>49%↓</b></td><td class="num"><b>26</b></td><td class="num"><b>195.0M</b></td><td class="num"><b>$1.32M</b></td></tr>
+    <tr><td>$0.0040</td><td>66%↓</td><td class="num">30</td><td class="num">208.5M</td><td class="num">$1.38M</td></tr>
+  </table>
+  <div class="callout ok"><b>핵심(정정):</b> <b>3% 하락으로는 신규청산 1건($1,410)뿐 — 사실상 없음.</b> 실질 청산 위험은 깊은 하락(~46~49%↓, $0.006 부근)에 집중되며, 이 구간 195M BFC 중 <b>단일 고래 <code>0xbc0995ca</code> 한 곳이 149.5M BFC(부채 $924K, 청산가 $0.00637=46%↓)로 대부분</b>을 차지. 즉 곡선의 거대 점프는 분산된 위험이 아니라 <b>고래 1명</b> 때문. 별도로 32건($0.73M)은 <b>이미 청산권인데도 미청산 방치</b> = BiFi 청산 키퍼 사실상 비활성(런오프 상태) 정황.<br><span class="small">캐비엇: wstBFC→BFC 1.137·오라클가 시점값 · marginCall 0.97 가정(순 wstBFC포지션서 검증) · BFC 단독 하락(타자산 고정) 시나리오 · 후보 189명(wstBFC마켓+BFC풀 예치자) 기준.</span></div>
 
   <h2 class="sec" id="eth-holders"><span class="n">16</span>ETH ERC-20 홀더 (보조 — 브릿지/원장)</h2>
   <p class="small">홀더 ~3,619명 · totalSupply 40억(소각분 포함) · 전송누계 111,008 / txs 56,044.</p>

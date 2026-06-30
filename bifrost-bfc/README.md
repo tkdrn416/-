@@ -98,3 +98,5 @@
 - BTC vault 멀티시그 임계값(M-of-N)
 - 검증자 실명↔주소 매핑(Substrate identity 부재로 원천 제약)
 - (해결됨) `0x4bAE7…6Ee` 87M = **BiFi BFC 렌딩 예치풀**(미식별 콜드 아님) · `0xcF2FC1d3` = BiFi BtcUSD 풀
+- (해결됨) **BiFi 담보시장 = 12개**(Manager `getTokenHandlersLength()`=12): BFC·wstBFC·ETH·BNB·POL·USDC·USDT·DAI·WBTC·BTCB·BtcUSD·**EverStableLPToken**(`0x9491297f…`, Everdex 스테이블 풀 LP). 가격민감 담보는 BFC·wstBFC뿐.
+- (정정됨, 2026-06-30) **BiFi 청산곡선 재산출:** 초판은 12시장 중 4개만 조회 → 비BFC 담보 누락+이미청산권 중복집계로 과대. 정정: **3% 하락=신규청산 1건($1.4K)뿐**, 깊은 하락(~49%↓)에 집중되며 그마저 단일 고래 `0xbc0995ca`(149.5M BFC)가 대부분. 32건은 이미 청산권인데 미청산=청산봇 비활성(런오프). 상세 → `data/native-holders-analysis.md` 10차 정정판.
