@@ -3,50 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bifrost (BFC) 리서치 — 파이랩테크놀로지</title>
+<title>Bifrost (BFC) 초기 분석 리포트 — 파이랩테크놀로지</title>
 <style>
   :root{
     --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --line:#2a2f3a;
     --txt:#e6e8ee; --mut:#9aa3b2; --acc:#ff5a4d; --acc2:#4da3ff;
-    --ok:#34d399; --warn:#fbbf24; --bad:#f87171; --chip:#232836;
+    --ok:#34d399; --warn:#fbbf24; --bad:#f87171; --chip:#232836; --vio:#b794ff;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--bg);color:var(--txt);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
     line-height:1.65;font-size:15px}
-  a{color:var(--acc2);text-decoration:none}
-  a:hover{text-decoration:underline}
-  .wrap{display:flex;max-width:1280px;margin:0 auto}
-  /* sidebar */
+  a{color:var(--acc2);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{display:flex;max-width:1300px;margin:0 auto}
   nav.toc{position:sticky;top:0;align-self:flex-start;height:100vh;overflow-y:auto;
-    width:248px;flex:none;padding:22px 14px;border-right:1px solid var(--line);background:var(--panel)}
-  nav.toc h2{font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin:18px 8px 6px}
-  nav.toc a{display:block;color:var(--mut);padding:5px 10px;border-radius:7px;font-size:13.5px}
+    width:260px;flex:none;padding:22px 14px;border-right:1px solid var(--line);background:var(--panel)}
+  nav.toc h2{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin:16px 8px 4px}
+  nav.toc a{display:block;color:var(--mut);padding:4px 10px;border-radius:7px;font-size:13px}
   nav.toc a:hover{background:var(--chip);color:var(--txt);text-decoration:none}
-  nav.toc .brand{font-weight:800;font-size:18px;color:var(--txt);padding:0 8px 4px}
-  nav.toc .brand small{display:block;color:var(--mut);font-weight:500;font-size:12px;margin-top:2px}
-  /* main */
-  main{flex:1;min-width:0;padding:30px 40px 120px}
-  h1{font-size:26px;margin:.2em 0 .1em}
-  h2.sec{font-size:21px;margin:46px 0 12px;padding-top:14px;border-top:1px solid var(--line);scroll-margin-top:14px}
+  nav.toc .brand{font-weight:800;font-size:17px;color:var(--txt);padding:0 8px 4px}
+  nav.toc .brand small{display:block;color:var(--mut);font-weight:500;font-size:11.5px;margin-top:2px}
+  main{flex:1;min-width:0;padding:30px 42px 140px}
+  h1{font-size:27px;margin:.2em 0 .1em}
+  h2.sec{font-size:21px;margin:50px 0 12px;padding-top:14px;border-top:2px solid var(--line);scroll-margin-top:14px}
   h2.sec .n{color:var(--acc);font-weight:800;margin-right:8px}
-  h3{font-size:16px;margin:24px 0 8px;color:#cfd5e1}
+  h3{font-size:16.5px;margin:24px 0 8px;color:#dfe4ee}
+  h4{font-size:14px;margin:16px 0 6px;color:var(--vio)}
   p{margin:8px 0}
   .lead{color:var(--mut);font-size:14px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
   .kpi{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-  .kpi .v{font-size:20px;font-weight:800}
-  .kpi .l{font-size:12px;color:var(--mut)}
-  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px;display:block;overflow-x:auto}
+  .kpi .v{font-size:19px;font-weight:800}
+  .kpi .l{font-size:12px;color:var(--mut);margin-top:2px}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13px;display:block;overflow-x:auto}
   th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top;white-space:nowrap}
   th{background:var(--panel2);color:#cfd5e1;font-weight:700}
-  td.wrap,th.wrap{white-space:normal}
+  td.wrap,th.wrap{white-space:normal} td.num{text-align:right}
   tr:nth-child(even) td{background:rgba(255,255,255,.015)}
-  code,.mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;
+  code,.mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:12px;
     background:var(--chip);padding:1px 6px;border-radius:5px;color:#d7c9ff}
-  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:4px;vertical-align:middle}
+  .badge{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:3px;vertical-align:middle;white-space:nowrap}
   .b-ok{background:rgba(52,211,153,.15);color:var(--ok);border:1px solid rgba(52,211,153,.3)}
   .b-warn{background:rgba(251,191,36,.15);color:var(--warn);border:1px solid rgba(251,191,36,.3)}
   .b-bad{background:rgba(248,113,113,.15);color:var(--bad);border:1px solid rgba(248,113,113,.3)}
@@ -55,185 +53,275 @@
   .callout.warn{border-color:var(--warn);background:rgba(251,191,36,.07)}
   .callout.ok{border-color:var(--ok);background:rgba(52,211,153,.07)}
   .callout.info{border-color:var(--acc2);background:rgba(77,163,255,.07)}
-  ul{margin:8px 0;padding-left:20px}
-  li{margin:4px 0}
-  .muted{color:var(--mut)}
+  ul,ol{margin:8px 0;padding-left:20px} li{margin:4px 0}
+  .muted{color:var(--mut)} .small{font-size:12.5px}
   .pill{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:20px;padding:2px 10px;font-size:12px;margin:2px}
-  hr{border:none;border-top:1px solid var(--line);margin:20px 0}
-  .foot{color:var(--mut);font-size:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:14px}
+  .foot{color:var(--mut);font-size:12px;margin-top:46px;border-top:1px solid var(--line);padding-top:14px}
   .topbar{display:none}
-  @media(max-width:880px){
-    nav.toc{display:none}
-    main{padding:18px}
-    .topbar{display:block;position:sticky;top:0;background:var(--panel);border-bottom:1px solid var(--line);
-      padding:10px 16px;font-weight:800;z-index:5}
-  }
+  .tag{font-size:11px;color:var(--mut)}
+  @media(max-width:880px){ nav.toc{display:none} main{padding:18px}
+    .topbar{display:block;position:sticky;top:0;background:var(--panel);border-bottom:1px solid var(--line);padding:10px 16px;font-weight:800;z-index:5}}
 </style>
 </head>
 <body>
-<div class="topbar">Bifrost (BFC) 리서치</div>
+<div class="topbar">Bifrost (BFC) 초기 분석 리포트</div>
 <div class="wrap">
-
 <nav class="toc">
-  <div class="brand">Bifrost (BFC)<small>파이랩테크놀로지 · 리서치</small></div>
-  <h2>개요</h2>
+  <div class="brand">Bifrost (BFC)<small>파이랩테크놀로지 · 초기 분석 리포트</small></div>
+  <h2>요약</h2>
   <a href="#disamb">⚠️ 혼동 방지 (BFC≠BNC)</a>
-  <a href="#summary">핵심 요약</a>
+  <a href="#summary">핵심 요약 · KPI</a>
+  <h2>프로젝트</h2>
   <a href="#company">1. 회사</a>
-  <a href="#product">2. 제품</a>
-  <a href="#token">3. BFC 토큰</a>
+  <a href="#product">2. 제품군</a>
+  <a href="#token">3. BFC 토큰·토크노믹스</a>
   <a href="#mainnet">4. 메인넷</a>
-  <a href="#bridge">5. 브릿지·BTCFi</a>
-  <a href="#github">6. GitHub</a>
-  <a href="#japan">7. 일본 사업</a>
+  <a href="#bridge">5. 브릿지(CCCP)·Vault</a>
+  <a href="#defi">6. BTCFi·DeFi 레이어</a>
+  <a href="#github">7. GitHub</a>
+  <a href="#japan">8. 일본 사업</a>
+  <h2>온체인 심층분석</h2>
+  <a href="#holders">9. 네이티브 상위 홀더</a>
+  <a href="#exch">10. 거래소 클러스터</a>
+  <a href="#concentration">11. 집중도·배분구조</a>
+  <a href="#protocolmap">12. 프로토콜 맵·배포자</a>
+  <a href="#validators">13. 검증자</a>
   <h2>레퍼런스</h2>
   <a href="#contracts">컨트랙트 주소</a>
   <a href="#endpoints">조회 엔드포인트</a>
-  <h2>모니터링 (10차원)</h2>
-  <a href="#mon">베이스라인 & 루프</a>
-  <a href="#exch">거래소 클러스터</a>
-  <a href="#validators">검증자 24</a>
+  <h2>모니터링</h2>
+  <a href="#mon">10개 차원 베이스라인</a>
   <a href="#signals">🔔 감시 신호</a>
-  <h2>기타</h2>
+  <h2>부록</h2>
+  <a href="#method">방법론·신뢰도</a>
   <a href="#open">미해결 과제</a>
 </nav>
 
 <main>
-  <h1>Bifrost (BFC) 리서치 — 파이랩테크놀로지</h1>
-  <p class="lead">한국 <b>Pi Lab Technology</b>의 <b>Bifrost Network / BFC</b> · 정기 모니터링 루프용 배경지식 + 기준값(baseline)<br>
-  최종 갱신 <b>2026-06-30</b> · 데이터 관찰일 2026-06-29~30</p>
+  <h1>Bifrost (BFC) 초기 분석 리포트</h1>
+  <p class="lead">한국 <b>Pi Lab Technology(파이랩테크놀로지)</b>의 <b>Bifrost Network / BFC (바이프로스트)</b><br>
+  작성 <b>2026-06-30</b> · 온체인 데이터 관찰일 2026-06-29~30 · 용도: 정기 모니터링 루프 배경지식 + 기준값(baseline)<br>
+  <span class="tag">동반 문서: README.md · 01-overview · 02-deep-dive · 03-monitoring-baseline · data/validators-snapshot · data/native-holders-analysis</span></p>
 
   <!-- DISAMB -->
-  <h2 class="sec" id="disamb">⚠️ 절대 혼동 금지 (BFC ≠ BNC)</h2>
+  <h2 class="sec" id="disamb">⚠️ 절대 혼동 금지 — BFC ≠ BNC</h2>
   <div class="callout">
     <table>
       <tr><th>✅ 우리 대상 (BFC)</th><th>❌ 혼동 대상 (BNC)</th></tr>
-      <tr><td class="wrap"><b>BFC</b> = 한국 파이랩 Bifrost Network (EVM L1 + BTCFi)</td>
-          <td class="wrap"><b>BNC</b> = Polkadot Bifrost Finance (리퀴드 스테이킹)</td></tr>
+      <tr><td class="wrap"><b>BFC</b> = 한국 파이랩 <b>Bifrost Network</b> (EVM L1 + BTCFi)</td><td class="wrap"><b>BNC</b> = Polkadot <b>Bifrost Finance</b> (리퀴드 스테이킹)</td></tr>
       <tr><td class="wrap"><code>bifrostnetwork.com</code> · <code>thebifrost.io</code> · <code>medium.com/bifrost</code> · GitHub <code>bifrost-platform</code> · X <code>@Bifrost_Network</code></td>
           <td class="wrap"><code>bifrost.io</code> · <code>bifrost.io/blog</code> · GitHub <code>bifrost-io</code>/<code>bifrost-finance</code> · vDOT/SLP/parachain</td></tr>
       <tr><td class="wrap">ERC-20 <code>0x0c7D5ae0…Cab9c</code> · 메인넷 chainId <b>3068</b></td><td>—</td></tr>
     </table>
-    <p class="muted" style="margin-bottom:0">⚠️ CoinCodex·CMC "CMC AI updates" 등 일부 집계가 BNC/BFC를 섞음. <b>DOT/Polkadot 항목은 항상 버릴 것.</b></p>
+    <p class="muted small" style="margin-bottom:0">⚠️ CoinCodex·CMC "CMC AI updates" 등 일부 집계가 BNC/BFC를 섞음. <b>DOT/Polkadot 항목은 항상 버릴 것.</b> 동명 프로젝트: FluidTokens의 Bitcoin-Cardano "BIFROST bridge", Bifrost Wallet, maximhq/bifrost(AI) 등 모두 무관.</p>
   </div>
 
   <!-- SUMMARY -->
-  <h2 class="sec" id="summary">핵심 요약</h2>
+  <h2 class="sec" id="summary">핵심 요약 · KPI</h2>
   <div class="grid">
-    <div class="kpi"><div class="v">$0.0118</div><div class="l">BFC 가격 · 시총 ~$16.6M</div></div>
-    <div class="kpi"><div class="v">8.06M</div><div class="l">BtcUSD 발행량 (BTCFi)</div></div>
-    <div class="kpi"><div class="v">24</div><div class="l">검증자 (Full15/Basic9) · 406M 스테이킹</div></div>
-    <div class="kpi"><div class="v">업비트 348M</div><div class="l">빗썸 143.7M (거래소 보유 BFC)</div></div>
+    <div class="kpi"><div class="v">$0.0118</div><div class="l">BFC 가격 · 시총 ~$16.6M (#~900)</div></div>
+    <div class="kpi"><div class="v">8.06M</div><div class="l">BtcUSD 발행 · 481 홀더 (BTCFi)</div></div>
+    <div class="kpi"><div class="v">24</div><div class="l">검증자 Full15/Basic9 · 406M 스테이킹</div></div>
+    <div class="kpi"><div class="v">54.7%</div><div class="l">TOP50 중 거래소 집중(업비트+빗썸)</div></div>
+    <div class="kpi"><div class="v">$11.86M</div><div class="l">체인 TVL (DEX $3.23M+BTCFi $2.68M 등)</div></div>
+    <div class="kpi"><div class="v">7,747만</div><div class="l">네이티브 누적 tx · 당일 ~17K</div></div>
   </div>
   <div class="card">
-    <p><b>회사</b> — 2017년 설립, 박도현 CEO·이종협 CTO·유창현 COO, 서울 성수동, 직원 ~38명. 현재 "기관용 비트코인 금융 레이어 + 스테이블코인 인프라"로 재포지셔닝.</p>
-    <p><b>제품</b> — Bifrost Network(EVM L1) · <b>BTCFi/BtcUSD</b>(네이티브 BTC 담보 스테이블, 3.5%) · BiFi(렌딩) · Biport/Pockie(지갑) · The BIFROST Bridge(CCCP, 9체인).</p>
-    <p><b>토큰</b> — BFC. 40억 발행 → 2022년 40%(16억) 소각 → 메인넷서 캡 폐지·인플레이션(코드 13%) → StableDAO 소각. 상장 업비트(BTC)·빗썸(KRW)·코빗(KRW)·HTX·Gate.</p>
-    <p style="margin-bottom:0"><b>일본 전략(BTCFi 축)</b> — HashPort Wallet(JPYC 4% 렌딩)·DJT N.suite·SBI Digital Finance·Animoca Brands Japan·AI Fusion Capital/BitTrade(검증자)·JOC·MOIN·협회(JCBA/FAJ/BCCC). <b>JPYC는 활용만(발행 아님), JPYSC와는 무관.</b></p>
+    <p><b>한 줄 요약</b> — 파이랩테크놀로지가 만든 EVM 호환 L1 <b>Bifrost Network</b>는 멀티체인 미들웨어에서 출발해 현재 <b>"기관용 비트코인 금융(BTCFi) + 스테이블코인 인프라"</b>로 재포지셔닝했다. 핵심 자산은 네이티브 코인 <b>BFC</b>와 BTC 담보 스테이블코인 <b>BtcUSD</b>. <b>일본 시장</b>(JPYC 렌딩·기관 BTC 재무)을 전략 축으로 삼고, 온체인 유통은 <b>국내 거래소(업비트·빗썸)에 절반 이상 집중</b>되어 있다.</p>
+    <p style="margin-bottom:0"><b>투자 관점 신호</b> — ① BTCFi(BtcUSD 발행량·홀더)와 일본 렌딩 수요가 성장 동력 ② 유통의 큰 부분이 거래소·초기배분 휴면물량에 묶여 실유통 적음 ③ 시총 대비 행보(일본 기관 제휴)가 활발하나 토큰 가격 반영은 제한적.</p>
   </div>
 
-  <!-- COMPANY -->
+  <!-- 1 COMPANY -->
   <h2 class="sec" id="company"><span class="n">1</span>회사 — Pi Lab Technology</h2>
   <table>
-    <tr><th>설립</th><td>2017년 (3월14일은 'Pi Day' 상징일, 설립일 아님)</td></tr>
+    <tr><th>설립</th><td>2017년 (※ 3/14 'Pi Day'는 브랜드 상징일, 설립일 아님. 영문 2차자료의 "2016/교수 2인 설립"은 부정확)</td></tr>
     <tr><th>경영진</th><td>박도현 CEO · 이종협 CTO · 유창현 COO (공동창업 3인)</td></tr>
     <tr><th>본사·인원</th><td>서울 성동구 성수동 · 약 38명</td></tr>
-    <tr><th>투자</th><td>시드 ~$3.3M(2019) · 시리즈A ~$8.4M(한국투자파트너스 리드) · 누적 ~140억원 · 별도 2022 에코펀드 $57M</td></tr>
+    <tr><th>투자유치</th><td>시드 ~$3.3M(2019, 한국투자파트너스·스틱벤처스) · 시리즈A ~$8.4M(~100억, 한국투자파트너스 리드) · 누적 ~140억원</td></tr>
+    <tr><th>에코펀드</th><td>2022-03 <b>$57M(~700억)</b> 생태계 확장 펀드(회사 투자유치와 별개, 첫 수혜 Delta Finance)</td></tr>
+    <tr><th>현 방향</th><td>2025~ "기관용 비트코인 금융 레이어 + 스테이블코인 인프라" 재포지셔닝 (BTCFi·BTCFi Boost·Pockie·Biplorer 전면)</td></tr>
   </table>
 
-  <!-- PRODUCT -->
+  <!-- 2 PRODUCT -->
   <h2 class="sec" id="product"><span class="n">2</span>제품군</h2>
   <ul>
     <li><b>Bifrost Network</b> — EVM 호환 L1 코어 (chainId 3068)</li>
-    <li><b>BTCFi / BTCFi Boost</b> — 네이티브 BTC 담보 CDP → <b>BtcUSD</b>(고정 3.5%) 민팅. 2024-04 출시</li>
-    <li><b>BiFi / BiFi-X</b> — 멀티체인 렌딩(BTC 담보로 ETH 차입)·레버리지. 거버넌스 토큰 BIFI 별도</li>
-    <li><b>Biport / Pockie</b> — 멀티체인 지갑 (Pockie 8체인)</li>
-    <li><b>The BIFROST Bridge</b> — CCCP 기반 9체인 크로스체인</li>
+    <li><b>BTCFi / BTCFi Boost</b> — 네이티브 BTC 담보 CDP → <b>BtcUSD</b>(고정 3.5%) 민팅. 2024-04 출시, 2025-07 Boost(원클릭 BTC 수익)</li>
+    <li><b>BiFi / BiFi-X</b> — 멀티체인 렌딩(BTC 담보로 ETH 차입)·플래시론 레버리지. 거버넌스 토큰 BIFI 별도</li>
+    <li><b>Everdex</b> — 네이티브 DEX(AMM) · <b>BIFROST CrossChain Swap</b> — 브릿지 기반 크로스체인 스왑</li>
+    <li><b>Biport / Pockie</b> — 멀티체인 지갑 (Pockie 8체인: ETH/BNB/Arbitrum/Polygon/Avalanche/Base/Bifrost/Klaytn)</li>
+    <li><b>ChainRunner Q</b> — DeFi 애그리게이터 · <b>Biplorer</b> — 온체인 분석도구 · <b>The BIFROST Bridge</b> — CCCP 9체인</li>
   </ul>
-  <p class="muted">핵심 기술 <b>CCCP</b>(Cross-Chain Communication Protocol): 각 체인 Socket 컨트랙트 + Relayer(=검증자) 다수결 서명.</p>
+  <p class="muted small">핵심 기술 <b>CCCP</b>(Cross-Chain Communication Protocol): 각 체인 Socket 컨트랙트 + Relayer(=검증자) 다수결 서명, timeout rollback. <b>BRP</b>(Bitcoin Relaying Protocol)로 네이티브 BTC 검증.</p>
 
-  <!-- TOKEN -->
-  <h2 class="sec" id="token"><span class="n">3</span>BFC 토큰</h2>
+  <!-- 3 TOKEN -->
+  <h2 class="sec" id="token"><span class="n">3</span>BFC 토큰 · 토크노믹스</h2>
   <table>
     <tr><th>ERC-20 (Ethereum)</th><td><code>0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c</code> <span class="badge b-ok">canonical</span></td></tr>
     <tr><th>메인넷(3068)</th><td>네이티브 가스코인 + Unified BFC <code>0xAe172D8c…9BF3e</code></td></tr>
-    <tr><th>공급</th><td>유통 ~13.9억 · 총 ~23.7억 · 최대 ∞(인플레이션)</td></tr>
-    <tr><th class="wrap">가짜 (차단)</th><td class="wrap"><span class="badge b-bad">FAKE</span> BSC <code>0xf4b5cd30…09ec</code> · BSC <code>0x5Dec5345…68dC9</code> · Fantom <code>0x84c882…</code>는 Anyswap 브릿지 래퍼</td></tr>
+    <tr><th>공급</th><td>유통 ~13.9억 · 총 ~23.7억 · 최대 ∞(인플레이션) · 시총 ~$16.6M</td></tr>
+    <tr><th>상장</th><td>업비트(BTC-BFC, KRW마켓 없음) · 빗썸(KRW) · <b>코빗(KRW)</b> · HTX(USDT, 글로벌 주력 ~$2.2M) · Gate(USDT, 미미) — 국내 3대 모두. 고팍스 미상장</td></tr>
+    <tr><th class="wrap">가짜(차단)</th><td class="wrap"><span class="badge b-bad">FAKE</span> BSC <code>0xf4b5cd30…09ec</code> · BSC <code>0x5Dec5345…68dC9</code> · Fantom <code>0x84c882…</code>=Anyswap 브릿지 래퍼(자체발행 아님)</td></tr>
   </table>
-  <div class="callout warn"><b>토크노믹스 정정</b> — BSC에 공식 BFC <b>없음</b>(소스 확정). 인플레이션: 문서 7/10/13%, 메인넷 코드 13% 고정. 2022년 16억 소각분은 <code>0x…dead</code>(현 #1 홀더 40.8%).</div>
+  <h4>토크노믹스 연혁 (4B 캡 미스터리 해소)</h4>
+  <ol>
+    <li>초기 발행 <b>40억(4B) BFC</b> (백서 캡)</li>
+    <li><b>2022-02 재단이 40%인 16억 소각</b> → <code>0x…dead</code> (현 ETH ERC-20 #1 홀더 40.8%)</li>
+    <li><b>2023-01-30 메인넷 전환</b> 시 고정 캡 폐지 → <b>DPoS 인플레이션</b>, max ∞</li>
+    <li><b>2025-07-18 StableDAO</b> 출범 — DAO 수익 30%로 BFC 소각(디플레 압력, 2025 Q3 ~50M 소각)</li>
+  </ol>
+  <div class="callout warn"><b>인플레이션 코드 vs 문서 불일치</b> — 메인넷 체인스펙 코드(<code>chain_spec.rs</code>)는 <b>연 13% 고정</b>, 공식 문서는 7/10/13% 동적. 고정 스테이킹 APR 없음(개인별 추정수익). 기대 스테이킹 5k/10k/50k BFC.</div>
 
-  <!-- MAINNET -->
+  <!-- 4 MAINNET -->
   <h2 class="sec" id="mainnet"><span class="n">4</span>메인넷</h2>
   <table>
     <tr><th>Chain ID</th><td>3068 (테스트넷 49088)</td></tr>
-    <tr><th>합의</th><td>DPoS + 블록생성 Aura + 파이널리티 GRANDPA</td></tr>
-    <tr><th>아키텍처</th><td>Substrate(FRAME) + Frontier(EVM 호환) · 완전 EVM 호환</td></tr>
-    <tr><th>스펙</th><td>블록 ~3초 · ~1,000 TPS · 출시 2023-01-30</td></tr>
-    <tr><th>RPC</th><td><code>https://public-01.mainnet.bifrostnetwork.com/rpc</code></td></tr>
-    <tr><th>익스플로러</th><td>UI <code>explorer.mainnet.bifrostnetwork.com</code> · API <code>explorer-backend.mainnet.thebifrost.io</code></td></tr>
+    <tr><th>합의</th><td>DPoS + 블록생성 Aura(Authority Round) + 파이널리티 GRANDPA</td></tr>
+    <tr><th>아키텍처</th><td>Substrate(FRAME) + Frontier(EVM 호환) — Cosmos/geth 아님. 완전 EVM 호환(Solidity·MetaMask·Web3)</td></tr>
+    <tr><th>스펙</th><td>블록타임 ~3초 · ~1,000 TPS · 출시 2023-01-30</td></tr>
+    <tr><th>온체인 규모</th><td>누적 tx <b>77,476,593</b> · 블록 36,330,250 · 주소 60,285,254 · 당일 tx ~17,051 (2026-06-30)</td></tr>
+    <tr><th>RPC / 익스플로러</th><td><code>public-01.mainnet.bifrostnetwork.com/rpc</code> · UI <code>explorer.mainnet.bifrostnetwork.com</code> · API <code>explorer-backend.mainnet.thebifrost.io</code></td></tr>
+    <tr><th>노드 요건</th><td>Basic: self-bond 40만/투표력 200만 · Full(검증+릴레이어): self-bond 40만/투표력 400만 BFC</td></tr>
   </table>
 
-  <!-- BRIDGE/BTCFI -->
-  <h2 class="sec" id="bridge"><span class="n">5</span>브릿지 · BTCFi</h2>
-  <p><b>The BIFROST Bridge (CCCP)</b> — 9체인: Bifrost·Bitcoin·Ethereum·Base·Arbitrum·Core·BSC·Polygon·Oasys. 자산: BFC·BiFi·ETH·USDC·USDT·WBTC.</p>
-  <h3>브릿지 Vault 락업 TVL (2026-06-29)</h3>
+  <!-- 5 BRIDGE -->
+  <h2 class="sec" id="bridge"><span class="n">5</span>브릿지 (CCCP) · Vault</h2>
+  <p><b>The BIFROST Bridge</b> — 9체인(Bifrost·Bitcoin·Ethereum·Base·Arbitrum·Core·BSC·Polygon·Oasys), 자산 BFC·BiFi·ETH·USDC·USDT·WBTC. 수수료 0.005%. <b>CCCP v2/Hook은 relayer v3에 있으나 아직 testnet 전용</b>(메인넷 전환=주목 이벤트).</p>
+  <h4>브릿지 Vault 락업 TVL (2026-06-29) — 브릿지 실제 자금</h4>
   <table>
-    <tr><th>Vault</th><th>주요 자산</th></tr>
-    <tr><td>ETH <code>0x2F95C102…AA535</code></td><td class="wrap">BFC 863.5M(~$10.2M) · USDC $607K · BIFI · WBTC · <b>JPYC 3,989</b></td></tr>
+    <tr><th>Vault</th><th>주요 락업 자산</th></tr>
+    <tr><td>ETH <code>0x2F95C102…AA535</code></td><td class="wrap">BFC 863.5M(~$10.2M) · USDC $607K · BIFI 137M · WBTC 0.13 · USDT 4.3K · <b>JPYC 3,989</b>(브릿지 존재 확인) · ETH 193</td></tr>
     <tr><td>BSC <code>0x78ae4c0F…E323</code></td><td>BTCB <b>44.3</b>(~$4.7M) · BNB 115</td></tr>
+    <tr><td>Bifrost <code>0xD85EB87c…42D7</code></td><td>네이티브 75.6 BFC(아웃바운드용) + <b>BtcUSD 4.46M</b>(BtcUSD 최대홀더=브릿지 유출분)</td></tr>
   </table>
-  <h3>BtcUSD <span class="badge b-info">BTCFi 핵심 성장지표</span></h3>
-  <table>
-    <tr><th>컨트랙트 (3068)</th><td><code>0x6906Ccda405926FC3f04240187dd4fAd5DF6d555</code></td></tr>
-    <tr><th>totalSupply</th><td><b>8,061,957 BtcUSD</b> (라이브 검증) · BTCFi TVL ~$2.68M</td></tr>
-    <tr><th>멀티체인</th><td class="wrap">BSC <code>0x4F2c9962…0D4c</code> · Base <code>0xe4b20925…4dd4</code> · Core <code>0xad0c524C…dd10</code> · Oasys <code>0x4Cda2D68…27B7</code></td></tr>
-  </table>
-  <p class="muted">비트코인 통합: 동적 PSBT 임계치 멀티시그 vault(정적 주소 없음) · Bitcoin Socket <code>0x73A9E443…D9ca</code> · 2022 BiFi 해킹 $2.25M(서버키 유출, 이후 브릿지 무사고).</p>
+  <p class="muted small">비트코인 통합: 정적 주소 아닌 <b>임계치 멀티시그 PSBT vault</b>(릴레이어 공개키 집계, 동적생성). Bitcoin Socket <code>0x73A9E443…D9ca</code>. v2.1.0(2025-09)부터 BLAZE 팔레트(고급 UTXO 관리).</p>
 
-  <h3>온체인 DeFi 레이어 / 프로토콜 맵 <span class="badge b-info">4차 분석</span></h3>
+  <!-- 6 DEFI -->
+  <h2 class="sec" id="defi"><span class="n">6</span>BTCFi · 온체인 DeFi 레이어</h2>
+  <div class="grid">
+    <div class="kpi"><div class="v">$2.68M</div><div class="l">BTCFi TVL (DefiLlama)</div></div>
+    <div class="kpi"><div class="v">$3.23M</div><div class="l">Everdex(DEX) TVL</div></div>
+    <div class="kpi"><div class="v">481</div><div class="l">BtcUSD 홀더 · 전송 195,729</div></div>
+    <div class="kpi"><div class="v">3.5%</div><div class="l">BtcUSD 민팅 고정금리</div></div>
+  </div>
   <table>
-    <tr><th>프로토콜</th><th>규모</th><th>핵심 컨트랙트 / 배포자</th></tr>
-    <tr><td><b>Everdex</b> (네이티브 DEX/AMM)</td><td>TVL <b>$3.23M</b></td><td class="wrap">라우터 <code>0x7Ace89E2…</code>(85,612tx) · LP <code>0x840Cf452…</code>(BtcUSD+USDC) · 배포자 <code>0x3aFE9F26</code></td></tr>
-    <tr><td><b>BTCFi / BtcUSD</b></td><td>BtcUSD <b>8.06M</b> · 홀더 <b>481</b> · TVL ~$2.68M</td><td class="wrap">BtcUSD <code>0x6906Ccda…</code> · 담보 <code>0xcF2FC1d3…</code> · #3 리저브 87M · 배포자 <code>0xA30B97a5</code>(팀)</td></tr>
-    <tr><td>WBFC (Wrapped BFC)</td><td>8.4M 래핑</td><td><code>0x1c1b0640…</code></td></tr>
+    <tr><th>프로토콜</th><th>규모</th><th>핵심 컨트랙트</th></tr>
+    <tr><td><b>Everdex</b> (네이티브 DEX/AMM)</td><td>TVL $3.23M</td><td class="wrap">라우터 <code>0x7Ace89E2…</code>(85,612tx) · LP <code>0x840Cf452…</code>(BtcUSD+USDC). 거래쌍 WBFC·BtcUSD·USDC·ETH</td></tr>
+    <tr><td><b>BtcUSD</b> (BTC담보 스테이블)</td><td>발행 8.06M·홀더 481</td><td class="wrap">토큰 <code>0x6906Ccda…d555</code> · 담보/발행 <code>0xcF2FC1d3…</code>(1.89M) · #3 리저브 87M BFC</td></tr>
+    <tr><td>WBFC (Wrapped BFC)</td><td>8.4M 래핑</td><td><code>0x1c1b0640…</code> (<code>deposit/withdraw</code>)</td></tr>
     <tr><td>리워드/에어드랍 claim</td><td>6.2M</td><td><code>0xD3351BAA…</code> (<code>claim()</code>)</td></tr>
   </table>
-  <p class="muted">배포자 3종: <code>0xDd505f3</code>(제네시스 분배·2023) · <code>0xA30B97a5</code>(BTCFi 스위트·2025~26) · <code>0x3aFE9F26</code>(DEX). BtcUSD 최대홀더=네이티브 Vault(4.46M=55%, 브릿지 유출). #3 리저브 입금자=일반 유저(거래소 아님). 출처 <a href="https://defillama.com/protocol/bifrost-dex">DefiLlama</a>·<a href="https://docs.bifrostnetwork.com/everdex/faqs/faq">Everdex docs</a></p>
+  <p class="muted small">BtcUSD 멀티체인: BSC <code>0x4F2c9962…</code>·Base <code>0xe4b20925…</code>·Core <code>0xad0c524C…</code>·Oasys <code>0x4Cda2D68…</code>. Oasys로 자동브릿지해 Gaming DEX 풀에 예치(최대 ~40% APY) 등 BTCFi Boost 사례. 외부 연계: Core·Stacks·XLink/ALEX.</p>
 
-  <!-- GITHUB -->
-  <h2 class="sec" id="github"><span class="n">6</span>GitHub — bifrost-platform</h2>
+  <!-- 7 GITHUB -->
+  <h2 class="sec" id="github"><span class="n">7</span>GitHub — bifrost-platform</h2>
   <table>
     <tr><th>레포</th><th>최신</th><th>상태</th></tr>
-    <tr><td>bifrost-node</td><td>v2.2.0 (2026-06-24), 커밋 <code>e0f08aa</code></td><td><span class="badge b-ok">활발</span> Rust, ★39</td></tr>
-    <tr><td>bifrost-relayer.rs</td><td>v3.0.0 (2026-06-24), 커밋 <code>f9c44ff</code></td><td><span class="badge b-ok">활발</span> Rust, ★12</td></tr>
-    <tr><td>asset-info-v2</td><td>v3.0.7 (2026-03-18)</td><td>미러(자산 추가 추적)</td></tr>
+    <tr><td>bifrost-node (메인넷 노드)</td><td>v2.2.0 (2026-06-24), <code>e0f08aa</code></td><td><span class="badge b-ok">활발</span> Rust ★39 · Fusaka 하드포크 지원</td></tr>
+    <tr><td>bifrost-relayer.rs (릴레이어)</td><td>v3.0.0 (2026-06-24), <code>f9c44ff</code></td><td><span class="badge b-ok">활발</span> Rust ★12 · CCCP v2/Hook(testnet)</td></tr>
+    <tr><td>asset-info-v2 (자산메타)</td><td>v3.0.7 (2026-03)</td><td>미러(신규자산 추적용)</td></tr>
     <tr><td>BiFi 계열 (Solidity)</td><td>~2021-22</td><td><span class="badge b-warn">정체</span></td></tr>
   </table>
-  <p class="muted">스택: Substrate+Frontier, Aura+GRANDPA. 조직 34 레포, 최신 신규 <code>common</code>(2025-12). CCCP v2/Hook은 relayer v3에 있으나 <b>아직 testnet 전용</b>(메인넷 전환 = 주목 이벤트).</p>
+  <p class="muted small">스택: Substrate+Frontier, 합의 Aura+GRANDPA. 조직 34 레포, 최신 신규 <code>common</code>(2025-12). 주 기여자 <code>dnjscksdn98</code>. 노드 v2.0.0(2024-11)에서 BRP+Bitcoin 지원 도입.</p>
 
-  <!-- JAPAN -->
-  <h2 class="sec" id="japan"><span class="n">7</span>일본 사업 (BTCFi·스테이블코인 축)</h2>
+  <!-- 8 JAPAN -->
+  <h2 class="sec" id="japan"><span class="n">8</span>일본 사업 (BTCFi·스테이블코인 축)</h2>
   <table>
     <tr><th>시점</th><th>파트너 / 이벤트</th><th>현재 상태</th></tr>
-    <tr><td>2024-09-26</td><td>Japan Open Chain(JOC) 전략투자</td><td>—</td></tr>
+    <tr><td>2024-04-19</td><td>JCBA(일본암호자산비즈니스협회) 가입</td><td>—</td></tr>
+    <tr><td>2024-09-26</td><td>Japan Open Chain(JOC) 전략투자</td><td>브릿지/BTCFi dApp 배포</td></tr>
     <tr><td>2024-11-29</td><td>BitTrade(구 Huobi Japan)</td><td>검증자. BFC 상장은 미확인</td></tr>
-    <tr><td>2025-06-30</td><td>AI Fusion Capital(도쿄 상장사)</td><td>검증자 + BTC 트레저리</td></tr>
-    <tr><td>2025-08-13</td><td>SBI Digital Finance</td><td>btcUSD "개발 논의" 단계</td></tr>
-    <tr><td>2025-10-23</td><td>double jump.tokyo (N.suite)</td><td>BTC/JPYC 기업 재무</td></tr>
-    <tr><td>2025-12-16</td><td>Animoca Brands Japan</td><td>기본합의(검증)</td></tr>
+    <tr><td>2025-03-04</td><td>FAJ(일본핀테크협회) Web3 가입</td><td>PayPal·SBI·미즈호 등과 동석</td></tr>
+    <tr><td>2025-06-30</td><td>AI Fusion Capital(도쿄 상장사)</td><td>검증자 + BTC 트레저리(상장사 최초)</td></tr>
+    <tr><td>2025-08-13</td><td>SBI Digital Finance</td><td>btcUSD "개발 논의" 단계(제품화 미확인)</td></tr>
+    <tr><td>2025-10-23</td><td>double jump.tokyo (N.suite)</td><td>BTC/JPYC 기업 재무·급여 프레임워크</td></tr>
+    <tr><td>2025-11-04</td><td>BCCC(블록체인 추진협회) 가입</td><td>—</td></tr>
+    <tr><td>2025-12-16</td><td>Animoca Brands Japan</td><td>상장사 BTC 재무 기본합의(검증)</td></tr>
     <tr><td>2026-02-05</td><td>MOIN × JOC × Bifrost</td><td>다통화 스테이블 송금 MOU</td></tr>
     <tr><td>2026-05-20</td><td>DJT N.suite Treasury Access Plan</td><td>JPYC 렌딩 1단계</td></tr>
-    <tr><td><b>2026-06-01</b></td><td><b>HashPort Wallet × JPYC 4% 렌딩</b></td><td><span class="badge b-ok">최신</span> TVL 미공개</td></tr>
+    <tr><td><b>2026-06-01</b></td><td><b>HashPort Wallet × JPYC 4% 렌딩</b></td><td><span class="badge b-ok">최신</span> TVL 미공개 · 6/4 BFC +30%</td></tr>
   </table>
   <div class="callout info">
     <b>JPYC vs JPYSC (필수 구분)</b><br>
-    • <b>JPYC</b> (JPYC Inc., 자금이동형, 100만엔 한도) — Bifrost가 <b>활용</b>(발행 아님). HashPort 4% 렌딩·DJT N.suite. 누적 발행 30억엔(2026-05).<br>
+    • <b>JPYC</b> (JPYC Inc., 자금이동형, 100만엔 한도, 누적발행 30억엔/2026-05) — Bifrost가 <b>활용</b>(발행 아님). HashPort 4% 렌딩·DJT N.suite. <b>Bifrost에서 네이티브 발행 안 됨</b>(ETH/Polygon/Avalanche/Kaia 발행, Bifrost는 예치·수익 venue).<br>
     • <b>JPYSC</b> (SBI+Startale 신탁형) — Bifrost와 <b>직접 연관 없음</b>. (단 SBI Digital Finance와는 별도 제휴)
   </div>
-  <p class="muted">※ eBTC/BitVM(bifrost.blue)은 <b>파이랩 제품 아님</b>(동명 별개) · MJPY/MKRW/MUSD는 상표 출원 단계.</p>
+  <p class="muted small">전략 해석: 일본의 규제 명확성(2023 스테이블코인법·2026 FIEA 재분류) + 발행 경쟁 회피(BtcUSD=BTC담보, JPYC/USDC 흡수) + 4중 진입(협회/검증자/지갑/금융파트너). ※ eBTC/BitVM(bifrost.blue)은 파이랩 제품 아님 · MJPY/MKRW/MUSD는 상표 출원 단계.</p>
+
+  <!-- ============ 온체인 심층분석 ============ -->
+  <h2 class="sec" id="holders"><span class="n">9</span>네이티브 상위 홀더 <span class="badge b-info">온체인 심층</span></h2>
+  <p class="muted small">메인넷 전환 후 실제 보유·유통의 핵심은 네이티브 체인(3068). 아래는 흐름추적(2-hop)+메서드 시그니처+배포자 분석으로 분류.</p>
+  <table>
+    <tr><th>#</th><th>주소</th><th class="num">잔액(BFC)</th><th>분류 / 근거</th><th>신뢰도</th></tr>
+    <tr><td>1</td><td><code>0x50F187Ef…955E</code></td><td class="num">332,484,206</td><td><b>업비트 콜드허브</b> — 핫월렛 자금공급, 사용자 출금이력</td><td><span class="badge b-ok">확인</span></td></tr>
+    <tr><td>2</td><td><code>0xDCd52f5f…8935</code></td><td class="num">137,482,292</td><td><b>빗썸 콜드허브</b> — 핫과 합 143.7M=앱공시 일치</td><td><span class="badge b-ok">확인</span></td></tr>
+    <tr><td>3</td><td><code>0x4bAE7ba3…66Ee</code></td><td class="num">87,424,912</td><td>신규 컨트랙트(2026-06 생성), 다수 유저 입금·OUT0 → <b>BTCFi 스테이킹/락업 리저브</b></td><td><span class="badge b-warn">추정</span></td></tr>
+    <tr><td>4</td><td><code>0xAe172D8c…9BF3e</code></td><td class="num">40,342,392</td><td><b>Unified BFC</b> 시스템 컨트랙트</td><td><span class="badge b-ok">확인</span></td></tr>
+    <tr><td>6</td><td><code>0x081a4ee5…268c3</code></td><td class="num">15,377,787</td><td><b>업비트 핫</b></td><td><span class="badge b-ok">확인</span></td></tr>
+    <tr><td>5·8·10·11·12</td><td>휴면 EOA 다수</td><td class="num">~10~16M</td><td>휴면 <b>초기배분/OTC 지갑</b>(2023-02 1회수령 후 휴면)</td><td><span class="badge b-warn">추정</span></td></tr>
+    <tr><td>19</td><td><code>0x6d6f646C…0000</code></td><td class="num">7,538,155</td><td><b>Treasury 국고</b> (ASCII <code>modlpy/trsry</code>)</td><td><span class="badge b-ok">확인</span></td></tr>
+    <tr><td>21·22·25</td><td><code>0xffFaAC…</code> 외</td><td class="num">~6.7M each</td><td><b>검증자 stash</b></td><td><span class="badge b-ok">확인</span></td></tr>
+  </table>
+
+  <h2 class="sec" id="exch"><span class="n">10</span>거래소 보유 클러스터 (온체인 확정)</h2>
+  <div class="grid">
+    <div class="card">
+      <h4 style="margin-top:0">업비트 ≈ 348M BFC <span class="badge b-ok">확인</span></h4>
+      <p class="muted small">사용자 출금이력으로 확정. 콜드허브가 핫월렛들에 자금공급.</p>
+      <table>
+        <tr><th>역할</th><th>주소</th><th class="num">잔액</th></tr>
+        <tr><td>콜드/허브</td><td><code>0x50F187Ef…955E</code></td><td class="num">332.5M</td></tr>
+        <tr><td>핫(유저출금)</td><td><code>0x081a4ee5…268c3</code></td><td class="num">15.4M</td></tr>
+        <tr><td>핫×3</td><td><code>0x0056a143</code> 외</td><td class="num">순환(0)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">빗썸 ≈ 143.7M BFC <span class="badge b-ok">공시일치</span></h4>
+      <p class="muted small">앱 공시 "내부 유통량" 143,666,510 ≈ 온체인 합 143.8M.</p>
+      <table>
+        <tr><th>역할</th><th>주소</th><th class="num">잔액</th></tr>
+        <tr><td>콜드/허브</td><td><code>0xDCd52f5f…8935</code></td><td class="num">137.5M</td></tr>
+        <tr><td>핫(2,920tx)</td><td><code>0x39528D59…084D</code></td><td class="num">6.3M</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="callout warn"><b>빗썸 공시 자동수집</b> — 정확값(내부유통량·보유자 45,296명·순입금)은 로그인+Akamai 봇차단으로 자동수집 불가 → <b>온체인 클러스터 합으로 대체</b>(공시와 일치). 공개 API(ticker·assetsstatus)는 수집 OK. <b>거래소 BFC는 ETH ERC-20이 아닌 네이티브 체인에 존재</b>(ETH 거래소 핫월렛은 BFC 0).</div>
+
+  <h2 class="sec" id="concentration"><span class="n">11</span>집중도 · 배분 구조</h2>
+  <h4>TOP50 카테고리별 집중도 (합계 899.8M BFC)</h4>
+  <table>
+    <tr><th>카테고리</th><th class="num">보유량</th><th class="num">비중</th></tr>
+    <tr><td><b>업비트</b>(콜드+핫)</td><td class="num">347.9M</td><td class="num">38.7%</td></tr>
+    <tr><td>미식별 EOA(대부분 초기배분)</td><td class="num">238.0M</td><td class="num">26.5%</td></tr>
+    <tr><td><b>빗썸</b>(콜드+핫)</td><td class="num">143.7M</td><td class="num">16.0%</td></tr>
+    <tr><td>미식별 컨트랙트(리저브/WBFC 등)</td><td class="num">102.0M</td><td class="num">11.3%</td></tr>
+    <tr><td>시스템(Unified BFC)</td><td class="num">40.3M</td><td class="num">4.5%</td></tr>
+    <tr><td>검증자 stash</td><td class="num">20.3M</td><td class="num">2.3%</td></tr>
+    <tr><td>Treasury 국고</td><td class="num">7.5M</td><td class="num">0.8%</td></tr>
+  </table>
+  <div class="callout ok"><b>초기/제네시스 배분 확정 (잔액이력 검증)</b> — TOP50 중 <b>14개 지갑이 ~3.25M BFC 균등 청크 = 45.9M</b>. 잔액이력이 단 1건(블록 613703, <b>2023-02-03=메인넷 직후</b>) → 1회 수령 후 3년 휴면. 루트 분배 컨트랙트 <code>0x4077aE70</code>(내부tx로 80M 팬아웃)→분배자 EOA→3.25M 휴면. <b>잠재 매도압력 풀</b>(대량 이동 시 언락 신호).</div>
+  <p class="muted small"><b>요지:</b> 유통 구조 = 거래소(55%) + 초기배분 휴면군집(~26%) + 시스템/리저브 컨트랙트(~16%). 순수 액티브 리테일 비중은 TOP50 기준 작음 → 실유통(free float) 적고 거래소 의존도 높음.</p>
+
+  <h2 class="sec" id="protocolmap"><span class="n">12</span>프로토콜 맵 · 배포자(주체)</h2>
+  <table>
+    <tr><th>배포자 주소</th><th>시기</th><th>배포물</th><th>성격</th></tr>
+    <tr><td><code>0xDd505f3e…de369</code></td><td>제네시스기 2023</td><td>루트 분배 컨트랙트 <code>0x4077aE70</code>(80M 팬아웃)</td><td>초기 토큰배분 운영</td></tr>
+    <tr><td><code>0xA30B97a5…BB7a9B</code></td><td>BTCFi기 2025~26</td><td>#3 리저브·BtcUSD담보 <code>0xcF2FC1d3</code>·WBFC·<code>0x23286f4f</code></td><td>BTCFi 프로토콜 스위트</td></tr>
+    <tr><td><code>0x3aFE9F26…0381</code></td><td>—</td><td>Everdex LP 풀 <code>0x840Cf452</code></td><td>DEX</td></tr>
+  </table>
+  <p class="muted small">제네시스 분배는 컨트랙트 내부 tx로 실행(루트 normal유출 0). <code>0xDd505f3</code>은 가스성 운영 EOA(normal유출 32 BFC). 배포자 실세계 신원(팀/재단/투자자)은 온체인만으로 귀속 불가. #3 리저브 입금자는 전부 일반 EOA(거래소 아님)=유저 스테이킹 수요.</p>
+
+  <h2 class="sec" id="validators"><span class="n">13</span>검증자</h2>
+  <table>
+    <tr><th>항목</th><td>값</td></tr>
+    <tr><th>후보 / 선출</th><td>24개 (Full 15 + Basic 9), 라운드 2524</td></tr>
+    <tr><th>총 스테이킹</th><td>≈ 406M BFC (self-bond ~60.9M + 위임 ~345.2M), 위임자 27,387명, 스테이킹비율 ~29.3%</td></tr>
+    <tr><th>기명(공지)</th><td>BitTrade(일본) · AI Fusion Capital(도쿄 상장사) · KICA(한국정보인증) · DeSpread</td></tr>
+  </table>
+  <div class="callout warn">⚠️ Bifrost는 Substrate라 <b>온체인 identity 필드가 없어 실명↔주소 1:1 매핑 원천 불가</b>. 24개 controller/stash 주소 전체는 <code>data/validators-snapshot.md</code>. 루프는 주소집합 변동(신규/이탈)만 추적. (위임자 분포는 미탐색 — 다음 후보)</div>
 
   <!-- CONTRACTS -->
-  <h2 class="sec" id="contracts">📌 컨트랙트 주소 (메인넷 Socket / Vault / Authority)</h2>
+  <h2 class="sec" id="contracts">📌 컨트랙트 주소 (메인넷 Socket / Vault)</h2>
   <table>
     <tr><th>체인</th><th>ChainID</th><th>Socket</th><th>Vault</th></tr>
     <tr><td>Bifrost</td><td>3068</td><td><code>0xd551F33Ca8eCb0Be83d8799D9C68a368BA36Dd52</code></td><td><code>0xD85EB87caB9041ad00764b95796702b1104F42D7</code></td></tr>
@@ -245,131 +333,72 @@
     <tr><td>Oasys</td><td>248</td><td><code>0x4C7a44F3FB37A53F33D3fe3cCdE97A444F105239</code></td><td><code>0x872b347cd764d46c127ffefbcaB605FFF3f3a48C</code></td></tr>
     <tr><td>Bitcoin</td><td>10000</td><td>Bitcoin Socket <code>0x73A9E443F51eE40C1469A740D9CCf0118e8FD9ca</code></td><td>동적 PSBT</td></tr>
   </table>
-  <p><b>토큰:</b> BFC <code>0x0c7D5ae0…Cab9c</code> · BiFi(ETH) <code>0x2791BfD6…BA81</code> · BiFiB(BSC) <code>0x1378e33a…d645</code> · BtcUSD(3068) <code>0x6906Ccda…d555</code></p>
+  <p class="small"><b>토큰:</b> BFC <code>0x0c7D5ae0…Cab9c</code> · BiFi(ETH) <code>0x2791BfD6…BA81</code> · BiFiB(BSC) <code>0x1378e33a…d645</code> · BtcUSD(3068) <code>0x6906Ccda…d555</code> · WBFC <code>0x1c1b0640…</code><br>
+  <b>거래소(네이티브):</b> 업비트콜드 <code>0x50F187Ef…955E</code> · 빗썸콜드 <code>0xDCd52f5f…8935</code> · Treasury <code>0x6d6f646C…0000</code> · DEX라우터 <code>0x7Ace89E2…</code></p>
 
   <!-- ENDPOINTS -->
   <h2 class="sec" id="endpoints">📌 온체인 조회 엔드포인트</h2>
   <table>
     <tr><th>용도</th><th>엔드포인트</th></tr>
-    <tr><td>BFC ERC-20</td><td><code>api.ethplorer.io/getTokenInfo/0x0c7D5ae0…?apiKey=freekey</code></td></tr>
-    <tr><td>메인넷 RPC</td><td><code>public-01.mainnet.bifrostnetwork.com/rpc</code> (eth_call)</td></tr>
-    <tr><td>메인넷 익스플로러 API</td><td><code>explorer-backend.mainnet.thebifrost.io/api/v2/...</code></td></tr>
-    <tr><td>빗썸 시세/상태</td><td><code>api.bithumb.com/public/ticker/BFC_KRW</code> · <code>/assetsstatus/BFC_KRW</code></td></tr>
-    <tr><td>업비트 시세</td><td><code>api.upbit.com/v1/ticker?markets=BTC-BFC</code> (BTC마켓만)</td></tr>
+    <tr><td>네이티브 리치리스트·잔액·tx</td><td><code>explorer-backend.mainnet.thebifrost.io/api/v2/addresses</code> · <code>/addresses/{a}</code> · <code>/addresses/{a}/counters</code> · <code>/stats</code></td></tr>
+    <tr><td>네이티브 RPC (eth_call)</td><td><code>public-01.mainnet.bifrostnetwork.com/rpc</code> (검증자 0x…0400, BtcUSD totalSupply 등)</td></tr>
+    <tr><td>BtcUSD 토큰</td><td><code>…/api/v2/tokens/0x6906Ccda…d555/counters</code> (홀더수·전송수)</td></tr>
+    <tr><td>BFC ERC-20 (보조)</td><td><code>api.ethplorer.io/getTokenInfo|getTopTokenHolders/0x0c7D5ae0…?apiKey=freekey</code></td></tr>
+    <tr><td>거래소 시세/상태</td><td>빗썸 <code>api.bithumb.com/public/ticker|assetsstatus/BFC_KRW</code> · 업비트 <code>api.upbit.com/v1/ticker?markets=BTC-BFC</code> · HTX <code>api.huobi.pro/market/detail/merged?symbol=bfcusdt</code></td></tr>
+    <tr><td>TVL</td><td><code>api.llama.fi/protocol/btcfi</code> · <code>/bifrost-dex</code> · <code>/v2/chains</code></td></tr>
     <tr><td>GitHub</td><td><code>api.github.com/orgs/bifrost-platform/...</code></td></tr>
   </table>
 
   <!-- MONITORING -->
-  <h2 class="sec" id="mon">📊 모니터링 — 10개 차원 베이스라인 & 루프</h2>
-  <p class="lead">매 루프: 아래 "재실행"으로 "기준값"과 diff → 차이 있을 때만 보고. 항상 BNC/Polkadot 필터링.</p>
+  <h2 class="sec" id="mon">📊 모니터링 — 10개 차원 베이스라인</h2>
+  <p class="lead">매 루프: "재실행"으로 "기준값"과 diff → 차이 있을 때만 보고. 항상 BNC/Polkadot 필터링.</p>
   <table>
     <tr><th>#</th><th>차원</th><th>기준값 (2026-06-29~30)</th><th>재실행 / 디프</th></tr>
-    <tr><td>1</td><td>상위 홀더 <b>★네이티브★</b></td><td>네이티브 리치리스트(업비트/빗썸 콜드허브·Treasury) · ETH는 보조(홀더 3,619)</td><td class="wrap">explorer-backend /addresses → 잔액·신규진입 diff</td></tr>
-    <tr><td>2</td><td>노드/검증자</td><td>24개(Full15/Basic9) · 스테이킹 406M · 라운드 2524</td><td class="wrap">RPC eth_call(0x…0400) · 주소집합 대조</td></tr>
-    <tr><td>3</td><td>브릿지+Vault+BtcUSD</td><td>BSC Socket 17,532tx · BtcUSD 8.06M · ETH Vault BFC 863.5M</td><td class="wrap">bscscan + RPC totalSupply + Vault 잔액</td></tr>
-    <tr><td>4</td><td>트랜잭션 <b>★네이티브★</b></td><td>네이티브 누적 7,747만 tx · 당일 ~17,051 · ETH는 보조(5.6만)</td><td class="wrap">explorer-backend /stats → 당일tx·대형전송</td></tr>
-    <tr><td>5</td><td>GitHub</td><td>node v2.2.0 · relayer v3.0.0 · 34 레포</td><td class="wrap">github API → 커밋SHA·릴리스·신규레포</td></tr>
+    <tr><td>1</td><td>상위홀더 <b>★네이티브★</b></td><td>업비트/빗썸 콜드허브·Treasury·리저브 분류</td><td class="wrap">explorer-backend /addresses → 잔액·신규진입</td></tr>
+    <tr><td>2</td><td>노드/검증자</td><td>24개(Full15/Basic9)·스테이킹 406M·라운드 2524</td><td class="wrap">RPC eth_call(0x…0400) · 주소집합 대조</td></tr>
+    <tr><td>3</td><td>브릿지+Vault+BtcUSD</td><td>BSC Socket 17,532tx·BtcUSD 8.06M(홀더481)·Everdex $3.23M</td><td class="wrap">bscscan + RPC totalSupply + tokens/counters</td></tr>
+    <tr><td>4</td><td>트랜잭션 <b>★네이티브★</b></td><td>네이티브 누적 7,747만·당일 ~17,051</td><td class="wrap">explorer-backend /stats → 당일tx·대형전송</td></tr>
+    <tr><td>5</td><td>GitHub</td><td>node v2.2.0·relayer v3.0.0·34레포</td><td class="wrap">github API → 커밋SHA·릴리스·신규레포</td></tr>
     <tr><td>6</td><td>뉴스</td><td>워터마크 2026-06-02 (6/3~30 신규 공식뉴스 없음)</td><td class="wrap">medium-kr·telegram·검색 → 워터마크 이후</td></tr>
-    <tr><td>7</td><td>일본 파트너</td><td>전부 발표/검증 단계, TVL 미공개</td><td class="wrap">파트너별 URL → 감시신호(HashPort TVL 등)</td></tr>
-    <tr><td>8</td><td>한국 거래소</td><td>업비트 348M · 빗썸 143.7M</td><td class="wrap">explorer-backend 클러스터 합 + assetsstatus</td></tr>
-    <tr><td>9</td><td>글로벌 거래소</td><td>HTX ~$2.2M(주력) · Gate 미미 · 코인원 미상장</td><td class="wrap">HTX/Gate/업비트/빗썸 공개 ticker</td></tr>
-    <tr><td>10</td><td>소셜</td><td>TG 860/7,129 · Medium 7,500 · X ~82K</td><td class="wrap">t.me/s/… · CoinCarp(X)</td></tr>
+    <tr><td>7</td><td>일본 파트너</td><td>전부 발표/검증 단계, TVL 미공개</td><td class="wrap">파트너별 URL → 감시신호</td></tr>
+    <tr><td>8</td><td>한국 거래소</td><td>업비트 348M·빗썸 143.7M·코빗 상장</td><td class="wrap">explorer-backend 클러스터 합 + assetsstatus</td></tr>
+    <tr><td>9</td><td>글로벌 거래소</td><td>HTX ~$2.2M(주력)·Gate 미미·코인원 미상장</td><td class="wrap">HTX/Gate/업비트/빗썸 ticker</td></tr>
+    <tr><td>10</td><td>소셜</td><td>TG 860/7,129·Medium 7,500·X ~82K</td><td class="wrap">t.me/s/… · CoinCarp(X)</td></tr>
   </table>
 
-  <h3>네이티브 메인넷(3068) 상위 홀더 — 주력 <span class="badge b-info">2026-06-30</span></h3>
-  <p class="muted">메인넷 전환 후 실제 보유·유통의 핵심. ETH ERC-20은 브릿지/원장용 보조.</p>
-  <table>
-    <tr><th>#</th><th>주소</th><th>잔액(BFC)</th><th>식별</th></tr>
-    <tr><td>1</td><td><code>0x50F187Ef…955E</code></td><td>332,484,206</td><td><span class="badge b-ok">업비트 콜드허브</span></td></tr>
-    <tr><td>2</td><td><code>0xDCd52f5f…8935</code></td><td>137,482,292</td><td><span class="badge b-ok">빗썸 콜드허브</span></td></tr>
-    <tr><td>3</td><td><code>0x4bAE7ba3…66Ee</code></td><td>87,424,912</td><td>미검증 컨트랙트(수신전용) → <b>리저브/베스팅성</b> <span class="badge b-warn">추정</span></td></tr>
-    <tr><td>4</td><td><code>0xAe172D8c…9BF3e</code></td><td>40,342,392</td><td>Unified BFC 컨트랙트(시스템)</td></tr>
-    <tr><td>6</td><td><code>0x081a4ee5…268c3</code></td><td>15,377,787</td><td><span class="badge b-ok">업비트 핫</span></td></tr>
-    <tr><td>5·8·10·11·12</td><td>휴면 EOA 다수</td><td>~10~16M</td><td>휴면 <b>배분/OTC 지갑</b>(분배자가 큰덩어리 송금) <span class="badge b-warn">추정</span></td></tr>
-    <tr><td>19</td><td><code>0x6d6f646C…0000</code></td><td>7,538,155</td><td><span class="badge b-info">Treasury 국고</span> (modlpy/trsry)</td></tr>
-    <tr><td>21·22·25</td><td><code>0xffFaAC…</code> 외</td><td>~6.7M</td><td>검증자 stash</td></tr>
-  </table>
-  <p class="muted">+ 네이티브 <b>DEX 라우터</b> <code>0x7Ace89E2…</code>(Uniswap V2형, <b>85,612 tx</b>, 잔액0) 식별 — 온체인 스왑 중심. 상세 → <code>data/native-holders-analysis.md</code></p>
-  <div class="callout"><b>인사이트</b> — 네이티브 상위 <b>470M이 업비트(332.5M)+빗썸(137.5M) 두 거래소 콜드허브</b>에 집중. 3위는 미검증 87M 리저브성 컨트랙트(첫 OUT 발생 시 주목), 중간티어는 휴면 배분 지갑(대량 이동=장기홀더 매도 신호).</div>
-  <p class="muted">디프: 거래소 콜드허브(#1·#2) 잔액 급변=순유입/출 · Treasury(#19) 집행 · #3 87M 첫 OUT · 휴면 배분지갑 이동 · top25 신규/이탈. 조회 <code>explorer-backend.mainnet.thebifrost.io/api/v2/addresses</code></p>
-
-  <h3>TOP50 집중도 분해 <span class="badge b-info">심화</span></h3>
-  <div class="grid">
-    <div class="kpi"><div class="v">54.7%</div><div class="l">거래소 (업비트 38.7% + 빗썸 16.0%)</div></div>
-    <div class="kpi"><div class="v">26.5%</div><div class="l">미식별 EOA (대부분 초기배분 휴면)</div></div>
-    <div class="kpi"><div class="v">15.8%</div><div class="l">시스템/리저브 컨트랙트</div></div>
-    <div class="kpi"><div class="v">3.1%</div><div class="l">검증자 stash + Treasury</div></div>
-  </div>
-  <p class="muted">TOP50 합계 899.8M BFC. 유통 구조 = <b>거래소 + 초기배분 휴면군집 + 컨트랙트</b>로 단순, 순수 액티브 리테일 비중 작음.</p>
-  <h3>미식별 컨트랙트 추가 식별 (메서드 시그니처)</h3>
-  <table>
-    <tr><th>주소</th><th>잔액</th><th>정체</th></tr>
-    <tr><td><code>0x1c1b0640…E3B9</code></td><td>8.4M</td><td><code>deposit()/withdraw()</code> → <b>Wrapped BFC (WBFC)</b></td></tr>
-    <tr><td><code>0xD3351BAA…7Ad05</code></td><td>6.2M</td><td><code>claim()</code> → <b>에어드랍/리워드 클레임</b></td></tr>
-    <tr><td><code>0x4bAE7ba3…66Ee</code> (#3)</td><td>87.4M</td><td><b>신규 리저브</b> — 2026-06-04 생성(BTCFi기), 다수 입금 수집(OUT 0) → BFC 스테이킹/락업 추정</td></tr>
-  </table>
-  <div class="callout ok"><b>초기 배분 확정 (잔액이력으로 검증)</b> — TOP50 중 <b>14개 지갑이 ~3.25M BFC 균등 청크</b>. 잔액이력이 <b>단 1건(블록 613703, 2023-02-03 = 메인넷 직후)</b> → 1회 수령 후 3년 휴면. 루트 분배 컨트랙트 <code>0x4077aE70</code>(내부tx로 80M 팬아웃) → 분배자 EOA → 3.25M 휴면. = <b>초기 토큰 배분</b> 확정. 대량 이동 시 언락/매도 신호.</div>
-  <div class="callout info"><b>팀 배포자 2명 식별 (creator 필드)</b><br>
-    • <code>0xDd505f3e…de369</code> — 제네시스기(2023) 운영 EOA, 루트 분배 컨트랙트 배포<br>
-    • <code>0xA30B97a5…BB7a9B</code> — BTCFi기(2025~26) 배포자, <b>#3 리저브·WBFC·호출자 컨트랙트</b> 배포<br>
-    <span class="muted">실세계 신원(팀/재단/투자자)은 온체인만으로 귀속 불가.</span></div>
-  <p class="muted">방법론: 리치리스트·counters·2hop 흐름·메서드 시그니처 + <b>internal-tx·잔액이력·creator·chain_spec</b>(2차→3차 추가). 막힌 것: 실 genesis 명단(raw chainspec 비공개)·컨트랙트 소스 미검증·배포자 신원.</p>
-
-  <!-- EXCHANGE -->
-  <h2 class="sec" id="exch">🟢 거래소 보유 클러스터 (온체인 확정)</h2>
-  <div class="grid">
-    <div class="card">
-      <h3 style="margin-top:0">업비트 ≈ 348M BFC <span class="badge b-ok">확인</span></h3>
-      <p class="muted">사용자 출금이력으로 확정 — 콜드허브가 핫월렛들에 자금 공급</p>
-      <table>
-        <tr><th>역할</th><th>주소</th><th>잔액</th></tr>
-        <tr><td>콜드/허브</td><td><code>0x50F187Ef…955E</code></td><td>332.5M</td></tr>
-        <tr><td>핫(유저출금)</td><td><code>0x081a4ee5…268c3</code></td><td>15.4M</td></tr>
-        <tr><td>핫</td><td><code>0x0056a143…3D0e</code> 외 2</td><td>순환(0)</td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <h3 style="margin-top:0">빗썸 ≈ 143.7M BFC <span class="badge b-ok">공시일치</span></h3>
-      <p class="muted">앱 공시 143,666,510 ≈ 온체인 합 143.8M</p>
-      <table>
-        <tr><th>역할</th><th>주소</th><th>잔액</th></tr>
-        <tr><td>콜드/허브</td><td><code>0xDCd52f5f…8935</code></td><td>137.5M</td></tr>
-        <tr><td>핫(2,920tx)</td><td><code>0x39528D59…084D</code></td><td>6.3M</td></tr>
-      </table>
-    </div>
-  </div>
-  <div class="callout warn"><b>빗썸 공시 자동수집</b> — 정확값(내부유통량/보유자/순입금)은 로그인+Akamai 봇차단으로 자동수집 불가 → <b>온체인 클러스터 합으로 대체</b>(공시와 일치). 공개 API(ticker·assetsstatus)는 수집 OK. 거래소 BFC는 ETH가 아닌 <b>네이티브 체인</b>에 존재.</div>
-
-  <!-- VALIDATORS -->
-  <h2 class="sec" id="validators">검증자 24 (기명 / 매핑 제약)</h2>
-  <p>기명 검증자(주소 비공개): <span class="pill">BitTrade 일본거래소</span><span class="pill">AI Fusion Capital 도쿄상장사</span><span class="pill">KICA 한국정보인증</span><span class="pill">DeSpread</span></p>
-  <div class="callout warn">Bifrost는 Substrate라 <b>온체인 identity 필드가 없어 실명↔주소 1:1 매핑은 원천 불가</b>. 24개 controller/stash 주소 전체는 <code>data/validators-snapshot.md</code> 보관 → 루프에서 주소집합 변동(신규/이탈)만 추적.</div>
-
-  <!-- SIGNALS -->
   <h2 class="sec" id="signals">🔔 최우선 감시 신호</h2>
-  <div class="card">
-    <ol>
-      <li>Vault/소각 주소 대형 이동 · <b>거래소 클러스터 잔액 급변</b>(순유입=매도압력)</li>
-      <li><b>BFC의 BitTrade(일본) 상장</b> · 빗썸/업비트 입출금 중단(<code>assetsstatus</code>=0)</li>
-      <li>HashPort/N.suite JPYC 렌딩 <b>첫 TVL 수치</b> + <b>BtcUSD 발행량 급증</b>(교차검증)</li>
-      <li><b>CCCP v2 메인넷 전환</b> (현재 testnet)</li>
-      <li>검증자 집합 변동 · 신규 GitHub 레포/릴리스 · 워터마크(2026-06-02) 이후 신규 뉴스</li>
-    </ol>
-  </div>
+  <div class="card"><ol>
+    <li><b>거래소 클러스터 잔액 급변</b>(업비트/빗썸 콜드허브 순유입=매도압력) · Treasury(#19) 집행</li>
+    <li><b>#3 87M 리저브의 첫 OUT 발생</b>(잠재 매도/언락) · 3.25M 휴면 배분지갑 대량 이동</li>
+    <li><b>BFC의 BitTrade(일본) 상장</b> · 빗썸/업비트 입출금 중단(<code>assetsstatus</code>=0)</li>
+    <li>HashPort/N.suite JPYC 렌딩 <b>첫 TVL 수치</b> + <b>BtcUSD 발행량·홀더수 급증</b>(교차검증)</li>
+    <li><b>CCCP v2 메인넷 전환</b> · 검증자 집합 변동 · 신규 GitHub 릴리스 · 워터마크(2026-06-02) 이후 신규 뉴스</li>
+  </ol></div>
+
+  <!-- METHOD -->
+  <h2 class="sec" id="method">📐 방법론 · 신뢰도</h2>
+  <h4>사용한 분석 방법</h4>
+  <p class="small">리치리스트·counters·2-hop 흐름추적·메서드 시그니처 식별·클러스터 매칭 · <b>internal-tx·coin-balance-history·contract creator·chain_spec genesis</b> 교차. 거래소 클러스터는 사용자 출금이력(ground truth)+빗썸 앱 공시와 온체인 합 대조로 확정.</p>
+  <table>
+    <tr><th>신뢰도</th><th>항목</th></tr>
+    <tr><td><span class="badge b-ok">확인</span></td><td class="wrap">업비트/빗썸 클러스터, 3.25M=초기배분(2023-02), 배포자 2명, BtcUSD 발행량/홀더, 검증자 24주소, Treasury, 컨트랙트 주소 풀셋</td></tr>
+    <tr><td><span class="badge b-warn">추정</span></td><td class="wrap">#3=BTCFi 리저브(용도), WBFC·claim 컨트랙트(메서드 기반), 초기배분 군집의 투자자/팀 구분</td></tr>
+    <tr><td><span class="badge b-bad">미확인/한계</span></td><td class="wrap">실 genesis allocation 명단(raw chainspec 비공개), 컨트랙트 소스 미검증, 배포자 실세계 신원, 검증자 실명매핑(Substrate identity 부재)</td></tr>
+  </table>
 
   <!-- OPEN -->
-  <h2 class="sec" id="open">미해결 / 후속 과제 (난이도 높음)</h2>
+  <h2 class="sec" id="open">미해결 / 다음 분석 후보</h2>
   <ul>
+    <li>검증자 27,387 위임자 분포(탈중앙화·보안 신호) — BfcStaking precompile ABI 필요</li>
+    <li>코빗(Korbit) 네이티브 클러스터 식별</li>
+    <li>#3 87M 리저브의 정확한 프로토콜명(소스 미검증)</li>
     <li>온체인 거버넌스(제안/투표) 추적 가능 여부</li>
-    <li>토큰 언락/베스팅 일정 (대형 컨트랙트 해제 패턴)</li>
-    <li>BTC vault 멀티시그 임계값(M-of-N)</li>
-    <li>미식별 대형 콜드 <code>0x4bAE7…6Ee</code> (87M, 유출 0, 축적형) 정체</li>
-    <li>검증자 실명↔주소 매핑 (Substrate identity 부재로 원천 제약 → 테스트입금 필요)</li>
+    <li>초기배분 최초 루트(팀/재단/투자자) — 아카이브 노드 trace 또는 raw genesis 필요</li>
   </ul>
 
   <div class="foot">
-    <p>출처: 공식(bifrostnetwork.com·docs·medium/bifrost·GitHub bifrost-platform) · 온체인(ethplorer·explorer-backend.thebifrost.io·bscscan·DefiLlama) · 거래소 공개 API(빗썸·업비트·HTX·Gate) · 한·일 미디어. 모든 수치는 관찰일 기준 스냅샷.</p>
-    <p>동반 문서: <code>README.md</code> · <code>01-overview.md</code> · <code>02-deep-dive.md</code> · <code>03-monitoring-baseline.md</code> · <code>data/validators-snapshot.md</code></p>
+    <p><b>출처</b> — 공식(bifrostnetwork.com·docs·medium/bifrost·GitHub bifrost-platform) · 온체인(explorer-backend.thebifrost.io·ethplorer·bscscan·RPC·DefiLlama) · 거래소 공개 API(빗썸·업비트·코빗·HTX·Gate) · 한·일 미디어. 모든 수치는 관찰일(2026-06-29~30) 스냅샷이며 변동됨.</p>
+    <p><b>면책</b> — 온체인 라벨 다수는 흐름·행태 기반 추정이며 단정이 아님. 투자 조언 아님.</p>
   </div>
 </main>
 </div>
