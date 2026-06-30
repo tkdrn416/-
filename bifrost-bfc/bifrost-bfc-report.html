@@ -358,7 +358,7 @@
 
   <!-- ===== 온체인 심층분석 ===== -->
   <h2 class="sec" id="native-holders"><span class="n">15</span>실질 BFC 익스포저 TOP100 (BiFi 예치·스테이킹 합산) <span class="badge b-info">재단 탐지</span></h2>
-  <p class="small muted">랭킹 기준 = <b>네이티브 잔액 + BiFi 예치(wstBFC×1.13, BFC) + 스테이킹(stBFC/wstBFC) + bvVault 지분</b> (인프라 컨트랙트 제외, 주소 병합). 지갑 BFC를 스테이킹→BiFi 예치하면 네이티브 잔액엔 안 잡히므로 이를 합산한 <b>실보유 랭킹</b>. ◆=재단 연관. 합계 1.11B BFC, 100위 컷 ~2.97M.<br><b>「← 원천」</b> = BiFi 예치자가 예치 전 <b>물량을 받아온 출처</b>(재귀 funder 추적, 최대 7홉·순환감지): <b>★재단 분배망</b>=재단 배포망 origin · <b>빗썸 인출</b>=거래소발(다홉 도달 포함) · <b>순환 클러스터(관리형 추정)</b>=서로 wstBFC를 돌리는 연관 지갑군(독립 외부유저 아님, 재단분배자 0x313b1578과 연결) · <b>DEX 매수</b>=Everdex 취득.</p>
+  <p class="small muted">랭킹 기준 = <b>네이티브 잔액 + BiFi 예치(wstBFC×1.13, BFC) + 스테이킹(stBFC/wstBFC) + bvVault 지분</b> (인프라 컨트랙트 제외, 주소 병합). 지갑 BFC를 스테이킹→BiFi 예치하면 네이티브 잔액엔 안 잡히므로 이를 합산한 <b>실보유 랭킹</b>. ◆=재단 연관. 합계 1.11B BFC, 100위 컷 ~2.97M.<br><b>「← 원천」</b> = BiFi 예치자가 예치 전 <b>물량을 받아온 출처</b>(재귀 funder 추적, 최대 7홉·순환감지). <b>「다홉」=여러 중간지갑을 거침</b>(예: A→B→C→빗썸 = 3홉; 직접 아니라 단계적으로 도달). 분류: <b>★재단 분배망</b>=재단 배포망 origin · <b>빗썸 인출(다홉)</b>=결국 거래소발 · <b>순환 클러스터(관리형)</b>=서로 wstBFC 돌리는 연관 지갑군(독립 외부 아님, 재단분배자 0x313b1578 연결·가스허브 0x81c22bec 충전) · <b>DEX 경유</b>=Everdex 라우터 경유(단, 결제자금 자체가 재단/운용지갑발 — 외부 신규자금 아님).</p>
   <div class="callout warn"><b>캐비엇:</b> wstBFC→BFC 1.13x 가정(시점변동) · 대출(borrow) 미차감(총공급 기준) · BiFi BtcUSD/USDC 풀 예치는 BFC 아니라 제외 · "네이티브 보유" EOA의 재단◆는 초기배분 추정(funder 미전수검증, 거래소출금/OTC 일부 가능) · BiFi예치/스테이커는 외부 유저 다수(재단 미플래그).</div>
   <table>
     <tr><th>#</th><th class="num">eff BFC</th><th>재단</th><th>분류</th><th>주소</th><th>소스</th></tr>
@@ -390,8 +390,8 @@
     <tr><td>26</td><td class="num">8,951,898</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 빗썸 인출</span></td><td><code>0x10982101db09142dfdec7ad75712093c45c075b3</code></td><td class="small">BiFi</td></tr>
     <tr><td>27</td><td class="num">8,523,512</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자(0x988077831d)</span></td><td><code>0x2a3e8fd86a304168b8e7d187b63c07feb5efef83</code></td><td class="small">볼트</td></tr>
     <tr><td>28</td><td class="num">8,500,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x9825f45906387bdcae71832ee274cd76d33d8ca6</code></td><td class="small">네이티브</td></tr>
-    <tr><td>29</td><td class="num">8,385,624</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: DEX(Everdex) 매수</span></td><td><code>0x902a21c0fa4e223e07d51ac2608fc19b7c303582</code></td><td class="small">네이티브+stake</td></tr>
-    <tr><td>30</td><td class="num">7,729,062</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 순환 클러스터(관리형 추정)</span></td><td><code>0xc7275255ae6da1bc1e103d6b5d16d39f7f252204</code></td><td class="small">볼트</td></tr>
+    <tr><td>29</td><td class="num">8,385,624</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: DEX 경유(실자금원=재단플래그 0x41c2ceb4 #24)</span></td><td><code>0x902a21c0fa4e223e07d51ac2608fc19b7c303582</code></td><td class="small">네이티브+stake</td></tr>
+    <tr><td>30</td><td class="num">7,729,062</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: DEX 경유(자금원=재단플래그 0x41c2ceb4 #24)</span></td><td><code>0xc7275255ae6da1bc1e103d6b5d16d39f7f252204</code></td><td class="small">볼트</td></tr>
     <tr><td>31</td><td class="num">7,699,148</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">Treasury재단</td><td><code>0x6d6f646c70792f74727372790000000000000000</code></td><td class="small">네이티브</td></tr>
     <tr><td>32</td><td class="num">7,001,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xc1f8b8048e187df9c7847e639a867f843083dc29</code></td><td class="small">네이티브</td></tr>
     <tr><td>33</td><td class="num">6,948,222</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 순환 클러스터(관리형 추정)</span></td><td><code>0xb6bd9f069ef653999ced2c8c7b0b8ec45f553fb5</code></td><td class="small">볼트</td></tr>
@@ -403,8 +403,8 @@
     <tr><td>39</td><td class="num">6,666,148</td><td></td><td class="wrap">검증자 stash</td><td><code>0x355b784757473741133911042bcd215b3d8ee289</code></td><td class="small">네이티브</td></tr>
     <tr><td>40</td><td class="num">6,365,992</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 순환 클러스터(관리형 추정)</span></td><td><code>0x2b6745618ff2ee48be7b52347c2d67c4c9eb0973</code></td><td class="small">볼트</td></tr>
     <tr><td>41</td><td class="num">6,264,119</td><td></td><td class="wrap">빗썸핫</td><td><code>0x39528d59132920ab0a637129d90cf9fb3650084d</code></td><td class="small">네이티브</td></tr>
-    <tr><td>42</td><td class="num">6,000,000</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: DEX(Everdex) 매수</span></td><td><code>0x080c1ee5df627c56a849a04c46af1f533ee290bc</code></td><td class="small">BiFi</td></tr>
-    <tr><td>43</td><td class="num">5,879,919</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자(경유)</span></td><td><code>0x106f60267cd1368641633f86dec41a028dbcb147</code></td><td class="small">볼트</td></tr>
+    <tr><td>42</td><td class="num">6,000,000</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: DEX/멀티토큰 운영주소(BtcUSD·BiFi, 외부신규 아님)</span></td><td><code>0x080c1ee5df627c56a849a04c46af1f533ee290bc</code></td><td class="small">BiFi</td></tr>
+    <tr><td>43</td><td class="num">5,879,919</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: DEX/멀티토큰 운영주소(BtcUSD·BiFi 취급, 외부신규 아님)</span></td><td><code>0x106f60267cd1368641633f86dec41a028dbcb147</code></td><td class="small">볼트</td></tr>
     <tr><td>44</td><td class="num">5,875,385</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자(경유)</span></td><td><code>0xdd2398e8bd9f8a1f34cc013b7d0ca5f85a08470d</code></td><td class="small">볼트</td></tr>
     <tr><td>45</td><td class="num">5,828,846</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배망(0x98807783 경유)</span></td><td><code>0xc1f2a6ea484ab0f0041a158dc86e132d1612cdf4</code></td><td class="small">볼트</td></tr>
     <tr><td>46</td><td class="num">5,758,374</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배망(다홉)</span></td><td><code>0x556f8c585d4efe5f379e56fe373bdf9827f2f7cd</code></td><td class="small">볼트</td></tr>
@@ -535,6 +535,91 @@
 </svg></div>
   <p class="small">BiFi/볼트 예치자 38명을 <b>재귀 funder 추적(최대 7홉·순환감지)</b>으로 끝까지 분해: <b>재단 분배망 42%(17건·128.8M)</b> · <b>순환 클러스터(관리형 추정) 30%(12건·91.4M)</b> · 거래소 인출 24%(7건·73.2M) · DEX 매수 5%(2건·14.4M). 초기 「미상 경유 46%」는 0%로 해소됨 — 다수가 4~5홉 뒤 빗썸/재단분배자에 도달하거나, 서로 wstBFC를 돌리는 <b>순환 클러스터</b>(0x0c791e90·0x52c78774·0x4d0bbd3b·0xeb76c926 등, 재단분배자 0x313b1578과 연결)로 수렴. 순환 클러스터는 독립 외부유저가 아니라 <b>관리형/연관 지갑군</b> 정황(재단 또는 MM 운용 추정).</p>
   <div class="callout warn"><b>★★ 운용자 네트워크 (순환클러스터·InvestVault 정체 규명):</b> 더 파보니 단일 조정 주체로 수렴 — ① 볼트운용 EOA <code>0xaff29bedb24c</code>=InvestVault 포함 <b>43개 컨트랙트 배포</b> · ② 클러스터 컨트롤러 EOA <code>0xb878526f</code>=순환 share컨트랙트 배포자(<code>0x23E016E0e5</code>) 소유, <b>49개 배포</b> · ③ 공통 <b>가스허브 EOA <code>0x81c22bec</code></b>(49,270 BFC)가 위 둘 모두 가스충전, <b>총 51개 지갑에 BFC 배분</b>. → 두 볼트 운용자가 같은 허브에서 자금 = <b>하나의 관리형 운용 네트워크</b>. 재단직접/위탁MM/볼트팀 중 무엇인지는 온체인만으론 단정 불가하나 독립 retail 아님 확정. <b>가스허브 <code>0x81c22bec</code> 잔액·배분 급변 = 운용망 재가동(신규볼트/매도) 트리거</b> → <code>tools/monitor.py</code> 와치리스트 포함.</div>
+  <h4>순환 클러스터 구조 (실측 매핑)</h4>
+  <div style="margin:8px 0"><svg viewBox="0 0 820 470" width="100%" style="max-width:820px;background:#0d1117;border:1px solid #1f2937;border-radius:8px" font-family="ui-sans-serif,system-ui">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9ca3af"/></marker></defs>
+<text x="20" y="24" fill="#e5e7eb" font-size="14" font-weight="700">순환 클러스터 구조 — 관리형 운용 네트워크 (12멤버: EOA 7 + 컨트랙트 5)</text>
+<rect x="30" y="46" width="150" height="40" rx="6" fill="#a78bfa" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="105.0" y="64" fill="#0d1117" font-size="12" font-weight="700" text-anchor="middle">컨트롤러 EOA</text>
+<text x="105.0" y="79" fill="#0d1117" font-size="10" text-anchor="middle">0xb878526f · 49배포</text>
+<rect x="220" y="46" width="160" height="40" rx="6" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="300.0" y="64" fill="#0d1117" font-size="12" font-weight="700" text-anchor="middle">배포자 컨트랙트</text>
+<text x="300.0" y="79" fill="#0d1117" font-size="10" text-anchor="middle">0x23E016E0e5</text>
+<line x1="180" y1="66" x2="220" y2="66" stroke="#9ca3af" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="200.0" y="63.0" fill="#9ca3af" font-size="9" text-anchor="middle">소유</text>
+<rect x="440" y="46" width="160" height="40" rx="6" fill="#4da3ff" stroke="#2563eb" stroke-width="1.5"/>
+<text x="520.0" y="64" fill="#0d1117" font-size="12" font-weight="700" text-anchor="middle">가스허브 EOA</text>
+<text x="520.0" y="79" fill="#0d1117" font-size="10" text-anchor="middle">0x81c22bec · 51지갑</text>
+<rect x="630" y="46" width="165" height="40" rx="6" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+<text x="712.5" y="64" fill="#0d1117" font-size="12" font-weight="700" text-anchor="middle">재단분배자</text>
+<text x="712.5" y="79" fill="#0d1117" font-size="10" text-anchor="middle">0x313b1578</text>
+<rect x="30" y="130" width="140" height="38" rx="6" fill="#1f2937" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="100.0" y="148" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0xc7275255</text>
+<text x="100.0" y="163" fill="#e5e7eb" font-size="10" text-anchor="middle">share컨트랙트</text>
+<line x1="300" y1="86" x2="100" y2="130" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="190" y="130" width="140" height="38" rx="6" fill="#1f2937" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="260.0" y="148" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0x9610386e</text>
+<text x="260.0" y="163" fill="#e5e7eb" font-size="10" text-anchor="middle">share컨트랙트</text>
+<line x1="300" y1="86" x2="260" y2="130" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="350" y="130" width="140" height="38" rx="6" fill="#1f2937" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="420.0" y="148" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0x2b674561</text>
+<text x="420.0" y="163" fill="#e5e7eb" font-size="10" text-anchor="middle">share컨트랙트</text>
+<line x1="300" y1="86" x2="420" y2="130" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="510" y="130" width="140" height="38" rx="6" fill="#1f2937" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="580.0" y="148" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0xb6bd9f06</text>
+<text x="580.0" y="163" fill="#e5e7eb" font-size="10" text-anchor="middle">share컨트랙트</text>
+<line x1="300" y1="86" x2="580" y2="130" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="670" y="130" width="140" height="38" rx="6" fill="#1f2937" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="740.0" y="148" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0x8c5ce7cd</text>
+<text x="740.0" y="163" fill="#e5e7eb" font-size="10" text-anchor="middle">share컨트랙트</text>
+<line x1="300" y1="86" x2="740" y2="130" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="712" y1="86" x2="580" y2="130" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#a)" stroke-dasharray="5 3"/>
+<text x="646.0" y="105.0" fill="#fbbf24" font-size="9" text-anchor="middle">경유</text>
+<line x1="712" y1="86" x2="740" y2="130" stroke="#fbbf24" stroke-width="1.6" marker-end="url(#a)" stroke-dasharray="5 3"/>
+<rect x="60" y="250" width="150" height="40" rx="6" fill="#1f2937" stroke="#34d399" stroke-width="1.5"/>
+<text x="135.0" y="268" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0xbb9f0294 (EOA)</text>
+<text x="135.0" y="283" fill="#e5e7eb" font-size="10" text-anchor="middle">공급원</text>
+<rect x="60" y="330" width="150" height="40" rx="6" fill="#1f2937" stroke="#34d399" stroke-width="1.5"/>
+<text x="135.0" y="348" fill="#f87171" font-size="12" font-weight="700" text-anchor="middle">0xeb76c926 (EOA)</text>
+<text x="135.0" y="363" fill="#f87171" font-size="10" text-anchor="middle">UNDERWATER</text>
+<line x1="135" y1="290" x2="135" y2="330" stroke="#34d399" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="135.0" y="307.0" fill="#34d399" font-size="9" text-anchor="middle">15.35M wstBFC</text>
+<rect x="300" y="250" width="150" height="40" rx="6" fill="#1f2937" stroke="#34d399" stroke-width="1.5"/>
+<text x="375.0" y="268" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0x0c791e90 (EOA)</text>
+<text x="375.0" y="283" fill="#e5e7eb" font-size="10" text-anchor="middle">공급허브</text>
+<rect x="300" y="330" width="150" height="40" rx="6" fill="#1f2937" stroke="#34d399" stroke-width="1.5"/>
+<text x="375.0" y="348" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0x4d0bbd3b (EOA)</text>
+<text x="375.0" y="363" fill="#e5e7eb" font-size="10" text-anchor="middle">SAFE</text>
+<line x1="375" y1="290" x2="375" y2="330" stroke="#34d399" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="375.0" y="307.0" fill="#34d399" font-size="9" text-anchor="middle">9.70M</text>
+<line x1="450" y1="350" x2="510" y2="168" stroke="#34d399" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="480.0" y="256.0" fill="#34d399" font-size="9" text-anchor="middle">6.84M→share</text>
+<line x1="390" y1="290" x2="310" y2="290" stroke="#34d399" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="375" y1="290" x2="200" y2="168" stroke="#34d399" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="287.5" y="226.0" fill="#34d399" font-size="9" text-anchor="middle">4.62M→share</text>
+<rect x="540" y="250" width="150" height="40" rx="6" fill="#1f2937" stroke="#34d399" stroke-width="1.5"/>
+<text x="615.0" y="268" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0xda50a0ff (EOA)</text>
+<rect x="540" y="330" width="150" height="40" rx="6" fill="#1f2937" stroke="#34d399" stroke-width="1.5"/>
+<text x="615.0" y="348" fill="#e5e7eb" font-size="12" font-weight="700" text-anchor="middle">0x6666a49b (EOA)</text>
+<line x1="615" y1="290" x2="615" y2="330" stroke="#34d399" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="615.0" y="307.0" fill="#34d399" font-size="9" text-anchor="middle">↕ 0.45M</text>
+<line x1="520" y1="86" x2="135" y2="250" stroke="#4da3ff" stroke-width="1.6" marker-end="url(#a)" stroke-dasharray="3 3"/>
+<text x="327.5" y="165.0" fill="#4da3ff" font-size="9" text-anchor="middle">gas</text>
+<line x1="520" y1="86" x2="375" y2="250" stroke="#4da3ff" stroke-width="1.6" marker-end="url(#a)" stroke-dasharray="3 3"/>
+<line x1="520" y1="86" x2="615" y2="250" stroke="#4da3ff" stroke-width="1.6" marker-end="url(#a)" stroke-dasharray="3 3"/>
+<text x="20" y="430" fill="#9ca3af" font-size="10">● 5개 share컨트랙트 = 동일 배포자 0x23E016E0e5(컨트롤러 0xb878526f) · ● EOA 7개 = 가스허브 0x81c22bec가 가스충전</text>
+<text x="20" y="447" fill="#9ca3af" font-size="10">● 초록=wstBFC 내부순환(BiFi 예치 경유) · 노랑 점선=재단분배자 0x313b1578 연결 · 파랑 점선=가스 공급</text>
+<text x="20" y="464" fill="#f87171" font-size="10">● 0xeb76c926·0xd7c19693(별도) 등 UNDERWATER 포지션이 이 클러스터에 집중 → 미청산 부실</text>
+</svg></div>
+  <table>
+    <tr><th>구성</th><th>멤버</th><th>역할</th></tr>
+    <tr><td>컨트롤러 EOA</td><td><code>0xb878526f</code></td><td class="wrap">share컨트랙트 배포자(<code>0x23E016E0e5</code>)의 소유주, 49개 컨트랙트 배포</td></tr>
+    <tr><td>배포자 컨트랙트</td><td><code>0x23E016E0e5</code></td><td class="wrap">아래 5개 share컨트랙트를 모두 생성(공통 배포자)</td></tr>
+    <tr><td>share 컨트랙트 5</td><td class="wrap"><code>0xc7275255</code>·<code>0x9610386e</code>·<code>0x2b674561</code>·<code>0xb6bd9f06</code>·<code>0x8c5ce7cd</code></td><td class="wrap">포지션 보유 컨트랙트(wstBFC 예치). 0xb6bd9f06·0x8c5ce7cd는 재단분배자 0x313b1578 경유</td></tr>
+    <tr><td>공급 EOA 7</td><td class="wrap"><code>0x0c791e90</code>·<code>0x4d0bbd3b</code>·<code>0xeb76c926</code>·<code>0xbb9f0294</code>·<code>0x5e5cc1a3</code>·<code>0x6666a49b</code>·<code>0xda50a0ff</code></td><td class="wrap">가스허브 0x81c22bec가 가스충전. 서로 wstBFC 전달(아래 흐름)</td></tr>
+  </table>
+  <p class="small"><b>내부 wstBFC 흐름(실측):</b> 0xbb9f0294→0xeb76c926 <b>15.35M</b> · 0x0c791e90→0x4d0bbd3b <b>9.70M</b> · 0x4d0bbd3b→0xc7275255 <b>6.84M</b> · 0x0c791e90→0x9610386e <b>4.62M</b> · 0xda50a0ff↔0x6666a49b 0.45M. → EOA가 wstBFC를 받아 share컨트랙트로 연쇄 이전, BiFi 예치. <b>UNDERWATER 부실(0xd7c19693·0xeb76c926·0x5e5cc1a3)이 이 클러스터에 집중.</b></p>
+  <div class="callout info"><b>InvestVault/1 정체:</b> <code>0xbc0995ca</code>는 <b>검증 안 된(소스 비공개) 컨트랙트</b>, 노출 ABI 없음. wstBFC 유입원=wstBFC핸들러(wrap) 32.9M + 자매볼트 <code>0x3aba7600</code> 17.1M(동일 운용자). <b>공개 문서화된 Bifrost 제품(BiFi·Biquid·Everdex·BTCFi) 아님</b> → "처음 듣는 게 정상". <b>재단 직속 여부 미확정</b>(운용자 네트워크 소속, 자금 내부순환). 즉 비공식 관리형 볼트.</div>
   <h4>재단 클러스터 최근 활동 (신규배분/매도 신호)</h4>
   <p class="small">Treasury 출금 0 · DeFi배포자 0xA30B97a5 <b>2025-08 후 휴면</b> · 분배자 네트워크 대부분 2025중반 후 휴면(0x54c29770만 2025-12). → <b>현재 신규 배분/매도 신호 없음.</b> 2026 성장은 기배포 컨트랙트로 진행. <b>이 휴면 지갑들의 재가동이 차기 프로젝트/매도 핵심 트리거.</b></p>
   <p class="small muted">캐비엇: 재단 origin 추정은 funder 기반(일부 거래소출금/OTC 혼재 가능). 0xA30B97a5 외 신규 운영지갑 존재 가능 → 신규 배포자 추적으로 보완. 상세 <code>data/foundation-tracking.md</code>.</p>
@@ -624,7 +709,7 @@
     <tr><td><b>$0.0060</b></td><td><b>49%↓</b></td><td class="num"><b>26</b></td><td class="num"><b>195.0M</b></td><td class="num"><b>$1.32M</b></td></tr>
     <tr><td>$0.0040</td><td>66%↓</td><td class="num">30</td><td class="num">208.5M</td><td class="num">$1.38M</td></tr>
   </table>
-  <div class="callout ok"><b>핵심(정정):</b> <b>3% 하락으로는 신규청산 1건($1,410)뿐 — 사실상 없음.</b> 실질 청산 위험은 깊은 하락(~46~49%↓, $0.006 부근)에 집중되며, 이 구간 195M BFC 중 <code>0xbc0995ca</code> 한 곳이 149.5M BFC(부채 $924K, 청산가 $0.00637=46%↓)로 대부분을 차지. <b>★ 단 이 <code>0xbc0995ca</code>는 개인 고래가 아니라 컨트랙트 <code>InvestVault/1</code>(BiFi 풀형 투자볼트, 토큰전송 2,430건)</b> — 즉 곡선의 거대 점프는 <b>bvVault 예치자 수십 명의 합산 포지션</b>(TOP100 #14·17·18·19·20·25·27… 의 「볼트 지분」)이 한 컨트랙트로 묶인 것. 개인 1명이 아니라 <b>볼트 참여자 집단</b>이 ~46% 구간서 동반 청산. 볼트 운용 배포자 EOA=<code>0xaff29bedb24c</code>(팩토리 <code>0xd0f8ba2d</code>→<code>0x3aba7600</code> 등 동반 배포). 별도 32건($0.73M)은 <b>이미 청산권인데도 미청산 방치</b> = BiFi 청산 키퍼 사실상 비활성(런오프) 정황.<br><span class="small">캐비엇: wstBFC→BFC 1.137·오라클가 시점값 · marginCall 0.97 가정 · BFC 단독 하락(타자산 고정) 시나리오 · 후보 189명 기준 · InvestVault 내부 지분분배는 볼트 컨트랙트 회계.</span></div>
+  <div class="callout ok"><b>핵심(정정):</b> <b>3% 하락으로는 신규청산 1건($1,410)뿐 — 사실상 없음.</b> 실질 청산 위험은 깊은 하락(~46~49%↓, $0.006 부근)에 집중되며, 이 구간 195M BFC 중 <code>0xbc0995ca</code> 한 곳이 149.5M BFC(부채 $924K, 청산가 $0.00637=46%↓)로 대부분을 차지. <b>★ 단 이 <code>0xbc0995ca</code>는 개인 고래가 아니라 컨트랙트 <code>InvestVault/1</code>(BiFi 풀형 투자볼트, 토큰전송 2,430건)</b> — 즉 곡선의 거대 점프는 <b>bvVault 예치자 수십 명의 합산 포지션</b>(TOP100 #14·17·18·19·20·25·27… 의 「볼트 지분」)이 한 컨트랙트로 묶인 것. 개인 1명이 아니라 <b>볼트 참여자 집단</b>이 ~46% 구간서 동반 청산. 볼트 운용 배포자 EOA=<code>0xaff29bedb24c</code>(팩토리 <code>0xd0f8ba2d</code>→<code>0x3aba7600</code> 등 동반 배포). 별도 32건($0.73M)은 <b>이미 청산권인데도 미청산 방치</b>.<br><b>★ 검증(2026-06-30):</b> 이 32건은 <b>소액 아님</b> — 100만BFC 초과 6건이 담보의 <b>88%</b>, 특히 <code>0xd7c19693</code>(18.8M·health 1.24)+<code>0xeb76c926</code>(17.8M·1.06) 둘이 70%. <b>셋다(+0x5e5cc1a3) 순환클러스터 멤버</b> = 부실이 운용 클러스터 자체 포지션에 집중. Manager+핸들러4개 로그 전수에 <b>청산(liquidation) 이벤트 0건</b> = BiFi 청산 키퍼 사실상 비활성 확정. <b>왜 방치?</b> ①청산봇 부재 ②52M 비유동 BFC 강제매각=가격붕괴라 청산인 무수익(부채 $0.73M에 불과) ③다수가 운용자 자기 포지션. → <b>"청산 대기 5천만개"가 아니라 영구 정체된 휴면 부실</b>(달러규모 작아 시스템 위협 아님).<br><span class="small">캐비엇: wstBFC→BFC 1.137·오라클가 시점값 · marginCall 0.97(순 wstBFC서 검증) · 로그 최근 2000건 기준(청산 이벤트 타입 자체 부재).</span></div>
 
   <h2 class="sec" id="eth-holders"><span class="n">16</span>ETH ERC-20 홀더 (보조 — 브릿지/원장)</h2>
   <p class="small">홀더 ~3,619명 · totalSupply 40억(소각분 포함) · 전송누계 111,008 / txs 56,044.</p>
