@@ -123,7 +123,7 @@
     <div class="kpi"><div class="v">8.06M</div><div class="l">BtcUSD 발행 · 홀더 481 · 전송 195,729</div></div>
     <div class="kpi"><div class="v">24</div><div class="l">검증자 Full15/Basic9 · 스테이킹 406M(~29.3%)</div></div>
     <div class="kpi"><div class="v">54.7%</div><div class="l">TOP50 거래소 집중(업비트38.7+빗썸16)</div></div>
-    <div class="kpi"><div class="v">$11.86M</div><div class="l">체인 TVL (DEX $3.23M + BTCFi $2.68M 등)</div></div>
+    <div class="kpi"><div class="v">$11.84M</div><div class="l">체인 TVL net · BTCFi $9.2M·BiFi $6.9M·Biquid $3.2M·DEX $2.7M(중복조정)</div></div>
     <div class="kpi"><div class="v">7,747만</div><div class="l">네이티브 누적 tx · 당일 ~17K · 주소 6,028만</div></div>
   </div>
   <div class="card">
@@ -171,6 +171,7 @@
     <tr><td><b>BiFi</b></td><td class="wrap">멀티체인 렌딩(BTC 담보로 ETH 차입; 랩드 없는 네이티브 크로스체인 렌딩). 배포 ETH/BSC/AVAX. 거버넌스 토큰 BIFI(총발행 10억) 별도</td></tr>
     <tr><td><b>BiFi X</b></td><td>플래시론 기반 레버리지/마진 트레이딩</td></tr>
     <tr><td><b>Everdex</b></td><td>네이티브 DEX(AMM) · <b>BIFROST CrossChain Swap</b>(브릿지 기반)</td></tr>
+    <tr><td><b>Biquid</b></td><td>리퀴드 스테이킹 — BFC 스테이킹→stBFC/wstBFC 발행(biquid.io)</td></tr>
     <tr><td><b>Biport / Pockie</b></td><td>멀티체인 지갑. Pockie 8체인(ETH/BNB/Arbitrum/Polygon/Avalanche/Base/Bifrost/Klaytn), 2023-12 출시</td></tr>
     <tr><td><b>ChainRunner Q</b></td><td>DeFi 애그리게이터</td></tr>
     <tr><td><b>Biplorer</b></td><td>온체인 분석 도구 (pilab.co 등재)</td></tr>
@@ -260,22 +261,24 @@
   </ul>
 
   <!-- 8 DEFI -->
-  <h2 class="sec" id="defi"><span class="n">8</span>온체인 DeFi 레이어</h2>
+  <h2 class="sec" id="defi"><span class="n">8</span>온체인 DeFi 레이어 <span class="badge b-warn">재조사 정정</span></h2>
   <div class="grid">
-    <div class="kpi"><div class="v">$2.68M</div><div class="l">BTCFi TVL (DefiLlama)</div></div>
-    <div class="kpi"><div class="v">$3.23M</div><div class="l">Everdex(DEX) TVL</div></div>
-    <div class="kpi"><div class="v">481</div><div class="l">BtcUSD 홀더 · 전송 195,729</div></div>
-    <div class="kpi"><div class="v">$11.86M</div><div class="l">Bifrost 체인 전체 TVL</div></div>
+    <div class="kpi"><div class="v">$9.17M</div><div class="l">BTCFi CDP (BTC담보 $6.45M+Bifrost $2.65M)</div></div>
+    <div class="kpi"><div class="v">$6.94M</div><div class="l">BiFi 렌딩 (Bifrost $6.5M)</div></div>
+    <div class="kpi"><div class="v">$3.17M</div><div class="l">Biquid 리퀴드스테이킹 (stBFC)</div></div>
+    <div class="kpi"><div class="v">$2.69M</div><div class="l">Everdex DEX</div></div>
+    <div class="kpi"><div class="v">$11.84M</div><div class="l">Bifrost Network 체인 TVL(net)</div></div>
   </div>
+  <p class="small muted">※ <b>정정:</b> 앞서 BiFi를 "$4,901 붕괴"로 본 것은 오류(잘못된 DefiLlama 필드). BiFi는 건재하며 Bifrost 최대급 DeFi. 4대 프로토콜 단순합 ~$22M이나 자산 중복(BiFi가 wstBFC·BtcUSD 보유 등)으로 체인 net TVL은 $11.84M.</p>
   <table>
-    <tr><th>프로토콜</th><th>규모</th><th>핵심 컨트랙트</th></tr>
-    <tr><td><b>Everdex</b> (네이티브 DEX/AMM)</td><td>TVL $3.23M</td><td class="wrap">라우터 <code>0x7Ace89E2…</code>(85,612tx) · LP <code>0x840Cf452…</code>(BtcUSD 1.47M+USDC 1.0M). 거래쌍 WBFC·BtcUSD·USDC·ETH</td></tr>
-    <tr><td><b>BtcUSD</b> (BTC담보 스테이블)</td><td>발행 8.06M·홀더 481</td><td class="wrap">토큰 <code>0x6906Ccda…d555</code> · 담보/발행 <code>0xcF2FC1d3…</code>(1.89M BtcUSD) · #3 리저브 87M BFC</td></tr>
-    <tr><td>WBFC (Wrapped BFC)</td><td>8.4M 래핑</td><td><code>0x1c1b0640…</code> (<code>deposit/withdraw</code>)</td></tr>
-    <tr><td>리워드/에어드랍 claim</td><td>6.2M</td><td><code>0xD3351BAA…</code> (<code>claim()</code>)</td></tr>
-    <tr><td>BiFi 렌딩</td><td>TVL ~$4,901 (피크 2021-08 $207.9M→붕괴)</td><td>ETH <code>0x2791BfD6…BA81</code> 등</td></tr>
+    <tr><th>프로토콜</th><th>카테고리</th><th>TVL</th><th>핵심 컨트랙트 / 구성</th></tr>
+    <tr><td><b>BTCFi CDP</b></td><td>CDP</td><td>$9.17M</td><td class="wrap">BtcUSD <code>0x6906Ccda…d555</code>(발행 8.06M·홀더 481). BTC 담보 $6.45M(Bitcoin)+Bifrost $2.65M. 고정 3.5%</td></tr>
+    <tr><td><b>BiFi</b> (렌딩)</td><td>Lending</td><td>$6.94M</td><td class="wrap">예치 구성: <b>wstBFC $3.07M</b>·BtcUSD $1.90M(<code>0xcF2FC1d3…</code>)·BFC $1.03M(<code>0x4bAE7…</code> 87M)·ETH·USDC·BNB. url bifi.finance · Unified BiFi <code>0x047938C3…0003</code></td></tr>
+    <tr><td><b>Biquid</b> (리퀴드스테이킹)</td><td>Liquid Staking</td><td>$3.17M</td><td class="wrap"><b>stBFC</b> <code>0xEff8378C…5aE4</code>(발행 268.8M) · <b>wstBFC</b> <code>0x386f2F5d…DdaE</code>(발행 232.6M). url biquid.io. 네트워크 스테이킹 406M 중 상당분 경유</td></tr>
+    <tr><td><b>Everdex</b> (DEX/AMM)</td><td>Dexs</td><td>$2.69M</td><td class="wrap">라우터 <code>0x7Ace89E2…</code>(85,612tx)·LP <code>0x840Cf452…</code>(BtcUSD/USDC). 거래쌍 WBFC·BtcUSD·USDC·ETH</td></tr>
+    <tr><td>WBFC / claim</td><td>유틸</td><td>8.4M / 6.2M</td><td>WBFC <code>0x1c1b0640…</code> · claim <code>0xD3351BAA…</code></td></tr>
   </table>
-  <p class="small">BtcUSD 멀티체인: BSC <code>0x4F2c9962…0D4c</code> · Base <code>0xe4b20925…4dd4</code> · Core <code>0xad0c524C…dd10</code> · Oasys <code>0x4Cda2D68…27B7</code>. 출처 DefiLlama "Bifrost DEX"·docs Everdex</p>
+  <p class="small">BtcUSD 멀티체인: BSC <code>0x4F2c9962…</code>·Base <code>0xe4b20925…</code>·Core <code>0xad0c524C…</code>·Oasys <code>0x4Cda2D68…</code>. 출처 DefiLlama(btcfi-cdp·bifi·biquid·everdex)·docs. <b>BiFi/Biquid/BTCFi/Everdex 배포자 다수 = 0xA30B97a5(현행 DeFi 스위트).</b></p>
 
   <!-- 9 GITHUB -->
   <h2 class="sec" id="github"><span class="n">9</span>GitHub — bifrost-platform</h2>
@@ -359,7 +362,7 @@
     <tr><th>#</th><th class="num">잔액(BFC)</th><th class="num">tx</th><th>C/E</th><th>주소</th><th>분류</th></tr>
     <tr><td>1</td><td class="num">332,484,206</td><td class="num">35</td><td>E</td><td><code>0x50F187Ef4447dA6e5Ff1D740439e91175BAC955E</code></td><td class="wrap">업비트 콜드허브 <span class="badge b-ok"></span></td></tr>
     <tr><td>2</td><td class="num">137,482,292</td><td class="num">243</td><td>E</td><td><code>0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935</code></td><td class="wrap">빗썸 콜드허브 <span class="badge b-ok"></span></td></tr>
-    <tr><td>3</td><td class="num">87,424,912</td><td class="num">int</td><td>C</td><td><code>0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee</code></td><td class="wrap">BTCFi 리저브(신규 2026-06) <span class="badge b-warn"></span></td></tr>
+    <tr><td>3</td><td class="num">87,424,912</td><td class="num">int</td><td>C</td><td><code>0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee</code></td><td class="wrap">BiFi BFC 렌딩 예치풀 <span class="badge b-warn"></span></td></tr>
     <tr><td>4</td><td class="num">40,342,392</td><td class="num">0</td><td>C</td><td><code>0xAe172D8c5E428D4b7C70f9E593b207F9daC9BF3e</code></td><td class="wrap">Unified BFC 컨트랙트 <span class="badge b-ok"></span></td></tr>
     <tr><td>5</td><td class="num">16,494,730</td><td class="num">0</td><td>E</td><td><code>0x5EeFFDbCDf6d269AE249e445b95BfFaDC0673cc7</code></td><td class="wrap">휴면 홀딩(초기배분 추정) <span class="badge b-warn"></span></td></tr>
     <tr><td>6</td><td class="num">15,377,787</td><td class="num">629</td><td>E</td><td><code>0x081a4ee55739F0DA8abB8af40D07687527a268c3</code></td><td class="wrap">업비트 핫 <span class="badge b-ok"></span></td></tr>
@@ -548,6 +551,8 @@
     <tr><td>BiFi (ETH)</td><td><code>0x2791BfD60D232150Bff86b39B7146c0eaAA2BA81</code></td></tr>
     <tr><td>BiFiB (BSC, 유일 공식 BSC 생태계토큰)</td><td><code>0x1378e33a09d8bd8e449CFD8A5aBCa0439286d645</code></td></tr>
     <tr><td>WBFC (3068)</td><td><code>0x1c1b06405058AbE02e4748753aeD1458BEFEE3B9</code></td></tr>
+    <tr><td>stBFC (Biquid 리퀴드스테이킹)</td><td><code>0xEff8378C6419b50C9D87f749f6852d96D4Cc5aE4</code> (발행 268.8M)</td></tr>
+    <tr><td>wstBFC (Wrapped staked BFC)</td><td><code>0x386f2F5d9A97659C86f3cA9B8B11fc3F76eFDdaE</code> (발행 232.6M)</td></tr>
     <tr><td class="wrap"><span class="badge b-bad">FAKE</span> BSC HelloBEP20</td><td><code>0xf4b5cd30bb12955ab54e106003e79223639009ec</code> (총발행 1만)</td></tr>
     <tr><td><span class="badge b-bad">FAKE</span> BSC 사칭</td><td><code>0x5Dec5345bA6c4CBcb6CF0ACA4954954174068dC9</code> (총발행 1000조)</td></tr>
     <tr><td><span class="badge b-bad">주의</span> Fantom</td><td><code>0x84c882a4d8eb448ce086ea19418ca0f32f106117</code> = Anyswap 브릿지 래퍼(자체발행 아님)</td></tr>

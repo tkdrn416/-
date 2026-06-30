@@ -31,9 +31,10 @@
 - ⚠️ Socket이 보유한 토큰으로 표시되는 HEX/DW 등은 스팸 에어드랍 → 브릿지 TVL 직접 산정 불가
 
 ### A-3. TVL / 시세 (DefiLlama + CoinGecko, 라이브)
-- **BTCFi 프로토콜 TVL: 약 $2.63M** (Bifrost Network $2.63M / Bitcoin $6.40M / Base $66.8K) — `api.llama.fi/protocol/btcfi`
+- **BTCFi CDP TVL: 약 $9.17M** (Bitcoin 담보 $6.45M + Bifrost Network $2.65M + Base) — `api.llama.fi/protocol/btcfi-cdp`
+- **Biquid 리퀴드스테이킹 TVL: $3.17M** (stBFC 268.8M/wstBFC 232.6M) — `api.llama.fi/protocol/biquid` ※ 신규 발견
 - **Bifrost Network 체인 전체 TVL: 약 $11.86M** — `api.llama.fi/v2/chains`
-- BiFi(렌딩) TVL: 약 $4,901 (피크 2021-08 $207.9M → 사실상 붕괴)
+- **BiFi(렌딩) TVL: 약 $6.94M** (Bifrost Network $6.5M 집중). ※ 앞서 '$4,901 붕괴'는 오류였음 — BiFi는 건재(Bifrost 최대급 렌딩). 예치 구성 wstBFC $3.07M·BtcUSD $1.9M·BFC $1.03M 등
 - **시세 (2026-06-29):** 가격 **$0.01195**, 시총 **$16.6M** (#896), 24h 거래량 ~$2.4M, 유통 13.9억, 총공급 23.7억, 최대공급 ∞, FDV $28.3M
 - ⚠️ DefiLlama에 "Bifrost"(BNC, gecko_id bifrost-native-coin, TVL $3.19M)가 별도 존재 → 혼동 주의
 

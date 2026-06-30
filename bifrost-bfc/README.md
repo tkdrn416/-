@@ -33,7 +33,7 @@
 
 **회사:** 2017년 설립, 박도현 CEO·이종협 CTO·유창현 COO, 서울 성수동, 직원 ~38명. 현재 "기관용 비트코인 금융 레이어 + 스테이블코인 인프라"로 재포지셔닝.
 
-**제품:** Bifrost Network(EVM L1, chainId 3068, DPoS+Aura/GRANDPA, Substrate+Frontier) · **BTCFi/BtcUSD**(네이티브 BTC 담보 스테이블, 3.5%) · BiFi(렌딩) · Biport/Pockie(지갑) · The BIFROST Bridge(CCCP, 9체인).
+**제품:** Bifrost Network(EVM L1, chainId 3068, DPoS+Aura/GRANDPA, Substrate+Frontier) · **BTCFi/BtcUSD**(네이티브 BTC 담보 스테이블, 3.5%, CDP $9.17M) · **BiFi**(렌딩 $6.94M) · **Biquid**(리퀴드스테이킹 $3.17M, stBFC) · **Everdex**(DEX $2.69M) · Biport/Pockie(지갑) · The BIFROST Bridge(CCCP, 9체인).
 
 **토큰:** BFC. ERC-20 `0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c`. 메인넷 네이티브 가스코인. 시총 ~$16.6M(2026-06). 공급: 40억 발행 → 2022년 40%(16억) 소각 → 메인넷서 캡 폐지·인플레이션(코드 13%) → StableDAO 소각. 상장 업비트·빗썸·코빗·HTX.
 
@@ -66,7 +66,7 @@
 - 거래소 보유: **업비트 ≈348M · 빗썸 ≈143.7M** (클러스터 잔액 합)
 - 검증자: **24개**(Full15/Basic9), 스테이킹 **406M BFC** · 주소목록 [data/validators-snapshot.md](./data/validators-snapshot.md)
 - 브릿지 Vault TVL: ETH **BFC 863.5M**+USDC$607K · BSC **BTCB 44.3**(~$4.7M)
-- **BtcUSD 발행량 8.06M** (BTCFi 성장지표) · BTCFi TVL ~$2.68M
+- **DeFi:** BTCFi CDP $9.17M(BtcUSD 8.06M) · **BiFi 렌딩 $6.94M** · **Biquid 리퀴드스테이킹 $3.17M**(stBFC) · Everdex $2.69M · 체인 TVL $11.84M
 - 소셜: TG Notice 860/Global 7,129 · Medium 7,500 · X ~82K
 
 ### 🔔 최우선 감시 신호
@@ -95,5 +95,5 @@
 - 온체인 거버넌스(제안/투표) 추적 가능 여부
 - 토큰 언락/베스팅 일정 (대형 컨트랙트 해제 패턴)
 - BTC vault 멀티시그 임계값(M-of-N)
-- 미식별 대형 콜드 `0x4bAE7…6Ee`(87M, 유출 0) 정체
 - 검증자 실명↔주소 매핑(Substrate identity 부재로 원천 제약)
+- (해결됨) `0x4bAE7…6Ee` 87M = **BiFi BFC 렌딩 예치풀**(미식별 콜드 아님) · `0xcF2FC1d3` = BiFi BtcUSD 풀

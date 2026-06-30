@@ -228,3 +228,41 @@
 
 **전수 분류 집계(TOP50):** 거래소 8개(업비트5+빗썸2+핫) 491.6M · 컨트랙트 5개(리저브·Unified·WBFC·claim) 142.3M · 검증자 stash 3개 20.3M · Treasury 1개 7.5M · 초기배분/휴면 홀딩 ~30개 ~230M · 액티브/DeFi/OTC 소수.
 → **0-tx 휴면이 압도적**: TOP50 중 약 절반이 tx 0~5의 장기 휴면(초기배분/홀딩). 거래소+휴면배분이 유통의 대부분.
+
+---
+
+# ⚠️ 중대 정정 (6차, 2026-06-30) — BiFi/DeFi 재조사
+
+> 앞선 4차에서 BiFi TVL을 "$4,901(붕괴)"로 본 것은 **오류**(잘못된 DefiLlama 필드). 사용자 지적으로 재조사한 결과 BiFi는 건재하며, **#3·0xcF2FC1d3는 별개 리저브가 아니라 BiFi 렌딩 풀**이었음. Biquid(리퀴드스테이킹)도 신규 발견.
+
+## Bifrost Network DeFi 전모 (DefiLlama 카테고리별, 2026-06-30)
+| 프로토콜 | 카테고리 | TVL | 비고 |
+|---|---|---:|---|
+| **BTCFi CDP** | CDP | **$9.17M** | Bitcoin 담보 $6.45M + Bifrost $2.65M + Base $68K. BtcUSD 발행 |
+| **BiFi** | Lending | **$6.94M** | Bifrost $6.5M + ETH $237K + BSC $151K + Klaytn $52K. url bifi.finance |
+| **Biquid** | Liquid Staking | **$3.17M** | stBFC/wstBFC. url biquid.io |
+| **Everdex** | DEX | **$2.69M** | (별도 슬러그 bifrost-dex $3.23M와 중복 가능) |
+| **Bifrost Network 체인 TVL(net)** | | **$11.84M** | 중복 조정 후 (gecko bifrost, cmc 7817) |
+
+## BiFi 예치 구성 (Bifrost Network, tokensInUsd)
+| 자산 | USD | 컨트랙트/비고 |
+|---|---:|---|
+| **wstBFC** | $3.07M | Biquid 리퀴드스테이킹 파생(최대 예치자산) |
+| **BtcUSD** | $1.90M | **= 0xcF2FC1d3**(BiFi BtcUSD 풀, 배포자 0xA30B97a5) |
+| **BFC** | $1.03M | **= #3 0x4bAE7(87M BFC, BiFi BFC 풀)** |
+| ETH | $296K | |
+| USDC | $136K | |
+| BNB | $57K | |
+| USDT/DAI/BTC.b/WBTC | 소액 | |
+
+## 정정 사항
+1. **#3 `0x4bAE7…66Ee`(87M BFC)** = "BTCFi 신규 리저브" ❌ → **BiFi BFC 렌딩 예치풀** ✅. "다수 유저 입금"은 렌딩 예치였음(매도 overhang 아님, 활성 TVL).
+2. **`0xcF2FC1d3…`(1.89M BtcUSD)** = "BtcUSD 담보 컨트랙트" → 더 정확히 **BiFi BtcUSD 렌딩 풀**.
+3. **Biquid(리퀴드 스테이킹) 누락** → 신규 반영. **stBFC** `0xEff8378C6419b50C9D87f749f6852d96D4Cc5aE4`(발행 268.8M) · **wstBFC** `0x386f2F5d9A97659C86f3cA9B8B11fc3F76eFDdaE`(발행 232.6M). 네트워크 스테이킹 406M 중 상당분이 Biquid 경유 추정.
+4. **BTCFi 규모** $2.68M(Bifrost분만) → **CDP 전체 $9.17M**(BTC 담보 $6.45M 포함)로 정정.
+5. **0xA30B97a5** = "BTCFi 스위트" → 더 정확히 **BiFi/Biquid/BTCFi 등 현행 DeFi 스위트 배포자**.
+
+## 정정된 DeFi 모니터링 지표
+- BiFi TVL `api.llama.fi/protocol/bifi`(현 $6.94M) · Biquid `…/biquid`($3.17M) · BTCFi CDP `…/btcfi-cdp`($9.17M) · Everdex `…/everdex`($2.69M) · 체인 `…/v2/chains`(Bifrost Network $11.84M)
+- stBFC/wstBFC totalSupply(RPC 0x18160ddd) = 리퀴드스테이킹 성장
+- BiFi 예치 구성 변화(wstBFC·BtcUSD·BFC 비중) = 렌딩 수요 추적
