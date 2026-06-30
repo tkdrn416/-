@@ -357,132 +357,113 @@
   <p class="small">※ eBTC/BitVM(bifrost.blue)은 <b>파이랩 제품 아님</b>(동명 별개, 도메인 비활성). 파이랩 BTC 라인=BRP+BtcUSD+BTCFi. MJPY/MKRW/MUSD는 2025-07 상표 출원 단계(실제 라인은 BtcUSD).</p>
 
   <!-- ===== 온체인 심층분석 ===== -->
-  <h2 class="sec" id="native-holders"><span class="n">15</span>네이티브 TOP100 전수 + 재단(◆) 추적 <span class="badge b-info">재단 탐지</span></h2>
-  <p class="small muted"><b>목적: 재단 움직임 추적 → 물밑 프로젝트 조기 감지.</b> 잔액순 TOP100 전 주소 분류 + 재단 연관(◆) 플래그. ◆=Treasury·재단배포 컨트랙트·분배자 본체·재단분배 초기배분. <b>92/100이 재단 origin</b>(직접분배 또는 분배자)으로, 토큰 보유가 극도로 재단 중심. 거래소(커스터디)·검증자·외부 보유는 소수.</p>
-  <div class="callout warn"><b>캐비엇:</b> 휴면 EOA 기본값은 "초기배분(재단분배 추정)" — 대다수가 2023-02 재단 분배자 네트워크에서 수령했으나(확인), <b>일부는 거래소 출금수령·OTC일 수 있음</b>(개별 funder 미전수검증). 거래소/검증자/컨트랙트/분배자 본체는 확정.</div>
+  <h2 class="sec" id="native-holders"><span class="n">15</span>실질 BFC 익스포저 TOP100 (BiFi 예치·스테이킹 합산) <span class="badge b-info">재단 탐지</span></h2>
+  <p class="small muted">랭킹 기준 = <b>네이티브 잔액 + BiFi 예치(wstBFC×1.13, BFC) + 스테이킹(stBFC/wstBFC) + bvVault 지분</b> (인프라 컨트랙트 제외, 주소 병합). 지갑 BFC를 스테이킹→BiFi 예치하면 네이티브 잔액엔 안 잡히므로 이를 합산한 <b>실보유 랭킹</b>. ◆=재단 연관. 합계 1.11B BFC, 100위 컷 ~2.97M.</p>
+  <div class="callout warn"><b>캐비엇:</b> wstBFC→BFC 1.13x 가정(시점변동) · 대출(borrow) 미차감(총공급 기준) · BiFi BtcUSD/USDC 풀 예치는 BFC 아니라 제외 · "네이티브 보유" EOA의 재단◆는 초기배분 추정(funder 미전수검증, 거래소출금/OTC 일부 가능) · BiFi예치/스테이커는 외부 유저 다수(재단 미플래그).</div>
   <table>
-    <tr><th>#</th><th class="num">BFC</th><th>C/E</th><th>재단</th><th>주소</th><th>분류</th></tr>
-    <tr><td>1</td><td class="num">332,484,206</td><td>E</td><td></td><td><code>0x50F187Ef4447dA6e5Ff1D740439e91175BAC955E</code></td><td class="wrap">업비트 콜드허브(커스터디)</td></tr>
-    <tr><td>2</td><td class="num">137,482,292</td><td>E</td><td></td><td><code>0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935</code></td><td class="wrap">빗썸 콜드허브(커스터디)</td></tr>
-    <tr><td>3</td><td class="num">87,424,912</td><td>C</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee</code></td><td class="wrap">BiFi BFC풀(재단배포)</td></tr>
-    <tr><td>4</td><td class="num">40,342,392</td><td>C</td><td></td><td><code>0xAe172D8c5E428D4b7C70f9E593b207F9daC9BF3e</code></td><td class="wrap">Unified BFC(시스템 인프라)</td></tr>
-    <tr><td>5</td><td class="num">16,494,730</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x5EeFFDbCDf6d269AE249e445b95BfFaDC0673cc7</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>6</td><td class="num">15,377,787</td><td>E</td><td></td><td><code>0x081a4ee55739F0DA8abB8af40D07687527a268c3</code></td><td class="wrap">업비트 핫</td></tr>
-    <tr><td>7</td><td class="num">14,017,724</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xb68a0A0121be78f25A7d147394D90C35F2e34C5d</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>8</td><td class="num">14,001,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xf6ac30649a26130E2D1c6875E935a1FA67Cee76c</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>9</td><td class="num">11,810,189</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x5dEc180f0D414B4f3606e759c408A6B3561b1b2e</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>10</td><td class="num">11,000,500</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xd7C451b4A52DAFd95be3302d05eE70d097139A87</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>11</td><td class="num">10,809,131</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xc8BEda62EE1Cdf299a96be7C5d48d9b3956BC571</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>12</td><td class="num">10,100,100</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x456B4e4e67eB60c9594f135C2d54EC8F6E746157</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>13</td><td class="num">10,000,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xBB677177E68Baf15E32EE17833DbCce85F9fA234</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>14</td><td class="num">10,000,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x137b14ca112d911c2309076394f91CfB09BC7883</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>15</td><td class="num">9,606,633</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x41c2cEb45EaE87355B7E3FCe88Db134DA1c0BDAa</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>16</td><td class="num">8,500,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x9825F45906387bDcAE71832Ee274CD76D33D8cA6</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>17</td><td class="num">8,383,217</td><td>C</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x1c1b06405058AbE02e4748753aeD1458BEFEE3B9</code></td><td class="wrap">WBFC(재단배포)</td></tr>
-    <tr><td>18</td><td class="num">7,822,965</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x902a21c0Fa4e223e07d51ac2608fC19B7C303582</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>19</td><td class="num">7,699,148</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x6d6f646C70792f74727372790000000000000000</code></td><td class="wrap">Treasury 국고</td></tr>
-    <tr><td>20</td><td class="num">7,001,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xc1f8B8048e187DF9c7847E639A867f843083DC29</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>21</td><td class="num">6,845,339</td><td>E</td><td></td><td><code>0xffFaAC4Ea0972C21c2834a0410A0582e4AbfF741</code></td><td class="wrap">검증자 stash</td></tr>
-    <tr><td>22</td><td class="num">6,777,852</td><td>E</td><td></td><td><code>0x330d76197a25721357e05368179EbA8d0be9Be0e</code></td><td class="wrap">검증자 stash</td></tr>
-    <tr><td>23</td><td class="num">6,711,547</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x7AF4307bC3511B91ae452c514590B74F122761d3</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>24</td><td class="num">6,700,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x30D56Cdf86162dCc2d4A89b16eb9ae16105Ce327</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>25</td><td class="num">6,666,148</td><td>E</td><td></td><td><code>0x355b784757473741133911042bcD215B3d8EE289</code></td><td class="wrap">검증자 stash</td></tr>
-    <tr><td>26</td><td class="num">6,264,119</td><td>E</td><td></td><td><code>0x39528D59132920Ab0a637129D90CF9fB3650084D</code></td><td class="wrap">빗썸 핫</td></tr>
-    <tr><td>27</td><td class="num">6,167,698</td><td>C</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xD3351BAA5F5a60d3c8d438273B3f6EdB8aF7Ad05</code></td><td class="wrap">claim 컨트랙트(재단배포)</td></tr>
-    <tr><td>28</td><td class="num">5,450,353</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xd7548ef14e0e3f1a058c6a7066A1C8b9530474Ab</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>29</td><td class="num">4,981,687</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x988077831DC3b966aFEcC56597325ADEa2775d1e</code></td><td class="wrap">재단 집계/분배 연관</td></tr>
-    <tr><td>30</td><td class="num">4,499,587</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xb5F1948e68d85D0a4B202568CDE0B1554a5Ac9F2</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>31</td><td class="num">4,408,286</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x09FCED818439182812F13b006114da4382c4470E</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>32</td><td class="num">3,852,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xec174Bb7425B166C110Df2635C7EEa19b5066B25</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>33</td><td class="num">3,775,200</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xd0Fcb310DA818837275B22D2b8A619623FB585c1</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>34</td><td class="num">3,580,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xE08dfb35aC277Ed0fdCf3fC0FA52bfdF992236A3</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>35</td><td class="num">3,554,700</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x03b3254C33e71BB9803Bb0374C79A175704E2aF3</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>36</td><td class="num">3,434,810</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x7Dc6065B06620b71a02Ea680609d90F06CAF4825</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>37</td><td class="num">3,369,655</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xA877784Dbb3006d7625F6Cb0d70FC9A85a559ff3</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>38</td><td class="num">3,352,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x9a93B3aDdFcaC856a7ed9f0eBC26e50C64F999bF</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>39</td><td class="num">3,350,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x03BE8a705B0450aCA8Acd8A9354331a012a177f1</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>40</td><td class="num">3,335,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x9aB36689710Ebf5c7F964400E702649F7AB35378</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>41</td><td class="num">3,321,525</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x7Dff5caC83bF089ddddBb4780760Dae72Bce4227</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>42</td><td class="num">3,255,200</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x0ec0f33f88F6e04d950b66c8595e8Cd1b4bc6dBa</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>43</td><td class="num">3,253,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x91764daDC948417aaC03dF508c35c79A4766C3EB</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>44</td><td class="num">3,252,500</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x9A9b4417Eaa5dfB9145Bc5b4CA3deFac41c57199</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>45</td><td class="num">3,251,254</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xC3997794402553040CA17508E814E38B920717c6</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>46</td><td class="num">3,250,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xD63E32D055E39F53B93A9221202e3f384172Cc9a</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>47</td><td class="num">3,250,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x2D6Ef09BD5a298a6A650A2Dbd315805Fc6f0834F</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>48</td><td class="num">3,250,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x25527337e0845B97CC11E0893C388cD85f5D5de9</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>49</td><td class="num">3,215,600</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x453358744F494B8FA988fd9931c6664Ad61832Cd</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>50</td><td class="num">3,185,700</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x82f2a5c1589bE6a223C7DE5d865eF94D9D5Be347</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>51</td><td class="num">3,180,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x5E41cA233d3D243A15d3d1b340464D916Eac6CA6</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>52</td><td class="num">3,154,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x855D5bFf53D2c54d8c5E3dD1Ad7cb7cd58514db6</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>53</td><td class="num">3,152,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x1b6282ACd98c661B32efE139D2A57Af06Ad3f449</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>54</td><td class="num">3,121,500</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x257b7Bbab0485c376fdE341CbdA226030294c893</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>55</td><td class="num">3,118,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x801d56c695223E8C4f2b60D744cf6aa6F6C971Ef</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>56</td><td class="num">3,112,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x3818B0e11BA006415df89c5AACfc8d7fa9c34cDd</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>57</td><td class="num">3,112,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xf112b022eFe8b2A5e5944Ee7C708f162Baa224b5</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>58</td><td class="num">3,100,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x6571c7Ed083004d4010014d6737E7940AD6616e3</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>59</td><td class="num">3,059,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xeD49Ff92954f2850861177D67D81e9E94DBa83D8</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>60</td><td class="num">3,052,984</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x5c3aC5b1a7922380e88c880eE712818c7961f2D3</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>61</td><td class="num">3,025,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xBA3eebD1bd024a0E3462fc202d8A627E6953Fa0B</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>62</td><td class="num">3,013,995</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x256B3939e7F99dc1C5C900CC8bF85916Dad1B9fA</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>63</td><td class="num">3,012,599</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x9c012E888e927712E21808BCEceEb78ca5dEf459</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>64</td><td class="num">3,000,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x32d9fE2a947E299637Be0b252eb2a755b4d50AA2</code></td><td class="wrap">재단 분배자</td></tr>
-    <tr><td>65</td><td class="num">3,000,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x3Ad3B4df9FA3e11871F02FaCe0c667198Ea28134</code></td><td class="wrap">재단 분배자 본체</td></tr>
-    <tr><td>66</td><td class="num">2,975,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x34BfaC2b1D4bF4E2ed70226195fb4013c6a05543</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>67</td><td class="num">2,973,500</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xe6DB5714b6317090ed2f5B1862495aF3D10ce010</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>68</td><td class="num">2,957,899</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x96012B936374831660bc3660f2efc772eEFb3eE1</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>69</td><td class="num">2,956,895</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xEDd5454666009c66F7F331b6CcA5119bD15d7b83</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>70</td><td class="num">2,956,852</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x3F2F3995b0dcE7262De2B683d6C3f03B25313A07</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>71</td><td class="num">2,956,500</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x18a68c346Bab5507Eb60Ca902B095C48B7A0361E</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>72</td><td class="num">2,953,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x7419143e90C24BA6002dA440aB8a6b3433d73dF9</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>73</td><td class="num">2,914,584</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xe071967d3cc10126913B5F42900663F8C97d739E</code></td><td class="wrap">재단 분배자 본체</td></tr>
-    <tr><td>74</td><td class="num">2,850,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x7Ef07cd77c99221F8A26D2790527c2F4Ec06a496</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>75</td><td class="num">2,850,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xfA638f58Ad190198F2D94F0213619EEb8320aB31</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>76</td><td class="num">2,753,500</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x061de35495DA32Bf7641d04C4F10C04bE1Cc2364</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>77</td><td class="num">2,750,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x7DB817c00439FE073209C7b3748031028F789cB7</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>78</td><td class="num">2,676,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x5e00179c03fe9EC6f3AB1A27330ace54e865323c</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>79</td><td class="num">2,557,867</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xA4Db23692302e457153Ca93F00269bB1CBe7b5cE</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>80</td><td class="num">2,500,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x71c7Bd0829cB5d64bb7aD5ff1eb61B61532d2345</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>81</td><td class="num">2,500,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x7eE7C610dfCc4F13BC84CBB27171ED2726cC609F</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>82</td><td class="num">2,475,531</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xF71efEAa7Cfc642fbE74b0CeAc627983E4d8f769</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>83</td><td class="num">2,441,862</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xe536100D0c0B41005c6313278d4749cf8f5c3279</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>84</td><td class="num">2,360,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x81BA7f18a3d5574969C559F90f3d001a8883D7d1</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>85</td><td class="num">2,346,582</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xB1eF33c2075563BE57E1557C28d49E8418ff2eF0</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>86</td><td class="num">2,244,601</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x7dE4806Af9517cED1bD09678aB90b28Bd696B49c</code></td><td class="wrap">재단 분배자 본체</td></tr>
-    <tr><td>87</td><td class="num">2,153,600</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x84fB3609C2920253dc8CBAB9877935Ed66Bb7d30</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>88</td><td class="num">2,100,998</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x54C2977027d7c25f2C733d754109550B8f88495F</code></td><td class="wrap">재단 분배자 본체</td></tr>
-    <tr><td>89</td><td class="num">2,082,012</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xF3AD12C19438FF4F5b32E49D28b4530953796719</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>90</td><td class="num">1,967,306</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x832BB4A7C444E38c846F0d40F6C2c69bCd434950</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>91</td><td class="num">1,751,500</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xD6EAE8d3587bef4b08ccfA60c25C60c20781AC92</code></td><td class="wrap">재단 2차 분배자</td></tr>
-    <tr><td>92</td><td class="num">1,632,775</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x0069098B141C40D609BCF08226D2D14D70169D22</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>93</td><td class="num">1,541,103</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x3BA7d96cc7b7A48c511f149fB3a7323F195C29E9</code></td><td class="wrap">재단 분배자 본체</td></tr>
-    <tr><td>94</td><td class="num">1,500,000</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x2cb4fDbd77D4D56CAfB8811f810D0699F81354E8</code></td><td class="wrap">재단 분배자</td></tr>
-    <tr><td>95</td><td class="num">1,309,195</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x60866574070D5d1007f9A93A37D46f8E0BadF0af</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>96</td><td class="num">1,268,489</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x9ebB5E4EbE5acBfD1946Efc796284b3226c64eD6</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>97</td><td class="num">1,078,990</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x511101683B54B1d86443aF45483345eeeb605Eec</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>98</td><td class="num">1,000,001</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xE44289C97B2cd7203a0e6a779e3f605a87AD2851</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>99</td><td class="num">902,599</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0x08fF598c3fDa3A30e53E83FD0a8fc20BcB70aC92</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
-    <tr><td>100</td><td class="num">837,676</td><td>E</td><td><span class="badge b-warn">◆재단</span></td><td><code>0xc4E955e046fd4F6D20b026Eda002a4B412444319</code></td><td class="wrap">초기배분(재단분배 추정)</td></tr>
+    <tr><th>#</th><th class="num">eff BFC</th><th>재단</th><th>분류</th><th>주소</th><th>소스</th></tr>
+    <tr><td>1</td><td class="num">332,484,206</td><td></td><td class="wrap">업비트콜드</td><td><code>0x50f187ef4447da6e5ff1d740439e91175bac955e</code></td><td class="small">네이티브</td></tr>
+    <tr><td>2</td><td class="num">137,482,292</td><td></td><td class="wrap">빗썸콜드</td><td><code>0xdcd52f5f5af5022edefd59fd5353f4da3f2c8935</code></td><td class="small">네이티브</td></tr>
+    <tr><td>3</td><td class="num">21,640,284</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x0c791e902d08b916218317d308156eb6a8a2d6d2</code></td><td class="small">BiFi+stake</td></tr>
+    <tr><td>4</td><td class="num">20,180,371</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xfd561fbd4dd43ea04733adfa31949b25c0595818</code></td><td class="small">BiFi</td></tr>
+    <tr><td>5</td><td class="num">18,686,164</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xd7c19693f9ca21511847b1707242773d37c1c391</code></td><td class="small">BiFi</td></tr>
+    <tr><td>6</td><td class="num">17,762,447</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xeb76c926e848e0bab9323e998eea16c9076563a5</code></td><td class="small">BiFi</td></tr>
+    <tr><td>7</td><td class="num">16,494,730</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x5eeffdbcdf6d269ae249e445b95bffadc0673cc7</code></td><td class="small">네이티브</td></tr>
+    <tr><td>8</td><td class="num">15,377,787</td><td></td><td class="wrap">업비트핫</td><td><code>0x081a4ee55739f0da8abb8af40d07687527a268c3</code></td><td class="small">네이티브</td></tr>
+    <tr><td>9</td><td class="num">14,017,724</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xb68a0a0121be78f25a7d147394d90c35f2e34c5d</code></td><td class="small">네이티브</td></tr>
+    <tr><td>10</td><td class="num">14,001,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xf6ac30649a26130e2d1c6875e935a1fa67cee76c</code></td><td class="small">네이티브</td></tr>
+    <tr><td>11</td><td class="num">12,195,316</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xd05aa73ec4adfda929c52ef03db6e27f21da7005</code></td><td class="small">BiFi+stake</td></tr>
+    <tr><td>12</td><td class="num">12,000,000</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xbbcc95860e9a60b12dca99c78f82dda32dec6337</code></td><td class="small">BiFi</td></tr>
+    <tr><td>13</td><td class="num">11,810,189</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x5dec180f0d414b4f3606e759c408a6b3561b1b2e</code></td><td class="small">네이티브</td></tr>
+    <tr><td>14</td><td class="num">11,221,667</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x412b9646515cdb87d58041d31aa7f1f016b6fc6e</code></td><td class="small">볼트</td></tr>
+    <tr><td>15</td><td class="num">11,000,500</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xd7c451b4a52dafd95be3302d05ee70d097139a87</code></td><td class="small">네이티브</td></tr>
+    <tr><td>16</td><td class="num">10,809,131</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xc8beda62ee1cdf299a96be7c5d48d9b3956bc571</code></td><td class="small">네이티브</td></tr>
+    <tr><td>17</td><td class="num">10,474,673</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x91c4094bb5e97a1c8968add7499b16e3bc2c3a87</code></td><td class="small">볼트</td></tr>
+    <tr><td>18</td><td class="num">10,225,873</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x6abaa3950d0e0f0b731d8e453ec0b2ca0237bc26</code></td><td class="small">볼트</td></tr>
+    <tr><td>19</td><td class="num">10,143,850</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x80e9701c2a522967f26c48762a821b90355b1b71</code></td><td class="small">볼트</td></tr>
+    <tr><td>20</td><td class="num">10,143,850</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x0e9b3cfab21f9b31d797fae2b34928ce38496b88</code></td><td class="small">볼트</td></tr>
+    <tr><td>21</td><td class="num">10,100,100</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x456b4e4e67eb60c9594f135c2d54ec8f6e746157</code></td><td class="small">네이티브</td></tr>
+    <tr><td>22</td><td class="num">10,000,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xbb677177e68baf15e32ee17833dbcce85f9fa234</code></td><td class="small">네이티브</td></tr>
+    <tr><td>23</td><td class="num">10,000,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x137b14ca112d911c2309076394f91cfb09bc7883</code></td><td class="small">네이티브</td></tr>
+    <tr><td>24</td><td class="num">9,606,633</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x41c2ceb45eae87355b7e3fce88db134da1c0bdaa</code></td><td class="small">네이티브</td></tr>
+    <tr><td>25</td><td class="num">9,500,052</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xbabdc92221b4de2d8413412b6aa9798dd54afcbf</code></td><td class="small">볼트</td></tr>
+    <tr><td>26</td><td class="num">8,951,898</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x10982101db09142dfdec7ad75712093c45c075b3</code></td><td class="small">BiFi</td></tr>
+    <tr><td>27</td><td class="num">8,523,512</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x2a3e8fd86a304168b8e7d187b63c07feb5efef83</code></td><td class="small">볼트</td></tr>
+    <tr><td>28</td><td class="num">8,500,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x9825f45906387bdcae71832ee274cd76d33d8ca6</code></td><td class="small">네이티브</td></tr>
+    <tr><td>29</td><td class="num">8,385,624</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x902a21c0fa4e223e07d51ac2608fc19b7c303582</code></td><td class="small">네이티브+stake</td></tr>
+    <tr><td>30</td><td class="num">7,729,062</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xc7275255ae6da1bc1e103d6b5d16d39f7f252204</code></td><td class="small">볼트</td></tr>
+    <tr><td>31</td><td class="num">7,699,148</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">Treasury재단</td><td><code>0x6d6f646c70792f74727372790000000000000000</code></td><td class="small">네이티브</td></tr>
+    <tr><td>32</td><td class="num">7,001,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xc1f8b8048e187df9c7847e639a867f843083dc29</code></td><td class="small">네이티브</td></tr>
+    <tr><td>33</td><td class="num">6,948,222</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xb6bd9f069ef653999ced2c8c7b0b8ec45f553fb5</code></td><td class="small">볼트</td></tr>
+    <tr><td>34</td><td class="num">6,929,861</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xc54347d6d873875795a49465fda7a047fb1d1b8b</code></td><td class="small">볼트</td></tr>
+    <tr><td>35</td><td class="num">6,845,339</td><td></td><td class="wrap">검증자 stash</td><td><code>0xfffaac4ea0972c21c2834a0410a0582e4abff741</code></td><td class="small">네이티브</td></tr>
+    <tr><td>36</td><td class="num">6,777,852</td><td></td><td class="wrap">검증자 stash</td><td><code>0x330d76197a25721357e05368179eba8d0be9be0e</code></td><td class="small">네이티브</td></tr>
+    <tr><td>37</td><td class="num">6,711,547</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x7af4307bc3511b91ae452c514590b74f122761d3</code></td><td class="small">네이티브</td></tr>
+    <tr><td>38</td><td class="num">6,700,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x30d56cdf86162dcc2d4a89b16eb9ae16105ce327</code></td><td class="small">네이티브</td></tr>
+    <tr><td>39</td><td class="num">6,666,148</td><td></td><td class="wrap">검증자 stash</td><td><code>0x355b784757473741133911042bcd215b3d8ee289</code></td><td class="small">네이티브</td></tr>
+    <tr><td>40</td><td class="num">6,365,992</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x2b6745618ff2ee48be7b52347c2d67c4c9eb0973</code></td><td class="small">볼트</td></tr>
+    <tr><td>41</td><td class="num">6,264,119</td><td></td><td class="wrap">빗썸핫</td><td><code>0x39528d59132920ab0a637129d90cf9fb3650084d</code></td><td class="small">네이티브</td></tr>
+    <tr><td>42</td><td class="num">6,000,000</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x080c1ee5df627c56a849a04c46af1f533ee290bc</code></td><td class="small">BiFi</td></tr>
+    <tr><td>43</td><td class="num">5,879,919</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x106f60267cd1368641633f86dec41a028dbcb147</code></td><td class="small">볼트</td></tr>
+    <tr><td>44</td><td class="num">5,875,385</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xdd2398e8bd9f8a1f34cc013b7d0ca5f85a08470d</code></td><td class="small">볼트</td></tr>
+    <tr><td>45</td><td class="num">5,828,846</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xc1f2a6ea484ab0f0041a158dc86e132d1612cdf4</code></td><td class="small">볼트</td></tr>
+    <tr><td>46</td><td class="num">5,758,374</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x556f8c585d4efe5f379e56fe373bdf9827f2f7cd</code></td><td class="small">볼트</td></tr>
+    <tr><td>47</td><td class="num">5,676,681</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x4d0bbd3bbcebbf7d826b00a57683f2fff643d184</code></td><td class="small">BiFi</td></tr>
+    <tr><td>48</td><td class="num">5,450,353</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xd7548ef14e0e3f1a058c6a7066a1c8b9530474ab</code></td><td class="small">네이티브</td></tr>
+    <tr><td>49</td><td class="num">5,344,786</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x77d6941a54ac5fa21930b871ac0183dc01b2ddd3</code></td><td class="small">볼트</td></tr>
+    <tr><td>50</td><td class="num">5,220,391</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x9610386e89a16809f1c341dbcfdb92ce69daed4a</code></td><td class="small">볼트</td></tr>
+    <tr><td>51</td><td class="num">5,000,000</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xb290781ada49ebb068615090dd04dbe8a9439c9b</code></td><td class="small">BiFi</td></tr>
+    <tr><td>52</td><td class="num">4,981,687</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x988077831dc3b966afecc56597325adea2775d1e</code></td><td class="small">네이티브</td></tr>
+    <tr><td>53</td><td class="num">4,870,000</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xbb9f02945073a2edf7b8632557f20414d96a9d20</code></td><td class="small">BiFi</td></tr>
+    <tr><td>54</td><td class="num">4,499,587</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xb5f1948e68d85d0a4b202568cde0b1554a5ac9f2</code></td><td class="small">네이티브</td></tr>
+    <tr><td>55</td><td class="num">4,408,286</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x09fced818439182812f13b006114da4382c4470e</code></td><td class="small">네이티브</td></tr>
+    <tr><td>56</td><td class="num">4,387,015</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xf614497937555ef5d6ee945c15658ad46ba114c2</code></td><td class="small">BiFi+stake</td></tr>
+    <tr><td>57</td><td class="num">4,107,074</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x35d8a3d697df071e3de2d5f681198910d4c3e84a</code></td><td class="small">볼트</td></tr>
+    <tr><td>58</td><td class="num">4,007,293</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x5e5cc1a3ad7202408f2a37b2b8d69f414c7235bd</code></td><td class="small">BiFi</td></tr>
+    <tr><td>59</td><td class="num">3,916,048</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x8c5ce7cd747971736cf67c7b80033607581fc3b1</code></td><td class="small">볼트</td></tr>
+    <tr><td>60</td><td class="num">3,852,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xec174bb7425b166c110df2635c7eea19b5066b25</code></td><td class="small">네이티브</td></tr>
+    <tr><td>61</td><td class="num">3,800,000</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xa4147540b0552fd5ec5e66490f4b9e38786ddc33</code></td><td class="small">BiFi</td></tr>
+    <tr><td>62</td><td class="num">3,775,200</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xd0fcb310da818837275b22d2b8a619623fb585c1</code></td><td class="small">네이티브</td></tr>
+    <tr><td>63</td><td class="num">3,733,763</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x6666a49b7339998dfbc494f649710a1f3cd66666</code></td><td class="small">BiFi</td></tr>
+    <tr><td>64</td><td class="num">3,597,670</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0x0cb9964d54f66f576567c45e5cbba591e24bbb11</code></td><td class="small">볼트</td></tr>
+    <tr><td>65</td><td class="num">3,580,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xe08dfb35ac277ed0fdcf3fc0fa52bfdf992236a3</code></td><td class="small">네이티브</td></tr>
+    <tr><td>66</td><td class="num">3,557,690</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xda50a0ff48eda9b67a8fb2ba8274eec1e6351843</code></td><td class="small">BiFi+stake</td></tr>
+    <tr><td>67</td><td class="num">3,554,700</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x03b3254c33e71bb9803bb0374c79a175704e2af3</code></td><td class="small">네이티브</td></tr>
+    <tr><td>68</td><td class="num">3,434,810</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x7dc6065b06620b71a02ea680609d90f06caf4825</code></td><td class="small">네이티브</td></tr>
+    <tr><td>69</td><td class="num">3,369,655</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xa877784dbb3006d7625f6cb0d70fc9a85a559ff3</code></td><td class="small">네이티브</td></tr>
+    <tr><td>70</td><td class="num">3,352,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x9a93b3addfcac856a7ed9f0ebc26e50c64f999bf</code></td><td class="small">네이티브</td></tr>
+    <tr><td>71</td><td class="num">3,350,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x03be8a705b0450aca8acd8a9354331a012a177f1</code></td><td class="small">네이티브</td></tr>
+    <tr><td>72</td><td class="num">3,335,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x9ab36689710ebf5c7f964400e702649f7ab35378</code></td><td class="small">네이티브</td></tr>
+    <tr><td>73</td><td class="num">3,321,525</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x7dff5cac83bf089ddddbb4780760dae72bce4227</code></td><td class="small">네이티브</td></tr>
+    <tr><td>74</td><td class="num">3,255,200</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x0ec0f33f88f6e04d950b66c8595e8cd1b4bc6dba</code></td><td class="small">네이티브</td></tr>
+    <tr><td>75</td><td class="num">3,253,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x91764dadc948417aac03df508c35c79a4766c3eb</code></td><td class="small">네이티브</td></tr>
+    <tr><td>76</td><td class="num">3,252,500</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x9a9b4417eaa5dfb9145bc5b4ca3defac41c57199</code></td><td class="small">네이티브</td></tr>
+    <tr><td>77</td><td class="num">3,251,254</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xc3997794402553040ca17508e814e38b920717c6</code></td><td class="small">네이티브</td></tr>
+    <tr><td>78</td><td class="num">3,250,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xd63e32d055e39f53b93a9221202e3f384172cc9a</code></td><td class="small">네이티브</td></tr>
+    <tr><td>79</td><td class="num">3,250,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x2d6ef09bd5a298a6a650a2dbd315805fc6f0834f</code></td><td class="small">네이티브</td></tr>
+    <tr><td>80</td><td class="num">3,250,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x25527337e0845b97cc11e0893c388cd85f5d5de9</code></td><td class="small">네이티브</td></tr>
+    <tr><td>81</td><td class="num">3,215,600</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x453358744f494b8fa988fd9931c6664ad61832cd</code></td><td class="small">네이티브</td></tr>
+    <tr><td>82</td><td class="num">3,203,677</td><td></td><td class="wrap">BiFi예치/스테이커</td><td><code>0xd22dbc1f123a363cc68f1c4d383fc4575f9067d1</code></td><td class="small">볼트</td></tr>
+    <tr><td>83</td><td class="num">3,185,700</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x82f2a5c1589be6a223c7de5d865ef94d9d5be347</code></td><td class="small">네이티브</td></tr>
+    <tr><td>84</td><td class="num">3,180,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x5e41ca233d3d243a15d3d1b340464d916eac6ca6</code></td><td class="small">네이티브</td></tr>
+    <tr><td>85</td><td class="num">3,154,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x855d5bff53d2c54d8c5e3dd1ad7cb7cd58514db6</code></td><td class="small">네이티브</td></tr>
+    <tr><td>86</td><td class="num">3,152,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x1b6282acd98c661b32efe139d2a57af06ad3f449</code></td><td class="small">네이티브</td></tr>
+    <tr><td>87</td><td class="num">3,121,500</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x257b7bbab0485c376fde341cbda226030294c893</code></td><td class="small">네이티브</td></tr>
+    <tr><td>88</td><td class="num">3,118,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x801d56c695223e8c4f2b60d744cf6aa6f6c971ef</code></td><td class="small">네이티브</td></tr>
+    <tr><td>89</td><td class="num">3,112,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x3818b0e11ba006415df89c5aacfc8d7fa9c34cdd</code></td><td class="small">네이티브</td></tr>
+    <tr><td>90</td><td class="num">3,112,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xf112b022efe8b2a5e5944ee7c708f162baa224b5</code></td><td class="small">네이티브</td></tr>
+    <tr><td>91</td><td class="num">3,100,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x6571c7ed083004d4010014d6737e7940ad6616e3</code></td><td class="small">네이티브</td></tr>
+    <tr><td>92</td><td class="num">3,059,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xed49ff92954f2850861177d67d81e9e94dba83d8</code></td><td class="small">네이티브</td></tr>
+    <tr><td>93</td><td class="num">3,052,984</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x5c3ac5b1a7922380e88c880ee712818c7961f2d3</code></td><td class="small">네이티브</td></tr>
+    <tr><td>94</td><td class="num">3,025,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xba3eebd1bd024a0e3462fc202d8a627e6953fa0b</code></td><td class="small">네이티브</td></tr>
+    <tr><td>95</td><td class="num">3,013,995</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x256b3939e7f99dc1c5c900cc8bf85916dad1b9fa</code></td><td class="small">네이티브</td></tr>
+    <tr><td>96</td><td class="num">3,012,599</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x9c012e888e927712e21808bceceeb78ca5def459</code></td><td class="small">네이티브</td></tr>
+    <tr><td>97</td><td class="num">3,000,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">재단 분배자</td><td><code>0x32d9fe2a947e299637be0b252eb2a755b4d50aa2</code></td><td class="small">네이티브</td></tr>
+    <tr><td>98</td><td class="num">3,000,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">재단 분배자</td><td><code>0x3ad3b4df9fa3e11871f02face0c667198ea28134</code></td><td class="small">네이티브</td></tr>
+    <tr><td>99</td><td class="num">2,975,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x34bfac2b1d4bf4e2ed70226195fb4013c6a05543</code></td><td class="small">네이티브</td></tr>
+    <tr><td>100</td><td class="num">2,973,500</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xe6db5714b6317090ed2f5b1862495af3d10ce010</code></td><td class="small">네이티브</td></tr>
   </table>
-  <p class="small"><b>전수 집계:</b> 거래소 커스터디 ~3(491M) · 검증자 stash 3 · 재단배포 컨트랙트 4(BiFi풀·WBFC·claim) · Treasury 1 · <b>재단 분배자 본체 ~8</b> · <b>초기배분 휴면(재단 origin) ~60+</b> · 외부(거래소출금/OTC/액티브) 소수. → 재단 클러스터·분배 네트워크 상세 <code>data/foundation-tracking.md</code>.</p>
-
-  <h3>실질 BFC 익스포저 — 스테이킹/BiFi 합산 (TOP100 기반) <span class="badge b-info">확장</span></h3>
-  <p class="small muted">네이티브 잔액 리치리스트는 <b>스테이킹(stBFC/wstBFC)·BiFi 예치분 누락</b>(지갑 BFC를 스테이킹→래핑→예치하면 지갑잔액↓). 환산 합산: native + BiFi wstBFC예치×1.13 + 직접 wstBFC×1.13 + stBFC×1.0 + bvBasewstBFC 볼트지분.</p>
-  <div class="callout info"><b>숨은 스테이킹/BiFi 레이어</b> — stBFC 264M(거의 전량 wstBFC 래핑) · wstBFC 229M 중 <b>228.98M을 BiFi 마켓이 보유 ≈ 263M BFC 상당</b>(업비트 콜드 332M 다음 규모). wstBFC→BFC <b>≈1.13x</b>(사용자값, 시점변동).</div>
-  <table>
-    <tr><th>#</th><th class="num">effBFC</th><th>주소</th><th>소스</th><th>비고</th></tr>
-    <tr><td>1</td><td class="num">332,484,206</td><td><code>0x50F187Ef…955E</code></td><td>native</td><td>업비트 콜드(커스터디)</td></tr>
-    <tr><td>2</td><td class="num">137,482,292</td><td><code>0xDCd52f5f…8935</code></td><td>native</td><td>빗썸 콜드(커스터디)</td></tr>
-    <tr><td>3</td><td class="num">87,424,912</td><td><code>0x4bAE7ba3…66Ee</code></td><td>native</td><td>BiFi BFC풀(인프라·미분해)</td></tr>
-    <tr><td>4</td><td class="num">40,342,392</td><td><code>0xAe172D8c…9BF3e</code></td><td>native</td><td>Unified BFC(인프라)</td></tr>
-    <tr><td>5</td><td class="num">18,686,164</td><td><code>0xd7c19693…C391</code></td><td><b>BiFi예치</b></td><td><span class="badge b-warn">★신규</span> 네이티브 미포착</td></tr>
-    <tr><td>6</td><td class="num">17,762,447</td><td><code>0xeb76c926…63a5</code></td><td><b>BiFi예치</b></td><td><span class="badge b-warn">★신규</span></td></tr>
-    <tr><td>7</td><td class="num">16,970,324</td><td><code>0x0c791e90…d6d2</code></td><td>BiFi예치+stBFC</td><td><span class="badge b-warn">★신규</span></td></tr>
-    <tr><td>12</td><td class="num">12,195,316</td><td><code>0xd05aa73e…7005</code></td><td>BiFi예치+stBFC</td><td><span class="badge b-warn">★신규</span></td></tr>
-    <tr><td>14</td><td class="num">11,221,667</td><td><code>0x412b9646…fc6e</code></td><td>bvVault</td><td><span class="badge b-warn">★신규</span> 볼트분해</td></tr>
-    <tr><td>17~20</td><td class="num">~10.1~10.5M</td><td><code>0x91c4094b…</code> 외 3</td><td>bvVault</td><td><span class="badge b-warn">★신규</span></td></tr>
-    <tr><td>26</td><td class="num">8,531,010</td><td><code>0xfd561fbd…5818</code></td><td>BiFi예치</td><td><span class="badge b-warn">★신규</span></td></tr>
-  </table>
-  <p class="small"><b>요지:</b> 네이티브 TOP100에 없던 <b>★신규 대형 보유자 20여 명</b>(BiFi 예치자·bvVault 홀더, 각 8~19M BFC상당)이 실질 익스포저 상위권 진입. 거래소·인프라 컨트랙트(#1~4) 제외 시 이들이 실질 대형 개인/기관 홀더. <span class="muted">캐비엇: BiFi BFC풀(#3)·BtcUSD/USDC풀 예치자 미분해(추가 netting 필요)·교환비 1.13 가정·대출(borrow) 미반영. 상세 → data/native-holders-analysis 8차.</span></p>
+  <p class="small"><b>요지:</b> 거래소 커스터디(#1·2)를 빼면 상위는 <b>BiFi 예치/스테이킹 고래(#3~6,11,12,14…)</b>와 초기배분 휴면(네이티브). 네이티브-only 리스트엔 없던 BiFi 예치자 다수가 실질 상위. 상세 → data/native-holders-analysis(8차)·foundation-tracking.</p>
 
   <h2 class="sec" id="foundation"><span class="n">15-F</span>★ 재단 추적 · 물밑 프로젝트 감지</h2>
   <p class="small muted">이 조사의 핵심 목적 — 파이랩 재단의 온체인 움직임으로 진행 중인 프로젝트를 조기 포착.</p>
