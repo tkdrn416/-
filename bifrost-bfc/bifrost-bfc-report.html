@@ -283,6 +283,23 @@
   <div class="callout"><b>인사이트</b> — 네이티브 상위 <b>470M이 업비트(332.5M)+빗썸(137.5M) 두 거래소 콜드허브</b>에 집중. 3위는 미검증 87M 리저브성 컨트랙트(첫 OUT 발생 시 주목), 중간티어는 휴면 배분 지갑(대량 이동=장기홀더 매도 신호).</div>
   <p class="muted">디프: 거래소 콜드허브(#1·#2) 잔액 급변=순유입/출 · Treasury(#19) 집행 · #3 87M 첫 OUT · 휴면 배분지갑 이동 · top25 신규/이탈. 조회 <code>explorer-backend.mainnet.thebifrost.io/api/v2/addresses</code></p>
 
+  <h3>TOP50 집중도 분해 <span class="badge b-info">심화</span></h3>
+  <div class="grid">
+    <div class="kpi"><div class="v">54.7%</div><div class="l">거래소 (업비트 38.7% + 빗썸 16.0%)</div></div>
+    <div class="kpi"><div class="v">26.5%</div><div class="l">미식별 EOA (대부분 초기배분 휴면)</div></div>
+    <div class="kpi"><div class="v">15.8%</div><div class="l">시스템/리저브 컨트랙트</div></div>
+    <div class="kpi"><div class="v">3.1%</div><div class="l">검증자 stash + Treasury</div></div>
+  </div>
+  <p class="muted">TOP50 합계 899.8M BFC. 유통 구조 = <b>거래소 + 초기배분 휴면군집 + 컨트랙트</b>로 단순, 순수 액티브 리테일 비중 작음.</p>
+  <h3>미식별 컨트랙트 추가 식별 (메서드 시그니처)</h3>
+  <table>
+    <tr><th>주소</th><th>잔액</th><th>정체</th></tr>
+    <tr><td><code>0x1c1b0640…E3B9</code></td><td>8.4M</td><td><code>deposit()/withdraw()</code> → <b>Wrapped BFC (WBFC)</b></td></tr>
+    <tr><td><code>0xD3351BAA…7Ad05</code></td><td>6.2M</td><td><code>claim()</code> → <b>에어드랍/리워드 클레임</b></td></tr>
+    <tr><td><code>0x4bAE7ba3…66Ee</code> (#3)</td><td>87.4M</td><td>다수 입금 수집(OUT 0) → <b>스테이킹/락업/에스크로 리저브</b></td></tr>
+  </table>
+  <div class="callout warn"><b>초기/제네시스 배분 정황</b> — TOP50 중 <b>14개 지갑이 ~3.25M BFC 균등 청크</b>(다층 분배자 EOA → 휴면 지갑). 분배자 정상 입금내역이 비어 자금이 제네시스/내부 tx로 유입 → <b>초기 토큰 배분(투자자·팀·생태계)</b>으로 강하게 추정. 대부분 장기 휴면 = <b>잠재 매도압력 풀</b>(대량 이동 시 언락 신호).</div>
+
   <!-- EXCHANGE -->
   <h2 class="sec" id="exch">🟢 거래소 보유 클러스터 (온체인 확정)</h2>
   <div class="grid">
