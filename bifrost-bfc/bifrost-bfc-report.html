@@ -273,7 +273,7 @@
     <li>v2.1.0(2025-09)부터 <b>BLAZE 팔레트</b>(고급 UTXO 관리)</li>
     <li><b>BtcUSD</b>(btcfi.one): 네이티브 BTC 담보 CDP → BTC 백드 스테이블 민트, 고정 3.5%. 외부 연계 Core·Stacks(STX/aBTC/sBTC)·XLink/ALEX. Oasys 자동브릿지(Gaming DEX 풀, 최대 ~40% APY)</li>
   </ul>
-  <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 당일 대형 상환 포착:</b> 총공급 <b>6.11M</b>. <b>정정: 점진 수축이 아니라 오늘(2026-06-30) 하루 -1.96M 단일 소각</b>(전일 ~8.06M→오늘 6.11M, -24%). 소각 주체 = 9개 EOA. <b>★ 상위 2곳이 82%이며 둘 다 재단 연결 계정</b>: <code>0x85b44cf6</code>(-1.19M, <b>활동개시 2025-07-18=StableDAO 출범일</b>, BFC가스 출처=재단분배자 <code>0x3ba7d96c</code>) + <code>0xcca25978</code>(-408K, 동일 재단분배자 루트) — <b>공통 funder <code>0xdd88ffe1</code> 공유 = 연결된 계정</b>. 나머지 7곳은 BTCFi CDP 민터(브릿지볼트 경유), 그중 2곳(<code>0x08ff598c</code>·<code>0xf0585acc</code>)은 BFC 79~90만 보유 고래. <b>해석: 오늘 BTC 회수는 외부 일반유저 이탈이 아니라 재단/시드 계정의 BtcUSD CDP 언와인드</b>(BtcUSD가 96% 인프라/재단 보유라는 사실과 일관). 분포 극집중: 브릿지볼트 <code>0xD85EB87c</code> 61% + <code>0x840Cf452</code> 24% + BiFi풀 0.76M. <b>모니터 실시간 포착</b> — 재발행/재소각 추이 감시(`tools/monitor.py`).</div>
+  <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 당일 대형 상환 포착:</b> 총공급 <b>6.11M</b>. <b>정정: 점진 수축이 아니라 오늘(2026-06-30) 하루 -1.96M 단일 소각</b>(전일 ~8.06M→오늘 6.11M, -24%). 소각 주체 = 9개 EOA. 상위 2곳이 82%: <code>0x85b44cf6</code>(-1.19M, 활동개시 2025-07-18) + <code>0xcca25978</code>(-408K), 공통 funder <code>0xdd88ffe1</code> 공유. <b>★ 정정(사용자 지적 반영):</b> 두 계정의 BFC 가스가 재단분배자 <code>0x3ba7d96c</code> 루트지만, <b>받은 BFC는 110·210 BFC(순수 가스 ~$1.5)뿐</b>이고 실질 자산(BtcUSD 3.0M·0.58M)은 <b>본인이 BiFi에서 차입/민팅</b>. → <b>"재단 소유 시드"가 아니라 재단이 온보딩 가스만 후원한 B2B/VIP 고객일 개연성</b>(BTCFi는 컨택 후 예치하는 VIP 컨시어지로 초기운영 → 가스 후원은 통상). <b>가스 출처=소유 아님.</b> 나머지 7곳은 CDP 민터(브릿지볼트 경유), 2곳(<code>0x08ff598c</code>·<code>0xf0585acc</code>)은 BFC 79~90만 고래. 즉 오늘 BTC 회수 = <b>가스후원받은 대형 고객들의 BtcUSD CDP 언와인드</b>(재단 직접인지 외부 VIP인지 가스만으론 단정 불가). 분포: 브릿지볼트 61%+0x840Cf452 24%+BiFi풀. 감시 `tools/monitor.py`.</div>
 
   <!-- 8 DEFI -->
   <h2 class="sec" id="defi"><span class="n">8</span>온체인 DeFi 레이어 <span class="badge b-warn">재조사 정정</span></h2>
@@ -940,7 +940,8 @@
 
   <!-- ===== 부록 ===== -->
   <h2 class="sec" id="method">📐 방법론 · 신뢰도</h2>
-  <p class="small"><b>사용 방법:</b> 리치리스트·counters·2-hop 흐름추적·메서드 시그니처 식별·클러스터 매칭 · internal-tx·coin-balance-history·contract creator·chain_spec genesis 교차. 거래소 클러스터는 <b>사용자 출금이력(ground truth)+빗썸 앱 공시</b>와 온체인 합 대조로 확정.</p>
+  <p class="small"><b>사용 방법:</b> 리치리스트·counters·재귀 흐름추적(순환감지)·메서드 시그니처 식별·클러스터 매칭 · internal-tx·coin-balance-history·contract creator·chain_spec genesis 교차. 거래소 클러스터는 <b>사용자 출금이력(ground truth)+빗썸 앱 공시</b>와 온체인 합 대조로 확정.</p>
+  <div class="callout warn"><b>⚠️ 핵심 방법론 경고 — 가스 후원 ≠ 소유:</b> BTCFi는 <b>B2B/VIP 컨시어지(컨택 후 예치)</b>로 초기 운영돼, 재단/운용망이 <b>고객 온보딩용 가스(소액 BFC)를 후원</b>했을 수 있음. 따라서 <b>"BFC 가스 출처가 재단/운용망"이라는 사실만으로 그 계정을 재단 소유로 단정하지 않음</b>(소액 수령=온보딩 후원 가능). <b>소유·관계의 강한 근거 = ①컨트랙트 배포자(creator) ②실질 자산(담보·볼트 물량) 출처 ③순환 흐름</b>. 본 보고서에서 가스허브(<code>0x81c22bec</code>) 충전 기반 추정은 <b>약한 근거</b>로 표기하고, 배포자·물량·순환 기반 결론(예: BTCFi Boost 제품 식별=팩토리 <code>0xd0f8ba2d</code> 배포 / 순환클러스터=공통 배포자 <code>0x23E016E0e5</code>)만 견고한 것으로 분류한다.</div>
   <table>
     <tr><th>신뢰도</th><th>항목</th></tr>
     <tr><td><span class="badge b-ok">확인</span></td><td class="wrap">업비트/빗썸 클러스터, 3.25M=초기배분(2023-02), 팀 배포자 2명, BtcUSD 발행량/홀더, 검증자 24주소, Treasury, 컨트랙트 주소 풀셋, 코빗 상장, 메인넷 스펙</td></tr>
