@@ -115,3 +115,31 @@
 - **컨트랙트 소스 미검증**: #3·WBFC·claim의 정확한 프로토콜명/로직은 ABI 없이 메서드 추정까지.
 - **배포자 실세계 신원**: 0xDd505f3·0xA30B97a5의 팀/개인 귀속은 온체인만으로 불가(KYC/공시 필요).
 - 추가 가능 방법(미시도, 여력 시): ① 0xA30B97a5가 배포한 전체 컨트랙트 enumerate(프로토콜 맵) ② #3 리저브 입금자 군집이 거래소/유저인지 ③ 검증자 27,387 위임자 분포 ④ DEX 라우터의 LP 풀별 유동성.
+
+---
+
+# 심화 분석 (4차) — DeFi 레이어 / 프로토콜 맵 (2026-06-30)
+
+## 온체인 DeFi 구성
+| 프로토콜 | TVL/규모 | 핵심 컨트랙트 | 배포자 |
+|---|---|---|---|
+| **Everdex** (네이티브 DEX, AMM) | **$3.23M** (DefiLlama "Bifrost DEX") | 라우터 `0x7Ace89E2…`(85,612tx), LP `0x840Cf452…`(BtcUSD 1.47M+USDC 1.0M 페어) | DEX 풀=`0x3aFE9F26…` |
+| **BTCFi / BtcUSD** | BTCFi TVL ~$2.68M · BtcUSD 발행 **8.06M**, 홀더 **481명**, 전송 195,729 | BtcUSD `0x6906Ccda…d555`, 담보/발행 `0xcF2FC1d3…`(1.89M BtcUSD), #3 리저브 87M BFC | **0xA30B97a5…**(팀) |
+| **BIFROST CrossChain Swap** | (브릿지 기반) | docs.bifrostnetwork.com/bifrost-crosschain-swap | — |
+| WBFC (Wrapped BFC) | 8.4M 래핑 | `0x1c1b0640…` | 0xA30B97a5 |
+| 리워드/에어드랍 claim | 6.2M | `0xD3351BAA…`(`claim()`) | — |
+
+> 출처: [docs Everdex](https://docs.bifrostnetwork.com/everdex/faqs/faq) · [DefiLlama Bifrost DEX](https://defillama.com/protocol/bifrost-dex)
+
+## 배포자(주체) 3종 정리
+| 배포자 | 시기 | 배포물 | 성격 |
+|---|---|---|---|
+| `0xDd505f3edb9B…de369` | 제네시스기(2023) | 루트 분배 컨트랙트 `0x4077aE70`(80M 팬아웃) | 초기 토큰 배분 운영 |
+| `0xA30B97a5…BB7a9B` | BTCFi기(2025-06~) | #3 리저브·BtcUSD담보 `0xcF2FC1d3`·WBFC·`0x23286f4f` | BTCFi 프로토콜 스위트 |
+| `0x3aFE9F26…0381` | — | Everdex LP 풀 `0x840Cf452` | DEX |
+
+## 신규 모니터링 지표 (DeFi)
+- **BtcUSD 홀더수(481)·발행량(8.06M)** — BTCFi 사용자/규모 성장. `GET /api/v2/tokens/0x6906Ccda…/counters`(token_holders_count, transfers_count)
+- **Everdex TVL($3.23M)** — `api.llama.fi/protocol/bifrost-dex`
+- **#3 리저브(87M) 입금자 = 일반 유저**(거래소 아님) — 신규 스테이킹/락업 수요. 첫 OUT 여전히 핵심 감시.
+- **BtcUSD 최대 홀더 = 네이티브 Vault `0xD85EB87…`(4.46M=55%)** → BtcUSD 브릿지 유출 추적 가능.

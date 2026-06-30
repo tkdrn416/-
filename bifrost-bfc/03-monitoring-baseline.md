@@ -138,6 +138,16 @@ curl -s -X POST https://public-01.mainnet.bifrostnetwork.com/rpc -H "Content-Typ
 ```
 - **디프 대상:** BtcUSD 발행량 증감(BTCFi 성장/수축), BTCFi TVL 델타. **발행량 급증 = HashPort/N.suite 등 일본 렌딩 수요 유입 신호와 교차검증 가능.**
 
+### DeFi 레이어 지표 (신규)
+| 지표 | 기준값(2026-06-30) | 재실행 |
+|---|---|---|
+| BtcUSD 홀더수 | **481명** | `GET /api/v2/tokens/0x6906Ccda…d555/counters` → token_holders_count |
+| BtcUSD 전송수 | 195,729 | 동일 transfers_count |
+| **Everdex(DEX) TVL** | **$3.23M** | `api.llama.fi/protocol/bifrost-dex` |
+| #3 리저브 입금자 | 일반 유저(거래소 아님) | #3 transactions filter=to |
+- 프로토콜 맵 상세(Everdex·BtcUSD 담보·WBFC·배포자 3종) → [data/native-holders-analysis.md](./data/native-holders-analysis.md) 4차
+- **디프:** BtcUSD 홀더수 증가(BTCFi 유저 성장), Everdex TVL 델타.
+
 ---
 
 # 차원 4 — 트랜잭션 변화 ★네이티브 메인넷(3068) 우선★
