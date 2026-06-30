@@ -34,6 +34,7 @@ WATCH=[
  ("일본 JPYC venue 0x6894Ae31","0x6894ae31cae97f228590f6dc7bbea7449f4db980","일본"),
  ("BtcUSD시드 0x85b44cf6","0x85b44cf6d007e8a6ca16ee277e33c3223bb7db92","BtcUSD시드"),
  ("BtcUSD시드 0xcca25978","0xcca259780b2fbfa18f4ce3afb868f1be53220df6","BtcUSD시드"),
+ ("액티브 유동성허브 0x09FCED81","0x09fced818439182812f13b006114da4382c4470e","유동성허브"),
 ]
 # 토큰 잔액 감시(네이티브 아님): (라벨, 토큰주소, 보유주소) — 일본/BtcUSD 추세
 TOKEN_WATCH=[
