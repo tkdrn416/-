@@ -40,6 +40,8 @@
 
 **디프 대상:** 거래소 콜드허브(#1 업비트·#2 빗썸) 잔액 급변(=순유입/출), top25 신규 진입·이탈, **Treasury(#19) 변동**(국고 집행), 미식별 대형(#3 87M·#5 16M) 이동.
 
+> 📊 **상위 홀더 흐름 분석 → [data/native-holders-analysis.md](./data/native-holders-analysis.md)**: #3(87M)=미검증 수신전용 리저브성 컨트랙트, 중간티어(#5·8·10·11·12)=휴면 배분/OTC 지갑, 추가로 네이티브 **DEX 라우터** `0x7Ace89E2…`(Uniswap V2형, 85,612 tx) 식별. 거래소 2곳이 네이티브 상위 470M 집중.
+
 ## 1-B. ETH ERC-20 홀더 (보조 — 브릿지/원장)
 **재실행:** `https://api.ethplorer.io/getTopTokenHolders/0x0c7D5ae0…Cab9c?apiKey=freekey&limit=30` · holdersCount는 getTokenInfo
 - 기준값(2026-06-29): 홀더 **3,619명**. 상위: `0x…dead` 소각 40.8%, ETH Vault `0x2f95c102…` 21.6%, 컨트랙트 `0x4d5aa298…` 11.5%

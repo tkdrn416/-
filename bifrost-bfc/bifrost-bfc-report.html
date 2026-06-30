@@ -272,13 +272,16 @@
     <tr><th>#</th><th>주소</th><th>잔액(BFC)</th><th>식별</th></tr>
     <tr><td>1</td><td><code>0x50F187Ef…955E</code></td><td>332,484,206</td><td><span class="badge b-ok">업비트 콜드허브</span></td></tr>
     <tr><td>2</td><td><code>0xDCd52f5f…8935</code></td><td>137,482,292</td><td><span class="badge b-ok">빗썸 콜드허브</span></td></tr>
-    <tr><td>3</td><td><code>0x4bAE7ba3…66Ee</code></td><td>87,424,912</td><td>미식별 콜드(유출0)</td></tr>
-    <tr><td>4</td><td><code>0xAe172D8c…9BF3e</code></td><td>40,342,392</td><td>Unified BFC 컨트랙트</td></tr>
+    <tr><td>3</td><td><code>0x4bAE7ba3…66Ee</code></td><td>87,424,912</td><td>미검증 컨트랙트(수신전용) → <b>리저브/베스팅성</b> <span class="badge b-warn">추정</span></td></tr>
+    <tr><td>4</td><td><code>0xAe172D8c…9BF3e</code></td><td>40,342,392</td><td>Unified BFC 컨트랙트(시스템)</td></tr>
     <tr><td>6</td><td><code>0x081a4ee5…268c3</code></td><td>15,377,787</td><td><span class="badge b-ok">업비트 핫</span></td></tr>
+    <tr><td>5·8·10·11·12</td><td>휴면 EOA 다수</td><td>~10~16M</td><td>휴면 <b>배분/OTC 지갑</b>(분배자가 큰덩어리 송금) <span class="badge b-warn">추정</span></td></tr>
     <tr><td>19</td><td><code>0x6d6f646C…0000</code></td><td>7,538,155</td><td><span class="badge b-info">Treasury 국고</span> (modlpy/trsry)</td></tr>
     <tr><td>21·22·25</td><td><code>0xffFaAC…</code> 외</td><td>~6.7M</td><td>검증자 stash</td></tr>
   </table>
-  <p class="muted">디프: 거래소 콜드허브(#1·#2) 잔액 급변=순유입/출 · Treasury(#19) 집행 · 미식별 대형(#3 87M) 이동 · top25 신규/이탈. 조회 <code>explorer-backend.mainnet.thebifrost.io/api/v2/addresses</code></p>
+  <p class="muted">+ 네이티브 <b>DEX 라우터</b> <code>0x7Ace89E2…</code>(Uniswap V2형, <b>85,612 tx</b>, 잔액0) 식별 — 온체인 스왑 중심. 상세 → <code>data/native-holders-analysis.md</code></p>
+  <div class="callout"><b>인사이트</b> — 네이티브 상위 <b>470M이 업비트(332.5M)+빗썸(137.5M) 두 거래소 콜드허브</b>에 집중. 3위는 미검증 87M 리저브성 컨트랙트(첫 OUT 발생 시 주목), 중간티어는 휴면 배분 지갑(대량 이동=장기홀더 매도 신호).</div>
+  <p class="muted">디프: 거래소 콜드허브(#1·#2) 잔액 급변=순유입/출 · Treasury(#19) 집행 · #3 87M 첫 OUT · 휴면 배분지갑 이동 · top25 신규/이탈. 조회 <code>explorer-backend.mainnet.thebifrost.io/api/v2/addresses</code></p>
 
   <!-- EXCHANGE -->
   <h2 class="sec" id="exch">🟢 거래소 보유 클러스터 (온체인 확정)</h2>

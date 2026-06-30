@@ -23,6 +23,7 @@
 | **[02-deep-dive.md](./02-deep-dive.md)** | 온체인 실측, **전체 컨트랙트 주소 풀셋**, BTC vault 구조, 토크노믹스, 일본 사업 타임라인, **검증/정정** | 정확한 사실·주소 확인 |
 | **[03-monitoring-baseline.md](./03-monitoring-baseline.md)** | **10개 차원 기준값 + 매 루프 재실행 쿼리/디프 대상** (+부록: 체크리스트·확장후보) | 루프 돌릴 때 매번 |
 | **[data/validators-snapshot.md](./data/validators-snapshot.md)** | 검증자 24개 온체인 주소(controller/stash) | 노드 변동 대조용 |
+| **[data/native-holders-analysis.md](./data/native-holders-analysis.md)** | 네이티브 상위 홀더 분류(거래소·Treasury·리저브·DEX·배분지갑) | 홀더 분석 |
 
 충돌 시 우선순위: **03 > 02 > 01** (최신·정정 반영순).
 
