@@ -286,3 +286,13 @@ BTCFi가 **B2B/VIP 컨시어지(컨택 후 예치)**로 초기 운영됐으므�
 - **가스 출처(BFC funder)만으로 "재단/운용망 소유"라 단정 금지.** 소액(수십~수백 BFC) 수령은 온보딩 후원일 수 있음.
 - **소유·관계 판단의 강한 근거 = ①컨트랙트 배포자(creator) ②실질 자산(담보·볼트 물량)의 출처 ③순환 흐름.** (예: Boost 볼트=팩토리 0xd0f8ba2d 배포 → 견고 / 순환클러스터=공통 배포자 0x23E016E0e5 → 견고)
 - 본 보고서의 "가스허브 0x81c22bec 충전" 기반 추정은 **약한 근거**로 강등(다수가 가스후원 고객일 수 있음). 단 배포자·순환흐름 기반 결론(Boost 제품 식별, 클러스터 그룹핑)은 유지.
+
+# 🔭 브릿지 테스트 흔적 = 출시 임박 자산 엿보기 (2026-06-30, 루프 발견)
+메인넷 브릿지 Vault `0xD85EB87c` 토큰전송 3,000건(2026-05~06) 자산별 분석. **소액 반복 브릿지 = 출시 전 테스트**(JPYC 폴리곤 소액테스트→HashPort 렌딩 출시 선례).
+- **현 주력:** BrJPYC 88M(2,092건·중앙값3,000=렌딩캠페인) · BrBFC 8.8M · BrBiFi 8.3M · BrUSDC.
+- **★ 테스트 정황 신규자산(출시 임박 후보):**
+  - **cbBTC**(Coinbase Wrapped BTC, Base발) `0x74B73Fd2`(Unified)/`0x6eB960B1`(Base) — 2026-01-22~06-26 소액(0.01~0.15), holders 7, 현 supply~0 → **cbBTC를 BTCFi 담보로 추가 준비** 정황.
+  - **BrBTC**(네이티브 BTC 브릿지) `0xCb4E4f67` — 2026-04-03~**06-30(오늘)** 소액 → 네이티브 BTC 직접 브릿지 테스트/활성화.
+  - **USDT 다중소스**(Bridged Arbitrum/Binance/Ethereum USDT 각각) — 멀티체인 USDT 통합 테스트(Binance USDT 2,667 외 소액).
+- **감시:** 위 테스트 자산(특히 cbBTC·BrBTC) 공급/볼륨 급증 = 신담보/신제품 출시 순간. `tools/monitor.py` 토큰와치에 cbBTC·BrBTC 추가.
+- 방법론: 통합토큰(Unified) 모델로 Base/Arbitrum/BSC/ETH/Polygon발 자산 래핑 → 신규 "Bridged X"/"Unified X" 토큰 등장 자체가 신규 체인/자산 통합 신호.

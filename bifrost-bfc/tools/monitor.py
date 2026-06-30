@@ -39,6 +39,9 @@ WATCH=[
 TOKEN_WATCH=[
  ("Unified JPYC 총공급","0x84122a4a75bfe65ef455dba5f6d43d61359ca77e",None),
  ("BtcUSD 총공급","0x6906ccda405926fc3f04240187dd4fad5df6d555",None),
+ # ★ 브릿지 테스트 신규자산 — 공급 급증=신담보/신제품 출시 신호
+ ("Unified cbBTC(테스트)","0x74b73fd2ee237e9219df30dffdb206d237cbfc00",None),
+ ("BrBTC 네이티브BTC브릿지(테스트)","0xcb4e4f67b33eebfc17c82cf6e8c0b56d269aeb79",None),
 ]
 def get(u):
     for _ in range(3):

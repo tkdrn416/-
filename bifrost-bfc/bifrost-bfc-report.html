@@ -242,6 +242,14 @@
   <p>연결 9체인(Bifrost·Bitcoin·Ethereum·Base·Arbitrum·Core·BSC·Polygon·Oasys), 자산 BFC·BiFi·ETH·USDC·USDT·WBTC. 수수료 0.005%, 최대 ~15분. 구조: 각 체인 Socket + Relayer(=검증자) → CCC 이벤트 → 다수결 서명 → primary relayer 일괄 제출. Oracle Service가 BTC 블록해시·가격 제출(reorg-aware).</p>
   <div class="callout info"><b>CCCP v2/Hook</b>(Hook Executor·Price Deviation Checker·브릿지자산 가격책정)은 relayer v3.0.0에 포함되나 <b>아직 testnet 전용</b> — 메인넷 <code>CCCPRelayQueue</code> 포함 시 활성. <b>메인넷 전환=주목 이벤트.</b></div>
   <div class="callout ok"><b>★ 브릿지 가동 실측(2026-06-30):</b> Socket <code>0xd551F33C</code> 누적 <b>5,388,111 tx</b>(릴레이어 라운드 heartbeat 포함이라 tx수≠유저볼륨), <b>최근 tx 11:31(분단위 가동)</b>, 릴레이어 caller ~15(=Full노드 릴레이어군). Vault <code>0xD85EB87c</code> 토큰전송 누적 55,436. <b>당일 실제 자산 흐름</b>: <b>BrJPYC 800,869 in/out(통과)</b> — JPYC가 브릿지로 활발히 유입(렌딩 캠페인과 일관) · <b>BtcUSD 746,930 out</b>(오늘 BtcUSD 활동과 연동) · 토큰전송 46건(6-30). → <b>브릿지는 휴면 아닌 LIVE 제품</b>, 현재 주력 흐름은 JPYC 유입·BtcUSD 유출. ⚠️ "Bifrost Wallet"(XRP/Flare 등 14체인)은 <b>별개 프로젝트</b> — 파이랩은 <b>Biport</b>(ETH/BSC/Avax/BTC).</div>
+  <div class="callout warn"><b>🔭 브릿지 테스트 흔적 = 출시 임박 자산 엿보기 (Vault 3,000건 자산별 분석):</b> 통합토큰(Unified) 모델로 Base/Arbitrum/BSC/ETH/Polygon발 자산을 래핑. <b>소액 반복 브릿지 = 출시 전 테스트 신호</b>(JPYC를 폴리곤서 소액 테스트하다 HashPort 렌딩으로 출시한 선례). 현재 테스트 정황 신규자산:
+  <table style="margin-top:6px">
+    <tr><th>자산</th><th>주소</th><th>테스트 기간</th><th>규모</th><th>해석</th></tr>
+    <tr><td><b>cbBTC</b>(Coinbase Wrapped BTC, Base발)</td><td><code>0x74B73Fd2</code>(Unified)·<code>0x6eB960B1</code>(Base)</td><td>2026-01-22~06-26</td><td class="wrap">holders 7·소액(0.01~0.15)·현 supply~0</td><td class="wrap"><b>cbBTC를 BTCFi 담보로 추가 준비</b> 정황</td></tr>
+    <tr><td><b>BrBTC</b>(네이티브 BTC 브릿지)</td><td><code>0xCb4E4f67</code></td><td>2026-04-03~<b>06-30(오늘)</b></td><td class="wrap">소액·홀더1</td><td class="wrap">네이티브 BTC 직접 브릿지 테스트/활성화 중</td></tr>
+    <tr><td>USDT 다중소스</td><td class="wrap">Arbitrum/Binance/Ethereum 각각 별도</td><td>2026-06~</td><td class="wrap">Binance USDT 2,667 외 소액</td><td class="wrap">멀티체인 USDT 통합 테스트</td></tr>
+  </table>
+  <span class="small">현 주력 브릿지 자산: BrJPYC 88M(2,092건, 중앙값 3,000=렌딩 캠페인)·BrBFC 8.8M·BrBiFi 8.3M·BrUSDC. <b>★ 위 테스트 자산(특히 cbBTC·BrBTC)의 볼륨 급증 = 신제품/신담보 출시 순간 → 최우선 감시.</b> <code>tools/monitor.py</code> 토큰 와치 추가됨.</span></div>
   <h4>체인별 Socket / Authority / Vault (메인넷) — GitHub config.mainnet.yaml 추출</h4>
   <table>
     <tr><th>체인</th><th>ChainID</th><th>Socket</th><th>Authority</th><th>Vault</th></tr>
