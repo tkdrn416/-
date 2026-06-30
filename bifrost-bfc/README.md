@@ -50,7 +50,7 @@
 
 (Polygon/Base/Arbitrum/Oasys 포함 전체 표 → [02-deep-dive.md](./02-deep-dive.md) B-1)
 
-토큰: BFC ERC-20 `0x0c7D5ae0…Cab9c` · BiFi ETH `0x2791BfD60D232150Bff86b39B7146c0eaAA2BA81` · BiFiB(BSC) `0x1378e33a09d8bd8e449CFD8A5aBCa0439286d645`
+토큰: BFC ERC-20 `0x0c7D5ae0…Cab9c` · BiFi ETH `0x2791BfD60D232150Bff86b39B7146c0eaAA2BA81` · BiFiB(BSC) `0x1378e33a09d8bd8e449CFD8A5aBCa0439286d645` · **BtcUSD(Bifrost3068) `0x6906Ccda405926FC3f04240187dd4fAd5DF6d555`**
 ❌ 가짜(차단): BSC `0xf4b5cd30…09ec`, BSC `0x5Dec5345…68dC9`
 
 ### 온체인 조회 엔드포인트
@@ -59,10 +59,17 @@
 - 메인넷 익스플로러 백엔드(Blockscout): `https://explorer-backend.mainnet.thebifrost.io/api/v2/...`
 - GitHub: `https://api.github.com/orgs/bifrost-platform/...`
 
+### 핵심 추적 지표 (베이스라인 2026-06-29~30)
+- 거래소 보유: **업비트 ≈348M · 빗썸 ≈143.7M** (클러스터 잔액 합)
+- 검증자: **24개**(Full15/Basic9), 스테이킹 **406M BFC** · 주소목록 [data/validators-snapshot.md](./data/validators-snapshot.md)
+- 브릿지 Vault TVL: ETH **BFC 863.5M**+USDC$607K · BSC **BTCB 44.3**(~$4.7M)
+- **BtcUSD 발행량 8.06M** (BTCFi 성장지표) · BTCFi TVL ~$2.68M
+- 소셜: TG Notice 860/Global 7,129 · Medium 7,500 · X ~82K
+
 ### 🔔 최우선 감시 신호
-1. Vault/소각 주소 대형 이동, 네이티브 리치리스트 대형 변동
-2. **BFC의 BitTrade(일본) 상장**
-3. HashPort/N.suite JPYC 렌딩 **첫 TVL 수치**
+1. Vault/소각 주소 대형 이동, 거래소 클러스터 잔액 급변(순유입=매도압력)
+2. **BFC의 BitTrade(일본) 상장**, 빗썸/업비트 입출금 중단(`assetsstatus`=0)
+3. HashPort/N.suite JPYC 렌딩 **첫 TVL 수치** + **BtcUSD 발행량 급증**(교차검증)
 4. **CCCP v2 메인넷 전환** (현재 testnet)
 5. 검증자 집합 변동, 신규 GitHub 레포/릴리스, 워터마크(2026-06-02) 이후 신규 뉴스
 

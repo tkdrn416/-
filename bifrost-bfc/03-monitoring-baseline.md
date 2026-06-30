@@ -57,9 +57,11 @@ curl -s -X POST https://public-01.mainnet.bifrostnetwork.com/rpc -H "Content-Typ
 | 스테이킹 비율 | ≈ 29.3% (유통 대비) |
 | 위임자 카운트 | 27,387 |
 
-검증자 파트너(공지): BitTrade, AI Fusion Capital. (이름↔주소 매핑은 익스플로러 수동 대조 필요)
+**기명 검증자(공지, 주소 비공개):** BitTrade(일본거래소, 2024-11-29) · AI Fusion Capital(도쿄 상장사, 2025-06-30) · KICA 한국정보인증(2023-01-29) · DeSpread(2022-12-23). ⚠️ Bifrost는 Substrate라 **온체인 identity 필드가 없어 실명↔주소 1:1 매핑은 원천 불가** — 익스플로러/Blockscout 모두 name·tag null.
 
-**디프 대상:** 후보수(24)·Basic(9)·Full(15) 분포 변화, 총 스테이킹 ±, 검증자 주소집합 신규/이탈, 신규 검증자 공지(medium.com/bifrost).
+**검증자 24개 온체인 주소(controller):** 전체 목록은 [validators-snapshot.md](./data/validators-snapshot.md) 참조. 디프는 이 주소집합 기준.
+
+**디프 대상:** 후보수(24)·Basic(9)·Full(15) 분포 변화, 총 스테이킹 ±, **검증자 주소집합 신규/이탈**(data/validators-snapshot.md와 대조), 신규 검증자 공지(medium.com/bifrost).
 
 ---
 
@@ -106,6 +108,23 @@ curl -s -X POST https://public-01.mainnet.bifrostnetwork.com/rpc -H "Content-Typ
 
 - **재실행:** ETH=`api.ethplorer.io/getAddressInfo/0x2F95C102…?apiKey=freekey` · BSC=`bsc-dataseed.bnbchain.org` `eth_call`(BTCB balanceOf vault) · 네이티브=explorer-backend
 - **디프 대상:** Vault별 자산 수량 델타(브릿지 순유입/출), 특히 BFC·USDC·BTCB·**JPYC** 증감.
+
+## BTCFi 핵심지표 — BtcUSD 발행량 (신규, 핵심 성장지표)
+BtcUSD = BTCFi의 BTC담보 스테이블코인. **발행량 = BTCFi 사업 규모의 직접 지표.**
+
+| 항목 | 값 (2026-06-30, 라이브 검증) |
+|---|---|
+| **BtcUSD totalSupply** | **8,061,957 BtcUSD** |
+| 컨트랙트 (Bifrost 3068) | `0x6906Ccda405926FC3f04240187dd4fAd5DF6d555` |
+| 멀티체인 | BSC `0x4F2c996248ED9592e64B59f781A15dEB1e2b0D4c` · Base `0xe4b20925D9E9a62F1E492e15a81dC0de62804dd4` · Core `0xad0c524Ce19ceA03654Dc377da7Bac52C56eDd10` · Oasys `0x4Cda2D683E3AF90ea50855008BdB15D9454527B7` |
+| BTCFi TVL (DefiLlama) | ≈$2.68M |
+
+- **재실행:** `eth_call` totalSupply(`0x18160ddd`) to BtcUSD on `public-01.mainnet.bifrostnetwork.com/rpc` + `api.llama.fi/protocol/btcfi`
+```bash
+curl -s -X POST https://public-01.mainnet.bifrostnetwork.com/rpc -H "Content-Type: application/json" \
+ -d '{"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{"to":"0x6906Ccda405926FC3f04240187dd4fAd5DF6d555","data":"0x18160ddd"},"latest"]}'
+```
+- **디프 대상:** BtcUSD 발행량 증감(BTCFi 성장/수축), BTCFi TVL 델타. **발행량 급증 = HashPort/N.suite 등 일본 렌딩 수요 유입 신호와 교차검증 가능.**
 
 ---
 
@@ -161,7 +180,8 @@ curl -s "https://api.github.com/orgs/bifrost-platform/repos?sort=created&directi
 # 차원 6 — 인터넷 뉴스
 
 **뉴스 워터마크 (기준):** **2026-06-02** — "Bifrost BTCFi × HashPort Wallet 통합, JPYC 연 ~4% 렌딩" (JinaCoin) — https://jinacoin.ne.jp/jpyc-bifrost-hashport-20260602/
-→ **이 날짜보다 새로운 BFC 직접 항목이 나오면 "신규"**. (2026-06-29 현재 이후 신규 없음)
+→ **이 날짜보다 새로운 BFC 직접 항목이 나오면 "신규"**.
+- **리프레시 (2026-06-30 확인):** 6/3~6/30 기간 **신규 공식 발표/파트너십/상장 없음**. 단 시세 기사 1건 — **2026-06-04 BFC 빗썸서 +30% 급등(상승률 1위, 거래량 ~5배)**, 뚜렷한 호재 없는 단기 매수세 ([news1](https://www.news1.kr/finance/blockchain-fintech/6187719)). 공식 발표 아님 → 워터마크 유지.
 
 **재실행 소스 (우선순위):**
 1. `https://medium.com/bifrost-blog-kor` (한국 공식, 가장 활발)
@@ -282,14 +302,16 @@ for a in 0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935 0x39528D59132920Ab0a637129D9
 
 # 차원 10 — 소셜 모멘텀
 
-**기준값 (2026-06-29):**
-| 채널 | 수치 | 비고 |
+**기준값 (2026-06-30):**
+| 채널 | 수치 | 신뢰도 |
 |---|---|---|
-| Telegram `Bifrost_Notice` | **860 subscribers** | 공식 KR 공지 |
-| X `@Bifrost_Network` | (수집중) | 페이지 존재(200) |
-| Medium `medium.com/bifrost` | (수집중) | 공식 |
+| Telegram `Bifrost_Notice`(KR공지) | **860** | 확인 |
+| Telegram `Bifrost_Global` | **7,129** (온라인 ~125) | 확인 |
+| Medium `@bifrost` | **7,500** | 확인 |
+| X `@Bifrost_Network` | **~82,000** (CoinCarp 81,877) | 추정(제3자집계) |
+| Discord | ~20,200 | 추정/미확인 |
 
-- **재실행:** `https://t.me/s/Bifrost_Notice`(구독자수 grep) · X는 nitter/검색 보조
+- **재실행:** `t.me/s/Bifrost_Notice`·`t.me/s/Bifrost_Global`(구독자수 grep) · Medium `bifrost.medium.com` · X는 차단되어 **CoinCarp 동일소스 유지 권장**(일관성)
 - **디프 대상:** 구독자/팔로워 급증(관심도), 공지 빈도 변화.
 
 > ※ 차원 9·10은 보조 신호. 핵심은 1~8.
@@ -300,12 +322,13 @@ for a in 0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935 0x39528D59132920Ab0a637129D9
 
 매 루프:
 1. **차원1·4** ethplorer getTopTokenHolders + getTokenInfo + getTokenHistory → 홀더/카운터/대형전송 diff
-2. **차원2** RPC eth_call(0x...0400) → 검증자 24/9/15, 스테이킹 406M diff
-3. **차원3** bscscan + blockscout counters → Socket txn 17,532/10,132 diff
+2. **차원2** RPC eth_call(0x...0400) → 검증자 24/9/15, 스테이킹 406M diff + 검증자 주소집합(data/validators-snapshot.md) diff
+3. **차원3** Socket txn(17,532/10,132) + **Vault TVL**(ETH BFC 863.5M/BSC BTCB 44.3) + **BtcUSD 발행량 8.06M** diff
 4. **차원5** github API → 커밋 SHA/릴리스/신규레포 diff
 5. **차원6** medium-kr + telegram + 검색 → 워터마크 2026-06-02 이후 신규
 6. **차원7** 파트너별 URL → 표의 "감시 신호" (특히 HashPort TVL, BitTrade BFC 상장)
-7. **차원8** explorer-backend API 리치리스트 diff(후보 #1 332M·#2 137M) + ethplorer ETH거래소주소(현 0). 확정 귀속은 테스트입금 필요
+7. **차원8** explorer-backend 클러스터 합(업비트 348M/빗썸 143.7M) diff + 빗썸 `assetsstatus`(입출금중단)
+8. **차원9·10** 글로벌 시세(HTX/Gate) + 소셜(텔레그램/Medium) — 보조
 
 변화 발견 시에만 보고 + 본 문서 기준값 갱신. 항상 BNC/Polkadot 항목 필터링.
 
@@ -314,6 +337,9 @@ for a in 0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935 0x39528D59132920Ab0a637129D9
 # 부록 2 — 수집 확장 후보 (검토 결과, 우선순위순)
 
 전체 리서치 검토 후 "더 수집하면 좋은" 항목. ⭐=권장.
+
+> ✅ **이미 수집 완료(베이스라인 반영):** 거래소 순흐름(클러스터 확정), 입출금중단 감지(assetsstatus), 검증자 24주소(data/validators-snapshot.md, 단 실명매핑은 원천불가), 브릿지 Vault TVL, **BtcUSD 발행량(8.06M)**, 글로벌 거래소(차원9), 소셜(차원10).
+> ⬜ **남은 후보:** 온체인 거버넌스 제안, 토큰 언락/베스팅 일정, 미식별 87M 콜드 정체.
 
 | 후보 | 왜 가치있나 | 수집 방법 | 난이도 |
 |---|---|---|---|
