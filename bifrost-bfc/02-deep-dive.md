@@ -114,7 +114,8 @@
 - **Pi Lab의 실제 비트코인 라인 = BRP(Bitcoin Relaying Protocol) + BtcUSD(BTC 담보 스테이블, 3.5% APY) + BTCFi/BTCFi Boost.** BitVM 사용 안 함.
 
 ### D-2. JPYSC ↔ Bifrost = **직접 연결 없음 (부정확인, 재확인)**
-- JPYSC = Shinsei Trust&Banking 발행 / SBI VC Trade 유통 / **Startale** 기술. 배포 예정 체인은 Strium L1, Soneium 등. **Bifrost/BFC 언급 전무.**
+- JPYSC = SBI신세이신탁은행 발행 / SBI VC Trade 유통 / **Startale** 기술. **발행 체인 = Ethereum**(2026-06-24 출시·¥10B 시드, 정정: 기존 "Strium/Soneium" 오류). 현재 **SBI VC Trade 밖으로 이동 불가**(규제/세금 미정). **Bifrost/BFC 직접 언급 전무.**
+  - ★ 온체인 정황(2026-06-30): **JPYC 이더리움 브릿지가 4개월+ 소액 테스트 레일**(BrETH JPYC 전송 256건·중앙값 55·주소2, 현 supply 3,381) — 실볼륨은 Polygon발(65.6M)뿐. **「JPYC-ETH 테스트 = JPYSC 대용」 소문은 정황상 그럴듯**(JPYSC도 ETH 발행·아직 브릿지 불가→동일체인 JPYC로 ETH 엔화SC 레일 사전검증 설명과 부합), 단 **Bifrost에 JPYSC 토큰 미존재(통합 미개시)=미확정**. 감시: "Bridged Ethereum JPYSC" 등장 시 통합 개시.
 - 단, Bifrost는 **SBI Digital Finance와 별도 제휴**(2025-08) → 같은 SBI 그룹 우산이나 JPYSC와는 무관.
 
 ### D-3. 신제품 상태

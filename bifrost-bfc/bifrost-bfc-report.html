@@ -371,7 +371,7 @@
     <tr><td>발행사</td><td>JPYC Inc.</td><td>SBI신세이신탁은행 (SBI+Startale)</td></tr>
     <tr><td>법적분류</td><td>자금이동형(~Type II), 100만엔 한도</td><td>신탁형(Type III), 한도 없음</td></tr>
     <tr><td>발행</td><td>2025-10-27 (JPYC EX)</td><td>2026-06-24</td></tr>
-    <tr><td>발행 체인</td><td>ETH/Polygon/Avalanche(+Kaia)</td><td>Strium L1·Soneium 등</td></tr>
+    <tr><td>발행 체인</td><td>ETH/Polygon/Avalanche(+Kaia)</td><td><b>Ethereum</b>(2026-06-24 출시·¥10B 시드, Startale 기술). <span class="badge b-bad">정정</span> 기존 "Strium/Soneium"은 오류</td></tr>
     <tr><td>Bifrost 연관</td><td>✅ <b>활용</b>(발행 아님) — HashPort 4% 렌딩·DJT N.suite, 예치·수익 venue</td><td>❌ <b>직접 연관 없음</b>(단 SBI Digital Finance와 별도 제휴)</td></tr>
   </table>
   <p class="small"><b>JPYC 현황:</b> 일본 최초 규제준수 엔화SC, 제2종 자금이동업(송금 상한 10만엔). 누적 발행 ~21억엔(2026-04)→<b>30억엔 돌파(2026-05말)</b>, 활성지갑 13.7만/계좌 1.9만. 목표 1조엔(→3년 10조엔). JPYC사 Series B 총 ~46억엔(Metaplanet·北洋은행·住友生命·Sony Bank 등). <b>※ Bifrost는 JPYC 발행체인 아님 — 예치·수익 venue일 뿐.</b></p>
@@ -382,8 +382,10 @@
     <tr><th>토큰</th><th>주소</th><th class="num">공급</th><th>비고</th></tr>
     <tr><td><b>Unified JPYC</b></td><td><code>0x84122a4a75Bfe65eF455dBA5F6d43D61359ca77e</code></td><td class="num">65.54M</td><td class="wrap">CCCP 통합 JPYC(≈6,554만엔·~$440K). 홀더 8</td></tr>
     <tr><td>Bridged Polygon JPYC</td><td><code>0x16638b94f9e8…</code></td><td class="num">65.53M</td><td class="wrap">물량 대부분이 <b>Polygon발</b> 브릿지인</td></tr>
-    <tr><td>Bridged Ethereum JPYC</td><td><code>0xbFad87bFEdc0…</code></td><td class="num">3,381</td><td class="wrap">ETH발 소량</td></tr>
+    <tr><td>Bridged Ethereum JPYC</td><td><code>0xbFad87bFEdc0…</code></td><td class="num">3,381</td><td class="wrap"><b>ETH발 = 테스트 레일</b>(아래)</td></tr>
   </table>
+  <div class="callout warn"><b>🔭 JPYC 이더리움 브릿지 = 테스트 레일 (+ JPYSC 대용 소문 검증):</b> 소스체인별 실측 — <b>Polygon발(BrPOL JPYC)=실볼륨</b>(supply 65.6M·전송 다수·중앙값 3,174) vs <b>Ethereum발(BrETH JPYC)=소액 테스트</b>(전송 <b>256건·중앙값 55 JPYC(~$0.37)</b>·주소 2개·2026-02-19~06-30·현 supply 3,381). → ETH JPYC는 실수요 아니라 <b>4개월+ 지속된 소액 테스트 레일</b>.<br>
+  <b>「JPYSC 대용 테스트」 소문 평가(정황상 그럴듯, 미확정):</b> ① <b>JPYSC는 이더리움 발행</b>(2026-06-24·SBI신세이신탁·¥10B) — JPYC-ETH와 <b>같은 체인</b> ② JPYSC는 현재 <b>SBI VC Trade 밖으로 이동 불가</b>(규제/세금 미정)라 <b>아직 브릿지 불가</b> → 동일 체인의 JPYC를 <b>대용(proxy)</b>으로 ETH 엔화SC 브릿지 레일을 미리 검증한다는 설명과 부합 ③ Bifrost는 이미 SBI Digital Finance 접점 보유. <b>단 Bifrost에 JPYSC 토큰은 아직 없음</b>(검색 0) → 통합 미개시. <b>소문은 "그럴듯한 가설"이지 확정 아님</b>(ETH JPYC 자체 지원 테스트일 수도). ⚠️ 감시: BrETH JPYC 볼륨 급증 또는 <b>"Bridged Ethereum JPYSC" 토큰 등장 = JPYSC 통합 개시 신호</b>.</div>
   <p class="small" style="margin:6px 0 0 0"><b>예치 venue:</b> <code>0x6894Ae31Cae9…</code>(미검증 컨트랙트)가 <b>JPYC 99.99%(65.5M) 보유</b>, 2026-02-19 배포, 2026-06에도 활발(LIVE). <b>= BTCFi Boost / HashPort JPYC 연 4% 렌딩 venue</b>(외부확인: "BTCFi Partners"가 HashPort Wallet 통합, JPYC 4% 무락업). 65.5M 증가는 <b>"JPYC Lending Summer Campaign"(3개월·보너스금리) 이자 이벤트</b>로 일반 사용자 예치가 유입된 결과로 해석(사용자 제보와 부합).<br>
   <b>예치 구조(실측·정정):</b> venue로 JPYC를 보낸 주소는 <b>5개뿐이고 전부 컨트랙트</b>(개별 retail EOA 아님). 메인 라우터 <code>0xcC56EABf</code>도 컨트랙트 2개(<code>0xb531a378</code>+venue 자신)에서 받아 <b>인프라 컨트랙트끼리 순환</b>. → <b>Bifrost 상에선 소수 렌딩 인프라 컨트랙트가 JPYC를 집계·보유</b>. 실제 다수 일반 예치자(이자 이벤트 참여)는 <b>HashPort 레이어(브릿지/커스터디)에 있어 Bifrost 온체인만으론 개별 식별 불가</b>.<br>
   <span class="muted">⚠️ 자기정정: 초안의 "JPYC=운용자 네트워크가 운영"은 <b>과대해석</b>이었음 — 근거가 'venue 생성자가 가스허브 자금받음' 하나뿐인데, 가스허브는 51개 지갑에 뿌리는 범용 가스주입이라 약함. JPYC 보유 컨트랙트들은 내 운용망 주소와 불일치. <b>JPYC는 HashPort 렌딩 인프라로 보는 게 타당</b>(사용자 예치 이벤트 결과일 개연성 높으나 예치자는 온체인에 개별로 안 드러남). 캐비엇: venue 미검증→"4% 렌딩" 코드확인 불가 · holders 8 = 풀에 묶여 개별잔액 0.</span></p></div>
