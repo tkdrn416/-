@@ -254,10 +254,10 @@
   <p class="lead">매 루프: 아래 "재실행"으로 "기준값"과 diff → 차이 있을 때만 보고. 항상 BNC/Polkadot 필터링.</p>
   <table>
     <tr><th>#</th><th>차원</th><th>기준값 (2026-06-29~30)</th><th>재실행 / 디프</th></tr>
-    <tr><td>1</td><td>상위 홀더 (ETH)</td><td>홀더 3,619 · 상위3 73.9%(소각40.8/Vault21.6/컨트랙트11.5)</td><td class="wrap">ethplorer getTopTokenHolders → 잔액·신규진입 diff</td></tr>
+    <tr><td>1</td><td>상위 홀더 <b>★네이티브★</b></td><td>네이티브 리치리스트(업비트/빗썸 콜드허브·Treasury) · ETH는 보조(홀더 3,619)</td><td class="wrap">explorer-backend /addresses → 잔액·신규진입 diff</td></tr>
     <tr><td>2</td><td>노드/검증자</td><td>24개(Full15/Basic9) · 스테이킹 406M · 라운드 2524</td><td class="wrap">RPC eth_call(0x…0400) · 주소집합 대조</td></tr>
     <tr><td>3</td><td>브릿지+Vault+BtcUSD</td><td>BSC Socket 17,532tx · BtcUSD 8.06M · ETH Vault BFC 863.5M</td><td class="wrap">bscscan + RPC totalSupply + Vault 잔액</td></tr>
-    <tr><td>4</td><td>트랜잭션 (ETH)</td><td>전송 111,008 · 거래량 급증구간</td><td class="wrap">ethplorer getTokenInfo/History → 카운터·대형전송</td></tr>
+    <tr><td>4</td><td>트랜잭션 <b>★네이티브★</b></td><td>네이티브 누적 7,747만 tx · 당일 ~17,051 · ETH는 보조(5.6만)</td><td class="wrap">explorer-backend /stats → 당일tx·대형전송</td></tr>
     <tr><td>5</td><td>GitHub</td><td>node v2.2.0 · relayer v3.0.0 · 34 레포</td><td class="wrap">github API → 커밋SHA·릴리스·신규레포</td></tr>
     <tr><td>6</td><td>뉴스</td><td>워터마크 2026-06-02 (6/3~30 신규 공식뉴스 없음)</td><td class="wrap">medium-kr·telegram·검색 → 워터마크 이후</td></tr>
     <tr><td>7</td><td>일본 파트너</td><td>전부 발표/검증 단계, TVL 미공개</td><td class="wrap">파트너별 URL → 감시신호(HashPort TVL 등)</td></tr>
@@ -265,6 +265,20 @@
     <tr><td>9</td><td>글로벌 거래소</td><td>HTX ~$2.2M(주력) · Gate 미미 · 코인원 미상장</td><td class="wrap">HTX/Gate/업비트/빗썸 공개 ticker</td></tr>
     <tr><td>10</td><td>소셜</td><td>TG 860/7,129 · Medium 7,500 · X ~82K</td><td class="wrap">t.me/s/… · CoinCarp(X)</td></tr>
   </table>
+
+  <h3>네이티브 메인넷(3068) 상위 홀더 — 주력 <span class="badge b-info">2026-06-30</span></h3>
+  <p class="muted">메인넷 전환 후 실제 보유·유통의 핵심. ETH ERC-20은 브릿지/원장용 보조.</p>
+  <table>
+    <tr><th>#</th><th>주소</th><th>잔액(BFC)</th><th>식별</th></tr>
+    <tr><td>1</td><td><code>0x50F187Ef…955E</code></td><td>332,484,206</td><td><span class="badge b-ok">업비트 콜드허브</span></td></tr>
+    <tr><td>2</td><td><code>0xDCd52f5f…8935</code></td><td>137,482,292</td><td><span class="badge b-ok">빗썸 콜드허브</span></td></tr>
+    <tr><td>3</td><td><code>0x4bAE7ba3…66Ee</code></td><td>87,424,912</td><td>미식별 콜드(유출0)</td></tr>
+    <tr><td>4</td><td><code>0xAe172D8c…9BF3e</code></td><td>40,342,392</td><td>Unified BFC 컨트랙트</td></tr>
+    <tr><td>6</td><td><code>0x081a4ee5…268c3</code></td><td>15,377,787</td><td><span class="badge b-ok">업비트 핫</span></td></tr>
+    <tr><td>19</td><td><code>0x6d6f646C…0000</code></td><td>7,538,155</td><td><span class="badge b-info">Treasury 국고</span> (modlpy/trsry)</td></tr>
+    <tr><td>21·22·25</td><td><code>0xffFaAC…</code> 외</td><td>~6.7M</td><td>검증자 stash</td></tr>
+  </table>
+  <p class="muted">디프: 거래소 콜드허브(#1·#2) 잔액 급변=순유입/출 · Treasury(#19) 집행 · 미식별 대형(#3 87M) 이동 · top25 신규/이탈. 조회 <code>explorer-backend.mainnet.thebifrost.io/api/v2/addresses</code></p>
 
   <!-- EXCHANGE -->
   <h2 class="sec" id="exch">🟢 거래소 보유 클러스터 (온체인 확정)</h2>

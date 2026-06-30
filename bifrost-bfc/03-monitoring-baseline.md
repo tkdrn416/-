@@ -11,29 +11,39 @@
 
 ---
 
-# 차원 1 — 상위 어카운트(홀더) 변동 [ETH ERC-20]
+# 차원 1 — 상위 어카운트(홀더) 변동 ★네이티브 메인넷(3068) 우선★
 
-**재실행:** `https://api.ethplorer.io/getTopTokenHolders/0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c?apiKey=freekey&limit=30`
-**전체 홀더수 재실행:** `https://api.ethplorer.io/getTokenInfo/0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c?apiKey=freekey` → `holdersCount`
+> 메인넷 전환 후 **실제 보유·유통은 네이티브 체인(3068)이 핵심.** ETH ERC-20은 브릿지/원장용으로 보조.
 
-**기준값 (2026-06-29):** 전체 홀더 **3,619명** · totalSupply 40억 · 상위3 집중 **73.88%**
+## 1-A. 네이티브 메인넷 리치리스트 (주력)
+**재실행:** `GET https://explorer-backend.mainnet.thebifrost.io/api/v2/addresses` (잔액 내림차순)
 
-| # | 주소 | 잔액(BFC) | % | 유형 |
-|---|---|---:|---:|---|
-| 1 | `0x...dead` | 1,631,415,927 | 40.79 | **소각** |
-| 2 | `0x2f95c102cc26875406bc689fb01ae382b82aa535` | 863,522,304 | 21.59 | **ETH Vault(브릿지)** |
-| 3 | `0x4d5aa29862bc8186e19ee5b699494aa40fc83206` | 459,987,204 | 11.50 | 컨트랙트(베스팅/트레저리 추정) |
-| 4 | `0x08d1b81813cff08e8525145ce132a097abc031ca` | 297,936,989 | 7.45 | EOA |
-| 5 | `0xfa24b321bd8bb0e1c318795cf37bf95b4fa9247c` | 248,498,596 | 6.21 | EOA |
-| 6 | `0x752725e9d69f784625256822ba11419a0615b788` | 131,124,840 | 3.28 | EOA |
-| 7 | `0xb23f8b9b046a8223d261890fc9df05c2e951ad62` | 110,000,000 | 2.75 | EOA |
-| 8 | `0x66a02618b638ffc07f993317cab8e635e1437ec7` | 70,000,000 | 1.75 | EOA |
-| 9 | `0xcbe7d8f55aafa79821f504a992aa5c0f495f8714` | 68,537,888 | 1.71 | EOA |
-| 10 | `0xa2a1a561719cef0225f951a6d2bdde80ef4a1b76` | 60,000,000 | 1.50 | EOA |
+**기준값 (2026-06-30):** 네이티브 주소 ~6,028만 · TOP25 라벨 포함
 
-(11~30위는 2천만 BFC 이하 — 잔액 변동만 추적)
+| # | 주소 | 잔액(BFC) | 라벨/식별 |
+|---|---|---:|---|
+| 1 | `0x50F187Ef4447dA6e5Ff1D740439e91175BAC955E` | 332,484,206 | **업비트 콜드허브** |
+| 2 | `0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935` | 137,482,292 | **빗썸 콜드허브** |
+| 3 | `0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee` | 87,424,912 | 미식별 콜드(유출0 축적) |
+| 4 | `0xAe172D8c5E428D4b7C70f9E593b207F9daC9BF3e` | 40,342,392 | **Unified BFC 컨트랙트** |
+| 5 | `0x5EeFFDbCDf6d269AE249e445b95BfFaDC0673cc7` | 16,494,730 | 미식별 |
+| 6 | `0x081a4ee55739F0DA8abB8af40D07687527a268c3` | 15,377,787 | **업비트 핫** |
+| 7 | `0xb68a0A0121be78f25A7d147394D90C35F2e34C5d` | 14,017,724 | 미식별 |
+| 8 | `0xf6ac30649a26130E2D1c6875E935a1FA67Cee76c` | 14,001,000 | 미식별 |
+| 9 | `0x5dEc180f0D414B4f3606e759c408A6B3561b1b2e` | 11,810,189 | 미식별 |
+| 10 | `0xd7C451b4A52DAFd95be3302d05eE70d097139A87` | 11,000,500 | 미식별 |
+| … | (11~25위 ~6.6M~10M) | | 다수 미식별 |
+| 19 | `0x6d6f646C70792f74727372790000000000000000` | 7,538,155 | **Treasury 국고**(modlpy/trsry) |
+| 21 | `0xffFaAC4Ea0972C21c2834a0410A0582e4AbfF741` | 6,845,339 | 검증자 stash |
+| 22 | `0x330d76197a25721357e05368179EbA8d0be9Be0e` | 6,777,852 | 검증자 stash |
+| 25 | `0x355b784757473741133911042bcD215B3d8EE289` | 6,666,148 | 검증자 stash |
 
-**디프 대상:** ① 각 주소 `rawBalance`/`share` 증감, ② top30 신규 진입자, ③ 이탈자, ④ 순위 변동. **1순위 알림:** #2 Vault·#1 소각·#3 컨트랙트 잔액 변화(토크노믹스/브릿지 이벤트), `holdersCount` 큰 변동.
+**디프 대상:** 거래소 콜드허브(#1 업비트·#2 빗썸) 잔액 급변(=순유입/출), top25 신규 진입·이탈, **Treasury(#19) 변동**(국고 집행), 미식별 대형(#3 87M·#5 16M) 이동.
+
+## 1-B. ETH ERC-20 홀더 (보조 — 브릿지/원장)
+**재실행:** `https://api.ethplorer.io/getTopTokenHolders/0x0c7D5ae0…Cab9c?apiKey=freekey&limit=30` · holdersCount는 getTokenInfo
+- 기준값(2026-06-29): 홀더 **3,619명**. 상위: `0x…dead` 소각 40.8%, ETH Vault `0x2f95c102…` 21.6%, 컨트랙트 `0x4d5aa298…` 11.5%
+- **디프:** Vault·소각 주소 잔액 변화(토크노믹스/브릿지), holdersCount 변동
 
 ---
 
@@ -128,23 +138,30 @@ curl -s -X POST https://public-01.mainnet.bifrostnetwork.com/rpc -H "Content-Typ
 
 ---
 
-# 차원 4 — 트랜잭션 변화 [ETH ERC-20]
+# 차원 4 — 트랜잭션 변화 ★네이티브 메인넷(3068) 우선★
 
-**재실행:** `https://api.ethplorer.io/getTokenInfo/0x0c7D5ae0...Cab9c?apiKey=freekey` (카운터) + `https://api.ethplorer.io/getTokenHistory/0x0c7D5ae0...Cab9c?apiKey=freekey&limit=100&type=transfer` (대형전송 감시)
+> 실제 온체인 활동은 네이티브 체인이 압도적(누적 tx 7,747만 vs ETH ERC-20 5.6만). 네이티브를 주력으로.
 
-**기준값 (2026-06-29):**
+## 4-A. 네이티브 메인넷 활동 (주력)
+**재실행:** `GET https://explorer-backend.mainnet.thebifrost.io/api/v2/stats`
+
+**기준값 (2026-06-30):**
 | 지표 | 값 |
 |---|---|
-| transfersCount 누적 | **111,008** |
-| txsCount 누적 | **56,044** |
-| price | **$0.011789** (₩18.21) |
-| volume24h | **$2.41M** (당시 7d 대비 +80%, 급증 구간) |
-| market_cap_rank | ~901 |
+| **누적 트랜잭션** | **77,476,593** |
+| **당일 트랜잭션** | **~17,051** (tx_today) |
+| 누적 블록 | 36,330,250 (블록타임 ~3s) |
+| 누적 주소 | 60,285,254 |
+| coin_price | $0.011745 |
 
-**디프 대상:** transfersCount/txsCount 델타(활동 스파이크), volume24h 평소 대비 2~3배↑, **대형 전송**(value≥1,000,000 BFC) 특히 to/from이 dead·Vault·top30이면 알림. 직전 루프 최신 txHash 저장 후 그 이후만 신규 처리.
-**보조(시세):** `https://api.coingecko.com/api/v3/coins/ethereum/contract/0x0c7D5ae0...Cab9c`
+- **대형 전송 감시:** 거래소 콜드허브/Treasury 출입금은 `GET /api/v2/addresses/{addr}/transactions?filter=to|from` 으로 value 큰 건 추적 (특히 #1 업비트·#2 빗썸·#19 Treasury).
+- **디프 대상:** **당일 tx 수 급변**(활동 스파이크/둔화), 누적 tx·주소 증가율, 대형 네이티브 전송.
 
-> 참고: 네이티브 체인(3068) 트랜잭션 활동은 ETH ERC-20과 별개로 훨씬 클 수 있음. 네이티브 tx 카운트는 차원 2의 RPC/블록번호 진행으로 간접 추적(블록 36,200,231 기준, 블록타임 ~3s).
+## 4-B. ETH ERC-20 활동 (보조)
+**재실행:** `api.ethplorer.io/getTokenInfo/0x0c7D5ae0…?apiKey=freekey`(카운터) + `getTokenHistory…&limit=100&type=transfer`(대형전송)
+- 기준값(2026-06-29): transfersCount **111,008** · txsCount **56,044** · price $0.0118 · vol24h $2.41M(급증구간) · rank ~901
+- **디프:** transfersCount/txsCount 델타, vol24h 2~3배↑, value≥1M BFC 전송(to/from = dead·Vault)
+- 시세 보조: `api.coingecko.com/api/v3/coins/ethereum/contract/0x0c7D5ae0…Cab9c`
 
 ---
 
@@ -321,7 +338,7 @@ for a in 0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935 0x39528D59132920Ab0a637129D9
 # 부록 — 루프 실행 체크리스트 (요약)
 
 매 루프:
-1. **차원1·4** ethplorer getTopTokenHolders + getTokenInfo + getTokenHistory → 홀더/카운터/대형전송 diff
+1. **차원1·4** ★네이티브 우선★ explorer-backend `/addresses`(리치리스트)·`/stats`(당일tx 17,051) diff + 보조로 ethplorer(ETH ERC-20)
 2. **차원2** RPC eth_call(0x...0400) → 검증자 24/9/15, 스테이킹 406M diff + 검증자 주소집합(data/validators-snapshot.md) diff
 3. **차원3** Socket txn(17,532/10,132) + **Vault TVL**(ETH BFC 863.5M/BSC BTCB 44.3) + **BtcUSD 발행량 8.06M** diff
 4. **차원5** github API → 커밋 SHA/릴리스/신규레포 diff
