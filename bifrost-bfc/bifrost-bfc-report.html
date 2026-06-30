@@ -241,7 +241,7 @@
   <!-- 6 BRIDGE -->
   <h2 class="sec" id="bridge"><span class="n">6</span>브릿지 (The BIFROST Bridge / CCCP)</h2>
   <p>연결 9체인(Bifrost·Bitcoin·Ethereum·Base·Arbitrum·Core·BSC·Polygon·Oasys), 자산 BFC·BiFi·ETH·USDC·USDT·WBTC. 수수료 0.005%, 최대 ~15분. 구조: 각 체인 Socket + Relayer(=검증자) → CCC 이벤트 → 다수결 서명 → primary relayer 일괄 제출. Oracle Service가 BTC 블록해시·가격 제출(reorg-aware).</p>
-  <div class="callout info"><b>CCCP v2/Hook</b>(Hook Executor·Price Deviation Checker·브릿지자산 가격책정)은 relayer v3.0.0에 포함되나 <b>아직 testnet 전용</b> — 메인넷 <code>CCCPRelayQueue</code> 포함 시 활성. <b>메인넷 전환=주목 이벤트.</b></div>
+  <div class="callout info"><b>CCCP v2/Hook</b>(Hook Executor·Price Deviation Checker·브릿지자산 가격책정)은 relayer v3.0.0에 포함. <b>★ 업데이트(커밋 #219, 2026-06-17):</b> <code>CCCPRelayQueue</code>가 메인넷 바이너리에 탑재되고 <b>"enabled일 때만 spawn"(flag-gated)</b> — 즉 testnet 전용이 아니라 <b>설정 플래그만 켜면 메인넷 활성</b> 단계. <b>플래그 on = 최우선 주목 이벤트.</b></div>
   <div class="callout ok"><b>★ 브릿지 가동 실측(2026-06-30):</b> Socket <code>0xd551F33C</code> 누적 <b>5,388,111 tx</b>(릴레이어 라운드 heartbeat 포함이라 tx수≠유저볼륨), <b>최근 tx 11:31(분단위 가동)</b>, 릴레이어 caller ~15(=Full노드 릴레이어군). Vault <code>0xD85EB87c</code> 토큰전송 누적 55,436. <b>당일 실제 자산 흐름</b>: <b>BrJPYC 800,869 in/out(통과)</b> — JPYC가 브릿지로 활발히 유입(렌딩 캠페인과 일관) · <b>BtcUSD 746,930 out</b>(오늘 BtcUSD 활동과 연동) · 토큰전송 46건(6-30). → <b>브릿지는 휴면 아닌 LIVE 제품</b>, 현재 주력 흐름은 JPYC 유입·BtcUSD 유출. ⚠️ "Bifrost Wallet"(XRP/Flare 등 14체인)은 <b>별개 프로젝트</b> — 파이랩은 <b>Biport</b>(ETH/BSC/Avax/BTC).</div>
   <div class="callout warn"><b>🔭 브릿지 테스트 흔적 = 출시 임박 자산 엿보기 (Vault 3,000건 자산별 분석):</b> 통합토큰(Unified) 모델로 Base/Arbitrum/BSC/ETH/Polygon발 자산을 래핑. <b>소액 반복 브릿지 = 출시 전 테스트 신호</b>(JPYC를 폴리곤서 소액 테스트하다 HashPort 렌딩으로 출시한 선례). 현재 테스트 정황 신규자산:
   <table style="margin-top:6px">
@@ -327,6 +327,13 @@
   </table>
   <h4>릴리스 디테일</h4>
   <p class="small"><b>node:</b> v2.2.0(2026-06-24, Polkadot SDK stable2512→Ethereum Fusaka 하드포크 지원·BLAZE 스토리지 마이그v3) · v2.1.0(2025-09, BLAZE 팔레트·Pectra/EIP-7702·trace RPC) · v2.0.0(2024-11, BRP+Bitcoin 도입). <b>relayer:</b> v3.0.0(2026-06-24, 필수 업그레이드, CCCP v2+Hook testnet·Price Deviation Checker·core chain 제거). 스택 Substrate+Frontier, Aura+GRANDPA.</p>
+  <div class="callout info"><b>★ 최근 커밋 분석(2026-06, 공개 GitHub API):</b> 두 핵심 레포 모두 <b>2026-06-24 동시 릴리스</b>(relayer v3.0.0 / node v2.2.0·mainnet runtime v2045), <b>relayer는 오늘(2026-06-30)도 커밋</b>(신규합류 릴레이어 round 처리=검증자/릴레이어 집합 변동 대응).
+  <ul style="margin:6px 0 0 0">
+    <li><b>CCCP v2 활성화 임박:</b> #219(6-17) <code>spawn CCCPRelayQueue modules only when enabled</code> — CCCP v2(CCCPRelayQueue)가 <b>v3.0.0 메인넷 바이너리에 탑재되고 flag로 on/off</b>. 즉 "testnet 전용"이 아니라 <b>설정 플래그만 켜면 메인넷 활성</b> 단계 → 최우선 주목 이벤트.</li>
+    <li><b>BTC vault 멀티시그 정교화:</b> relayer #220(6-18) <code>sign psbt through snapshot members</code> + node #215 <code>store historical relay executive members</code>·<code>MembershipHook to RelayExecutiveMembership</code> — BTC PSBT 서명자(=relay executive) 멤버십을 스냅샷·이력화. BTCFi BTC 커스터디 거버넌스 강화.</li>
+    <li><b>Core 체인 제거 확정:</b> #221(6-18) <code>remove core chain</code> — 브릿지 연결 체인에서 Core(Coredao) 빠짐.</li>
+    <li><b>★ 신제품은 비공개:</b> BTCFi Boost·JPYC 렌딩 등 온체인 신제품에 대응하는 <b>공개 레포 없음</b>(2025+ 신규=fork "common" 1개뿐). = <b>제품 컨트랙트 클로즈드소스</b>(온체인 미검증 컨트랙트와 일관). 공개 dev는 노드/릴레이어(인프라)에 집중.</li>
+  </ul></div>
 
   <!-- 10 SECURITY -->
   <h2 class="sec" id="security"><span class="n">10</span>보안 사고</h2>
