@@ -353,28 +353,62 @@
   <p class="small">※ eBTC/BitVM(bifrost.blue)은 <b>파이랩 제품 아님</b>(동명 별개, 도메인 비활성). 파이랩 BTC 라인=BRP+BtcUSD+BTCFi. MJPY/MKRW/MUSD는 2025-07 상표 출원 단계(실제 라인은 BtcUSD).</p>
 
   <!-- ===== 온체인 심층분석 ===== -->
-  <h2 class="sec" id="native-holders"><span class="n">15</span>네이티브 메인넷(3068) 상위 홀더 <span class="badge b-info">온체인 심층</span></h2>
-  <p class="small muted">메인넷 전환 후 실제 보유·유통의 핵심은 네이티브 체인. 흐름추적(2-hop)+메서드 시그니처+배포자/잔액이력 분석으로 분류. 출처 explorer-backend.mainnet.thebifrost.io.</p>
+  <h2 class="sec" id="native-holders"><span class="n">15</span>네이티브 메인넷(3068) 상위 홀더 — TOP50 전수 분류 <span class="badge b-info">온체인 심층</span></h2>
+  <p class="small muted">메인넷 전환 후 실제 보유·유통의 핵심은 네이티브 체인. <b>TOP50 전 주소 1행씩 개별 분류</b>(흐름추적 2-hop + 메서드 시그니처 + 배포자/잔액이력). tx=int은 내부tx로만 수신. 색: <span class="badge b-ok">확인</span> <span class="badge b-warn">추정</span>. 출처 explorer-backend.mainnet.thebifrost.io.</p>
   <table>
-    <tr><th>#</th><th>주소</th><th class="num">잔액(BFC)</th><th>유형</th><th>분류 / 근거</th><th>신뢰도</th></tr>
-    <tr><td>1</td><td><code>0x50F187Ef4447dA6e5Ff1D740439e91175BAC955E</code></td><td class="num">332,484,206</td><td>EOA</td><td class="wrap"><b>업비트 콜드허브</b> — 핫월렛 자금공급, 사용자 출금이력</td><td><span class="badge b-ok">확인</span></td></tr>
-    <tr><td>2</td><td><code>0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935</code></td><td class="num">137,482,292</td><td>EOA</td><td class="wrap"><b>빗썸 콜드허브</b> — 핫 0x39528D59와 합 143.7M=앱공시 일치</td><td><span class="badge b-ok">확인</span></td></tr>
-    <tr><td>3</td><td><code>0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee</code></td><td class="num">87,424,912</td><td>컨트랙트</td><td class="wrap"><b>신규 BTCFi 리저브</b> — 2026-06-04 생성(배포자 0xA30B97a5), 다수 유저 입금·OUT 0 → 스테이킹/락업</td><td><span class="badge b-warn">추정</span></td></tr>
-    <tr><td>4</td><td><code>0xAe172D8c5E428D4b7C70f9E593b207F9daC9BF3e</code></td><td class="num">40,342,392</td><td>컨트랙트</td><td><b>Unified BFC</b> 시스템 컨트랙트</td><td><span class="badge b-ok">확인</span></td></tr>
-    <tr><td>5</td><td><code>0x5EeFFDbCDf6d269AE249e445b95BfFaDC0673cc7</code></td><td class="num">16,494,730</td><td>EOA</td><td>휴면(2tx) 단일출처 → 초기배분/홀딩</td><td><span class="badge b-warn">추정</span></td></tr>
-    <tr><td>6</td><td><code>0x081a4ee55739F0DA8abB8af40D07687527a268c3</code></td><td class="num">15,377,787</td><td>EOA</td><td><b>업비트 핫</b>(유저 직접출금)</td><td><span class="badge b-ok">확인</span></td></tr>
-    <tr><td>7</td><td><code>0xb68a0A0121be78f25A7d147394D90C35F2e34C5d</code></td><td class="num">14,017,724</td><td>EOA</td><td>패스스루(19tx) → DEX 라우터로 송금(8.66M)</td><td><span class="badge b-warn">추정</span></td></tr>
-    <tr><td>8</td><td><code>0xf6ac30649a26130E2D1c6875E935a1FA67Cee76c</code></td><td class="num">14,001,000</td><td>EOA</td><td>휴면(2tx) 0x3BA7d96c 수령 → 초기배분</td><td><span class="badge b-warn">추정</span></td></tr>
-    <tr><td>9</td><td><code>0x5dEc180f0D414B4f3606e759c408A6B3561b1b2e</code></td><td class="num">11,810,189</td><td>EOA</td><td>부분출금(→0xAAEaa8ba)</td><td><span class="badge b-bad">미상</span></td></tr>
-    <tr><td>10</td><td><code>0xd7C451b4A52DAFd95be3302d05eE70d097139A87</code></td><td class="num">11,000,500</td><td>EOA</td><td>휴면(2tx) 0x3BA7d96c 체인 → 초기배분</td><td><span class="badge b-warn">추정</span></td></tr>
-    <tr><td>11</td><td><code>0xc8BEda62EE1Cdf299a96be7C5d48d9b3956BC571</code></td><td class="num">10,809,131</td><td>EOA</td><td>휴면(2tx) → 초기배분</td><td><span class="badge b-warn">추정</span></td></tr>
-    <tr><td>12</td><td><code>0x456B4e4e67eB60c9594f135C2d54EC8F6E746157</code></td><td class="num">10,100,100</td><td>EOA</td><td>휴면(3tx) 업비트핫서 1 BFC가스 → 초기배분</td><td><span class="badge b-warn">추정</span></td></tr>
-    <tr><td>13·14</td><td><code>0xBB677177…</code> · <code>0x137b14ca…</code></td><td class="num">10,000,000</td><td>EOA</td><td>균등 1천만(초기배분 추정)</td><td><span class="badge b-warn">추정</span></td></tr>
-    <tr><td>17</td><td><code>0x1c1b06405058AbE02e4748753aeD1458BEFEE3B9</code></td><td class="num">8,383,244</td><td>컨트랙트</td><td><b>Wrapped BFC (WBFC)</b> — deposit/withdraw</td><td><span class="badge b-warn">추정</span></td></tr>
-    <tr><td>19</td><td><code>0x6d6f646C70792f74727372790000…0000</code></td><td class="num">7,538,155</td><td>모듈계정</td><td><b>Treasury 국고</b> (ASCII <code>modlpy/trsry</code>)</td><td><span class="badge b-ok">확인</span></td></tr>
-    <tr><td>21·22·25</td><td><code>0xffFaAC…</code> · <code>0x330d76…</code> · <code>0x355b78…</code></td><td class="num">~6.7~6.8M</td><td>EOA</td><td><b>검증자 stash</b></td><td><span class="badge b-ok">확인</span></td></tr>
+    <tr><th>#</th><th class="num">잔액(BFC)</th><th class="num">tx</th><th>C/E</th><th>주소</th><th>분류</th></tr>
+    <tr><td>1</td><td class="num">332,484,206</td><td class="num">35</td><td>E</td><td><code>0x50F187Ef4447dA6e5Ff1D740439e91175BAC955E</code></td><td class="wrap">업비트 콜드허브 <span class="badge b-ok"></span></td></tr>
+    <tr><td>2</td><td class="num">137,482,292</td><td class="num">243</td><td>E</td><td><code>0xDCd52f5f5aF5022edEfD59fD5353f4DA3f2C8935</code></td><td class="wrap">빗썸 콜드허브 <span class="badge b-ok"></span></td></tr>
+    <tr><td>3</td><td class="num">87,424,912</td><td class="num">int</td><td>C</td><td><code>0x4bAE7ba39E4e71660307dcE780f1Ec9b7B7666Ee</code></td><td class="wrap">BTCFi 리저브(신규 2026-06) <span class="badge b-warn"></span></td></tr>
+    <tr><td>4</td><td class="num">40,342,392</td><td class="num">0</td><td>C</td><td><code>0xAe172D8c5E428D4b7C70f9E593b207F9daC9BF3e</code></td><td class="wrap">Unified BFC 컨트랙트 <span class="badge b-ok"></span></td></tr>
+    <tr><td>5</td><td class="num">16,494,730</td><td class="num">0</td><td>E</td><td><code>0x5EeFFDbCDf6d269AE249e445b95BfFaDC0673cc7</code></td><td class="wrap">휴면 홀딩(초기배분 추정) <span class="badge b-warn"></span></td></tr>
+    <tr><td>6</td><td class="num">15,377,787</td><td class="num">629</td><td>E</td><td><code>0x081a4ee55739F0DA8abB8af40D07687527a268c3</code></td><td class="wrap">업비트 핫 <span class="badge b-ok"></span></td></tr>
+    <tr><td>7</td><td class="num">14,017,724</td><td class="num">15</td><td>E</td><td><code>0xb68a0A0121be78f25A7d147394D90C35F2e34C5d</code></td><td class="wrap">패스스루→DEX <span class="badge b-warn"></span></td></tr>
+    <tr><td>8</td><td class="num">14,001,000</td><td class="num">0</td><td>E</td><td><code>0xf6ac30649a26130E2D1c6875E935a1FA67Cee76c</code></td><td class="wrap">휴면 홀딩(0x3BA7d96c=초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>9</td><td class="num">11,810,189</td><td class="num">5</td><td>E</td><td><code>0x5dEc180f0D414B4f3606e759c408A6B3561b1b2e</code></td><td class="wrap">홀딩(부분출금) <span class="badge b-warn"></span></td></tr>
+    <tr><td>10</td><td class="num">11,000,500</td><td class="num">0</td><td>E</td><td><code>0xd7C451b4A52DAFd95be3302d05eE70d097139A87</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>11</td><td class="num">10,809,131</td><td class="num">0</td><td>E</td><td><code>0xc8BEda62EE1Cdf299a96be7C5d48d9b3956BC571</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>12</td><td class="num">10,100,100</td><td class="num">0</td><td>E</td><td><code>0x456B4e4e67eB60c9594f135C2d54EC8F6E746157</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>13</td><td class="num">10,000,000</td><td class="num">0</td><td>E</td><td><code>0x137b14ca112d911c2309076394f91CfB09BC7883</code></td><td class="wrap">초기배분(1천만 균등) <span class="badge b-warn"></span></td></tr>
+    <tr><td>14</td><td class="num">10,000,000</td><td class="num">0</td><td>E</td><td><code>0xBB677177E68Baf15E32EE17833DbCce85F9fA234</code></td><td class="wrap">초기배분(1천만 균등) <span class="badge b-warn"></span></td></tr>
+    <tr><td>15</td><td class="num">9,606,633</td><td class="num">38</td><td>E</td><td><code>0x41c2cEb45EaE87355B7E3FCe88Db134DA1c0BDAa</code></td><td class="wrap">DeFi 액티브(DEX/Vault) <span class="badge b-warn"></span></td></tr>
+    <tr><td>16</td><td class="num">8,500,000</td><td class="num">0</td><td>E</td><td><code>0x9825F45906387bDcAE71832Ee274CD76D33D8cA6</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>17</td><td class="num">8,383,217</td><td class="num">0</td><td>C</td><td><code>0x1c1b06405058AbE02e4748753aeD1458BEFEE3B9</code></td><td class="wrap">WBFC 컨트랙트 <span class="badge b-warn"></span></td></tr>
+    <tr><td>18</td><td class="num">7,822,965</td><td class="num">4</td><td>E</td><td><code>0x902a21c0Fa4e223e07d51ac2608fC19B7C303582</code></td><td class="wrap">홀딩 <span class="badge b-warn"></span></td></tr>
+    <tr><td>19</td><td class="num">7,538,155</td><td class="num">0</td><td>E</td><td><code>0x6d6f646C70792f74727372790000000000000000</code></td><td class="wrap">Treasury 국고 <span class="badge b-ok"></span></td></tr>
+    <tr><td>20</td><td class="num">7,001,000</td><td class="num">0</td><td>E</td><td><code>0xc1f8B8048e187DF9c7847E639A867f843083DC29</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>21</td><td class="num">6,845,339</td><td class="num">0</td><td>E</td><td><code>0xffFaAC4Ea0972C21c2834a0410A0582e4AbfF741</code></td><td class="wrap">검증자 stash <span class="badge b-ok"></span></td></tr>
+    <tr><td>22</td><td class="num">6,777,852</td><td class="num">0</td><td>E</td><td><code>0x330d76197a25721357e05368179EbA8d0be9Be0e</code></td><td class="wrap">검증자 stash <span class="badge b-ok"></span></td></tr>
+    <tr><td>23</td><td class="num">6,711,547</td><td class="num">0</td><td>E</td><td><code>0x7AF4307bC3511B91ae452c514590B74F122761d3</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>24</td><td class="num">6,700,000</td><td class="num">2</td><td>E</td><td><code>0x30D56Cdf86162dCc2d4A89b16eb9ae16105Ce327</code></td><td class="wrap">홀딩 <span class="badge b-warn"></span></td></tr>
+    <tr><td>25</td><td class="num">6,666,148</td><td class="num">0</td><td>E</td><td><code>0x355b784757473741133911042bcD215B3d8EE289</code></td><td class="wrap">검증자 stash <span class="badge b-ok"></span></td></tr>
+    <tr><td>26</td><td class="num">6,264,119</td><td class="num">2662</td><td>E</td><td><code>0x39528D59132920Ab0a637129D90CF9fB3650084D</code></td><td class="wrap">빗썸 핫 <span class="badge b-ok"></span></td></tr>
+    <tr><td>27</td><td class="num">6,167,698</td><td class="num">0</td><td>C</td><td><code>0xD3351BAA5F5a60d3c8d438273B3f6EdB8aF7Ad05</code></td><td class="wrap">claim 컨트랙트 <span class="badge b-warn"></span></td></tr>
+    <tr><td>28</td><td class="num">5,450,353</td><td class="num">3</td><td>E</td><td><code>0xd7548ef14e0e3f1a058c6a7066A1C8b9530474Ab</code></td><td class="wrap">홀딩 <span class="badge b-warn"></span></td></tr>
+    <tr><td>29</td><td class="num">4,981,687</td><td class="num">15</td><td>E</td><td><code>0x988077831DC3b966aFEcC56597325ADEa2775d1e</code></td><td class="wrap">집계/홀딩 <span class="badge b-warn"></span></td></tr>
+    <tr><td>30</td><td class="num">4,499,587</td><td class="num">13</td><td>E</td><td><code>0xb5F1948e68d85D0a4B202568CDE0B1554a5Ac9F2</code></td><td class="wrap">홀딩 <span class="badge b-warn"></span></td></tr>
+    <tr><td>31</td><td class="num">4,408,286</td><td class="num">1133</td><td>E</td><td><code>0x09FCED818439182812F13b006114da4382c4470E</code></td><td class="wrap">액티브 트레이딩/OTC 추정 <span class="badge b-warn"></span></td></tr>
+    <tr><td>32</td><td class="num">3,852,000</td><td class="num">0</td><td>E</td><td><code>0xec174Bb7425B166C110Df2635C7EEa19b5066B25</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>33</td><td class="num">3,775,200</td><td class="num">0</td><td>E</td><td><code>0xd0Fcb310DA818837275B22D2b8A619623FB585c1</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>34</td><td class="num">3,580,000</td><td class="num">0</td><td>E</td><td><code>0xE08dfb35aC277Ed0fdCf3fC0FA52bfdF992236A3</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>35</td><td class="num">3,554,700</td><td class="num">0</td><td>E</td><td><code>0x03b3254C33e71BB9803Bb0374C79A175704E2aF3</code></td><td class="wrap">휴면 홀딩(초기배분) <span class="badge b-warn"></span></td></tr>
+    <tr><td>36</td><td class="num">3,434,810</td><td class="num">2</td><td>E</td><td><code>0x7Dc6065B06620b71a02Ea680609d90F06CAF4825</code></td><td class="wrap">홀딩 <span class="badge b-warn"></span></td></tr>
+    <tr><td>37</td><td class="num">3,369,655</td><td class="num">0</td><td>E</td><td><code>0xA877784Dbb3006d7625F6Cb0d70FC9A85a559ff3</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>38</td><td class="num">3,352,000</td><td class="num">0</td><td>E</td><td><code>0x9a93B3aDdFcaC856a7ed9f0eBC26e50C64F999bF</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>39</td><td class="num">3,350,000</td><td class="num">0</td><td>E</td><td><code>0x03BE8a705B0450aCA8Acd8A9354331a012a177f1</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>40</td><td class="num">3,335,000</td><td class="num">0</td><td>E</td><td><code>0x9aB36689710Ebf5c7F964400E702649F7AB35378</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>41</td><td class="num">3,321,525</td><td class="num">0</td><td>E</td><td><code>0x7Dff5caC83bF089ddddBb4780760Dae72Bce4227</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>42</td><td class="num">3,255,200</td><td class="num">0</td><td>E</td><td><code>0x0ec0f33f88F6e04d950b66c8595e8Cd1b4bc6dBa</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>43</td><td class="num">3,253,000</td><td class="num">0</td><td>E</td><td><code>0x91764daDC948417aaC03dF508c35c79A4766C3EB</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>44</td><td class="num">3,252,500</td><td class="num">0</td><td>E</td><td><code>0x9A9b4417Eaa5dfB9145Bc5b4CA3deFac41c57199</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>45</td><td class="num">3,251,254</td><td class="num">0</td><td>E</td><td><code>0xC3997794402553040CA17508E814E38B920717c6</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>46</td><td class="num">3,250,000</td><td class="num">0</td><td>E</td><td><code>0x25527337e0845B97CC11E0893C388cD85f5D5de9</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>47</td><td class="num">3,250,000</td><td class="num">0</td><td>E</td><td><code>0x2D6Ef09BD5a298a6A650A2Dbd315805Fc6f0834F</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>48</td><td class="num">3,250,000</td><td class="num">0</td><td>E</td><td><code>0xD63E32D055E39F53B93A9221202e3f384172Cc9a</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>49</td><td class="num">3,215,600</td><td class="num">0</td><td>E</td><td><code>0x453358744F494B8FA988fd9931c6664Ad61832Cd</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
+    <tr><td>50</td><td class="num">3,185,700</td><td class="num">0</td><td>E</td><td><code>0x82f2a5c1589bE6a223C7DE5d865eF94D9D5Be347</code></td><td class="wrap">초기배분 휴면(3.25M밴드) <span class="badge b-warn"></span></td></tr>
   </table>
-  <p class="small">기타 식별: <b>claim 컨트랙트</b> <code>0xD3351BAA…7Ad05</code>(6.2M, <code>claim()</code>) · <b>DEX 라우터</b> <code>0x7Ace89E2…</code>(85,612tx, 잔액0).</p>
+  <p class="small"><b>전수 집계:</b> 거래소 8주소 ~491.6M · 컨트랙트 5(리저브·Unified·WBFC·claim·BtcUSD담보) ~142M · 검증자 stash 3 ~20.3M · Treasury 1 7.5M · <b>초기배분/휴면 홀딩 ~30주소 ~230M</b> · 액티브/DeFi/OTC 소수. → TOP50 중 약 절반이 tx 0~5 장기 휴면. 거래소+휴면배분이 유통 대부분. (DEX 라우터 <code>0x7Ace89E2…</code>는 잔액0이라 리치리스트 외)</p>
 
   <h2 class="sec" id="eth-holders"><span class="n">16</span>ETH ERC-20 홀더 (보조 — 브릿지/원장)</h2>
   <p class="small">홀더 ~3,619명 · totalSupply 40억(소각분 포함) · 전송누계 111,008 / txs 56,044.</p>
