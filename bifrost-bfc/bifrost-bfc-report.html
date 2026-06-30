@@ -239,8 +239,15 @@
     <li>초기 발행 <b>40억(4B) BFC</b> (백서 캡)</li>
     <li><b>2022-02 재단이 40%인 16억 소각</b> → <code>0x…dead</code> (현 ETH ERC-20 #1 홀더 40.8%, ~16.3억)</li>
     <li><b>2023-01-30 메인넷 전환</b> 시 고정 캡 폐지 → <b>DPoS 인플레이션</b>, max ∞</li>
-    <li><b>2025-07-18 StableDAO</b> 출범 — DAO 수익 30%로 BFC 소각 <b>계획 발표</b>(실제 집행 미확인). <span class="badge b-bad">정정</span> 앞서의 'Q3 ~50M/$1.45M 소각'은 CMC AI 집계 출처로 신뢰 낮아 <b>철회</b> — 온체인 dead 주소 소각은 2021-03-14 31.4M(Pi Day)+2022-02-10 ~16억(재단 40%)뿐, 2025년 추가 소각 흔적 없음</li>
+    <li><b>2025-07-18 StableDAO</b> 출범 — DAO 수익 30%로 BFC 소각 <b>계획 발표</b>(실제 집행 미확인). <span class="badge b-bad">정정</span> 앞서의 'Q3 ~50M/$1.45M 소각'은 CMC AI 집계 출처로 신뢰 낮아 <b>철회</b>.</li>
   </ol>
+  <div class="callout bad"><b>★ 소각 현황 재실측(2026-06-30) — "현재 진행 중인 소각은 없음":</b>
+  <ul style="margin:6px 0 0 0">
+    <li><b>역대 소각 전부 = ERC-20 dead <code>0x…dEaD</code> 2건뿐:</b> 2021-03-14 <b>31,415,926</b>(Pi Day, π×10⁷) + 2022-02-10 <b>1,600,000,001</b>(재단 40%) = <b>총 1,631,415,927(40.79%)</b>. ethplorer 실측 확인.</li>
+    <li><b>2022-02-10 이후 dead 주소 실수신 0</b>(2025-08-23 건은 <b>0 BFC</b> 더미 tx) → <b>StableDAO "수익 30% 소각"은 발표만, 온체인 집행 흔적 전혀 없음.</b></li>
+    <li><b>네이티브 체인(3068)엔 소각 메커니즘 부재</b> — 번 주소(zero·dead) 잔액 0·휴면(최근 수신 2023~24), 가스수수료도 소각 아님(Substrate=treasury/author 귀속).</li>
+    <li>⟹ <b>BFC는 순(純) 인플레이션 자산</b>(연 13% 코드값). 디플레 상쇄(소각) 압력 없음 — 발행만 증가. <span class="muted">감시: dead 주소 신규 실수신 또는 StableDAO 소각 컨트랙트 가동 = 토크노믹스 전환 신호.</span></li>
+  </ul></div>
   <div class="callout warn"><b>인플레이션: 코드 vs 문서 불일치</b><br>
     • 메인넷 체인스펙 코드(<code>chain_spec.rs</code>): <b>연 13% 고정</b> (min=ideal=max=13%) — <b>코드값 우선</b><br>
     • 공식 문서(docs): min 7% / ideal 10% / max 13% (동적)<br>
@@ -854,7 +861,7 @@
   <p class="small">100만BFC 초과 6건이 담보의 <b>88%</b>, 순환클러스터 멤버에 부실 집중. <b>후속 교차검증(2026-06-30):</b> <code>0xeb76c926</code>은 현재도 <b>UNDERWATER 확정</b>(차입 $217.6K&gt;청산임계 $205.5K). 단 당초 최대 UNDERWATER로 지목한 <code>0xd7c19693</code>(18.8M)은 <b>포지션 전부 청산/상환 종료(현재 0)</b>하여 제외 — 32건 집계는 6-29 기준이며 일부는 이후 정리됨.</p>
   <h4>③ 왜 방치되나 (청산 키퍼 비활성 정황)</h4>
   <ul class="small" style="margin:2px 0">
-    <li>청산봇 부재 — Manager+핸들러 로그(최근 1,500건)에 디코딩된 청산 이벤트 미발견(단 미식별 희귀이벤트 0x37025b68·0xfa101b18 각2건 → "역대 전무"로 단정 불가)</li>
+    <li><b>청산봇 부재 — 청산 이벤트 타입 자체가 BiFi 로그에 없음(2026-06-30 재검증):</b> Manager+핸들러(BFC/wstBFC/BtcUSD) 로그 ~4,000건 전수 시그니처 분석 결과 이벤트 종류는 <b>FlashLoan·HandlerRewardUpdate·ReserveDeposit·Deposit·Withdraw</b>뿐 — <b>"Liquidate"류 이벤트 0건</b>. 직전에 "청산 후보"로 의심했던 희귀이벤트(0x37025b68·0xfa101b18)는 추적 결과 <b>브릿지 BrBFC mint/burn</b>(Socket/Vault 경유)으로 <b>청산과 무관 확정</b>. → 이전의 "단정 불가" 유보를 해소: <b>샘플 범위 내 BiFi 청산은 한 건도 관측되지 않음</b>(완전 확정엔 아카이브 전수 trace 필요하나, 이벤트 타입 부재 + 아래 미청산 잔존이 강한 정황).</li>
     <li>52M 비유동 BFC 강제매각 = 가격붕괴라 청산인 무수익(부채 $0.73M에 불과)</li>
     <li>다수가 운용자 자기 포지션</li>
   </ul>
@@ -1140,7 +1147,7 @@
     <li>온체인 거버넌스(제안/투표) 추적 가능 여부 · 토큰 언락/베스팅 일정 · BTC vault 멀티시그 임계값(M-of-N)</li>
     <li>HashPort/N.suite JPYC 렌딩 TVL·SBI 제품화·BitTrade BFC 상장(외부 발표 대기)</li>
     <li><b>★ ETH↔네이티브 공급 정합:</b> ETH 비소각분(~2.37B 명목)+네이티브 대형잔액을 단순합하면 명목총량 초과 → <b>두 사이드의 정확한 공급 reconciliation은 온체인상 불투명</b>(브릿지 Vault 863M만 명시적 락). 큐레이션 유통 ~1.39B(BFC수)와 시총기준 ~1.44B의 차이도 이 때문 — 정확 정합엔 팀의 네이티브 발행/소각 메커니즘 공시 필요.</li>
-    <li>BiFi 청산 키퍼의 <b>역대 청산 발생 여부 전수확인</b>(최근 ~1,500 로그엔 디코딩된 청산 이벤트 0, 단 전 이력 미확인) · 청산 함수/키퍼 주소의 온체인 호출 가능성</li>
+    <li>BiFi 청산의 <b>아카이브 전수 확인</b> — 샘플 ~4,000 로그엔 청산 이벤트 타입 부재(FlashLoan·RewardUpdate·ReserveDeposit·Deposit·Withdraw만)로 <b>청산 미관측이 강하게 시사</b>되나, 전 블록(36M) 아카이브 trace로 "역대 0건" 완전확정은 미완</li>
   </ul>
 
   <h2 class="sec" id="sources">출처</h2>
