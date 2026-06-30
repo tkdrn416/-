@@ -54,3 +54,9 @@
 
 > ⚠️ 0x52c78774 등 "Boost 운용망"이 다수 Full(릴레이어) 노드의 free잔액을 충전 = **릴레이어 인프라의 상당부분이 팀/운용망 운영** 정황. 단 gas충전≠소유이므로 단정 아님.
 > 감시: F7(2026-04 신규)처럼 **신규 stash 등장 + 기명 발표(KICA/DeSpread/AIF) 시점 교차**로 추후 매핑 정밀화 가능.
+
+## ★ BfcStaking precompile (EVM 조회 가능 — 2026-06-30 발견)
+> 이전 "Substrate 팔레트라 위임자 분포 불가"는 정정. precompile `0x0000000000000000000000000000000000000400`이 eth_call 가능.
+- `candidate_count()` → 24 · `latest_round()`/`round_info()` → 2525 · `candidate_pool()` → (address[] 컨트롤러, uint256[] 총스테이크)
+- **실측: 총 풀스테이크 405,645,895 BFC / 24노드**. 분포 균등(최대 6.1%), 상위5 30.4%·상위10 59.8%. 티어: 상위~12 ≈24M(Full급)·하위~12 ≈9.6M(Basic급).
+- 루프 활용: 매번 candidate_pool 디프 → 검증자 집합 변동·스테이크 이동·신규 검증자(예: F7 2026-04 합류) 자동 추적. 추가 메서드: `candidate_state(address)`(self-bond·위임 분리), `selected_candidates()`.

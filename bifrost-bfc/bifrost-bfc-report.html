@@ -845,6 +845,7 @@
   <table>
     <tr><th>항목</th><td colspan="2">24개(Full 15+Basic 9), 라운드 2524. 총 스테이킹 ≈406M(self-bond ~60.9M + 위임 ~345.2M), 위임자 27,387명, 비율 ~29.3%. 기명(공지): BitTrade·AI Fusion Capital·KICA(한국정보인증)·DeSpread</td></tr>
   </table>
+  <div class="callout ok"><b>★ BfcStaking precompile 실측(2026-06-30) — 스테이킹 분포·검증:</b> <code>0x0000…0400</code>가 EVM 호출 가능(이전 "팔레트라 불가" 정정). <code>candidate_count()</code>=<b>24</b>·<code>latest_round()</code>=<b>2525</b>·<code>candidate_pool()</code>로 검증자별 총스테이크(self+위임) 산출. <b>총 405,645,895 BFC</b>(기존 ~406M 정밀확인). <b>분포 균등 — 단일 지배 검증자 없음(최대 6.1%)</b>, 상위5 <b>30.4%</b>·상위10 <b>59.8%</b>. 티어 분리 뚜렷: 상위~12개 ≈24M(6%, Full급)·하위~12개 ≈9.6M(Basic급). → DPoS 24노드 기준 <b>비교적 탈중앙(노드별 ≤6%)</b>, 단 앞서 본 대로 일부 노드는 운용/Boost망 가스충전 릴레이어. 감시: precompile로 candidate set·round·스테이크 변동 직접 추적 가능.</div>
   <div class="callout warn">⚠️ Bifrost는 Substrate라 <b>온체인 identity 필드가 없어 실명↔주소 1:1 매핑 원천 불가</b>. 게다가 stash는 staking pallet/genesis로 자금받아 EVM funder가 대부분 안 잡힘. 아래는 funder·최초tx·자기본딩으로 분류한 <b>정황 추정</b>(실명 확정 아님).</div>
   <h4>★ 검증자 식별(네이밍) 최대치 — 정황 추정 (2026-06-30)</h4>
   <table>
