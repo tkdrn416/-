@@ -421,7 +421,7 @@
     <tr><td>발행사</td><td>JPYC Inc.</td><td>SBI신세이신탁은행 (SBI+Startale)</td></tr>
     <tr><td>법적분류</td><td>자금이동형(~Type II), 100만엔 한도</td><td>신탁형(Type III), 한도 없음</td></tr>
     <tr><td>발행</td><td>2025-10-27 (JPYC EX)</td><td>2026-06-24</td></tr>
-    <tr><td>발행 체인</td><td>ETH/Polygon/Avalanche(+Kaia)</td><td><b>Ethereum</b>(2026-06-24 출시·¥10B 시드, Startale 기술). <span class="badge b-bad">정정</span> 기존 "Strium/Soneium"은 오류</td></tr>
+    <tr><td>발행 체인</td><td>ETH/Polygon/Avalanche(+Kaia)</td><td><b>Ethereum 출시</b>(2026-06-24·¥10B 시드, Startale 기술) + Startale 멀티체인 계획(Strium L1·Soneium). <span class="badge b-warn">정정</span> "출시=Strium/Soneium"은 오류(출시는 ETH, Strium/Soneium은 계획 목표)</td></tr>
     <tr><td>Bifrost 연관</td><td>✅ <b>활용</b>(발행 아님) — HashPort 4% 렌딩·DJT N.suite, 예치·수익 venue</td><td>❌ <b>직접 연관 없음</b>(단 SBI Digital Finance와 별도 제휴)</td></tr>
   </table>
   <p class="small"><b>JPYC 현황:</b> 일본 최초 규제준수 엔화SC, 제2종 자금이동업(송금 상한 10만엔). 누적 발행 ~21억엔(2026-04)→<b>30억엔 돌파(2026-05말)</b>, 활성지갑 13.7만/계좌 1.9만. 목표 1조엔(→3년 10조엔). JPYC사 Series B 총 ~46억엔(Metaplanet·北洋은행·住友生命·Sony Bank 등). <b>※ Bifrost는 JPYC 발행체인 아님 — 예치·수익 venue일 뿐.</b></p>
@@ -449,6 +449,15 @@
     <li><b>경쟁:</b> 발행은 비경쟁. 기업 BTC 재무에선 Animoca×Solv·Rootstock와 경쟁. 글로벌 BTCFi 규모(WBTC ~$63억, Babylon, Stacks)엔 열위 → 일본 규제우위+기관채널로 상쇄</li>
   </ol>
   <p class="small">※ eBTC/BitVM(bifrost.blue)은 <b>파이랩 제품 아님</b>(동명 별개, 도메인 비활성). 파이랩 BTC 라인=BRP+BtcUSD+BTCFi. MJPY/MKRW/MUSD는 2025-07 상표 출원 단계(실제 라인은 BtcUSD).</p>
+
+  <h4>🔮 전망 시나리오 — HashPort 추가 협업 · JPYSC 대응 (추정·미확정)</h4>
+  <div class="callout warn"><b>⚠️ 아래는 발표된 사실이 아니라 패턴 기반 추정.</b> 확정 사실은 ①HashPort×Bifrost JPYC 4%(캠페인 시 ~6%) 렌딩 가동 중 ②JPYSC는 2026-06-24 Ethereum 출시되었으나 <b>현재 SBI VC Trade 밖으로 이동 불가</b>(외부지갑 출금 불가)뿐. 나머지는 시나리오.</div>
+  <table>
+    <tr><th>축</th><th>예상 시나리오(추정)</th><th>근거/패턴</th><th>온체인 감시신호</th></tr>
+    <tr><td><b>HashPort 추가 협업</b></td><td class="wrap">① 렌딩 자산 확대(USDC·BTC·BtcUSD 직접) ② <b>BtcUSD(BTC담보 수익)를 HashPort 1M+ 리테일에 유통</b> ③ 고금리/장기락 상품·신규 캠페인 ④ 카드포인트→스테이블 등 결제 백엔드로 BTCFi 수익 연결</td><td class="wrap">HashPort=프런트(리테일·규제신뢰), Bifrost=수익 백엔드(BtcUSD) 분업 구조. 이미 JPYC venue <code>0x6894Ae31</code> 가동·증가 중</td><td class="wrap">venue 신규 토큰(USDC/BtcUSD) 등장 · JPYC venue 잔액 급증 · 신규 렌딩 컨트랙트 배포</td></tr>
+    <tr><td><b>JPYSC 퍼블릭 개방 시</b></td><td class="wrap">① <b>JPYC와 동일 플레이북 — JPYSC 렌딩/수익 venue 추가</b>(BtcUSD 백킹) ② <b>CCCP로 JPYSC를 Ethereum→Bifrost 브릿지</b> ③ 기관 결제: BtcUSD(BTC수익)+JPYSC(엔 결제) 페어로 DJT N.suite·법인 트레저리</td><td class="wrap">Bifrost는 "엔 스테이블=예치자산 흡수" 전략 일관 + SBI Digital Finance 접점(2025-08 BtcUSD 논의) 보유. <b>내 온체인 발견: BrETH JPYC 테스트 레일(256건 소액)</b> = ETH 엔SC 브릿지 사전검증 정황(JPYSC 대용 가설)</td><td class="wrap"><b>"Bridged Ethereum JPYSC" 토큰 등장</b> = 통합 개시 결정신호 · BrETH JPYC 볼륨 급증 · JPYSC venue 컨트랙트 배포</td></tr>
+  </table>
+  <p class="small muted"><b>제약(중요):</b> JPYSC는 <b>현재 외부 이동 불가</b>(SBI VC Trade 내부 한정)라 SBI가 개방하기 전엔 BFC가 할 수 있는 게 없음. Bifrost 체인에 <b>JPYSC 토큰 아직 0</b>(미통합). 발표된 Bifrost-JPYSC 제휴도 없음 → 위는 "전략상 가장 그럴듯한 경로"이지 확정 아님. <b>실현 여부는 SBI의 JPYSC 개방 + 외부 수익처(Bifrost류) 허용에 달림.</b></p>
 
   <!-- ===== 온체인 심층분석 ===== -->
   <h2 class="sec" id="native-holders"><span class="n">15</span>실질 BFC 익스포저 TOP100 (BiFi 예치·스테이킹 합산) <span class="badge b-info">재단 탐지</span></h2>
