@@ -24,9 +24,10 @@
 | **[03-monitoring-baseline.md](./03-monitoring-baseline.md)** | **10개 차원 기준값 + 매 루프 재실행 쿼리/디프 대상** (+부록: 체크리스트·확장후보) | 루프 돌릴 때 매번 |
 | **[data/validators-snapshot.md](./data/validators-snapshot.md)** | 검증자 24개 온체인 주소(controller/stash) | 노드 변동 대조용 |
 | **[data/native-holders-analysis.md](./data/native-holders-analysis.md)** | 네이티브 홀더 전수분류·실질 BFC 익스포저(스테이킹/BiFi 합산)·BiFi 예치추적 | 홀더 분석 |
-| **[data/foundation-tracking.md](./data/foundation-tracking.md)** | **★ 재단 추적** — TOP100 재단 플래그·재단 클러스터·물밑 프로젝트 감지 신호 | 재단 움직임 추적 |
+| **[data/foundation-tracking.md](./data/foundation-tracking.md)** | **★ 재단 추적** — TOP100 재단 플래그·BiFi 38명 원천 전수·**운용자 네트워크**·청산 정정·물밑 프로젝트 감지 | 재단 움직임 추적 |
+| **[tools/monitor.py](./tools/monitor.py)** | **루프용 모니터링 스크립트** — 거래소/재단/순환클러스터/운용자망/BiFi 와치리스트 잔액 + 전일 델타 | 루프 돌릴 때 실행 |
 
-충돌 시 우선순위: **03 > 02 > 01** (최신·정정 반영순).
+충돌 시 우선순위: **03 > 02 > 01** (최신·정정 반영순). **루프 실행: `python3 tools/monitor.py`** (baseline 대비 델타 자동).
 
 ---
 
