@@ -99,4 +99,5 @@
 - 검증자 실명↔주소 매핑(Substrate identity 부재로 원천 제약)
 - (해결됨) `0x4bAE7…6Ee` 87M = **BiFi BFC 렌딩 예치풀**(미식별 콜드 아님) · `0xcF2FC1d3` = BiFi BtcUSD 풀
 - (해결됨) **BiFi 담보시장 = 12개**(Manager `getTokenHandlersLength()`=12): BFC·wstBFC·ETH·BNB·POL·USDC·USDT·DAI·WBTC·BTCB·BtcUSD·**EverStableLPToken**(`0x9491297f…`, Everdex 스테이블 풀 LP). 가격민감 담보는 BFC·wstBFC뿐.
-- (정정됨, 2026-06-30) **BiFi 청산곡선 재산출:** 초판은 12시장 중 4개만 조회 → 비BFC 담보 누락+이미청산권 중복집계로 과대. 정정: **3% 하락=신규청산 1건($1.4K)뿐**, 깊은 하락(~49%↓)에 집중되며 그마저 단일 고래 `0xbc0995ca`(149.5M BFC)가 대부분. 32건은 이미 청산권인데 미청산=청산봇 비활성(런오프). 상세 → `data/native-holders-analysis.md` 10차 정정판.
+- (정정됨, 2026-06-30) **BiFi 청산곡선 재산출:** 초판은 12시장 중 4개만 조회 → 비BFC 담보 누락+이미청산권 중복집계로 과대. 정정: **3% 하락=신규청산 1건($1.4K)뿐**, 깊은 하락(~49%↓)에 집중. 그마저 `0xbc0995ca`(149.5M BFC)는 **개인 아닌 `InvestVault/1` 풀형 볼트 컨트랙트**(bvVault 예치자 집단의 합산, 운용 EOA `0xaff29bedb24c`). 32건은 이미 청산권인데 미청산=청산봇 비활성(런오프). 상세 → `data/native-holders-analysis.md` 10차.
+- (해결됨, 2026-06-30) **BiFi 예치자 38명 원천 재귀추적(7홉·순환감지):** 재단 배포망 42% + **순환 클러스터(관리형 추정) 30%**(0x0c791e90·0x52c78774·0x4d0bbd3b 등이 서로 wstBFC 순환, 재단분배자 0x313b1578 연결) + 빗썸 인출 24% + DEX 5%. → **BiFi TVL의 ~70%가 재단/관리형 지갑 origin, 외부 실수요 제한적.** ⚠️ 「순환 클러스터」 지갑군 재가동/청산이 핵심 감시 대상. 상세 → `data/foundation-tracking.md`.
