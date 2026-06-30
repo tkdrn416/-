@@ -125,7 +125,7 @@
   <h2 class="sec" id="summary">핵심 요약 · KPI</h2>
   <div class="grid">
     <div class="kpi"><div class="v">$0.0118</div><div class="l">BFC 가격 · 시총 ~$16.6M (#~900) · FDV $28.3M</div></div>
-    <div class="kpi"><div class="v">6.11M ▼</div><div class="l">BtcUSD 발행(8.06M→6.11M 수축) · 홀더 481 · 61% 브릿지볼트</div></div>
+    <div class="kpi"><div class="v">6.11M ▼</div><div class="l">BtcUSD 발행(6-30 8.06M→6.11M, ▼=당일 -24% 상환) · 홀더 481 · 브릿지볼트 3.71M(61%)</div></div>
     <div class="kpi"><div class="v">24</div><div class="l">검증자 Full15 / Basic9 · 스테이킹 405.65M (유통의 ~29.3%) · Nakamoto 6</div></div>
     <div class="kpi"><div class="v">54.7%</div><div class="l">TOP50 거래소 집중(업비트38.7+빗썸16)</div></div>
     <div class="kpi"><div class="v">$11.84M</div><div class="l">체인 TVL net · BTCFi $9.2M·BiFi $6.9M·Biquid $3.2M·DEX $2.7M(중복조정)</div></div>
@@ -138,7 +138,7 @@
   <div class="callout info"><b>📌 온체인 심층조사 종합 (2026-06-30) — 이번 라운드 핵심 발견</b>
   <ol style="margin:6px 0 0 0">
     <li><b>거래소 보유 확정:</b> 업비트 ≈348M(콜드 <code>0x50F187Ef</code> 332M)·빗썸 ≈143.7M(콜드 <code>0xDCd52f5f</code>+핫). 빗썸 핫→콜드 통합 관측(총량 불변). → §17</li>
-    <li><b>BiFi 청산 분석 전면 정정:</b> 초판은 12시장 중 4개만 조회해 과대산출. 정정 후 <b>3% 하락=신규청산 1건($1.4K)뿐</b>. 깊은 하락(~49%)도 대부분 <code>InvestVault</code> 풀 1개. 별도 <b>32건·52M BFC가 이미 청산권인데 미청산</b>(키퍼 비활성/비유동 정황). → §15-L</li>
+    <li><b>BiFi 청산 분석 전면 정정:</b> 초판은 12시장 중 4개만 조회해 과대산출. 정정 후 <b>3% 하락=신규청산 1건($1.4K)뿐</b>. 깊은 하락(~49%)도 대부분 <b>Boost 볼트(bvBasewstBFC) 1개</b>의 합산 포지션. 별도 <b>32건·52M BFC가 이미 청산권인데 미청산</b>(키퍼 비활성/비유동 정황). → §15-L</li>
     <li><b>BiFi 예치자 38명 원천 재귀추적:</b> 재단 배포망 42% + <b>관리형 순환클러스터 30%</b> + 거래소 24% + DEX 5%. 외부 실수요 기반 제한적(~70%가 재단/관리형). → §15-F</li>
     <li><b>★★ 운용자 네트워크 = BTCFi Boost 제품으로 식별(이번 라운드 결정타):</b> 청산 지배 컨트랙트 <code>0xbc0995ca</code>의 토큰명이 <b>"Boost Base DAO Vault - wstBFC"(bvBasewstBFC)</b> — 즉 Bifrost 공식 수익상품 <b>BTCFi Boost</b>(boost.btcfi.one)의 볼트. 같은 시리즈 <code>bvBaseBFC</code>(빈 볼트)도 존재. 가스허브 <code>0x81c22bec</code>→운용EOA 2개→92개 컨트랙트→Boost 볼트군. <b>익명 운용망의 정체 = Bifrost BTCFi Boost 제품군의 운용 인프라</b>(근거=배포자·팩토리 <code>0xd0f8ba2d</code> = 강한 증거. 단 <b>소유주체 실명·"재단 직영" 여부는 미확정</b> — 가스 기반 귀속은 약한 근거로 배제). 배포시점 BTCFi/StableDAO기(2025-07) 일치, 2026-04까지 활발. → §15-F</li>
     <li><b>물밑 프로젝트 신호:</b> 운용자가 <b>2026년 빈 업그레이더블-프록시 볼트 껍데기 11개</b>를 미리 배포·소유권설정만 하고 자금 미투입 = <b>런칭 대비 스테이징</b>. <b>이 껍데기가 자금 받는 순간 = 신제품 출시</b> → <code>tools/monitor.py</code> 자동 감지. → §15-F</li>
@@ -656,7 +656,16 @@
 </svg></div>
   <p class="small">BiFi/볼트 예치자 38명을 <b>재귀 funder 추적(최대 7홉·순환감지)</b>으로 끝까지 분해: <b>재단 분배망 42%(17건·128.8M)</b> · <b>순환 클러스터(관리형 추정) 30%(12건·91.4M)</b> · 거래소 인출 24%(7건·73.2M) · DEX 매수 5%(2건·14.4M). 초기 「미상 경유 46%」는 0%로 해소됨 — 다수가 4~5홉 뒤 빗썸/재단분배자에 도달하거나, 서로 wstBFC를 돌리는 <b>순환 클러스터</b>(0x0c791e90·0x52c78774·0x4d0bbd3b·0xeb76c926 등, 재단분배자 0x313b1578과 연결)로 수렴. 순환 클러스터는 독립 외부유저가 아니라 <b>관리형/연관 지갑군</b> 정황(재단 또는 MM 운용 추정).</p>
   <div class="callout ok"><b>✅ 운용자 네트워크 정체 = BTCFi Boost 제품 (2026-06-30 식별):</b> 청산 지배 컨트랙트 <code>0xbc0995ca</code> 토큰명이 <b>"Boost Base DAO Vault - wstBFC"(bvBasewstBFC, 131.7M·홀더 37)</b> → 이 익명 운용망은 Bifrost 공식 수익상품 <b>BTCFi Boost</b>(boost.btcfi.one)의 볼트 인프라. 같은 시리즈 <code>bvBaseBFC</code>(빈 볼트)·"Boost"·"DAO Vault" 네이밍(StableDAO 연계)으로 확정. <b>"재단직접/제3자MM/제품팀" 중 → Bifrost 자체 BTCFi Boost 제품팀 인프라.</b> 따라서 순환클러스터·스테이징 껍데기 = Boost 볼트 운용/신규볼트 준비. (외부확인: BTCFi Boost는 "원클릭 크립토 적금"으로 2025 출시, HashPort JPYC 4% 렌딩 포함.)<br><b>재검증(✓):</b> bvBasewstBFC·bvBaseBFC 둘 다 운용 팩토리 <code>0xd0f8ba2d</code>(←0xaff29bedb24c)가 배포 → Boost=운용망 식별 확정. 단 Biquid <b>stBFC/wstBFC는 별도 배포자 <code>0x90b6796f</code></b>(다른 제품팀) → 리퀴드스테이킹(Biquid)과 수익볼트(Boost)는 배포주체 분리.</div>
-  <div class="callout warn"><b>운용자 네트워크 구조(=BTCFi Boost 백엔드):</b> ① 볼트운용 EOA <code>0xaff29bedb24c</code>=Boost볼트 포함 <b>43개 컨트랙트 배포</b> · ② 클러스터 컨트롤러 EOA <code>0xb878526f</code>=순환 share컨트랙트 배포자(<code>0x23E016E0e5</code>) 소유, <b>49개 배포</b> · ③ 공통 <b>가스허브 EOA <code>0x81c22bec</code></b>(49,270 BFC)가 위 둘 모두 가스충전, <b>총 51개 지갑에 BFC 배분</b>. → 두 볼트 운용자가 같은 허브에서 자금 = <b>하나의 관리형 운용 네트워크</b>. 재단직접/위탁MM/볼트팀 중 무엇인지는 온체인만으론 단정 불가하나 독립 retail 아님 확정. <b>가스허브 <code>0x81c22bec</code> 잔액·배분 급변 = 운용망 재가동(신규볼트/매도) 트리거</b> → <code>tools/monitor.py</code> 와치리스트 포함.<br><b>★ 배포 타임라인:</b> <code>0xaff29bedb24c</code> 43개 = <b>2025-06~08 집중(BTCFi/StableDAO 런칭 2025-07-18과 일치)</b>+2026-01 · <code>0xb878526f</code> 49개 = 2025-02부터 <b>2026-04까지 계속</b>(2026-02·04에 각 5개). <b>클래식 재단분배자는 휴면인데 이 운용망은 현재도 활발 → 물밑 활동의 실체 후보.</b> <b>팀 연결(정황):</b> 컨트롤러 <code>0xb878526f</code>가 BTCFi 팀배포자 <code>0xA30B97a5</code>로부터 BtcUSD 수령(2025-03, 소액)+share컨트랙트 재단분배자 0x313b1578 경유 → <b>재단/팀 orbit 개연성</b>(자금 내부순환이라 소유권 단정 불가).<br><b>★ 2026 신규 11개 정밀조사:</b> 10개가 <b>빈 껍데기</b>(tx·토큰·잔액 0), 유일 활성 <code>0x11d91B18bC</code>도 <code>upgradeTo()</code>+<code>transferOwnership()</code>만 = <b>업그레이더블 프록시 볼트 껍데기를 미리 배포·소유권설정만 하고 자금 미투입(런칭 대비 인프라 스테이징)</b>. 가동 신제품은 아직 없음. ⚠️ <b>이 껍데기들(<code>0xF4394659</code>·<code>0x94B9A18C</code>·<code>0xB9b05cEe</code>·<code>0x6dedf09e</code>·<code>0x3f0BA910</code> 등 2026-04분)이 토큰/자금 받기 시작 = 신제품 런칭 순간 → 최우선 감시.</b></div>
+  <h4>운용자 네트워크 구조 (=BTCFi Boost 백엔드)</h4>
+  <table>
+    <tr><th>구성</th><th>역할</th></tr>
+    <tr><td>볼트운용 EOA <code>0xaff29bedb24c</code></td><td class="wrap">Boost 볼트 포함 <b>43개 컨트랙트 배포</b>(팩토리 <code>0xd0f8ba2d</code>)</td></tr>
+    <tr><td>클러스터 컨트롤러 EOA <code>0xb878526f</code></td><td class="wrap">순환 share컨트랙트 배포자(<code>0x23E016E0e5</code>) 소유, <b>49개 배포</b></td></tr>
+    <tr><td>공통 가스허브 EOA <code>0x81c22bec</code></td><td class="wrap">49,270 BFC, 위 둘 모두 가스충전, <b>총 51개 지갑에 BFC 배분</b></td></tr>
+  </table>
+  <p class="small">→ 두 운용자가 같은 허브에서 자금 = <b>하나의 관리형 운용 네트워크</b>(독립 retail 아님 확정; 재단직접/위탁MM/볼트팀 구분은 온체인만으론 단정 불가). <b>가스허브 잔액·배분 급변 = 운용망 재가동(신규볼트/매도) 트리거.</b></p>
+  <div class="callout warn"><b>★ 배포 타임라인 — 클래식 재단분배자는 휴면, 이 운용망만 현재 활발:</b> <code>0xaff29bedb24c</code> 43개 = 2025-06~08 집중(BTCFi/StableDAO 런칭 2025-07-18과 일치)+2026-01 · <code>0xb878526f</code> 49개 = 2025-02부터 <b>2026-04까지 계속</b>(2026-02·04 각 5개). → <b>물밑 활동의 실체 후보.</b> <b>팀 연결(정황·약한 근거):</b> 컨트롤러가 BTCFi 팀배포자 <code>0xA30B97a5</code>로부터 BtcUSD 소액 수령(2025-03)+share컨트랙트 재단분배자 <code>0x313b1578</code> 경유 → 재단/팀 orbit 개연성(자금 내부순환이라 소유권 단정 불가).</div>
+  <p class="small"><b>★ 2026 신규 11개 정밀조사:</b> 10개가 <b>빈 껍데기</b>(tx·토큰·잔액 0), 유일 활성 <code>0x11d91B18bC</code>도 <code>upgradeTo()</code>+<code>transferOwnership()</code>만 = <b>업그레이더블 프록시 볼트를 미리 배포·소유권설정만 하고 자금 미투입(런칭 대비 인프라 스테이징)</b>. 전체 11개 주소는 아래 워치리스트 표 참조. ⚠️ <b>이들이 자금 받기 시작 = 신제품 런칭 순간 → 최우선 감시.</b></p>
   <h4>순환 클러스터 구조 (실측 매핑)</h4>
   <div style="margin:8px 0"><svg viewBox="0 0 820 470" width="100%" style="max-width:820px;background:#0d1117;border:1px solid #1f2937;border-radius:8px" font-family="ui-sans-serif,system-ui">
 <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9ca3af"/></marker></defs>
@@ -913,7 +922,7 @@
     <tr><td>− Treasury 국고</td><td class="num">−7.7M</td><td class="num">0.6%</td><td>출금 0(미집행)</td></tr>
     <tr><td><b>= 실질 자유유통(free float)</b></td><td class="num"><b>≤619M</b></td><td class="num"><b>≤45%</b></td><td><b>TOP100 밖 추가 휴면물량 감안 시 더 낮음(상한)</b></td></tr>
   </table>
-  <p class="small muted"><b>해석:</b> 유통의 <b>55%+가 거래소 커스터디·3년 휴면 초기배분·국고에 묶임</b> = "free float 적다"는 주장을 수치로 확정. 게다가 자유유통 619M 중에도 상당분이 <b>스테이킹(405.65M)·Biquid·BiFi 예치로 락</b>되어 즉시 매도엔 언본딩 필요 → <b>실제 활성 거래가능 물량은 619M보다 더 작음</b>. ⟹ 거래소 의존도·저유동·초기배분 overhang(45.9M+ 즉시 이동가능)이 가격 변동성·매도압력의 구조적 원천.</p>
+  <p class="small muted"><b>해석:</b> 유통의 <b>55%+가 거래소 커스터디·3년 휴면 초기배분·국고에 묶임</b> = "free float 적다"는 주장을 수치로 확정. 게다가 자유유통 619M 중에서도 <b>스테이킹·Biquid LST·BiFi 예치에 묶인 부분만큼</b>은 즉시 매도에 언본딩이 필요(스테이킹 총량 405.65M에는 거래소·휴면분도 일부 포함되므로 619M의 부분집합으로 단순계상은 불가) → <b>실제 활성 거래가능 물량은 619M보다 더 작음</b>. ⟹ 거래소 의존도·저유동·초기배분 overhang(45.9M+ 즉시 이동가능)이 가격 변동성·매도압력의 구조적 원천.</p>
 
   <h2 class="sec" id="genesis"><span class="n">19</span>제네시스/초기 배분 (잠재 매도 overhang)</h2>
   <div class="callout ok"><b>초기 배분 확정 (잔액이력 검증)</b> — TOP50 중 <b>14개 지갑이 ~3.25M BFC 균등 청크 = 45.9M</b>. 각 지갑 잔액이력이 <b>단 1건, 블록 613703(2023-02-03 = 메인넷 직후)</b> → 1회 수령 후 3년 휴면. = 초기 토큰 배분 확정.</div>
@@ -952,9 +961,9 @@
   <p class="small"><b>시스템 총계: self-bond 60.89M(15.0%) / 위임 344.76M(85.0%) / 총 405.65M.</b> 위임의 ~60M은 C형(기관집중)·~280M은 D형(retail). 팀 직영(A) 12M + 팀운영 추정(B) 50M = <b>최소 ~62M(15%)가 팀/재단 영향권 자기본딩</b>.</p>
   <div class="callout warn"><b>★ 탈중앙성 정량(Nakamoto 계수) + 스테이킹 수익률 — 실측·산출(2026-06-30):</b>
   <ul style="margin:6px 0 0 0">
-    <li><b>스테이크가중 Nakamoto 계수 = 6</b> — 상위 6개 노드만 담합해도 누적 36.3%로 <b>BFT 정지임계(33%) 초과</b>(파이널리티 중단 가능). 50% 통제엔 9개, 2/3 안전임계(66%)엔 12개 필요. <span class="muted">(동등가중 가정 시엔 24노드 중 9개=33%)</span> → DPoS 24노드치곤 <b>상위 12노드가 24M 동급으로 균등</b>해 단일지배는 없으나, <b>"6개면 정지"는 소수 검증자 신뢰에 의존</b>하는 구조.</li>
+    <li><b>스테이크가중 Nakamoto 계수: liveness(33% 정지임계) = 6 · safety(50%) = 9 · 2/3 통제 = 12.</b> 상위 6개 노드만 담합해도 누적 36.3%로 BFT 파이널리티 중단 가능. <span class="muted">(동등가중 가정 시엔 24노드 중 9개=33%)</span> → DPoS 24노드치곤 <b>상위 12노드가 24M 동급으로 균등</b>해 단일지배는 없으나, <b>"6개면 정지"는 소수 검증자 신뢰에 의존</b>하는 구조.</li>
     <li><b>★ 거버넌스 집중 리스크:</b> 위임의 78%가 단일 Biquid LST 풀 경유(위 §8) → <b>그 풀의 위임배분 정책 하나가 다수 검증자의 순위를 좌우</b>. LST 운영주체가 사실상 위임권력 보유(슬래싱·검열 시 시스템 광범위 영향).</li>
-    <li><b>스테이킹 명목수익률(추정):</b> 코드 인플레 13% ÷ 스테이킹비율 29.3% ≈ <b>명목 ~13%/스테이킹분배 가중 시 체감 더 높음</b>(고정 APR 없음·개인별 변동). 이는 BTCFi Boost JPYC 4%·Oasys ~40% APY 등 DeFi 수익과 경쟁관계 — 단순 스테이킹도 두 자릿수라 LST(Biquid)로 스테이킹+DeFi 동시 추구가 합리적(→ 단일 수익 스택 형성 원인).</li>
+    <li><b>스테이킹 명목수익률(추정):</b> 코드 인플레 연 13%(전체 공급 기준). <b>신규 발행이 스테이커(공급의 29.3%)에게 집중 분배된다고 가정하면 스테이커 명목 APR ≈ 13% ÷ 0.293 ≈ 최대 ~44%</b>. 단 인플레 일부는 treasury·collator 보상으로 배분되므로 <b>실제 스테이커 수익은 이보다 낮은 두 자릿수 추정</b>(고정 APR 없음·개인별 변동·정확 분배비율 미공개). 그래도 단순 스테이킹이 두 자릿수라 BTCFi Boost JPYC 4%·Oasys ~40% APY와 경쟁 가능 — LST(Biquid)로 스테이킹+DeFi 동시 추구가 합리적(→ 단일 수익 스택 형성 원인).</li>
   </ul></div>
   <div class="callout info"><b>★ 위임의 정체 = 대부분 Biquid 유동스테이킹(2026-06-30 실측):</b> Biquid LST 풀이 <code>totalPooledBFC()</code> <b>268.8M BFC</b>를 검증자에 내부 위임(공식문서 확인) → <b>위임 344.76M의 약 78%가 직접 위임이 아니라 Biquid 풀 경유.</b> 즉 "D형 retail 위임"의 상당분은 개별 사용자가 아니라 <b>stBFC 홀더(130명)가 맡긴 LST 물량</b>이 검증자로 재위임된 것. (§8 Biquid 참조)</div>
   <h4>자금출처·시점 보조단서 (위 분류와 교차)</h4>
@@ -1021,10 +1030,10 @@
     <div class="card"><h4 style="margin-top:0;color:var(--bad)">⊖ 약세 논거 (bear)</h4>
     <ul style="margin:0">
       <li><b>저유동·거래소 의존:</b> 자유유통 <b>≤45%</b>, 유통의 55%+가 거래소 커스터디·3년 휴면 초기배분·국고에 묶임(§18). 45.9M+ 즉시이동 overhang 상존.</li>
-      <li><b>재귀 TVL:</b> net TVL $11.84M의 ~70%가 재단/관리형 지갑발 → <b>외부 실수요 TVL은 $3~4M급</b>. 한 BFC가 5개 프로토콜에 중복계상(순환 레버리지).</li>
+      <li><b>재귀 TVL:</b> net TVL $11.84M의 ~70%가 재단/관리형 지갑발(<b>관리형 분류는 추정</b>) → <b>외부 실수요 TVL은 $3~4M급으로 추정</b>. 한 BFC가 5개 프로토콜에 중복계상(순환 레버리지).</li>
       <li><b>수익 스택 연쇄위험:</b> BFC급락 시 stBFC→wstBFC→Boost볼트→BiFi담보가 동반 타격(청산곡선 ~46%↓ 구간 131.7M wstBFC 볼트 집중).</li>
       <li><b>거버넌스 집중:</b> Nakamoto 6(정지) + 위임 78%가 단일 Biquid 풀 경유 = 소수 주체에 검증/위임 권력 집중.</li>
-      <li><b>매출·가격 괴리:</b> 영업매출 ~1.2억원(pre-revenue), BtcUSD는 당일 -24% 수축. 활발한 사업행보 대비 토큰가치 반영 제한적.</li>
+      <li><b>매출·가격 괴리:</b> 영업매출 ~1.2억원(pre-revenue), BtcUSD 당일 -24%(단일일 언와인드·추세 미확정). 활발한 사업행보 대비 토큰가치 반영 제한적.</li>
     </ul></div>
   </div>
   <div class="card"><h4 style="margin-top:0">❓ 핵심 미지수 (what would change the view)</h4>
@@ -1087,7 +1096,7 @@
     <tr><th>#</th><th>차원</th><th>기준값 (2026-06-29~30)</th><th>재실행 / 디프 대상</th></tr>
     <tr><td>1</td><td>상위홀더 ★네이티브★</td><td class="wrap">업비트 콜드 332.5M·빗썸 콜드 137.5M·#3리저브 87.4M·Treasury 7.70M</td><td class="wrap">explorer-backend /addresses → 잔액·신규진입·이탈 diff (콜드허브·#3 첫OUT·Treasury 1순위)</td></tr>
     <tr><td>2</td><td>노드/검증자</td><td class="wrap">24개(Full15/Basic9)·스테이킹 405.65M·라운드 2525~2526·위임자 27,387(대부분 Biquid풀 재위임)·Nakamoto 6</td><td class="wrap">RPC eth_call(0x…0400 candidate_pool/candidate_state) · 주소집합(validators-snapshot) 대조</td></tr>
-    <tr><td>3</td><td>브릿지+Vault+BtcUSD</td><td class="wrap">BSC Socket 17,532tx·ETH Socket 10,132·ETH Vault BFC 863.5M·BSC BTCB 44.3·BtcUSD 6.11M(홀더481, 6-29 8.06M→6-30 상환후 6.11M)·Everdex $3.23M·CCCP v2=flag-gated</td><td class="wrap">bscscan/blockscout counters + ethplorer Vault + RPC BtcUSD totalSupply + tokens/counters + llama.fi</td></tr>
+    <tr><td>3</td><td>브릿지+Vault+BtcUSD</td><td class="wrap">BSC Socket 17,532tx·ETH Socket 10,132·ETH Vault BFC 863.5M·BSC BTCB 44.3·BtcUSD 6.11M(홀더481, 6-29 8.06M→6-30 상환후 6.11M)·Everdex $2.69M(net, §8)·CCCP v2=flag-gated</td><td class="wrap">bscscan/blockscout counters + ethplorer Vault + RPC BtcUSD totalSupply + tokens/counters + llama.fi</td></tr>
     <tr><td>4</td><td>트랜잭션 ★네이티브★</td><td class="wrap">네이티브 누적 7,747만·당일 ~17,051 · ETH 전송 111,008(보조)</td><td class="wrap">explorer-backend /stats → 당일tx 급변·대형전송(콜드허브/Treasury)</td></tr>
     <tr><td>5</td><td>GitHub</td><td class="wrap">node v2.2.0 <code>e0f08aa</code>·relayer v3.0.0 <code>f9c44ff</code>·34레포·신규 common</td><td class="wrap">github API → 최신 커밋SHA·릴리스 태그·Open PR·신규레포·asset 폴더 추가</td></tr>
     <tr><td>6</td><td>뉴스</td><td class="wrap">워터마크 2026-06-02(HashPort×JPYC). 6/3~30 신규 공식뉴스 없음(6/4 BFC +30% 시세만)</td><td class="wrap">medium-kr·t.me/s/Bifrost_Notice·검색(한/일/영) → 워터마크 이후. bifrost.io/blog·CMC BNC항목 제외</td></tr>
