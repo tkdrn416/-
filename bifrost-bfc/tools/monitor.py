@@ -92,6 +92,25 @@ def token_check(old):
         print(f"  {lab:<22} {sup:>16,.0f}  (홀더 {hld})  Δ{fmt(d)}")
     return snap
 def fmt(v): return f"{v:+,.0f}" if v else "0"
+# 신규 토큰 출현 감지 — JPYSC 통합/신규 브릿지자산 = 최우선 신호
+NEW_TOKEN_QUERIES=["JPYSC","JPYC","cbBTC","BrBTC","Bridged"]
+def new_token_scan(old):
+    print("\n# 신규 토큰 출현 스캔(JPYSC 통합·신규 브릿지자산 = P1 신호):")
+    known=set(filter(None,(old.get("known_tokens") or "").split("|")))
+    cur=set(); alert=0
+    for q in NEW_TOKEN_QUERIES:
+        r=get(f"/api/v2/tokens?q={q}")
+        for it in (r.get('items') or [])[:12]:
+            addr=(it.get('address') or '').lower(); sym=it.get('symbol') or ''
+            if not addr: continue
+            cur.add(addr)
+            # JPYSC 등장은 무조건 경보
+            if 'JPYSC' in (sym+ (it.get('name') or '')).upper():
+                alert+=1; print(f"  🚨 JPYSC 계열 토큰 발견! {sym} {addr[:14]} ← JPYSC 통합 개시 가능")
+            elif known and addr not in known:
+                alert+=1; print(f"  ⚠️ 신규 토큰 등장: {sym} {addr[:14]}")
+    if alert==0: print("  신규 토큰 없음(JPYSC 미등장).")
+    return "|".join(sorted(cur))
 def main():
     save="--no-save" not in sys.argv
     cur=snapshot()
@@ -118,6 +137,7 @@ def main():
     toksnap=token_check(old)
     for k,v in toksnap.items(): cur["tok_"+k]=v
     shell_check()
+    cur["known_tokens"]=new_token_scan(old)
     if save:
         os.makedirs(os.path.dirname(BASE),exist_ok=True)
         json.dump(cur,open(BASE,"w"))
