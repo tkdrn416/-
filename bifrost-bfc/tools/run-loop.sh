@@ -17,20 +17,20 @@ python3 tools/monitor.py
 RC=$?
 if [ $RC -ne 0 ]; then echo "[monitor.py 비정상 종료 rc=$RC — 커밋 생략]"; exit $RC; fi
 
-# 3) 데이터·리포트만 커밋(코드 변경은 손대지 않음)
-git -C "$ROOT" add \
-  bifrost-bfc/data/history.csv \
-  bifrost-bfc/data/monitor-baseline.json \
-  bifrost-bfc/data/monitor-events.log \
-  bifrost-bfc/bifrost-daily-report.html 2>/dev/null
+# 3) 데이터·리포트만 커밋(코드 변경은 손대지 않음). ROOT로 이동해 경로 모호성 제거
+cd "$ROOT"
+# 존재하는 파일만 add(monitor-events.log는 경보 발생 시에만 생성 → 없으면 git add가 전체 실패)
+FILES="bifrost-bfc/data/history.csv bifrost-bfc/data/monitor-baseline.json bifrost-bfc/bifrost-daily-report.html"
+[ -f bifrost-bfc/data/monitor-events.log ] && FILES="$FILES bifrost-bfc/data/monitor-events.log"
+git add -- $FILES
 
-if git -C "$ROOT" diff --cached --quiet; then
+if git diff --cached --quiet; then
   echo "[변경 없음 — 커밋/푸시 생략]"; exit 0
 fi
-git -C "$ROOT" commit -q -m "loop: 일일 모니터 $(date -u +%F)"
+git commit -q -m "loop: 일일 모니터 $(date -u +%F)"
 # 네트워크 실패 시 4회 지수백오프 재시도
-for d in 2 4 8 16; do
-  if git -C "$ROOT" push origin "$BRANCH"; then echo "[push 완료]"; exit 0; fi
-  echo "[push 실패 — ${d}s 후 재시도]"; sleep "$d"
+for delay in 2 4 8 16; do
+  if git push origin "$BRANCH"; then echo "[push 완료]"; exit 0; fi
+  echo "[push 실패 — ${delay}s 후 재시도]"; sleep "$delay"
 done
 echo "[push 최종 실패 — 다음 실행에서 재시도됨]"; exit 1

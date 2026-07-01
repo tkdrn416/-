@@ -125,11 +125,12 @@ def balances(cur,old,row):
         if "HTX" in lab: htx+=v
         th=CAT_THRESH.get(cat,DEFAULT_THRESH); flag=""
         if old and abs(d)>=th:
-            flag=" ⚠️"
-            if cat=="재단핵심" and d<0: alert("P1",f"★재단핵심 출금! {lab} {fmt(d)} BFC (첫 집행/매도 신호)")
-            elif cat=="거래소" and d>0: alert("P1",f"거래소 콜드 순유입 {lab} {fmt(d)} BFC (매도압력)")
-            elif cat=="거래소": alert("P2",f"거래소 출금 {lab} {fmt(d)} BFC")
-            else: alert("P2",f"{cat} 잔액변동 {lab} {fmt(d)} BFC")
+            if cat=="재단핵심":
+                # 출금(d<0)만 신호. 양(+) 변동은 인플레 적립(정상)이라 무알림 → 매일 노이즈 방지
+                if d<0: flag=" ⚠️"; alert("P1",f"★재단핵심 출금! {lab} {fmt(d)} BFC (첫 집행/매도 신호)")
+            elif cat=="거래소" and d>0: flag=" ⚠️"; alert("P1",f"거래소 콜드 순유입 {lab} {fmt(d)} BFC (매도압력)")
+            elif cat=="거래소": flag=" ⚠️"; alert("P2",f"거래소 출금 {lab} {fmt(d)} BFC")
+            else: flag=" ⚠️"; alert("P2",f"{cat} 잔액변동 {lab} {fmt(d)} BFC")
         print(f"{lab:<32}{cat:<18}{v:>16,.0f}{fmt(d):>14}{flag}")
     row["upbit_bfc"]=round(up); row["bithumb_bfc"]=round(bt); row["htx_bfc"]=round(htx); row["exch_total"]=round(up+bt+htx)
     row["treasury_bfc"]=round(cur.get("0x6d6f646c70792f74727372790000000000000000",0))
