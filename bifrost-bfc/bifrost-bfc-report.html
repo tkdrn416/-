@@ -528,7 +528,7 @@
     <tr><td>52</td><td class="num">4,981,687</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x988077831dc3b966afecc56597325adea2775d1e</code></td><td class="small">네이티브</td></tr>
     <tr><td>53</td><td class="num">4,870,000</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 순환 클러스터(관리형 추정)</span></td><td><code>0xbb9f02945073a2edf7b8632557f20414d96a9d20</code></td><td class="small">BiFi</td></tr>
     <tr><td>54</td><td class="num">4,499,587</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xb5f1948e68d85d0a4b202568cde0b1554a5ac9f2</code></td><td class="small">네이티브</td></tr>
-    <tr><td>55</td><td class="num">4,408,286</td><td></td><td class="wrap"><b>HTX 거래소 핫월렛(네이티브)</b> <span class="small muted" data-orig="1">(사용자 업비트→HTX 입금 ground-truth로 확정: 입금라우터 27개←업비트/빗썸핫 스윕→여기 집결→출금라우터. 4.41M 보유)</span></td><td><code>0x09fced818439182812f13b006114da4382c4470e</code></td><td class="small">네이티브</td></tr>
+    <tr><td>55</td><td class="num">4,408,286</td><td></td><td class="wrap"><b>크로스-venue 유동성/MM 허브</b> <span class="small muted" data-orig="1">(업비트·빗썸 인출유입 → Everdex 스왑·브릿지·빗썸콜드 재예치로 순환. HTX 입금경유도 포함되나 다venue 순환이라 특정 거래소 custody 아님. 4.41M 순환)</span></td><td><code>0x09fced818439182812f13b006114da4382c4470e</code></td><td class="small">네이티브</td></tr>
     <tr><td>56</td><td class="num">4,387,015</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 빗썸 인출(다홉)</span></td><td><code>0xf614497937555ef5d6ee945c15658ad46ba114c2</code></td><td class="small">BiFi+stake</td></tr>
     <tr><td>57</td><td class="num">4,107,074</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: ★재단 분배자(경유)</span></td><td><code>0x35d8a3d697df071e3de2d5f681198910d4c3e84a</code></td><td class="small">볼트</td></tr>
     <tr><td>58</td><td class="num">4,007,293</td><td></td><td class="wrap">BiFi예치/스테이커 <span class="small muted" data-orig="1">← 원천: 순환 클러스터(관리형 추정)</span></td><td><code>0x5e5cc1a3ad7202408f2a37b2b8d69f414c7235bd</code></td><td class="small">BiFi</td></tr>
@@ -776,7 +776,7 @@
   </table>
   <p class="small"><b>★ 핵심:</b> 재단 관련 온체인 활동이 <b>클래식 분배망(전부 2025 휴면) → BTCFi Boost 운용망(2026 현재까지 활발)으로 완전히 이동.</b> 즉 지금 "재단 움직임"을 보려면 클래식 분배자가 아니라 <b>Boost 운용망(가스허브 0x81c22bec)</b>을 봐야 함. 클래식 분배자/Treasury 재가동은 여전히 별도 트리거(매도/언락 overhang).</p>
   <p class="small muted">캐비엇: 재단 origin 추정은 funder 기반(일부 거래소출금/OTC 혼재 가능). 0xA30B97a5 외 신규 운영지갑 존재 가능 → 신규 배포자 추적으로 보완. 상세 <code>data/foundation-tracking.md</code>.</p>
-  <div class="callout info"><b>★ 휴면 초기배분 지갑 재가동 스캔(2026-06-30, 리치 상위40 전수):</b> 초기배분 휴면 군집(3.25~10M·tx=1·송신이력 0) <b>전부 휴면 유지 — 재가동/매도 신호 0</b>(휴면 결론 재확인). 활성 대형은 거래소뿐(업비트콜드 2026-06-26·업비트핫·빗썸콜드 06-29)이며 <b>거래소 외 신규 대형 콜드월렛 없음</b>("거래소=업비트/빗썸 중심" 유지). <b>단 신규 식별→확정</b>: 액티브 EOA <code>0x09FCED81…470E</code>(4.41M·<b>1,861tx</b>)는 <b>HTX 거래소 핫월렛(네이티브)으로 확정</b>. <b>근거(사용자 ground-truth)</b>: 업비트→HTX 실전송 입금주소 <code>0xff91c31d</code>가 업비트핫 <code>0x97e9b4C0</code>에서 받아 이 주소로 스윕. 구조: <b>입금라우터 27개(업비트/빗썸핫에서 인출→스윕) → <code>0x09FCED81</code>(HTX 핫, 4.41M 집결) → 출금라우터(0x36675Cb1·0x24a30438, 잔액~0 통과) → 유저</b>. → HTX도 네이티브 BFC 보유 확인(≈4.41M), 거래소 클러스터에 편입.</div>
+  <div class="callout info"><b>★ 휴면 초기배분 지갑 재가동 스캔(2026-06-30, 리치 상위40 전수):</b> 초기배분 휴면 군집(3.25~10M·tx=1·송신이력 0) <b>전부 휴면 유지 — 재가동/매도 신호 0</b>(휴면 결론 재확인). 활성 대형은 거래소뿐(업비트콜드 2026-06-26·업비트핫·빗썸콜드 06-29)이며 <b>거래소 외 신규 대형 콜드월렛 없음</b>("거래소=업비트/빗썸 중심" 유지). <b>신규 식별</b>: 액티브 EOA <code>0x09FCED81…470E</code>(4.41M·<b>1,861tx</b>) = <b>크로스-venue 유동성/마켓메이킹 허브</b>. <b>구조(실측)</b>: 입금라우터 27개가 <b>업비트핫·빗썸핫</b>에서 인출된 BFC를 받아 스윕 → <code>0x09FCED81</code> 집결 → 출력은 <b>Everdex 스왑(0x36675Cb1→0x7Ace89E2 2.6M)·브릿지 아웃(0.56M)·빗썸콜드 재예치(0xBF323674→0xDCd52f5f 1.27M)</b>. <b>즉 여러 거래소·DEX·브릿지를 넘나드는 차익/MM 순환</b>(경쟁 거래소 콜드로 재예치=특정 거래소 custody 아님). <span class="small muted">주의: 사용자 업비트→HTX 입금(<code>0xff91c31d</code>)이 여기로 스윕된 사실은 확인 — 이 허브가 HTX행 입금 라우팅도 취급함을 시사하나, <b>다venue 순환이라 "HTX 지갑"으로 단정 불가</b>(HTX MM일 수도, 독립 MM/프로젝트 유동성일 수도). HTX 실보유는 대부분 ERC-20으로 추정(미식별).</span></div>
 
   <h2 class="sec" id="liquidation"><span class="n">15-L</span>BiFi 청산 분석 (ABI 실측 · 2026-06-30 정정판)</h2>
   <p class="small muted">BiFi Manager·핸들러 직접 호출로 차입자별 담보·부채·청산가 산출. <b>초판은 BiFi 담보시장을 4개만 조회해 과대 산출 → 12개 전체 반영해 정정.</b></p>
@@ -915,14 +915,16 @@
     </div>
   </div>
   <div class="card" style="margin-top:12px">
-    <h4 style="margin-top:0">HTX ≈ 4.41M BFC (네이티브) <span class="badge b-ok">확인(사용자 입금 ground-truth)</span></h4>
+    <h4 style="margin-top:0">크로스-venue 유동성/MM 허브 <code>0x09FCED81</code> ≈ 4.41M (거래소 아님) <span class="badge b-warn">정정</span></h4>
     <table>
-      <tr><th>역할</th><th>주소</th><th class="num">잔액</th></tr>
-      <tr><td><b>핫월렛(집결)</b></td><td><code>0x09FCED81…470E</code></td><td class="num">4.41M</td></tr>
-      <tr><td>입금 라우터(27개, 예)</td><td><code>0xff91c31d…</code>(업비트핫←)·<code>0x6b935f8C</code>(빗썸/업비트핫←)</td><td class="num">~0(스윕)</td></tr>
-      <tr><td>출금 라우터</td><td><code>0x36675Cb1</code>·<code>0x24a30438</code></td><td class="num">~0(통과)</td></tr>
+      <tr><th>흐름</th><th>주소</th><th class="num">규모</th></tr>
+      <tr><td>유입(입금라우터 27개←)</td><td>업비트핫 <code>0x97e9b4C0</code>·빗썸핫 <code>0x39528D59</code> 인출분 스윕</td><td class="num">→집결</td></tr>
+      <tr><td>허브(순환 잔액)</td><td><code>0x09FCED81…470E</code></td><td class="num">4.41M</td></tr>
+      <tr><td>유출①</td><td>Everdex 스왑 <code>0x7Ace89E2</code></td><td class="num">2.6M</td></tr>
+      <tr><td>유출②</td><td>브릿지 Vault <code>0xD85EB87c</code>(체인이동)</td><td class="num">0.56M</td></tr>
+      <tr><td>유출③</td><td><b>빗썸 콜드 <code>0xDCd52f5f</code> 재예치</b></td><td class="num">1.27M</td></tr>
     </table>
-    <p class="small muted" style="margin-bottom:0">사용자 업비트→HTX 실전송(입금주소 <code>0xff91c31d</code>가 업비트핫 <code>0x97e9b4C0</code>서 받아 <code>0x09FCED81</code>로 스윕)으로 확정. 글로벌 거래소는 통상 ERC-20을 쓰지만 <b>HTX는 네이티브 BFC도 4.41M 보유</b>(국내거래소서 유입). ⚠️ 콜드월렛은 미확인(핫 기준 하한).</p>
+    <p class="small muted" style="margin-bottom:0"><b>정정(비판적 재검증):</b> 사용자 업비트→HTX 입금주소 <code>0xff91c31d</code>가 이 허브로 스윕돼 처음엔 "HTX 핫월렛"으로 봤으나, <b>출력이 Everdex 스왑·브릿지·빗썸콜드 재예치로 다venue 순환</b>(경쟁 거래소 콜드로 되보냄=거래소 custody 불가). → <b>차익/마켓메이킹 유동성 허브</b>로 정정. HTX MM인지 독립 MM/프로젝트 유동성인지는 온체인만으론 미확정. <b>HTX 실보유는 대부분 ERC-20 추정(미식별)</b> — 네이티브 4.41M은 이 순환허브의 워킹밸런스이지 HTX 정적 보유가 아님.</p>
   </div>
   <div class="callout warn"><b>빗썸 공시 자동수집</b> — 정확 공시값(내부유통량·보유자·순입금)은 <b>로그인+Akamai 봇차단</b>으로 자동수집 불가(<code>gw.bithumb.com/.../coin/info</code> = member.fail) → <b>온체인 클러스터 합으로 대체</b>(공시와 일치). 공개 API는 수집 OK: 빗썸 <code>api.bithumb.com/public/ticker|assetsstatus/BFC_KRW</code>(입출금 중단 감지), 업비트 <code>api.upbit.com/v1/ticker?markets=BTC-BFC</code>.</div>
 
@@ -1128,7 +1130,7 @@
     <tr><td>6</td><td>뉴스</td><td class="wrap">워터마크 2026-06-02(HashPort×JPYC). 6/3~30 신규 공식뉴스 없음(6/4 BFC +30% 시세만)</td><td class="wrap">medium-kr·t.me/s/Bifrost_Notice·검색(한/일/영) → 워터마크 이후. bifrost.io/blog·CMC BNC항목 제외</td></tr>
     <tr><td>7</td><td>일본 파트너</td><td class="wrap">전부 발표/검증 단계, 공개 TVL 없음. 최신 HashPort(6/1)</td><td class="wrap">파트너별 URL → HashPort TVL·BitTrade BFC상장·SBI 제품화 등 진척신호</td></tr>
     <tr><td>8</td><td>한국 거래소</td><td class="wrap">업비트 348M·빗썸 143.7M·코빗 상장. 빗썸 ticker 17.74원/거래대금 ₩2.08억</td><td class="wrap">explorer-backend 클러스터 합 일별델타(순유입=매도압력) + 빗썸 assetsstatus(입출금중단)</td></tr>
-    <tr><td>9</td><td>글로벌 거래소</td><td class="wrap">HTX ~$2.2M 거래량(주력)·<b>네이티브 보유 4.41M(핫 0x09FCED81 확인)</b>·Gate 미미·코인원 미상장</td><td class="wrap">HTX 핫월렛 잔액(monitor.py 거래소 편입) + 공개 ticker → 순유입·상폐</td></tr>
+    <tr><td>9</td><td>글로벌 거래소</td><td class="wrap">HTX ~$2.2M 거래량(주력)·<b>HTX 네이티브 지갑 미식별(실보유 ERC-20 추정)</b>·Gate 미미·코인원 미상장. cf. 유동성/MM허브 0x09FCED81(4.41M 순환)</td><td class="wrap">공개 ticker → 순유입·상폐 · MM허브 잔액(monitor.py)</td></tr>
     <tr><td>10</td><td>소셜</td><td class="wrap">TG Notice 860/Global 7,129·Medium 7,500·X ~82K·Discord ~20K</td><td class="wrap">t.me/s/… 구독자 · CoinCarp(X, 동일소스 유지)</td></tr>
   </table>
 
@@ -1141,7 +1143,7 @@
     <tr><td><span class="badge b-bad">P1</span></td><td class="wrap"><b>빈 프록시 껍데기 11개</b> 중 자금/토큰 유입 = 신제품 런칭</td><td class="wrap">token_transfers&gt;0 또는 잔액&gt;0</td><td>일</td></tr>
     <tr><td><span class="badge b-warn">P2</span></td><td class="wrap"><b>3.25M 휴면 초기배분 지갑 재가동</b>(45.9M+ overhang) · 분배자망 재가동</td><td class="wrap">휴면지갑 송신 <b>1건</b> 또는 군집 <b>±10M</b></td><td>주</td></tr>
     <tr><td><span class="badge b-warn">P2</span></td><td class="wrap"><b>BtcUSD 발행량</b> 반등/추가수축(현 6.11M) · <b>홀더수</b> 급변 · JPYC venue <code>0x6894Ae31</code> 잔액(65.5M)</td><td class="wrap">발행 <b>±0.5M(8%)</b> 또는 홀더 <b>±10%</b></td><td>일</td></tr>
-    <tr><td><span class="badge b-warn">P2</span></td><td class="wrap"><b>운용망</b> 가스허브 <code>0x81c22bec</code>가 <b>새 주소군</b>에 살포 개시 · 운용EOA <code>0xb878526f</code>/<code>0xaff29bed</code> 신규 컨트랙트 배포 · <b>HTX 핫월렛 <code>0x09FCED81</code></b>(4.41M) 잔액 급변(HTX 순유입=매도압)</td><td class="wrap">신규 수취주소 등장 또는 신규 배포 1건</td><td>주</td></tr>
+    <tr><td><span class="badge b-warn">P2</span></td><td class="wrap"><b>운용망</b> 가스허브 <code>0x81c22bec</code>가 <b>새 주소군</b>에 살포 개시 · 운용EOA <code>0xb878526f</code>/<code>0xaff29bed</code> 신규 컨트랙트 배포 · <b>유동성/MM허브 <code>0x09FCED81</code></b>(4.41M·다venue 순환) 잔액 급변</td><td class="wrap">신규 수취주소 등장 또는 신규 배포 1건</td><td>주</td></tr>
     <tr><td><span class="badge b-warn">P2</span></td><td class="wrap"><b>검증자 집합·위임 변동</b>(candidate_pool/state diff) · <b>Biquid stBFC 풀</b>(268.8M) 급변=위임 대이동 · F13~15 위임자 0→양수</td><td class="wrap">신규/이탈 검증자 1 또는 stBFC <b>±5%</b></td><td>주</td></tr>
     <tr><td><span class="badge b-info">P3</span></td><td class="wrap"><b>BFC BitTrade(일본) 상장</b> · 거래소 입출금 중단(<code>assetsstatus</code>=0) · 글로벌 신규상장/상폐 · HashPort/N.suite JPYC <b>첫 TVL 공시</b></td><td class="wrap">공시/상태 변화</td><td>주2</td></tr>
     <tr><td><span class="badge b-info">P3</span></td><td class="wrap"><b>CCCP v2 메인넷 플래그 on</b> · 신규 GitHub 릴리스/레포 · 워터마크(2026-06-02) 이후 신규 공식 뉴스</td><td class="wrap">flag on 또는 릴리스 태그</td><td>주</td></tr>
@@ -1161,7 +1163,7 @@
   <h2 class="sec" id="open">미해결 / 다음 분석 후보</h2>
   <ul>
     <li><s>검증자 위임자 분포</s> — <b>해소</b>: candidate_state로 노드별 self-bond·위임자수 실측, 위임 78%가 Biquid LST 경유 확인(§21)</li>
-    <li>코빗(Korbit) 네이티브 클러스터 식별 <span class="muted">(0x09FCED81 정체는 <b>HTX 핫월렛으로 확정</b>—사용자 ground-truth—되어 해소)</span></li>
+    <li>코빗(Korbit)·HTX 네이티브 클러스터 식별 <span class="muted">(0x09FCED81은 HTX단정 철회→<b>크로스-venue MM/유동성 허브</b>로 정정. HTX 실보유 지갑은 미식별=ERC-20 추정)</span></li>
     <li>#3 87M 리저브의 정확한 프로토콜명(소스 미검증) · 초기배분 최초 루트(팀/재단/투자자) — 아카이브 노드 trace 또는 raw genesis</li>
     <li>온체인 거버넌스(제안/투표) 추적 가능 여부 · 토큰 언락/베스팅 일정 · BTC vault 멀티시그 임계값(M-of-N)</li>
     <li>HashPort/N.suite JPYC 렌딩 TVL·SBI 제품화·BitTrade BFC 상장(외부 발표 대기)</li>
