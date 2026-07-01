@@ -376,6 +376,16 @@
     <li><b>Core 체인 제거 확정:</b> #221(6-18) <code>remove core chain</code> — 브릿지 연결 체인에서 Core(Coredao) 빠짐.</li>
     <li><b>★ 신제품은 비공개:</b> BTCFi Boost·JPYC 렌딩 등 온체인 신제품에 대응하는 <b>공개 레포 없음</b>(2025+ 신규=fork "common" 1개뿐). = <b>제품 컨트랙트 클로즈드소스</b>(explorer 소스 미검증과 일관 — 제3자 감사와는 별개 축, <a href="#risk">§리스크</a> 참조). 공개 dev는 노드/릴레이어(인프라)에 집중.</li>
   </ul></div>
+  <div class="callout ok"><b>🧭 개발 동향 → 비즈니스 해석 (이 인프라 투자가 노리는 것)</b>
+  <p class="small" style="margin:4px 0">최근 공개 dev는 <b>제품(BTCFi Boost·렌딩)이 아니라 "크로스체인 결제·BTC 커스터디 인프라"에 집중</b> — 즉 <b>일본 기관/스테이블코인 사업을 받을 배관을 까는 단계</b>로 읽힘. 각 항목이 어떤 사업을 준비하는지:</p>
+  <table style="margin-top:4px">
+    <tr><th>개발 항목</th><th>기술적 효과</th><th>준비하는 비즈니스(해석)</th></tr>
+    <tr><td><b>CCCP v2 / Hook</b>(Hook Executor·Price Deviation Checker)</td><td class="wrap">브릿지에 <b>실행 훅·가격이탈 검증</b> 추가 — 자산을 옮기며 <b>조건부 로직 실행</b>(예: 도착 즉시 예치·스왑)·디페그 방어</td><td class="wrap"><b>엔SC 크로스체인 결제/렌딩 자동화.</b> JPYC/JPYSC를 ETH→Bifrost로 옮기며 <b>도착 즉시 4% 렌딩·환전에 꽂는 "프로그래머블 결제 레일"</b>. MOIN(다통화 송금)·N.suite(기업 결제) 시나리오의 전제조건</td></tr>
+    <tr><td><b>BTC vault 멀티시그 스냅샷·이력화</b>(PSBT를 relay executive 멤버십으로 서명)</td><td class="wrap">BTC 커스터디 서명자 집합을 <b>온체인 스냅샷·감사 가능</b>하게 정교화</td><td class="wrap"><b>기관 BTC 트레저리·수탁의 거버넌스 요건 충족.</b> 상장사(AIF·Animoca·Metaplanet류) BTC를 <b>"FSA 규제부합·감사가능 멀티시그"로 관리→BtcUSD 발행</b>하려면 필수. Bifrost 일본 핵심 쐐기(§14)의 배관</td></tr>
+    <tr><td><b>BLAZE 팔레트 + BRP</b>(BTC UTXO 관리·네이티브 BTC 검증)</td><td class="wrap">네이티브 BTC를 <b>브릿지 없이 검증·운용</b>(zero-trust UTXO)</td><td class="wrap"><b>native BTC 수익상품(BTCFi Boost)·BtcUSD CDP의 담보 엔진.</b> "BTC를 팔지 않고 달러유동성" 서사의 기술 기반</td></tr>
+    <tr><td><b>Fusaka/Pectra 하드포크 대응·Core 체인 제거</b></td><td class="wrap">ETH 최신 규격 추종 + 비주력 체인 정리</td><td class="wrap"><b>ETH(=JPYC·JPYSC 발행체인) 연결 최우선</b>으로 자원 집중 = 일본 엔SC 축에 베팅한다는 방증</td></tr>
+  </table>
+  <p class="small muted" style="margin:6px 0 0"><b>한 줄:</b> 인프라 릴리스의 방향(프로그래머블 크로스체인 + 감사가능 BTC 커스터디 + ETH 우선)은 <b>"일본 기관의 엔SC 결제·BTC 트레저리를 규제부합으로 처리하는 백엔드"</b>를 정확히 겨냥. <b>단 아직 '배관' 단계</b> — CCCP v2 플래그 on·신규 제품 컨트랙트 배포가 실가동 전환점(→ <code>monitor.py</code> 감시).</p>
 
   <!-- 10 SECURITY -->
   <h2 class="sec" id="security"><span class="n">10</span>보안 사고</h2>
