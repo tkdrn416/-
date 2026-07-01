@@ -68,11 +68,11 @@ def arrow(d):
 
 def change_table(rows):
     cur=rows[-1]; prev=rows[-2] if len(rows)>1 else None; wk=rows[-8] if len(rows)>=8 else None
-    metrics=[("price_usd","BFC 가격","$"),("exch_total","거래소 보유",""),("exch_net_flow","거래소 순흐름",""),
-     ("treasury_bfc","Treasury",""),("btcusd_supply","BtcUSD 발행",""),("btcusd_vault_share","BtcUSD 볼트점유","%"),
-     ("jpyc_supply","JPYC",""),("stbfc_supply","유동스테이킹",""),("val_total_stake","검증자 스테이크",""),
-     ("nakamoto33","Nakamoto",""),("val_top5_pct","상위5 집중","%"),("staking_ratio_pct","스테이킹비율","%"),
-     ("bifi_bfc_pool","BiFi BFC풀",""),("defi_tvl_usd","TVL","$")]
+    metrics=[("price_usd","BFC 가격(USD)","$"),("price_krw","BFC 가격(KRW)","원"),("bifi_price_usd","BIFI 가격(USD)","$"),
+     ("exch_total","거래소 보유",""),("exch_net_flow","거래소 순흐름",""),("treasury_bfc","Treasury",""),
+     ("btcusd_supply","BtcUSD 발행",""),("bifi_borrow_dollar","BiFi 달러대출",""),("jpyc_supply","JPYC",""),
+     ("stbfc_supply","유동스테이킹",""),("val_total_stake","검증자 스테이크",""),("nakamoto33","Nakamoto",""),
+     ("bifi_bfc_pool","BiFi BFC담보",""),("defi_tvl_usd","TVL","$")]
     out=['<table><tr><th>지표</th><th class="r">현재</th><th class="r">전일Δ</th><th class="r">전주Δ</th></tr>']
     for col,lab,u in metrics:
         c=_num(cur.get(col))
@@ -115,16 +115,23 @@ def generate():
     rows=[r for r in csv.DictReader(open(HIST)) if r.get("date")]
     if not rows: return
     last=rows[-1]
+    # BiFi 달러코인 대출: 합계(기본) ↔ 개별(토글)
+    borrow_merged=svg_chart(rows,[("bifi_borrow_dollar","달러대출 합계")],"BiFi 달러코인 대출 (통합)")
+    borrow_sep=svg_chart(rows,[("bifi_borrow_btcusd","BtcUSD"),("bifi_borrow_usdc","USDC"),("bifi_borrow_usdt","USDT"),("bifi_borrow_dai","DAI")],"BiFi 달러코인 대출 (개별)")
+    borrow_toggle=(f'<div class="ch" style="grid-column:1/-1">'
+      f'<button id="btglBtn" onclick="tgl()" style="background:#1d2531;color:#cbd5e1;border:1px solid #34d399;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;margin:2px 0 6px">개별 스테이블코인으로 보기 ▸</button>'
+      f'<div id="bmerged">{borrow_merged}</div><div id="bsep" style="display:none">{borrow_sep}</div></div>')
     charts=[
         svg_chart(rows,[("price_usd","BFC/USD")],"BFC 가격 (USD)","$"),
+        svg_chart(rows,[("price_krw","BFC/KRW")],"BFC 가격 (원)","원"),
+        svg_chart(rows,[("bifi_price_usd","BIFI/USD")],"BIFI 토큰 가격 (곡괭이토큰, USD)","$"),
         svg_chart(rows,[("exch_total","거래소합"),("upbit_bfc","업비트"),("bithumb_bfc","빗썸")],"거래소 보유 BFC"),
-        svg_chart(rows,[("btcusd_supply","BtcUSD")],"BtcUSD 발행량"),
-        svg_chart(rows,[("btcusd_vault_share","볼트점유%")],"BtcUSD 브릿지볼트 점유율","%"),
+        svg_chart(rows,[("btcusd_supply","BtcUSD")],"BtcUSD 발행량(=BTCFi CDP 부채)"),
+        borrow_toggle,
         svg_chart(rows,[("jpyc_supply","JPYC")],"일본 JPYC 공급(Bifrost)"),
         svg_chart(rows,[("stbfc_supply","stBFC")],"Biquid 유동스테이킹(=위임 대부분)"),
         svg_chart(rows,[("val_total_stake","총스테이크")],"검증자 총 스테이크"),
-        svg_chart(rows,[("val_top5_pct","상위5%"),("val_top10_pct","상위10%")],"검증자 집중도(탈중앙성 추세)","%"),
-        svg_chart(rows,[("bifi_bfc_pool","BFC풀"),("bifi_wstbfc","wstBFC담보"),("bifi_btcusd","BtcUSD담보")],"BiFi 예치(담보) 물량"),
+        svg_chart(rows,[("bifi_bfc_pool","BFC담보"),("bifi_wstbfc","wstBFC담보"),("bifi_btcusd","BtcUSD담보")],"BiFi 예치(담보) 물량"),
         svg_chart(rows,[("defi_tvl_usd","TVL")],"DefiLlama 체인 TVL","$"),
         svg_chart(rows,[("treasury_bfc","Treasury")],"재단 Treasury(축적·미집행)"),
         svg_chart(rows,[("alert_p1","P1"),("alert_p2","P2")],"일별 경보 건수"),
@@ -152,10 +159,12 @@ td.wrap{{white-space:normal}} .small{{font-size:11.5px}} .muted{{color:#9aa3b2}}
 <div class="narr"><b>오늘 한 줄:</b> {narrative(rows)}</div>
 <div class="grid">
  <div class="kpi"><div class="v">${L('price_usd',lambda v:f'{v:.5f}')}</div><div class="l">BFC 가격 (빗썸 {L('price_krw',lambda v:f'{v:,.1f}')}원)</div></div>
+ <div class="kpi"><div class="v">${L('bifi_price_usd',lambda v:f'{v:.5f}')}</div><div class="l">BIFI 곡괭이토큰 ({L('bifi_price_krw',lambda v:f'{v:,.1f}')}원)</div></div>
  <div class="kpi"><div class="v">{L('exch_total',lambda v:f'{v/1e6:,.1f}M')}</div><div class="l">거래소 보유(업비트+빗썸)</div></div>
- <div class="kpi"><div class="v">{L('btcusd_supply',lambda v:f'{v/1e6:,.2f}M')}</div><div class="l">BtcUSD (홀더 {L('btcusd_holders')} · 볼트 {L('btcusd_vault_share',lambda v:f'{v:.0f}')}%)</div></div>
+ <div class="kpi"><div class="v">{L('btcusd_supply',lambda v:f'{v/1e6:,.2f}M')}</div><div class="l">BtcUSD 발행 (홀더 {L('btcusd_holders')})</div></div>
+ <div class="kpi"><div class="v">${L('bifi_borrow_dollar',lambda v:f'{v/1e6:,.2f}M')}</div><div class="l">BiFi 달러코인 대출 합계</div></div>
  <div class="kpi"><div class="v">{L('jpyc_supply',lambda v:f'{v/1e6:,.1f}M')}</div><div class="l">일본 JPYC(Bifrost)</div></div>
- <div class="kpi"><div class="v">{L('val_count')}·N{L('nakamoto33')}</div><div class="l">검증자 · 상위5 {L('val_top5_pct',lambda v:f'{v:.0f}')}% · 스테이킹 {L('staking_ratio_pct',lambda v:f'{v:.0f}')}%</div></div>
+ <div class="kpi"><div class="v">{L('val_count')}·N{L('nakamoto33')}</div><div class="l">검증자 수 · Nakamoto</div></div>
  <div class="kpi"><div class="v">${L('defi_tvl_usd',lambda v:f'{v/1e6:,.1f}M')}</div><div class="l">DefiLlama TVL</div></div>
 </div>
 <h2>📊 전일/전주 대비 변화</h2>
@@ -164,7 +173,10 @@ td.wrap{{white-space:normal}} .small{{font-size:11.5px}} .muted{{color:#9aa3b2}}
 <div class="charts">{''.join(charts)}</div>
 <h2>🔔 최근 경보 (P1/P2)</h2>
 <table><tr><th>시각</th><th>등급</th><th>내용</th></tr>{albox}</table>
-<p class="lead">전체 시계열=<code>data/history.csv</code>(엑셀) · 경보원본=<code>data/monitor-events.log</code> · ▲=증가 ▼=감소(녹색=유출/감소가 호재인 거래소 기준 색반전).</p>
+<p class="lead">전체 시계열=<code>data/history.csv</code>(엑셀) · 경보원본=<code>data/monitor-events.log</code> · ▲=증가 ▼=감소.</p>
+<script>function tgl(){{var m=document.getElementById('bmerged'),s=document.getElementById('bsep'),b=document.getElementById('btglBtn');
+if(s.style.display==='none'){{s.style.display='';m.style.display='none';b.textContent='통합으로 보기 ◂';}}
+else{{s.style.display='none';m.style.display='';b.textContent='개별 스테이블코인으로 보기 ▸';}}}}</script>
 </body></html>"""
     open(OUT,"w").write(html); return OUT
 

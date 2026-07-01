@@ -55,6 +55,11 @@ NEW_TOKEN_QUERIES=["JPYSC","JPYC","cbBTC","BrBTC","Bridged"]
 BIFI_BFC_POOL="0x4bae7ba39e4e71660307dce780f1ec9b7b7666ee"
 WSTBFC_TOKEN="0x386f2f5d9a97659c86f3ca9b8b11fc3f76efddae"; WSTBFC_HANDLER="0xf9b2f6d2a61923e61ad9f6daa78f52b7e1722b12"
 BTCUSD_TOKEN="0x6906ccda405926fc3f04240187dd4fad5df6d555"; BTCUSD_HANDLER="0xcf2fc1d354018a39d5ef036aa865ad8cbf7b611e"
+# BiFi 달러코인 대출 핸들러(getBorrowTotalAmount, 전부 1e18 정규화)
+DOLLAR_HANDLERS=[("btcusd","0xcf2fc1d354018a39d5ef036aa865ad8cbf7b611e"),("usdc","0x168b2d7dd6b9812392f99ba01a14db03ed06dedc"),
+ ("usdt","0xed7b0974dc5d98b9e7c83695c415d68b8781b0f8"),("dai","0x2168dab12a6a93181bbad9c9dc769307c36fb45c")]
+BORROW_SEL="0x3763d0db"  # getBorrowTotalAmount()
+BIFI_CG="https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=0x2791BfD60D232150Bff86b39B7146c0eaAA2BA81&vs_currencies=usd,krw"
 STAKING_PRECOMPILE="0x0000000000000000000000000000000000000400"; CANDIDATE_POOL_SEL="0x96b41b5b"
 BFC_ERC20="0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c"
 
@@ -116,10 +121,7 @@ def token_check(old,row):
         ts=t.get('total_supply')
         sup=int(ts)/10**int(t.get('decimals') or 18) if ts else None
         snap[addr]=sup if sup is not None else old.get("tok_"+addr); row[col]=rnd(sup)
-        if col=="btcusd_supply":
-            row["btcusd_holders"]=t.get('holders')
-            vb=erc20_bal(BTCUSD_TOKEN,BTCUSD_VAULT)
-            if vb is not None and sup: row["btcusd_vault_share"]=round(vb/sup*100,1); print(f"  └ BtcUSD 브릿지볼트 점유 {row['btcusd_vault_share']}%")
+        if col=="btcusd_supply": row["btcusd_holders"]=t.get('holders')
         d=(sup-old.get("tok_"+addr,sup)) if (old and sup is not None and old.get("tok_"+addr) is not None) else 0
         flag=" ⚠️" if old and abs(d)>=th else ""
         if flag: alert("P2",f"{lab} 공급 {fmt(d)} (현 {sup:,.0f})")
@@ -131,8 +133,17 @@ def bifi_check(row):
     bfc=bal(BIFI_BFC_POOL); wst=erc20_bal(WSTBFC_TOKEN,WSTBFC_HANDLER); btc=erc20_bal(BTCUSD_TOKEN,BTCUSD_HANDLER)
     row["bifi_bfc_pool"]=rnd(bfc); row["bifi_wstbfc"]=rnd(wst); row["bifi_btcusd"]=rnd(btc)
     sw=f"{wst:,.0f}" if wst is not None else "n/a"; sb=f"{btc:,.0f}" if btc is not None else "n/a"
-    print(f"  BFC풀 {bfc:,.0f} · wstBFC담보 {sw} · BtcUSD담보 {sb}")
-    print("  (참고: BtcUSD 발행량=BTCFi CDP 부채 / BiFi 개별 borrow·health는 내부원장이라 별도조회 필요-미축적)")
+    print(f"  담보: BFC풀 {bfc:,.0f} · wstBFC {sw} · BtcUSD {sb}")
+    # BiFi 대출량(getBorrowTotalAmount, 1e18) — 달러코인(BtcUSD·USDC·USDT·DAI) 개별 + 합계
+    print("\n# BiFi 대출량(달러코인):")
+    tot=0; anyok=False
+    for nm,h in DOLLAR_HANDLERS:
+        r=rpc(h,BORROW_SEL); v=int(r,16)/1e18 if r and r!="0x" else None
+        row["bifi_borrow_"+nm]=rnd(v)
+        if v is not None: tot+=v; anyok=True; print(f"  {nm.upper():<7} {v:,.0f}")
+        else: print(f"  {nm.upper():<7} n/a")
+    row["bifi_borrow_dollar"]=round(tot) if anyok else ""
+    if anyok: print(f"  → 달러코인 대출 합계 {tot:,.0f}")
 
 def validator_check(old,row):
     print("\n# 검증자 집합·스테이크:")
@@ -151,10 +162,7 @@ def validator_check(old,row):
         cum+=s
         if cum>tot*0.333: nak=i; break
     row["val_count"]=n; row["val_total_stake"]=round(tot); row["nakamoto33"]=nak
-    row["val_top1_pct"]=round(ss[0]/tot*100,1); row["val_top5_pct"]=round(sum(ss[:5])/tot*100,1); row["val_top10_pct"]=round(sum(ss[:10])/tot*100,1)
-    row["staking_ratio_pct"]=round(tot/CIRC*100,1)
-    print(f"  검증자 {n} · 총스테이크 {tot:,.0f}(=self+위임, 유통대비 {row['staking_ratio_pct']}%) · Nakamoto(33%) {nak}")
-    print(f"  집중도: 상위1 {row['val_top1_pct']}% · 상위5 {row['val_top5_pct']}% · 상위10 {row['val_top10_pct']}%")
+    print(f"  검증자 {n} · 총스테이크 {tot:,.0f}(=self+위임) · Nakamoto(33%) {nak}")
     prev=set(filter(None,(old.get("val_addrs") or "").split(","))) if old else set(); curset=set(addrs)
     if prev:
         for x in curset-prev: alert("P1",f"★신규 검증자 등장 {x[:12]}")
@@ -195,6 +203,13 @@ def exchange_check(cur,old):
         if abs(ch)>=10: alert("P1",f"★가격 급변 {ch:+.1f}% (${old['_price']:.5f}→${cur['_price']:.5f})")
     return krw
 
+def bifi_price(row):
+    # BIFI = 파이랩의 BiFi 거버넌스토큰(곡괭이토큰). 컨트랙트로 조회(Beefy BIFI 혼동 회피)
+    d=get_url(BIFI_CG) or {}
+    v=d.get("0x2791bfd60d232150bff86b39b7146c0eaaa2ba81") or {}
+    if v.get("usd"): row["bifi_price_usd"]=v.get("usd"); row["bifi_price_krw"]=v.get("krw"); print(f"\n# BIFI 토큰(곡괭이) 가격: ${v.get('usd')} / {v.get('krw')}원")
+    else: print("\n# BIFI 가격: 조회 실패(칼럼 공백)")
+
 def defi_tvl(row):
     chains=get_url("https://api.llama.fi/v2/chains") or []
     for c in (chains if isinstance(chains,list) else []):
@@ -234,10 +249,10 @@ def summary():
     print("═"*56)
     return len(p1),len(p2)
 
-CSV_COLS=["date","price_usd","price_krw","upbit_bfc","bithumb_bfc","exch_total","exch_net_flow","treasury_bfc",
- "jpyc_supply","btcusd_supply","btcusd_holders","btcusd_vault_share","stbfc_supply","wstbfc_supply","cbbtc_supply","brbtc_supply",
- "bifi_bfc_pool","bifi_wstbfc","bifi_btcusd","val_count","val_total_stake","nakamoto33","val_top1_pct","val_top5_pct","val_top10_pct",
- "staking_ratio_pct","defi_tvl_usd","alert_p1","alert_p2","data_quality","chain_txns","chain_addrs"]
+CSV_COLS=["date","price_usd","price_krw","bifi_price_usd","bifi_price_krw","upbit_bfc","bithumb_bfc","exch_total","exch_net_flow","treasury_bfc",
+ "jpyc_supply","btcusd_supply","btcusd_holders","stbfc_supply","wstbfc_supply","cbbtc_supply","brbtc_supply",
+ "bifi_bfc_pool","bifi_wstbfc","bifi_btcusd","bifi_borrow_btcusd","bifi_borrow_usdc","bifi_borrow_usdt","bifi_borrow_dai","bifi_borrow_dollar",
+ "val_count","val_total_stake","nakamoto33","defi_tvl_usd","alert_p1","alert_p2","data_quality","chain_txns","chain_addrs"]
 def append_csv(row):
     row=dict(row); row["date"]=datetime.date.today().isoformat()
     nonempty=lambda r:sum(1 for k in CSV_COLS if str(r.get(k,"")).strip()!="")
@@ -266,6 +281,7 @@ def main():
     shell_check()
     kt=new_token_scan(old)
     krw=exchange_check(cur,old); row["price_krw"]=krw if krw else ""
+    bifi_price(row)
     defi_tvl(row)
     github_check(old); burn=burn_check(old)
     p1,p2=summary()
