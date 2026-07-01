@@ -756,7 +756,7 @@
 <line x1="520" y1="86" x2="615" y2="250" stroke="#4da3ff" stroke-width="1.6" marker-end="url(#a)" stroke-dasharray="3 3"/>
 <text x="20" y="430" fill="#9ca3af" font-size="10">● 5개 share컨트랙트 = 동일 배포자 0x23E016E0e5(컨트롤러 0xb878526f) · ● EOA 7개 = 가스허브 0x81c22bec가 가스충전</text>
 <text x="20" y="447" fill="#9ca3af" font-size="10">● 초록=wstBFC 내부순환(BiFi 예치 경유) · 노랑 점선=재단분배자 0x313b1578 연결 · 파랑 점선=가스 공급</text>
-<text x="20" y="464" fill="#f87171" font-size="10">● 0xeb76c926 UNDERWATER 확정(차입$217.6K>임계$205.5K, 미청산) · 0xd7c19693은 포지션 청산종료(현재 0)</text>
+<text x="20" y="464" fill="#f87171" font-size="10">● 0xeb76c926·0xd7c19693·0x5e5cc1a3 UNDERWATER(미청산) — 포지션 재차입으로 동적 변동</text>
 </svg></div>
   <table>
     <tr><th>구성</th><th>멤버</th><th>역할</th></tr>
@@ -766,7 +766,7 @@
     <tr><td>공급 EOA 7</td><td class="wrap"><code>0x0c791e90</code>·<code>0x4d0bbd3b</code>·<code>0xeb76c926</code>·<code>0xbb9f0294</code>·<code>0x5e5cc1a3</code>·<code>0x6666a49b</code>·<code>0xda50a0ff</code></td><td class="wrap">가스허브 0x81c22bec가 가스충전. 서로 wstBFC 전달(아래 흐름)</td></tr>
   </table>
   <p class="small"><b>내부 wstBFC 흐름(실측):</b> 0xbb9f0294→0xeb76c926 <b>15.35M</b> · 0x0c791e90→0x4d0bbd3b <b>9.70M</b> · 0x4d0bbd3b→0xc7275255 <b>6.84M</b> · 0x0c791e90→0x9610386e <b>4.62M</b> · 0xda50a0ff↔0x6666a49b 0.45M. → EOA가 wstBFC를 받아 share컨트랙트로 연쇄 이전, BiFi 예치. <b>현재 wstBFC핸들러 예치 재측정(2026-06-30): 0x0c791e90 15.0M·0xeb76c926 15.7M·0x4d0bbd3b 5.0M·0x5e5cc1a3 3.5M(합 ~39M).</b> 클러스터가 BiFi 대형 포지션을 계속 보유 중임을 재확인(단 일부 멤버 0xbb9f0294·0xc7275255·0x9610386e·0x2b674561는 현재 예치 0=동적 운용).</p>
-  <div class="callout warn"><b>★ 청산건전성 교차검증(2026-06-30, Manager getUserLimitIntraAsset/getUserTotalIntraCreditAsset):</b> <code>0xeb76c926</code> 차입 <b>$217,596 &gt; 청산임계 $205,462</b> = <b>실제 청산권인데 미청산</b>(키퍼 비활성 정황 재확인). 반면 <code>0x0c791e90</code>(임계$1.44M&gt;차입$0.93M)·<code>0x4d0bbd3b</code>(임계$1.26M&gt;차입$0.76M)는 <b>건전(SAFE)</b>. <b>직전 "최대 UNDERWATER"로 지목했던 <code>0xd7c19693</code>(18.8M)은 현재 BiFi 포지션 전부 0 = 청산/상환 종료(정정).</b> → 부실은 0xeb76c926 등 소수 소액에 국한(달러규모 작아 시스템 위협 아님) 결론 유지.</div>
+  <div class="callout warn"><b>★ 청산건전성 교차검증(2026-06-30, Manager getUserLimitIntraAsset/getUserTotalIntraCreditAsset):</b> <code>0xeb76c926</code> 차입 <b>$217,596 &gt; 청산임계 $205,462</b> = <b>실제 청산권인데 미청산</b>(키퍼 비활성 정황 재확인). 반면 <code>0x0c791e90</code>(임계$1.44M&gt;차입$0.93M)·<code>0x4d0bbd3b</code>(임계$1.26M&gt;차입$0.76M)는 <b>건전(SAFE)</b>. <code>0xd7c19693</code>는 <b>상환↔재차입을 반복하는 동적 포지션</b>(한때 0이었다가 다시 UNDERWATER, 최근 차입 $266K>임계 $216K). → 부실은 소수 대형(0xeb76c926·0xd7c19693·0x5e5cc1a3)에 집중, 달러규모 작아 시스템 위협 아님. <b>★ 자동화(2026-07): 대형 차입자 38 워치리스트를 매 루프 전수조회해 UNDERWATER 건수·부채를 자동집계</b>(현재 차입자 10·UNDERWATER 3·부채 $538K) → 데일리 리포트 신호등·차트로 상시 추적(수동 확인 불필요). <span class="small muted">주: "32건·$0.73M"은 6-29 소액 꼬리 포함 전수 스냅샷, 자동추적은 TOP100 대형 38 기준이라 범위가 다름.</span></div>
   <div class="callout info"><b>InvestVault/1 정체:</b> <code>0xbc0995ca</code>는 <b>검증 안 된(소스 비공개) 컨트랙트</b>, 노출 ABI 없음. wstBFC 유입원=wstBFC핸들러(wrap) 32.9M + 자매볼트 <code>0x3aba7600</code> 17.1M(동일 운용자). <b>공개 문서화된 Bifrost 제품(BiFi·Biquid·Everdex·BTCFi) 아님</b> → "처음 듣는 게 정상". <b>재단 직속 여부 미확정</b>(운용자 네트워크 소속, 자금 내부순환). 즉 비공식 관리형 볼트.</div>
   <h4>재단 클러스터 최근 활동 (재가동 점검 · 2026-06-30 실측)</h4>
   <table>
@@ -867,7 +867,7 @@
   <h4>① 깊은 하락 구간의 거대 점프 = 개인 아닌 Boost 볼트</h4>
   <p class="small">~46% 구간 195M BFC 중 <code>0xbc0995ca</code> 한 곳이 149.7M BFC(부채 $924K, 청산가 $0.00637)로 대부분. <b>이 컨트랙트는 개인 고래가 아니라 <code>bvBasewstBFC</code>="Boost Base DAO Vault - wstBFC"</b>(BTCFi Boost 제품 볼트, 131.7M wstBFC·홀더 37). 즉 거대 점프 = <b>bvVault 예치자 수십 명의 합산 포지션</b>(TOP100 #14·17·18·19·20·25·27…의 「볼트 지분」)이 한 컨트랙트로 묶인 것 — 개인 1명이 아니라 <b>볼트 참여자 집단</b>의 동반 청산. 운용 배포자 EOA <code>0xaff29bedb24c</code>(팩토리 <code>0xd0f8ba2d</code>).</p>
   <h4>② 별도 32건($0.73M) = 이미 청산권인데 미청산 방치(소액 아님)</h4>
-  <p class="small">100만BFC 초과 6건이 담보의 <b>88%</b>, 순환클러스터 멤버에 부실 집중. <b>후속 교차검증(2026-06-30):</b> <code>0xeb76c926</code>은 현재도 <b>UNDERWATER 확정</b>(차입 $217.6K&gt;청산임계 $205.5K). 단 당초 최대 UNDERWATER로 지목한 <code>0xd7c19693</code>(18.8M)은 <b>포지션 전부 청산/상환 종료(현재 0)</b>하여 제외 — 32건 집계는 6-29 기준이며 일부는 이후 정리됨.</p>
+  <p class="small">100만BFC 초과 6건이 담보의 <b>88%</b>, 순환클러스터 멤버에 부실 집중. <b>후속 교차검증(2026-06-30):</b> <code>0xeb76c926</code>은 현재도 <b>UNDERWATER 확정</b>(차입 $217.6K&gt;청산임계 $205.5K). <code>0xd7c19693</code>는 상환↔재차입 반복 <b>동적 포지션</b>(현재 재차입해 다시 UNDERWATER). <b>32건 집계는 6-29 소액포함 전수 스냅샷</b>이며, 이후 <b>대형 차입자 38 워치리스트 자동추적</b>(매 루프)으로 전환 — 현재 UNDERWATER 3명·부채 $538K(대형 기준).</p>
   <h4>③ 왜 방치되나 (청산 키퍼 비활성 정황)</h4>
   <ul class="small" style="margin:2px 0">
     <li><b>청산봇 부재 — 청산 이벤트 타입 자체가 BiFi 로그에 없음(2026-06-30 재검증):</b> Manager+핸들러(BFC/wstBFC/BtcUSD) 로그 ~4,000건 전수 시그니처 분석 결과 이벤트 종류는 <b>FlashLoan·HandlerRewardUpdate·ReserveDeposit·Deposit·Withdraw</b>뿐 — <b>"Liquidate"류 이벤트 0건</b>. 직전에 "청산 후보"로 의심했던 희귀이벤트(0x37025b68·0xfa101b18)는 추적 결과 <b>브릿지 BrBFC mint/burn</b>(Socket/Vault 경유)으로 <b>청산과 무관 확정</b>. → 이전의 "단정 불가" 유보를 해소: <b>샘플 범위 내 BiFi 청산은 한 건도 관측되지 않음</b>(완전 확정엔 아카이브 전수 trace 필요하나, 이벤트 타입 부재 + 아래 미청산 잔존이 강한 정황).</li>
