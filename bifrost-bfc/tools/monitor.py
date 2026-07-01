@@ -267,33 +267,41 @@ def shell_check(old,row):
         c=get(f"/api/v2/addresses/{a}/counters"); tt=int(c.get('token_transfers_count') or 0)
         tx=int(c.get('transactions_count') or 0); bl=bal(a); k=a.lower()
         state["sh_"+k]=f"{tt},{tx}"; ptt,ptx=0,0
+        seen=("sh_"+k) in old  # 기준선에 이 껍데기 카운트가 이미 있는지(첫 관측이면 오탐 방지)
         pv=(old.get("sh_"+k) or "").split(",")
         if len(pv)==2: ptt,ptx=_int(pv[0]) or 0,_int(pv[1]) or 0
-        # 활성 신호: 잔액>0 / 토큰전송 발생 / 기준선 대비 tx 증가(신규 상호작용)
-        if bl>0 or tt>0 or (old and tx>ptx):
-            act+=1; print(f"  ⚠️ 활성화! {a[:12]} xfers={tt} tx={tx}(전 {ptx}) bal={bl:,.0f}")
-            alert("P1",f"★신제품 런칭! 껍데기 {a[:12]} 활성화(xfers={tt},tx {ptx}→{tx},bal={bl:,.0f})")
-    if act==0: print("  전부 빈 상태(런칭 신호 없음).")
+        # P1 = 자금/토큰 유입(=실제 런칭 신호). 잔액·토큰전송이 진짜 신호
+        if bl>0 or tt>0:
+            act+=1; print(f"  🚨 자금/토큰 유입! {a[:12]} xfers={tt} bal={bl:,.0f}")
+            alert("P1",f"★신제품 런칭 가능! 껍데기 {a[:12]} 자금/토큰 유입(xfers={tt},bal={bl:,.0f})")
+        # P2 = 자금 없이 tx만 증가(업그레이드/소유권 등 관리자 조작). 첫 관측(seen=False)엔 알림 안 함
+        elif seen and tx>ptx:
+            print(f"  ⚠️ tx 증가(자금無) {a[:12]} tx {ptx}→{tx}")
+            alert("P2",f"껍데기 {a[:12]} tx {ptx}→{tx}(자금 없음·프록시/관리자 조작 가능)")
+    if act==0: print("  자금 유입된 껍데기 없음(런칭 신호 없음).")
     row["shells_active"]=act; return state
 
 def new_token_scan(old):
     print("\n# 신규 토큰 출현 스캔(JPYSC·신규 브릿지):")
-    known=set(filter(None,(old.get("known_tokens") or "").split("|"))); cur=set(); n=0; jpysc=0
+    first="seen_tokens" not in old  # 최초 실행(신 스캔범위)엔 시딩만·경보 생략(오탐 방지)
+    known=set(filter(None,(old.get("seen_tokens") or old.get("known_tokens") or "").split("|")))
+    cur=set(known); n=0; jpysc=0
+    def handle(addr,sym,name,src):
+        nonlocal n,jpysc
+        if not addr: return
+        cur.add(addr)
+        if 'JPYSC' in (sym+name).upper():  # JPYSC는 최초 실행이라도 항상 P1(핵심 감시대상)
+            jpysc=1; print(f"  🚨 JPYSC! {sym} {addr[:14]} [{src}]"); alert("P1",f"🚨 JPYSC 계열 토큰 등장! {sym} {addr[:14]} [{src}]")
+        elif (not first) and addr not in known:
+            n+=1; print(f"  ⚠️ 신규 {sym} {addr[:14]} [{src}]"); alert("P2",f"신규 토큰 {sym} {addr[:14]} [{src}]")
     for q in NEW_TOKEN_QUERIES:
         for it in (get(f"/api/v2/tokens?q={q}").get('items') or [])[:12]:
-            addr=(it.get('address') or '').lower(); sym=it.get('symbol') or ''
-            if not addr: continue
-            cur.add(addr)
-            if 'JPYSC' in (sym+(it.get('name') or '')).upper(): n+=1; jpysc=1; print(f"  🚨 JPYSC! {sym} {addr[:14]}"); alert("P1",f"🚨 JPYSC 계열 토큰 등장! {sym} {addr[:14]}")
-            elif known and addr not in known: n+=1; print(f"  ⚠️ 신규 {sym} {addr[:14]}"); alert("P2",f"신규 토큰 {sym} {addr[:14]}")
+            handle((it.get('address') or '').lower(), it.get('symbol') or '', it.get('name') or '', f"q:{q}")
     # 키워드 무관 신규자산 포착: 전체 토큰목록 1페이지 diff(심볼이 예상과 달라도 잡음)
     for it in (get("/api/v2/tokens").get('items') or [])[:50]:
-        addr=(it.get('address') or '').lower(); sym=it.get('symbol') or ''
-        if not addr: continue
-        cur.add(addr)
-        if 'JPYSC' in (sym+(it.get('name') or '')).upper(): n+=1; jpysc=1; alert("P1",f"🚨 JPYSC 계열 토큰(목록)! {sym} {addr[:14]}")
-        elif known and addr not in known: n+=1; print(f"  ⚠️ 신규(목록) {sym} {addr[:14]}"); alert("P2",f"신규 토큰(목록) {sym} {addr[:14]}")
-    if n==0: print("  신규 없음(JPYSC 미등장).")
+        handle((it.get('address') or '').lower(), it.get('symbol') or '', it.get('name') or '', "목록")
+    if first: print(f"  [최초 실행 — 토큰 {len(cur)}종 시딩(경보 생략), 다음 실행부터 신규만 감지]")
+    elif n==0: print("  신규 없음(JPYSC 미등장).")
     return "|".join(sorted(cur)), jpysc
 
 def exchange_check(cur,old):
@@ -409,7 +417,7 @@ def main():
         os.makedirs(DATA,exist_ok=True)
         for k,v in toksnap.items():
             if v is not None: cur["tok_"+k]=v
-        cur["known_tokens"]=kt; cur["val_addrs"]=row.pop("_val_addrs","")
+        cur["seen_tokens"]=kt; cur["val_addrs"]=row.pop("_val_addrs","")
         cur["seen_contracts"]=sc; cur.update(shellstate)
         # row 지표(직전값 비교용) 영속화 — 없으면 UW증가·Nakamoto악화 등 diff 알림이 영영 안 뜸
         for k in ("bifi_uw_count","bifi_uw_debt","bifi_borrowers","nakamoto33","val_total_stake","val_count","shells_active"):
