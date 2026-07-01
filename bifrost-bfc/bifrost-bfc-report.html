@@ -150,7 +150,7 @@
   </ol></div>
   <p class="small muted">※ 조사 과정에서의 자기정정·철회 이력은 <a href="#changelog">부록: 정정 이력</a>에 통합 정리(본문은 최종 확정 사실만 기술).</p>
 
-  <div class="callout ok"><b>🧩 구조적 종합 — 심층 라운드 결정판 (2026-06-30)</b>
+  <details class="callout ok"><summary class="small"><b>🧩 구조적 종합 — 심층 라운드 결정판 (펼치기)</b> · 검증자 위임구조 · 위임 78%=Biquid LST · 단일 수익 스택 흐름도 · 재단 "인프라 유지보수" 국면</summary>
   <ol style="margin:6px 0 0 0">
     <li><b>검증자 위임구조 실측(<code>candidate_state</code>):</b> 총 405.65M = self-bond 60.89M(15%)+위임 344.76M(85%). 위임자수로 4분류 — <b>A 순수 팀자체</b>(F13~15, self-bond 정확히 4.00M·위임자 0)·<b>B 팀운영 대형</b>(F2/F5/F6, 6.8M)·<b>C 기관집중</b>(위임자 4~405명·건당 거액)·<b>D retail</b>(1,670~2,022명). <b>팀/재단 영향권 자기본딩 최소 ~62M(15%)</b>. → §21</li>
     <li><b>★ 위임의 정체 = Biquid 유동스테이킹:</b> Biquid <code>totalPooledBFC()</code> <b>268.8M</b>이 검증자에 내부위임 → <b>위임 344.76M의 약 78%가 직접위임이 아닌 LST 풀 경유</b>(실질 위임주체 stBFC 홀더 130명). → §8·§21</li>
@@ -169,7 +169,7 @@
   <text x="120" y="58" fill="#475569">▶</text><text x="240" y="58" fill="#475569">▶</text><text x="360" y="58" fill="#475569">▶</text><text x="484" y="58" fill="#475569">▶</text><text x="604" y="58" fill="#475569">▶</text>
   </g>
   <text x="12" y="89" fill="#6b7280" font-size="9.5">운용 EOA(0xaff29bed·0xb878526f)가 Boost 볼트군 운용 · 가스허브 0x81c22bec가 릴레이어/오라클+볼트 가스 충전</text>
-  </svg></div></div>
+  </svg></div></details>
 
   <!-- TIMELINE -->
   <h2 class="sec" id="timeline">프로젝트 연혁 (2017→2026)</h2>
@@ -580,6 +580,7 @@
   <p class="small"><b>요지:</b> 거래소 커스터디(#1·2)를 빼면 상위는 <b>BiFi 예치/스테이킹 고래(#3~6,11,12,14…)</b>와 초기배분 휴면(네이티브). 네이티브-only 리스트엔 없던 BiFi 예치자 다수가 실질 상위. 상세 → data/native-holders-analysis(8차)·foundation-tracking.</p>
 
   <h2 class="sec" id="foundation"><span class="n">15-F</span>★ 재단 추적 · 물밑 프로젝트 감지</h2>
+  <p class="lead">TL;DR — 재단은 현재 <b>"인프라 유지보수" 국면</b>(Treasury 미집행·공식 배포자 휴면). 살아있는 활동은 <b>운용망 가스허브 1곳</b>(릴레이어/오라클 충전). 익명 운용망 = <b>BTCFi Boost 제품군 운용 인프라</b>로 식별. <b>빈 프록시 볼트 껍데기 11개 = 런칭 대비 스테이징</b>(자금 유입 순간이 신제품 출시 신호, monitor 자동감지).</p>
   <p class="small muted">이 조사의 핵심 목적 — 파이랩 재단의 온체인 움직임으로 진행 중인 프로젝트를 조기 포착.</p>
   <h4>재단 핵심 클러스터</h4>
   <table>
@@ -781,6 +782,7 @@
   <div class="callout info"><b>★ 휴면 초기배분 지갑 재가동 스캔(2026-06-30, 리치 상위40 전수):</b> 초기배분 휴면 군집(3.25~10M·tx=1·송신이력 0) <b>전부 휴면 유지 — 재가동/매도 신호 0</b>(휴면 결론 재확인). 활성 대형은 거래소뿐(업비트콜드 2026-06-26·업비트핫·빗썸콜드 06-29)이며 <b>거래소 외 신규 대형 콜드월렛 없음</b>("거래소=업비트/빗썸 중심" 유지). <b>신규 식별 → HTX 운영지갑 확정</b>: 액티브 EOA <code>0x09FCED81…470E</code>(4.41M·<b>1,861tx</b>). <b>근거(강): 입금주소 <code>0xff91c31d</code>는 HTX가 발급하고 업비트 트래블룰이 VASP(HTX)로 인증한 주소</b>이며, 그 물량이 이 지갑으로 스윕됨 → <b>HTX가 통제하는 BFC 운영지갑</b>. 구조: 입금라우터 27개(업비트핫·빗썸핫 인출분 스윕) → <code>0x09FCED81</code> 집결 → <b>HTX의 능동 운용</b>: Everdex 스왑(2.6M)·브릿지 아웃(0.56M)·타거래소 이동(1.27M). <span class="small muted">즉 정적 custody가 아니라 <b>MM/트레저리가 활발한 HTX 운영지갑</b>. 4.41M은 네이티브 워킹밸런스이고, HTX 총보유(ERC-20 포함)는 더 클 것으로 추정. <b>정정 이력</b>: 출력의 다venue 순환만 보고 잠시 "독립 MM"으로 봤으나, 사용자의 VASP 인증 근거(HTX발급+업비트검증)가 더 강해 HTX 운영지갑으로 확정.</span></div>
 
   <h2 class="sec" id="liquidation"><span class="n">15-L</span>BiFi 청산 분석 (ABI 실측 · 2026-06-30 정정판)</h2>
+  <p class="lead">TL;DR — <b>3% 하락으로는 신규청산 사실상 0</b>(1건 $1.4K). 실질 위험은 깊은 하락(~49%↓)에 집중. 별도로 <b>이미 청산권인데 미청산 다수</b> = <b>키퍼(청산봇) 비활성</b> 정황. 청산 이벤트는 샘플 범위 내 0건.</p>
   <p class="small muted">BiFi Manager·핸들러 직접 호출로 차입자별 담보·부채·청산가 산출. <b>초판은 BiFi 담보시장을 4개만 조회해 과대 산출 → 12개 전체 반영해 정정.</b></p>
   <div class="callout warn" style="margin-bottom:10px"><b>⚠️ 초판 정정(중요):</b> BiFi 담보시장은 <b>12개</b>(BFC·wstBFC·ETH·BNB·POL·USDC·USDT·DAI·WBTC·BTCB·BtcUSD·<b>EverStableLP</b>)인데 초판은 4개만 조회. 그 결과 ①대형 차입자의 <b>비(非)BFC 담보(EverStable LP·스테이블 $1.2M+급)를 못 봐</b> 청산가를 과대 산출, ②<b>이미 청산권(health≥1)</b> 포지션을 모든 하락구간에 중복 집계 → "3% 하락에 51.8M BFC 청산" 같은 잘못된 수치가 나왔음. 아래는 12개 시장 전부 반영 + 3분류 정정판.</div>
   <table>
@@ -881,7 +883,7 @@
 
   <h2 class="sec" id="eth-holders"><span class="n">16</span>ETH ERC-20 홀더 (★원조 토큰·레거시 — 추가분석 제외)</h2>
   <p class="small">홀더 ~3,619명 · totalSupply 40억(소각분 포함) · 전송누계 111,008 / txs 56,044. <b>※ ETH ERC-20측은 레거시/무의미로 판단 → 이후 분석 스코프에서 제외(네이티브 메인넷 3068 중심). 아래는 참고용 스냅샷.</b></p>
-  <div class="callout warn"><b>❓ "ETH에 BFC가 왜 이렇게 많나" — 핵심 해명(사용자 의문):</b> <b>BFC는 원래 이더리움 ERC-20으로 태어남</b>(2020~21, 40억 발행). 2022년 16.3억(40.79%) 소각, 2023-01-30 자체 메인넷 출범. <b>출범 시점에 ERC-20 대량이 락/마이그레이션됨</b> — 실제 <code>0x4d5aa298</code>의 460M은 <b>전량 2023-01-30 당일 입금 후 동결</b>(마이그레이션 락). 즉 <b>ETH측 대형 잔액의 상당부분은 "원조 토큰의 레거시/동결분"이지 활성 유통이 아님</b>. ⚠️ <b>ETH ERC-20 잔액과 네이티브(3068) 잔액을 단순 합산하면 이중계상 위험</b>(같은 토큰경제의 두 표현 — 제네시스 미러 + 부분 브릿지). 라이브 생태계·국내거래소(업비트/빗썸)는 <b>네이티브 메인넷</b>에, ETH ERC-20은 <b>HTX 거래·브릿지 백킹·레거시</b> 중심. 공식 <b>유통 ~1.44B</b>(시총 기준)은 양쪽을 netting한 큐레이션 수치.<br><span class="muted">미해소: ETH 비소각분(~2.37B 명목) + 네이티브 대형잔액(거래소491M+TOP100 1.1B…)을 단순합하면 2.37B를 초과 → <b>ETH↔네이티브 공급 정합(브릿지 vault 863M만 명시적 락)은 온체인상 불투명</b>. 정확 정합엔 팀 공시 토큰 컨트랙트(네이티브 발행/소각 메커니즘) 필요.</span></div>
+  <details class="callout warn"><summary class="small"><b>❓ "ETH에 BFC가 왜 이렇게 많나" — 핵심 해명(펼치기)</b> · 원조 ERC-20 레거시/동결분 · 이중계상 주의</summary> <b>BFC는 원래 이더리움 ERC-20으로 태어남</b>(2020~21, 40억 발행). 2022년 16.3억(40.79%) 소각, 2023-01-30 자체 메인넷 출범. <b>출범 시점에 ERC-20 대량이 락/마이그레이션됨</b> — 실제 <code>0x4d5aa298</code>의 460M은 <b>전량 2023-01-30 당일 입금 후 동결</b>(마이그레이션 락). 즉 <b>ETH측 대형 잔액의 상당부분은 "원조 토큰의 레거시/동결분"이지 활성 유통이 아님</b>. ⚠️ <b>ETH ERC-20 잔액과 네이티브(3068) 잔액을 단순 합산하면 이중계상 위험</b>(같은 토큰경제의 두 표현 — 제네시스 미러 + 부분 브릿지). 라이브 생태계·국내거래소(업비트/빗썸)는 <b>네이티브 메인넷</b>에, ETH ERC-20은 <b>HTX 거래·브릿지 백킹·레거시</b> 중심. 공식 <b>유통 ~1.44B</b>(시총 기준)은 양쪽을 netting한 큐레이션 수치.<br><span class="muted">미해소: ETH 비소각분(~2.37B 명목) + 네이티브 대형잔액(거래소491M+TOP100 1.1B…)을 단순합하면 2.37B를 초과 → <b>ETH↔네이티브 공급 정합(브릿지 vault 863M만 명시적 락)은 온체인상 불투명</b>. 정확 정합엔 팀 공시 토큰 컨트랙트(네이티브 발행/소각 메커니즘) 필요.</span></details>
   <div class="callout info"><b>★ "ETH가 왜 아직 활성인가" 규명(2026-07, 사용자 질의 추적):</b> ETH-side가 죽은 게 아니라 <b>ERC-20 BFC가 상시 네이티브로 브릿지되어 유입</b>. 실측 예: EOA <code>0x0668B4d2</code>(+funder <code>0x58edf782</code>·<code>0x0d070796</code>)가 ERC-20 BFC를 받아 <b>브릿지 Vault <code>0x2f95c102</code>로 전송(ETH→네이티브 브릿지 인)</b>, 최근(6-29)까지 반복. <b>동인 = 크로스체인 차익거래</b>: 네이티브(업비트·빗썸 <b>한국 프리미엄</b>) 가격 &gt; ERC-20(HTX/Gate) → 싼 ERC-20 매수→브릿지→국내 매도. (BiFi 토큰판 아비트라지 봇 <code>0x2CED561d</code>도 동일 생태계.) → <b>브릿지 Vault(863M)가 계속 커지는 이유</b>이자 <b>한국 프리미엄이 ERC-20을 네이티브로 빨아들이는 매도압력 파이프</b>가 가동 중이라는 뜻(네이티브에 직접 영향).</div>
   <table>
     <tr><th>#</th><th>주소</th><th class="num">비중</th><th>성격</th></tr>
@@ -891,7 +893,7 @@
     <tr><td>4·5</td><td><code>0x08d1b818…</code> · <code>0xfa24b321…</code></td><td class="num">7.45/6.21%</td><td>EOA</td></tr>
   </table>
   <p class="small muted">상위3 ~73.9% 점유. ⚠️ etherscan 라벨 봇차단(403)으로 ETH상 거래소 핫월렛 식별 불가 — 단, <b>거래소 BFC는 ETH가 아닌 네이티브 체인에 존재</b>(알려진 업비트/빗썸 ETH 핫월렛 BFC 잔액 0). ETH Socket 생성 2023-01-18 / BSC Socket 누적 17,530tx(활성).</p>
-  <div class="callout ok"><b>★ 재검증(2026-06-30, ethplorer 실측):</b> 소각 확정 — dead 주소 <b>1,631,415,927 BFC(40.79%)</b> 보유 = "40% 소각(~16.3억)" 헤드라인 <b>온체인 확인</b>(명목 totalSupply 4B 중 실효 ~2.37B). 브릿지 Vault <code>0x2f95c102</code> 863.5M(21.6%)=메인넷 락. <b>★ 신규: Boost 자매클러스터 <code>0x752725e9</code>가 ETH측 131.1M BFC(3.28%) 보유</b> — 운용망이 ETH 사이드에도 대형 물량 보유(크로스사이드 연결). 그 외 미식별 대형(거래소 아님): <b><code>0x4d5aa298</code>(460M)=컨트랙트, 최종 BFC전송 2023-01-30 in만/out0 → 진짜 휴면 락/리저브(메인넷 출범일 수령 후 3.5년 무이동)</b>. <span class="badge b-bad">정정</span> <code>0x08d1b818</code>(298M, 최종 2025-08·out12)·<code>0xfa24b321</code>(248M, <b>최종 2026-05·out20</b>)은 <b>휴면 아님 — 활동 중인 ETH측 분배 EOA</b>(특히 0xfa24b321은 2026-05까지 BFC를 계속 OUT). ⚠️ 이전 "~1.0B 휴면" 표현은 과장이었음 — <b>진짜 락은 0x4d5aa298(460M)뿐</b>, 나머지 546M은 활성 분배지갑(목적지 추적 필요). 교훈: <b>낮은 ETH잔액 ≠ 휴면</b>(가스≠소유 원칙의 연장). <code>0x752725e9</code>(131M)=Boost 운용망.</div>
+  <details class="callout ok"><summary class="small"><b>★ ETH측 대형홀더 재검증 (2026-06-30 ethplorer 실측) — 펼치기</b> · 소각 40.79% 확인 · 진짜 락은 0x4d5aa298(460M)뿐 · '낮은 잔액≠휴면'</summary> 소각 확정 — dead 주소 <b>1,631,415,927 BFC(40.79%)</b> 보유 = "40% 소각(~16.3억)" 헤드라인 <b>온체인 확인</b>(명목 totalSupply 4B 중 실효 ~2.37B). 브릿지 Vault <code>0x2f95c102</code> 863.5M(21.6%)=메인넷 락. <b>★ 신규: Boost 자매클러스터 <code>0x752725e9</code>가 ETH측 131.1M BFC(3.28%) 보유</b> — 운용망이 ETH 사이드에도 대형 물량 보유(크로스사이드 연결). 그 외 미식별 대형(거래소 아님): <b><code>0x4d5aa298</code>(460M)=컨트랙트, 최종 BFC전송 2023-01-30 in만/out0 → 진짜 휴면 락/리저브(메인넷 출범일 수령 후 3.5년 무이동)</b>. <span class="badge b-bad">정정</span> <code>0x08d1b818</code>(298M, 최종 2025-08·out12)·<code>0xfa24b321</code>(248M, <b>최종 2026-05·out20</b>)은 <b>휴면 아님 — 활동 중인 ETH측 분배 EOA</b>(특히 0xfa24b321은 2026-05까지 BFC를 계속 OUT). ⚠️ 이전 "~1.0B 휴면" 표현은 과장이었음 — <b>진짜 락은 0x4d5aa298(460M)뿐</b>, 나머지 546M은 활성 분배지갑(목적지 추적 필요). 교훈: <b>낮은 ETH잔액 ≠ 휴면</b>(가스≠소유 원칙의 연장). <code>0x752725e9</code>(131M)=Boost 운용망.</details>
 
   <h2 class="sec" id="exch"><span class="n">17</span>거래소 보유 클러스터 (온체인 확정)</h2>
   <div class="two">
@@ -975,6 +977,7 @@
   <p class="small">1차 홀더 분류·DEX 식별 → 2차 TOP50 집중도·컨트랙트 메서드 → 3차 크리틱(internal-tx·잔액이력·creator로 제네시스 분배·배포자 확정, #3=신규 리저브 정정) → 4차 DeFi 레이어/프로토콜 맵(Everdex·BtcUSD) → 5차 overhang·코빗 상장.</p>
 
   <h2 class="sec" id="validators"><span class="n">21</span>검증자 24 — 전체 주소</h2>
+  <p class="lead">TL;DR — 24노드(Full 15+Basic 9), <b>Nakamoto 계수 6</b>(상위 6노드 담합 시 파이널리티 정지) = 소수 검증자 의존. <b>위임 85% 중 ~78%가 단일 Biquid LST 풀 경유</b> → 그 풀 하나가 다수 검증자 순위 좌우(거버넌스 집중 리스크). Full 13~15는 self-bond 정확히 4.00M = 재단/팀 자체노드.</p>
   <table>
     <tr><th>항목</th><td colspan="2">24개(Full 15+Basic 9), 라운드 2525~2526(2026-06-30 조회). 총 스테이킹 405.65M(self-bond 60.89M·15% + 위임 344.76M·85%), <b>위임자 27,387 = 온체인 위임계정 수이며 그중 대부분은 단일 Biquid LST 풀의 재위임</b>(실질 독립 위임주체는 stBFC 홀더 ~130). 기명(공지): BitTrade·AI Fusion Capital·KICA(한국정보인증)·DeSpread</td></tr>
   </table>
