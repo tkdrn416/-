@@ -91,7 +91,17 @@ def rpc(to,data):
         req=urllib.request.Request(RPC,data=json.dumps({"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{"to":to,"data":data},"latest"]}).encode(),headers={"Content-Type":"application/json"})
         r=json.load(urllib.request.urlopen(req,timeout=15)).get("result"); FETCH["ok"]+=1; return r
     except: FETCH["fail"]+=1; return None
-def bal(a): return int(get(f"/api/v2/addresses/{a}").get('coin_balance') or 0)/1e18
+def rpc_getbalance(a):
+    try:
+        req=urllib.request.Request(RPC,data=json.dumps({"jsonrpc":"2.0","id":1,"method":"eth_getBalance","params":[a,"latest"]}).encode(),headers={"Content-Type":"application/json"})
+        r=json.load(urllib.request.urlopen(req,timeout=15)).get("result"); FETCH["ok"]+=1
+        return int(r,16)/1e18 if r and r!="0x" else None
+    except: FETCH["fail"]+=1; return None
+def bal(a):
+    r=get(f"/api/v2/addresses/{a}"); cb=r.get('coin_balance') if r else None
+    if cb is None:  # explorer 실패/누락 → RPC eth_getBalance 폴백(조회실패를 '잔액0'으로 오인 방지)
+        fb=rpc_getbalance(a); return fb if fb is not None else 0.0
+    return int(cb)/1e18
 def erc20_bal(token,holder):
     r=rpc(token,"0x70a08231"+holder.lower().replace("0x","").rjust(64,"0"))
     return int(r,16)/1e18 if r and r!="0x" else None  # None=조회실패(0과 구분)
@@ -177,6 +187,8 @@ def validator_check(old,row):
         if cum>tot*0.333: nak=i; break
     row["val_count"]=n; row["val_total_stake"]=round(tot); row["nakamoto33"]=nak
     print(f"  검증자 {n} · 총스테이크 {tot:,.0f}(=self+위임) · Nakamoto(33%) {nak}")
+    pnak=_int(old.get("nakamoto33")) if old else None
+    if pnak is not None and nak and nak<pnak: alert("P2",f"★탈중앙성 악화 — Nakamoto {pnak}→{nak}(상위 소수 집중↑)")
     prev=set(filter(None,(old.get("val_addrs") or "").split(","))) if old else set(); curset=set(addrs)
     if prev:
         for x in curset-prev: alert("P1",f"★신규 검증자 등장 {x[:12]}")
@@ -274,6 +286,13 @@ def new_token_scan(old):
             cur.add(addr)
             if 'JPYSC' in (sym+(it.get('name') or '')).upper(): n+=1; jpysc=1; print(f"  🚨 JPYSC! {sym} {addr[:14]}"); alert("P1",f"🚨 JPYSC 계열 토큰 등장! {sym} {addr[:14]}")
             elif known and addr not in known: n+=1; print(f"  ⚠️ 신규 {sym} {addr[:14]}"); alert("P2",f"신규 토큰 {sym} {addr[:14]}")
+    # 키워드 무관 신규자산 포착: 전체 토큰목록 1페이지 diff(심볼이 예상과 달라도 잡음)
+    for it in (get("/api/v2/tokens").get('items') or [])[:50]:
+        addr=(it.get('address') or '').lower(); sym=it.get('symbol') or ''
+        if not addr: continue
+        cur.add(addr)
+        if 'JPYSC' in (sym+(it.get('name') or '')).upper(): n+=1; jpysc=1; alert("P1",f"🚨 JPYSC 계열 토큰(목록)! {sym} {addr[:14]}")
+        elif known and addr not in known: n+=1; print(f"  ⚠️ 신규(목록) {sym} {addr[:14]}"); alert("P2",f"신규 토큰(목록) {sym} {addr[:14]}")
     if n==0: print("  신규 없음(JPYSC 미등장).")
     return "|".join(sorted(cur)), jpysc
 
@@ -392,6 +411,9 @@ def main():
             if v is not None: cur["tok_"+k]=v
         cur["known_tokens"]=kt; cur["val_addrs"]=row.pop("_val_addrs","")
         cur["seen_contracts"]=sc; cur.update(shellstate)
+        # row 지표(직전값 비교용) 영속화 — 없으면 UW증가·Nakamoto악화 등 diff 알림이 영영 안 뜸
+        for k in ("bifi_uw_count","bifi_uw_debt","bifi_borrowers","nakamoto33","val_total_stake","val_count","shells_active"):
+            if k in row: cur[k]=row[k]
         cur.update(github_check.tags)
         if burn is not None: cur["burn_dead"]=burn
         json.dump(cur,open(BASE,"w"))
