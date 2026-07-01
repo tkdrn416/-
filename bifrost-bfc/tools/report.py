@@ -22,6 +22,18 @@ def _fmt(v,unit=""):
     if a>=1e6: return f'{v/1e6:,.2f}M'
     if a>=1e3: return f'{v/1e3:,.0f}K'
     return f'{v:,.0f}'
+def _fmtc(v,unit=""):
+    """표·타일용 압축 표기: 큰 금액도 M/K로(스캔성). 소액 가격은 원형 유지."""
+    if v is None: return "—"
+    a=abs(v)
+    if unit=="%": return f'{v:,.1f}%'
+    if unit in ("$","원") and a<1000:  # 가격류 소액은 정밀
+        return _fmt(v,unit)
+    pfx="$" if unit=="$" else ""; sfx="원" if unit=="원" else ""
+    if a>=1e8: return f'{pfx}{v/1e6:,.0f}M{sfx}'
+    if a>=1e6: return f'{pfx}{v/1e6:,.2f}M{sfx}'
+    if a>=1e3: return f'{pfx}{v/1e3:,.1f}K{sfx}'
+    return f'{pfx}{v:,.0f}{sfx}'
 
 def augment(rows):
     for r in rows:
@@ -49,11 +61,11 @@ CATALOG=[
  ("defi_tvl_usd","DefiLlama TVL($)","$"),
 ]
 
-def signal_board(rows):
+def build_signals(rows):
+    """신호칩 계산 — signal_board·verdict 공용(로직 단일화). 반환: [(라벨,색g/y/r,값텍스트)]"""
     cur=rows[-1]; prev=rows[-2] if len(rows)>1 else {}
     d=lambda k:(_num(cur.get(k))-_num(prev.get(k))) if _num(cur.get(k)) is not None and _num(prev.get(k)) is not None else None
     chips=[]
-    # (라벨, 색(g/y/r), 값텍스트)
     a1=_num(cur.get("alert_p1")) or 0
     chips.append(("P1 경보","r" if a1 else "g", f"{a1:.0f}건" if a1 else "없음"))
     tf=d("treasury_bfc"); chips.append(("Treasury 유출","r" if (tf is not None and tf<0) else "g", "유출!" if (tf is not None and tf<0) else "미집행 유지"))
@@ -72,6 +84,18 @@ def signal_board(rows):
         chips.append(("BiFi 미청산(UW)",c,(f"{uw:.0f}명 ${_fmt(uwd)}" if uw>0 else "없음")))
     pu=_num(cur.get("price_usd")); pp=_num(prev.get("price_usd"))
     if pu is not None and pp: ch=(pu-pp)/pp*100; chips.append(("BFC 가격 24h","y" if abs(ch)>=10 else "g",f"{ch:+.1f}%"))
+    return chips
+
+def verdict(rows):
+    """상단 go/no-go 지시문 — 빨강/노랑 칩만 뽑아 '오늘 확인할 것'으로 요약."""
+    chips=build_signals(rows)
+    reds=[l for l,c,_ in chips if c=="r"]; yels=[l for l,c,_ in chips if c=="y"]
+    if reds:   return ("r", f"⚠️ 오늘 확인 필요 — {', '.join(reds)}"+(f" · 주의: {', '.join(yels)}" if yels else ""))
+    if yels:   return ("y", f"🟡 관찰 권장 — {', '.join(yels)} (긴급 아님)")
+    return ("g", "✅ 이상 없음 — 특이신호 0. 오늘은 스킵 가능(가격/추세만 확인).")
+
+def signal_board(rows):
+    chips=build_signals(rows)
     col={"g":"#34d399","y":"#fbbf24","r":"#f87171"}; ico={"g":"🟢","y":"🟡","r":"🔴"}
     cells="".join(f'<div class="chip" style="border-color:{col[c]}"><div class="ci">{ico[c]} {lab}</div><div class="cv" style="color:{col[c]}">{val}</div></div>' for lab,c,val in chips)
     return f'<div class="sigboard">{cells}</div>'
@@ -85,13 +109,18 @@ def svg_chart(rows,cols,title,unit="",colors=None,h=190):
         return f'<div class="ch"><svg viewBox="0 0 {W} 70" width="100%" style="max-width:{W}px"><text x="12" y="22" fill="#e5e7eb" font-size="12" font-weight="700">{title}</text><text x="12" y="46" fill="#6b7280" font-size="11">데이터 누적 대기</text></svg></div>'
     npts=max(len(pts) for _,pts in series)
     allv=[v for _,pts in series for _,v in pts]; lo,hi=min(allv),max(allv)
+    mid=(hi+lo)/2; nearflat=False
     if hi==lo:  # 평탄: 부호안전 패딩(음수축 방지)
         pad=abs(lo)*0.05 or 1; hi=lo+pad; lo=(lo-pad) if lo<0 else max(0,lo-pad)
+    elif mid and (hi-lo)<abs(mid)*0.01:  # 변동 <1%: 전체높이 자동스케일=오해 → 축 넓혀 평탄히
+        nearflat=(hi-lo)/abs(mid)*100; pad=abs(mid)*0.02
+        lo=(mid-pad) if mid<0 else max(0,mid-pad); hi=mid+pad
     drawn=[(lab,(pts*2 if len(pts)==1 else pts)) for lab,pts in series]; n=max(len(pts) for _,pts in drawn)
     X=lambda i:PADL+(W-PADL-PADR)*(i/(n-1) if n>1 else 0.5); Y=lambda v:PADT+(H-PADT-PADB)*(1-(v-lo)/(hi-lo))
     g=[f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px;background:#0d1117;border:1px solid #1f2937;border-radius:8px" font-family="ui-sans-serif,system-ui">',
        f'<text x="12" y="18" fill="#e5e7eb" font-size="12" font-weight="700">{title}</text>']
-    if npts<3: g.append(f'<text x="{W-PADR}" y="18" fill="#6b7280" font-size="9" text-anchor="end">데이터 {npts}p·추세는 3회+</text>')
+    if nearflat: g.append(f'<text x="{W-PADR}" y="18" fill="#6b7280" font-size="9" text-anchor="end">변동 &lt;1% (≈보합)</text>')
+    elif npts<3: g.append(f'<text x="{W-PADR}" y="18" fill="#6b7280" font-size="9" text-anchor="end">데이터 {npts}p·추세는 3회+</text>')
     for k in range(4):
         yv=lo+(hi-lo)*k/3; yy=Y(yv)
         g.append(f'<line x1="{PADL}" y1="{yy:.0f}" x2="{W-PADR}" y2="{yy:.0f}" stroke="#1b212b"/><text x="{PADL-6}" y="{yy+3:.0f}" fill="#6b7280" font-size="9" text-anchor="end">{_fmt(yv,unit)}</text>')
@@ -108,11 +137,12 @@ def svg_chart(rows,cols,title,unit="",colors=None,h=190):
     g.append(f'<text x="{W-PADR}" y="{H-20}" fill="#9aa3b2" font-size="10" text-anchor="end">최신 {_fmt(series[0][1][-1][1],unit)}</text></svg>')
     return f'<div class="ch">{"".join(g)}</div>'
 
-# 증가가 좋은지(good_up) valence 기반 화살표
-def arrow(d,good_up=True):
-    if d is None or d==0: return '<span class="flat">→ 0</span>'
+# 증가가 좋은지(good_up) valence 기반 화살표. thr 미만 변동은 회색(노이즈 억제)
+def arrow(d,good_up=True,thr=0,unit=""):
+    if d is None: return '<span class="flat">—</span>'
+    if d==0 or (thr and abs(d)<thr): return f'<span class="flat">→ ~0</span>'
     good=(d>0)==good_up; cls="pos" if good else "neg"; sym="▲ +" if d>0 else "▼ "
-    return f'<span class="{cls}">{sym}{_fmt(abs(d) if d<0 else d)}</span>'
+    return f'<span class="{cls}">{sym}{_fmtc(abs(d) if d<0 else d,unit)}</span>'
 def change_table(rows):
     cur=rows[-1]; prev=rows[-2] if len(rows)>1 else None; wk=rows[-8] if len(rows)>=8 else None
     # (키,라벨,단위,good_up,유의임계)
@@ -128,7 +158,7 @@ def change_table(rows):
         dp=(c-_num(prev.get(col))) if prev and _num(prev.get(col)) is not None else None
         dw=(c-_num(wk.get(col))) if wk and _num(wk.get(col)) is not None else None
         hl=' class="hot"' if (dp is not None and abs(dp)>=thr and thr>0) else ''
-        out.append(f'<tr{hl}><td>{lab}</td><td class="r">{_fmt(c,u)}</td><td class="r">{arrow(dp,gu)}</td><td class="r">{arrow(dw,gu)}</td></tr>')
+        out.append(f'<tr{hl}><td>{lab}</td><td class="r">{_fmtc(c,u)}</td><td class="r">{arrow(dp,gu,thr,u)}</td><td class="r">{arrow(dw,gu,thr,u)}</td></tr>')
     return "".join(out)+"</table>"
 
 def narrative(rows):
@@ -155,19 +185,20 @@ def generate():
     rows=augment([r for r in csv.DictReader(open(HIST)) if r.get("date")])
     if not rows: return
     last=rows[-1]; prev=rows[-2] if len(rows)>1 else {}
+    # 핵심 차트 = 미션 4대 감시(매도압·재단집행·렌딩청산·CDP부채)에 직결된 것만
     core=[
+        svg_chart(rows,[("exch_total","거래소합"),("upbit_bfc","업비트"),("bithumb_bfc","빗썸"),("htx_bfc","HTX운영")],"① 거래소 보유 BFC (순유입=매도압)"),
+        svg_chart(rows,[("treasury_bfc","Treasury")],"② 재단 Treasury (출금=P1 신호)"),
+        svg_chart(rows,[("coll_total_usd","예치($)"),("bifi_borrow_dollar","대출($)")],"③ BiFi 예치 vs 대출 (달러)","$"),
+        svg_chart(rows,[("util_pct","이용률%")],"④ BiFi 이용률 (대출/예치·청산근접도)","%"),
+        svg_chart(rows,[("bifi_uw_debt","미청산부채$")],"⑤ BiFi 미청산(UNDERWATER) 부채 — 자동추적","$"),
+        svg_chart(rows,[("btcusd_supply","BtcUSD")],"⑥ BtcUSD 발행 (=CDP 부채)"),
         svg_chart(rows,[("price_usd","BFC/USD")],"BFC 가격 (USD)","$"),
+    ]
+    etc=[
         svg_chart(rows,[("bfc_mcap_usd","BFC 시총")],"BFC 시가총액 (USD)","$"),
         svg_chart(rows,[("bifi_price_usd","BIFI/USD")],"BIFI 곡괭이토큰 (USD)","$"),
         svg_chart(rows,[("bifi_mcap_usd","BIFI 시총")],"BIFI 시가총액 (USD)","$"),
-        svg_chart(rows,[("coll_total_usd","예치($)"),("bifi_borrow_dollar","대출($)")],"★ BiFi 예치 vs 대출 (달러)","$"),
-        svg_chart(rows,[("exch_total","거래소합"),("upbit_bfc","업비트"),("bithumb_bfc","빗썸"),("htx_bfc","HTX운영")],"거래소 보유 BFC(순유입=매도압)"),
-        svg_chart(rows,[("treasury_bfc","Treasury")],"재단 Treasury(출금=P1 신호)"),
-        svg_chart(rows,[("btcusd_supply","BtcUSD")],"BtcUSD 발행(=CDP 부채)"),
-    ]
-    etc=[
-        svg_chart(rows,[("util_pct","이용률%")],"BiFi 이용률(대출/예치)","%"),
-        svg_chart(rows,[("bifi_uw_debt","미청산부채$")],"BiFi 미청산(UNDERWATER) 부채 — 대형차입자 자동추적","$"),
         svg_chart(rows,[("coll_bfc_usd","BFC담보"),("coll_wstbfc_usd","wstBFC담보"),("coll_btcusd_usd","BtcUSD담보")],"BiFi 담보 구성(달러환산)","$"),
         svg_chart(rows,[("bifi_borrow_btcusd","BtcUSD"),("bifi_borrow_usdc","USDC"),("bifi_borrow_usdt","USDT"),("bifi_borrow_dai","DAI")],"달러대출 구성(개별)","$"),
         svg_chart(rows,[("jpyc_supply","JPYC")],"일본 JPYC 공급"),
@@ -181,33 +212,36 @@ def generate():
     al=recent_alerts(); alopen=" open" if al else ""
     albox="".join(f'<tr><td class="small">{t}</td><td><span class="b-{ "bad" if p=="P1" else "warn"}">{p}</span></td><td class="wrap small">{m}</td></tr>' for t,p,m in al) or '<tr><td colspan="3" class="muted small">최근 기록된 경보 없음</td></tr>'
     # KPI 타일(값 + 전일Δ + valence색)
-    def kpi(key,label,uf,unit="",good_up=True):
+    def kpi(key,label,uf,unit="",good_up=True,thr=0):
         v=_num(last.get(key)); pv=_num(prev.get(key)); dd=(v-pv) if (v is not None and pv is not None) else None
         val=uf(v) if v is not None else "—"
         delta=""
-        if dd is not None and dd!=0:
+        if dd is not None and dd!=0 and not (thr and abs(dd)<thr):
             good=(dd>0)==good_up; cls="pos" if good else "neg"; sym="▲" if dd>0 else "▼"
-            delta=f'<span class="{cls}" style="font-size:11px"> {sym}{_fmt(abs(dd),unit)}</span>'
+            delta=f'<span class="{cls}" style="font-size:11px"> {sym}{_fmtc(abs(dd),unit)}</span>'
         return f'<div class="kpi"><div class="v">{val}{delta}</div><div class="l">{label}</div></div>'
     bfcmc=_num(last.get("bfc_mcap_usd")); bifimc=_num(last.get("bifi_mcap_usd"))
     kpis="".join([
         kpi("price_usd","BFC 가격 · 시총 "+(f'${bfcmc/1e6:,.1f}M' if bfcmc else '—'),lambda v:f'${v:.5f}',"$",True),
         kpi("bifi_price_usd","BIFI 곡괭이 · 시총 "+(f'${bifimc/1e6:,.2f}M' if bifimc else '—'),lambda v:f'${v:.5f}',"$",True),
-        kpi("exch_total","거래소 보유(BFC)",lambda v:f'{v/1e6:,.1f}M',"",False),
-        kpi("btcusd_supply","BtcUSD 발행",lambda v:f'{v/1e6:,.2f}M',"",True),
-        kpi("coll_total_usd","BiFi 예치(달러)",lambda v:f'${v/1e6:,.2f}M',"$",True),
-        kpi("bifi_borrow_dollar","BiFi 달러대출",lambda v:f'${v/1e6:,.2f}M',"$",True),
+        kpi("exch_total","거래소 보유(BFC)",lambda v:f'{v/1e6:,.1f}M',"",False,1_000_000),
+        kpi("btcusd_supply","BtcUSD 발행",lambda v:f'{v/1e6:,.2f}M',"",True,200_000),
+        kpi("coll_total_usd","BiFi 예치(달러)",lambda v:f'${v/1e6:,.2f}M',"$",True,500_000),
+        kpi("bifi_borrow_dollar","BiFi 달러대출",lambda v:f'${v/1e6:,.2f}M',"$",True,100_000),
         kpi("util_pct","BiFi 이용률",lambda v:f'{v:.1f}%',"%",False),
         kpi("nakamoto33","나카모토계수",lambda v:f'{v:.0f}',"",True),
     ])
     kb=(f'${_num(last.get("bifi_price_krw")):,.2f}원' if _num(last.get("bifi_price_krw")) else "")
     fx=f'<span class="muted small">· 원화: BFC {_num(last.get("price_krw")) or "—"}원 / BIFI {_num(last.get("bifi_price_krw")) or "—"}원</span>'
+    vd=verdict(rows)
     head="""<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bifrost(BFC) 데일리 추적 리포트</title><style>
 body{margin:0;background:#0f1115;color:#e6e8ee;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic",sans-serif;line-height:1.55;font-size:14px;padding:20px 26px 80px;max-width:1180px;margin:0 auto}
 h1{font-size:22px;margin:.2em 0} h2{font-size:16px;margin:22px 0 8px;border-top:1px solid #2a2f3a;padding-top:12px}
 .lead{color:#9aa3b2;font-size:12.5px} .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:10px 0}
 .kpi{background:#1d212b;border:1px solid #2a2f3a;border-radius:10px;padding:10px 12px} .kpi .v{font-size:17px;font-weight:800} .kpi .l{font-size:11px;color:#9aa3b2}
+.verdict{border-radius:10px;padding:14px 18px;margin:10px 0 6px;font-size:17px;font-weight:800;line-height:1.4}
+.verdict.v-g{background:rgba(52,211,153,.12);border:1px solid #34d399;color:#6ee7b7} .verdict.v-y{background:rgba(251,191,36,.12);border:1px solid #fbbf24;color:#fcd34d} .verdict.v-r{background:rgba(248,113,113,.14);border:1px solid #f87171;color:#fca5a5}
 .narr{background:#15212b;border:1px solid #234;border-left:4px solid #4da3ff;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:13.5px}
 .sigboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
 .chip{background:#161b22;border:1px solid #333;border-left-width:4px;border-radius:8px;padding:8px 11px} .chip .ci{font-size:11px;color:#9aa3b2} .chip .cv{font-size:15px;font-weight:800;margin-top:2px}
@@ -220,13 +254,16 @@ details summary{cursor:pointer;font-size:14px;color:#cbd5e1;margin:8px 0} .build
 .builder label{display:inline-block;font-size:11.5px;margin:2px 8px 2px 0;color:#cbd5e1;white-space:nowrap} .builder .btn{background:#1d2531;color:#cbd5e1;border:1px solid #4da3ff;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;margin:6px 6px 0 0}
 </style></head><body>"""
     body=f"""<h1>Bifrost (BFC) 데일리 추적 리포트</h1>
-<p class="lead">자동생성 {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')} · 누적 {len(rows)}p · 데이터품질 {last.get('data_quality','—')} {fx}</p>
+<p class="lead">자동생성 {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')} · 누적 {len(rows)}p · 데이터품질 {last.get('data_quality','—')} {fx}
+ · <a href="bifrost-bfc-report.html" style="color:#4da3ff">📄 상세 리포트</a> · <a href="data/history.csv" style="color:#4da3ff">📊 전체 CSV</a></p>
+<div class="verdict v-{vd[0]}">{vd[1]}</div>
 <div class="narr"><b>오늘 한 줄:</b> {narrative(rows)}</div>
 <h2>🚦 상태 보드 (한눈에)</h2>{signal_board(rows)}
-<h2>📌 핵심 지표 <span class="muted small">(값 + 전일 대비, 색: 초록=우호 빨강=주의)</span></h2>
+<p class="muted small" style="margin:2px 0 0">🟢 정상 · 🟡 관찰 · 🔴 확인필요 &nbsp;|&nbsp; <b>색 방향</b>: 거래소 순유입·Treasury 유출·이용률 급등·미청산 증가 = 🔴 주의</p>
+<h2>📌 핵심 지표 <span class="muted small">(값 + 전일Δ · 초록=우호적 방향, 빨강=주의 방향)</span></h2>
 <div class="grid">{kpis}</div>
-<h2>📊 전일/전주 대비 변화 <span class="muted small">(노란 배경=유의미 변동)</span></h2>{change_table(rows)}
-<h2>📈 핵심 차트</h2><div class="charts">{''.join(core)}</div>
+<h2>📈 핵심 차트 <span class="muted small">(미션 6대 감시 + 가격)</span></h2><div class="charts">{''.join(core)}</div>
+<details><summary>📊 전일/전주 대비 변화 표 (정밀 수치 — 노란 배경=유의미 변동)</summary>{change_table(rows)}</details>
 <details{alopen}><summary>🔻 기타 차트 (이용률·담보구성·대출구성·JPYC·스테이킹·검증자·TVL·경보)</summary><div class="charts">{''.join(etc)}</div></details>
 <h2>🔔 최근 경보 (P1/P2)</h2><table><tr><th>시각</th><th>등급</th><th>내용</th></tr>{albox}</table>
 <details><summary>🛠 커스텀 차트 빌더 (심화 — 원하는 지표 골라 겹쳐 비교)</summary>
