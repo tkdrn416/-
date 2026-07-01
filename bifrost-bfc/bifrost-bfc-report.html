@@ -389,6 +389,13 @@
     <tr><td class="wrap"><b>Fusaka/Pectra 대응 · Core 체인 제거</b></td><td class="wrap">ETH 최신 규격 추종 + 비주력 체인 정리</td><td class="wrap">ETH(=JPYC·JPYSC 발행체인) 연결 유지 — <b>단 범용 EVM 유지보수의 기본값</b>이라 "일본 베팅 방증"으로 보기엔 <b>약한 정황</b>(대체설명 존재)</td></tr>
   </table>
   <p class="small muted" style="margin:6px 0 0"><b>한 줄(신중):</b> CCCP v2 Hook·감사가능 BTC 멀티시그는 "엔SC 결제·기관 BTC 백엔드"와 <b>일관되게 부합</b>하나, 인프라 커밋만으로 일본 의도를 <b>단정할 수는 없음</b>(범용 인프라 업그레이드일 수도). 방향성은 유망하되 <b>아직 '배관' 단계</b> — CCCP v2 플래그 on·신규 제품 컨트랙트 배포가 실가동 전환점(→ <code>monitor.py</code> 감시).</p></div>
+  <div class="callout bad"><b>🆕 2026-07-01 GitHub 개발 업데이트 (당일 대량 커밋 실측):</b>
+  <ul class="small" style="margin:4px 0 0">
+    <li><b>★ RWA(실물자산 토큰화) 프로토콜 공개</b> — <code>bifrost-node</code> <b><code>rwa-protocol</code> 브랜치</b>에 당일 40+ 커밋(Pi Lab 개발자). 내용: <b><code>pallet-nav-oracle</code>(NAV 오라클)·Tranche(senior/junior 구조화)·Epoch 자동정산·투자자 지분(shares) 발행·Borrower 권한관리·EVM precompile</b> = <b>구조화 신용/펀드형 RWA</b>(Centrifuge류). BTCFi·스테이블 다음의 <b>신규 제품 라인</b>. <b>단 dev/main 미병합 = 스테이징(미출시)</b>. → 상세·시장분석 <a href="#japan-dd">§24-E</a></li>
+    <li><b>CCCP v2 실마이그레이션 진행</b> — <code>bifrost-relayer.rs</code> <code>cccp-migration</code> 브랜치 당일 커밋(L-Socket↔N-Socket req_id 충돌 해결·레거시 Vault/Socket 병행지원). = 레거시 브릿지→CCCP v2 <b>실제 전환 단계</b> 진입.</li>
+    <li>운영 안정화: relayer main에 의존성 업데이트(#224)·도커 ca-certificates 수정(#227) 병합.</li>
+  </ul>
+  <p class="small muted" style="margin:6px 0 0"><b>감시 신호(monitor 자동추적 추가):</b> <code>rwa-protocol</code>→<code>dev/test/main</code> 병합 또는 메인넷 런타임에 rwa pallet 반영 = <b>RWA 제품 출시 임박</b>.</p></div>
 
   <!-- 10 SECURITY -->
   <h2 class="sec" id="security"><span class="n">10</span>보안 사고</h2>
@@ -1187,6 +1194,20 @@
     <tr><td>토큰 집중·거버넌스</td><td class="wrap">상위10 ~98.5%·단일주소 40.79%(§18). 상장피/사모배포 논란(재단이 BFC 사모 이전 인정, 거래소 모니터링). 밸류 ~7x 시총/매출(ETH 4.5x 대비 프리미엄)</td><td class="wrap">확인/추정</td></tr>
   </table>
   <div class="callout info"><b>JPYC 4% 수익은 어떻게 만드나(메커니즘) + 지속성:</b> 소스 종합 — ①BTC 담보로 BtcUSD 발행 ②<b>JPYC를 빌려 고금리 USD 스테이블로 전환, JPY/USD 금리차(캐리) 포착</b> ③멀티시그 검증자망으로 무락업 운용. → <b>수익원=BTC담보 DeFi + 엔↔달러 금리차 아비트라지</b>(구조적으로 금리차·인센티브에 의존 → 지속성은 시장금리·보조금에 좌우). 게다가 위 C의 세제상 <b>렌딩수익이 20% 분리과세서 빠지면</b> 일본 개인엔 세후매력 저하. <b>= 4%는 실재 메커니즘이나 "규제·금리·보조금" 3중 변수에 노출.</b></div>
+
+  <h4>E. 🆕 일본 RWA 시장과 Bifrost의 RWA 승부수 (2026-07-01 개발 공개 기반)</h4>
+  <p class="lead">TL;DR — 일본 RWA(실물자산 토큰화)는 <b>부동산 ST·토큰화 국채(JGB)를 중심으로 폭발 중</b>(ST 시장 &gt;¥130B→<b>2026말 &gt;¥1.05조엔(~$7B) 전망</b>)이나 <b>이미 Progmat(MUFG)·Strium(SBI+Sony)이 장악</b>. Bifrost의 RWA는 이들과 다른 <b>DeFi 네이티브 '구조화 신용/펀드'(트랜치+NAV+에폭)</b> 틈새를 노림. <b>상방 서사는 크지만: ①인큐번트 대비 규모·라이선스 절대열위 ②아직 미출시 브랜치 ③RWA가 커져도 BFC 토큰 가치로 전달되는 다리는 여전히 미검증</b>.</p>
+  <table>
+    <tr><th>축</th><th>내용</th></tr>
+    <tr><td><b>일본 RWA 시장</b></td><td class="wrap">부동산 ST(20조달러 부동산·70+건·오사카 ODX 2차유통)·<b>토큰화 JGB/온체인 레포</b>(Progmat WG, 2026-10 보고→파일럿)·회사채. ST 시장 <b>&gt;¥130B → 2026말 &gt;¥1.05조엔 전망</b>. 규제 명확(FSA)+세제 완화가 순풍.</td></tr>
+    <tr><td><b>시장 구도(경쟁)</b></td><td class="wrap"><b>Progmat(MUFG)</b>=ST 발행 ~63%·AUM ¥439.6B·부동산ST 1위, Avalanche L1 이전. <b>Strium(SBI+Sony·Startale, $63M)</b>=토큰화증권·RWA 24/7 거래 L1(JPYSC/USDSC 결합). → <b>규제 증권형 RWA는 메가뱅크·SBI가 선점</b>.</td></tr>
+    <tr><td><b>Bifrost RWA 정체</b></td><td class="wrap">오늘 공개된 <code>rwa-protocol</code>=<b>구조화 신용/펀드</b>(senior/junior 트랜치·NAV 오라클·에폭 정산·투자자 지분·차입자 권한). = <b>Centrifuge/Maple류 온체인 사모대출·구조화 수익</b>. 증권 ST(Progmat)나 국채(JGB)가 <b>아님</b> — 다른 카테고리.</td></tr>
+    <tr><td><b>Bifrost의 역할(포지션)</b></td><td class="wrap">정면승부 대신 <b>DeFi 네이티브·크로스체인 틈새</b>: ①<b>BTC/스테이블 담보 구조화 신용 펀드</b>(BTCFi 정체성과 결합) ②<b>엔SC(JPYC/JPYSC) 표시 사모대출 펀드</b>(트랜치 수익) ③CCCP로 RWA를 <b>여러 체인에 분배</b>. 규제 증권 발행은 라이선스 부재로 불가 → <b>비증권형 크레딧</b>이 현실적 활로.</td></tr>
+    <tr><td><b>★ 토큰(BFC) 가격 연결</b></td><td class="wrap"><b>사업규모 ≠ 토큰가치</b>(§14④와 동일 구조적 갭). RWA가 BFC를 밀어올리는 경로: <b>ⓐ가스 수요</b>(RWA tx·에폭정산·NAV갱신 — 단 에폭성 저빈도라 제한적) <b>ⓑ스테이킹/보안 수요</b>(RWA AUM↑ → 체인 경제보안에 BFC 스테이킹 필요↑ = 유통축소, <b>실 AUM 유입 시 가장 강한 링크</b>) <b>ⓒRWA 수수료</b>(오리지네이션·운용·정산) — <b>단 수수료가 BFC로 귀속되는지(소각/환원)는 미공개, 현재 순수 인플레·바이백 無</b> <b>ⓓ내러티브 프리미엄</b>(RWA+BTCFi+일본 서사 → 투기수요, 실제 +30% 급등 전례이나 펀더멘털 아님). <b>결론: RWA가 실 AUM·수수료를 내고 그게 BFC 소각/스테이킹 수요로 전달돼야 가격부양. 그 전엔 '서사 랠리'.</b></td></tr>
+    <tr><td><b>냉정한 리스크</b></td><td class="wrap">①<b>미출시</b>(feature 브랜치, dev/main 미병합) ②Progmat/Strium 대비 <b>자본·기관망·라이선스 절대열위</b>(마이크로캡 한국 L1) ③RWA 가치 상당분이 자산/발행 레이어·파트너 레일에 잔류(BFC 가스로 직결 불확실) ④비증권형이라도 일본 판매 시 규제(FIEA 렌딩 편입·역외영업 등록).</td></tr>
+    <tr><td><b>감시 신호</b></td><td class="wrap"><b>확인(✓):</b> rwa-protocol → dev/main 병합·메인넷 런타임 rwa pallet 반영 · RWA 볼트/펀드 컨트랙트 온체인 배포·자금 유입 · NAV 오라클 피드 가동 · 일본 파트너(DJT·SBI·JOC)와 RWA 제휴 발표 · <b>수수료→BFC 환원(소각/스테이킹) 정책 공시</b>. <b>반증(✗):</b> 브랜치 방치·경쟁사(Progmat/Strium) 표준 채택 · BFC 인플레만 지속. (→ <code>monitor.py</code> GitHub 브랜치·런타임 추적)</td></tr>
+  </table>
+  <p class="small muted" style="margin:4px 0 0">출처: 오늘 GitHub 실측(bifrost-node/rwa-protocol 40+ 커밋) · Japan ST/RWA 시장(fintechobserver·Ledger Insights·team1.blog·tensquared) · Progmat/Strium(Ledger Insights·Startale·CoinDesk) · Nikkei(토큰화 JGB 24/7). <b>Bifrost RWA의 일본 시장 진입은 아직 발표 전 — 위 역할은 제품 설계(트랜치/NAV/크로스체인)와 시장구도에서 추론한 '가장 그럴듯한 경로'이지 확정 아님.</b></p>
 
   <p class="small muted"><b>방법론:</b> 2026-07-01 다각도 딥리서치(20+ 독립 서브리서치, 영·일·한 소스 교차). 주요 출처 — 공식: expo2025.or.jp(만박결산)·docs.bifrostnetwork.com·bifrost.medium·FSA(fsa.go.jp WG보고 2025-12-10·국회제출안)·법무법인(So&amp;Sato·Nagashima·Anderson Mori·Nishimura). 온체인/시장: DefiLlama·CoinMarketCap·bitcointreasuries.net. 미디어: The Block·CoinDesk·Ledger Insights·CryptoBriefing·News1·CoinPost·PR TIMES. <b>확인/추정/미확인</b> 태그는 소스 2개+ 교차 여부 기준. <b>한계:</b> 일부 규제 발효일(6/1 vs 6/13)·세제 발효(2027 vs 2028)·SG 법인 실소유 체인은 1차문서 미확정으로 잔여 불확실.</p>
 

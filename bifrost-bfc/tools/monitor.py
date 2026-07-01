@@ -346,6 +346,33 @@ def github_check(old):
             github_check.tags[key]=tag
 github_check.tags={}
 
+# 신규 제품 브랜치(특히 RWA) 진행·병합 추적. main에 rwa/제품 키워드 병합 = 출시 임박(P1)
+GH_BRANCHES=[("bifrost-node","rwa-protocol"),("bifrost-node","dev"),("bifrost-node","main"),
+             ("bifrost-relayer.rs","cccp-migration"),("bifrost-relayer.rs","main")]
+GH_MERGE_KEYWORDS=["rwa","tranche","nav-oracle","nav oracle"]  # 이 단어가 dev/main 최신커밋에 = 제품 편입
+def github_dev_check(old,row):
+    print("\n# GitHub 제품 브랜치 추적(RWA·CCCP 등 신제품 조기신호):")
+    hits=0
+    for repo,br in GH_BRANCHES:
+        r=get_url(f"https://api.github.com/repos/bifrost-platform/{repo}/commits?sha={br}&per_page=1")
+        c=(r or [{}])[0] if isinstance(r,list) else {}
+        sha=(c.get('sha') or "")[:8]; msg=((c.get('commit') or {}).get('message') or "").splitlines()[0][:70] if c else ""
+        if not sha: continue
+        key=f"ghb_{repo}_{br}"; prev=old.get(key)
+        if prev and prev!=sha:  # 브랜치 헤드 변경 = 활발
+            hits+=1
+            # dev/main에 RWA/제품 키워드가 새로 들어오면 = 병합/출시 임박 → P1
+            if br in ("dev","main") and any(k in msg.lower() for k in GH_MERGE_KEYWORDS):
+                alert("P1",f"★{repo}/{br}에 신제품 병합 정황! '{msg}' — RWA 등 출시 임박")
+            elif br in ("rwa-protocol","cccp-migration"):
+                alert("P2",f"{repo}/{br} 개발 진행(신규 커밋: {msg})")
+            else:
+                alert("P2",f"{repo}/{br} 헤드 변경({sha})")
+        print(f"  {repo}/{br}: {sha} {msg}")
+        github_dev_check.heads[key]=sha
+    if hits==0: print("  추적 브랜치 헤드 변경 없음.")
+github_dev_check.heads={}
+
 def burn_check(old):
     info=get_url("https://api.ethplorer.io/getAddressInfo/0x000000000000000000000000000000000000dEaD?apiKey=freekey",20)
     if not info: return None
@@ -408,7 +435,7 @@ def main():
     krw=exchange_check(cur,old); row["price_krw"]=krw if krw else ""
     bifi_price(row)
     defi_tvl(row)
-    github_check(old); burn=burn_check(old)
+    github_check(old); github_dev_check(old,row); burn=burn_check(old)
     slow_drift_check(row)
     p1,p2=summary()
     row["alert_p1"]=p1; row["alert_p2"]=p2
@@ -423,7 +450,7 @@ def main():
         # row 지표(직전값 비교용) 영속화 — 없으면 UW증가·Nakamoto악화 등 diff 알림이 영영 안 뜸
         for k in ("bifi_uw_count","bifi_uw_debt","bifi_borrowers","nakamoto33","val_total_stake","val_count","shells_active"):
             if k in row: cur[k]=row[k]
-        cur.update(github_check.tags)
+        cur.update(github_check.tags); cur.update(github_dev_check.heads)
         if burn is not None: cur["burn_dead"]=burn
         json.dump(cur,open(BASE,"w"))
         append_csv(row)
