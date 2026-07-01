@@ -144,7 +144,7 @@
     <li><b>BiFi 예치자 38명 원천 재귀추적:</b> 재단 배포망 42% + <b>관리형 순환클러스터 30%</b> + 거래소 24% + DEX 5%. 외부 실수요 기반 제한적(~70%가 재단/관리형). → §15-F</li>
     <li><b>★★ 운용자 네트워크 = BTCFi Boost 제품으로 식별(이번 라운드 결정타):</b> 청산 지배 컨트랙트 <code>0xbc0995ca</code>의 토큰명이 <b>"Boost Base DAO Vault - wstBFC"(bvBasewstBFC)</b> — 즉 Bifrost 공식 수익상품 <b>BTCFi Boost</b>(boost.btcfi.one)의 볼트. 같은 시리즈 <code>bvBaseBFC</code>(빈 볼트)도 존재. 가스허브 <code>0x81c22bec</code>→운용EOA 2개→92개 컨트랙트→Boost 볼트군. <b>익명 운용망의 정체 = Bifrost BTCFi Boost 제품군의 운용 인프라</b>(근거=배포자·팩토리 <code>0xd0f8ba2d</code> = 강한 증거. 단 <b>소유주체 실명·"재단 직영" 여부는 미확정</b> — 가스 기반 귀속은 약한 근거로 배제). 배포시점 BTCFi/StableDAO기(2025-07) 일치, 2026-04까지 활발. → §15-F</li>
     <li><b>물밑 프로젝트 신호:</b> 운용자가 <b>2026년 빈 업그레이더블-프록시 볼트 껍데기 11개</b>를 미리 배포·소유권설정만 하고 자금 미투입 = <b>런칭 대비 스테이징</b>. <b>이 껍데기가 자금 받는 순간 = 신제품 출시</b> → <code>tools/monitor.py</code> 자동 감지. → §15-F</li>
-    <li><b>★ 일본 JPYC 온체인 가동 확인:</b> <b>Unified JPYC 65.5M(~$440K)</b>이 Polygon/ETH에서 Bifrost로 브릿지돼 실재(HashPort 4% 렌딩 예치 풀로 추정). Bifrost 상에선 소수 렌딩 인프라 컨트랙트가 집계·보유 — 실제 일반 예치자는 HashPort 레이어에 있어 온체인 개별식별 불가. <b>BtcUSD는 오늘(6-30) 하루 -1.96M 대형 상환</b>(8.06M→6.11M, EOA 6곳 redeem). → 일본 사업 온체인 가동 중이나 초기·소규모. → §13·§7</li>
+    <li><b>★ 일본 JPYC 온체인 가동 확인:</b> <b>Unified JPYC 65.5M(~$440K)</b>이 Polygon/ETH에서 Bifrost로 브릿지돼 실재(HashPort 4% 렌딩 예치 풀로 추정). Bifrost 상에선 소수 렌딩 인프라 컨트랙트가 집계·보유 — 실제 일반 예치자는 HashPort 레이어에 있어 온체인 개별식별 불가. <b>BtcUSD는 오늘(6-30) 하루 -1.95M 대형 상환</b>(8.06M→6.11M, EOA 6곳 redeem). → 일본 사업 온체인 가동 중이나 초기·소규모. → §13·§7</li>
   </ol></div>
   <p class="small muted">※ 조사 과정에서의 자기정정·철회 이력은 <a href="#changelog">부록: 정정 이력</a>에 통합 정리(본문은 최종 확정 사실만 기술).</p>
 
@@ -315,7 +315,7 @@
     <li><b>BtcUSD</b>(btcfi.one): 네이티브 BTC 담보 CDP → BTC 백드 스테이블 민트, 고정 3.5%. <b>담보비율 최대 50%(LTV 50%)</b> — BTC 예치액의 최대 절반까지 BtcUSD 민트. 외부 연계 Core·Stacks(STX/aBTC/sBTC)·XLink/ALEX. Oasys 자동브릿지(Gaming DEX 풀, 최대 ~40% APY). 사전출시(2024-03) 120+ BTC 예치로 시작.</li>
     <li><b>BTC측 추적 한계(실측):</b> Bitcoin소켓 <code>0x73A9E443</code>는 활성(3,118tx)이나 호출자가 <b>릴레이어 ~14곳</b>뿐 — 일반 유저는 직접 호출 안 함. BTC↔Bifrost 매핑은 <b>registration_pool 팔레트(EVM 밖)</b>라 <b>예치자의 BTC 담보 출처는 Bifrost EVM으로 추적 불가</b>(BTC 메인넷 PSBT vault UTXO 분석 필요). → 가령 오늘 redeemer 0x85b44cf6의 1.42M BtcUSD 민트 = LTV 50% 기준 <b>~$2.84M(≈47 BTC) 담보</b>이나 그 BTC 출처는 EVM서 안 보임.</li>
   </ul>
-  <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 당일 대형 상환 포착:</b> 총공급 <b>6.11M</b>(홀더 481). <b>점진 수축이 아니라 오늘 하루 -1.96M 단일 소각</b>(전일 8.06M→6.11M, -24%). <span class="muted">추이 맥락: 2024-03 사전출시 120+ BTC 예치로 시작 → 최근 8.06M → 오늘 6.11M. 단일일 -24%는 점진추세가 아닌 <b>특정 주체의 일회성 언와인드</b>로, 추세 하락인지 판단하려면 향후 발행량 재측정 필요.</span>
+  <div class="callout warn"><b>★ BtcUSD 온체인 실측(2026-06-30) — 당일 대형 상환 포착:</b> 총공급 <b>6.11M</b>(홀더 481). <b>점진 수축이 아니라 오늘 하루 -1.95M 단일 소각</b>(전일 8.06M→6.11M, -24%). <span class="muted">추이 맥락: 2024-03 사전출시 120+ BTC 예치로 시작 → 최근 8.06M → 오늘 6.11M. 단일일 -24%는 점진추세가 아닌 <b>특정 주체의 일회성 언와인드</b>로, 추세 하락인지 판단하려면 향후 발행량 재측정 필요.</span>
   <p class="small" style="margin:4px 0 2px"><b>당일 소각 주체 = 9개 EOA, 상위 2곳이 82%:</b></p>
   <table>
     <tr><th>계정</th><th class="num">소각</th><th>자산 조달</th><th>가스 출처</th></tr>
@@ -339,7 +339,7 @@
   <p class="small"><b>TVL 규모 맥락(중복조정):</b> 4대 프로토콜 단순합 BTCFi $9.17M + BiFi $6.94M + Biquid $3.17M + Everdex $2.69M = <b>$21.97M</b> → 자산 중복(−$10.13M: BiFi가 보유한 wstBFC $3.07M·BtcUSD $1.90M + Boost볼트 wstBFC + Everdex 풀의 stBFC/BtcUSD가 Biquid·BTCFi와 이중계상)을 제거하면 <b>체인 net TVL $11.84M</b>. <b>비율: TVL/시총 ≈ 0.71($11.84M/$16.6M) · TVL/FDV ≈ 0.42($28.3M).</b> → 시총 대비 TVL은 평범하나, <b>그 TVL의 ~70%가 재단/관리형 지갑이 만든 것(§15-F)이라 "외부 실수요 기반 TVL"은 $3~4M급으로 더 작다.</b></p>
   <table>
     <tr><th>프로토콜</th><th>카테고리</th><th>TVL</th><th>핵심 컨트랙트 / 구성</th></tr>
-    <tr><td><b>BTCFi CDP</b></td><td>CDP</td><td>$9.17M</td><td class="wrap">BtcUSD <code>0x6906Ccda…d555</code>(발행 <b>6.11M</b>·홀더 481, 6-30 -1.96M 상환 후). BTC 담보 $6.45M(Bitcoin)+Bifrost $2.65M. 고정 3.5%</td></tr>
+    <tr><td><b>BTCFi CDP</b></td><td>CDP</td><td>$9.17M</td><td class="wrap">BtcUSD <code>0x6906Ccda…d555</code>(발행 <b>6.11M</b>·홀더 481, 6-30 -1.95M 상환 후). BTC 담보 $6.45M(Bitcoin)+Bifrost $2.65M. 고정 3.5%</td></tr>
     <tr><td><b>BiFi</b> (렌딩)</td><td>Lending</td><td>$6.94M</td><td class="wrap">예치 구성: <b>wstBFC $3.07M</b>·BtcUSD $1.90M(<code>0xcF2FC1d3…</code>)·BFC $1.03M(<code>0x4bAE7…</code> 87M)·ETH·USDC·BNB. url bifi.finance · Unified BiFi <code>0x047938C3…0003</code></td></tr>
     <tr><td><b>Biquid</b> (리퀴드스테이킹)</td><td>Liquid Staking</td><td>$3.17M</td><td class="wrap"><b>stBFC</b> <code>0xEff8378C…5aE4</code>(rebasing, 발행 268.8M·홀더 130) · <b>wstBFC</b> <code>0x386f2F5d…DdaE</code>(reward-bearing, 발행 232.6M·홀더 112). <b>★ totalPooledBFC() 실측 = 268,800,232 BFC</b>(=총 유동스테이킹). <b>환율 stBFCPerToken()=1.136696 검증</b>(청산식 "BFC×1.137"과 일치). url biquid.io</td></tr>
     <tr><td><b>Everdex</b> (DEX/AMM)</td><td>Dexs</td><td>$2.69M</td><td class="wrap">Uniswap V2 포크 라우터 <code>0x7Ace89E2…</code>(85,638tx·<b>2026-06-30 활성</b>). 풀: <b>BtcUSD/UnifiedUSDC</b> <code>0x4E4156F7</code>(2.46M·홀더25)·<b>stBFC/WBFC</b> <code>0x4e4fDaB2</code>(1.41M, =BiFi 담보 EverStableLP)·USDC/USDT/DAI 3pool <code>0xADA89c67</code>(소량)·LP <code>0x840Cf452</code>. WBFC <code>0x1c1b0640</code>(8.39M·홀더27)</td></tr>
@@ -1184,7 +1184,7 @@
     <tr><td>06-30</td><td class="wrap">거래소 운영지갑 <code>0x09FCED81</code> = "크로스벤치 MM 허브, HTX 아님"</td><td class="wrap"><b>HTX 운영지갑 확정</b>(4.41M 네이티브·MM/treasury 활발)</td><td class="wrap"><b>사용자 제공 결정타</b>: 업비트 트래블룰 VASP 인증(<code>0xff91c31d</code> 목적지=등록 VASP인 HTX). <b>규제 VASP 인증(오프체인 ground-truth) > 온체인 행태 추론</b></td></tr>
     <tr><td>06-30</td><td class="wrap">"가스허브→Everdex <b>결정적 연결</b>"</td><td class="wrap">Everdex는 실가동 DEX 맞으나, 가스허브 본질은 <b>릴레이어/오라클 충전</b>이며 Everdex행 3,500 BFC는 부수 토핑</td><td class="wrap">가스허브 대형수취 EOA 재추적 → 전부 초고빈도 릴레이어/오라클(989K·905K tx). "결정적 연결"은 과장이었음</td></tr>
     <tr><td>06-30</td><td class="wrap">"JPYC = 운용자 네트워크가 운영"</td><td class="wrap"><b>HashPort 렌딩 인프라</b>로 재해석(venue 입금자=컨트랙트 5개, 운용망 주소 아님)</td><td class="wrap">가스허브 연결고리가 약함을 재확인</td></tr>
-    <tr><td>06-30</td><td class="wrap">BtcUSD "점진 수축"</td><td class="wrap">"<b>오늘 단일 -1.96M 상환</b>"(전일까지 8.06M, 당일 redemption 웨이브)</td><td class="wrap">일자별 잔액 재확인</td></tr>
+    <tr><td>06-30</td><td class="wrap">BtcUSD "점진 수축"</td><td class="wrap">"<b>오늘 단일 -1.95M 상환</b>"(전일까지 8.06M, 당일 redemption 웨이브)</td><td class="wrap">일자별 잔액 재확인</td></tr>
     <tr><td>06-30</td><td class="wrap">의심 "미식별 희귀 청산이벤트"</td><td class="wrap"><b>브릿지 BrBFC mint/burn으로 확정(청산 무관)</b> — BiFi 로그(~4,000건)에 Liquidate 이벤트 타입 부재, 샘플 범위 청산 0건</td><td class="wrap">이벤트 시그니처 추적, 키퍼 비활성 = 32건 미청산 잔존이 뒷받침</td></tr>
     <tr><td>06-30</td><td class="wrap">BiFi 청산 "3% 하락 시 대량 청산"(초판)</td><td class="wrap">초판이 12시장 중 4개만 조회한 과대산출. <b>3% 하락=신규청산 1건($1.4K)뿐</b>, 깊은 하락도 대부분 Boost 볼트 1개 합산</td><td class="wrap">12개 dollar handler 전수 재조회(→§15-L)</td></tr>
     <tr><td>06-30</td><td class="wrap">검증자 self-bond "6.8M"(stash 잔액 기반)</td><td class="wrap">stash 네이티브 잔액≠본딩액. <code>candidate_state</code> 실측 <b>정확히 4.00M</b>(A형 F13~15)</td><td class="wrap">precompile <code>candidate_state</code> 직접 디코드(→§21)</td></tr>

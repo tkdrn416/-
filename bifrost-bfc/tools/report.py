@@ -231,7 +231,6 @@ def generate():
         kpi("util_pct","BiFi 이용률",lambda v:f'{v:.1f}%',"%",False),
         kpi("nakamoto33","나카모토계수",lambda v:f'{v:.0f}',"",True),
     ])
-    kb=(f'${_num(last.get("bifi_price_krw")):,.2f}원' if _num(last.get("bifi_price_krw")) else "")
     fx=f'<span class="muted small">· 원화: BFC {_num(last.get("price_krw")) or "—"}원 / BIFI {_num(last.get("bifi_price_krw")) or "—"}원</span>'
     vd=verdict(rows)
     head="""<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
