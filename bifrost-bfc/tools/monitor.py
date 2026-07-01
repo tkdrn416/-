@@ -61,6 +61,11 @@ DOLLAR_HANDLERS=[("btcusd","0xcf2fc1d354018a39d5ef036aa865ad8cbf7b611e"),("usdc"
 BORROW_SEL="0x3763d0db"  # getBorrowTotalAmount()
 BIFI_CG="https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=0x2791BfD60D232150Bff86b39B7146c0eaAA2BA81&vs_currencies=usd,krw&include_market_cap=true"
 STAKING_PRECOMPILE="0x0000000000000000000000000000000000000400"; CANDIDATE_POOL_SEL="0x96b41b5b"
+# BiFi 청산건전성 자동추적: 대형 차입자 워치리스트(TOP100 BiFi예치/볼트 38 + Boost볼트). Manager로 UNDERWATER 자동집계.
+MGR_MANAGER="0x6541342bc39a399c274092652b5c50890dca6fca"
+CRD_SEL="0x314d59fc"  # getUserTotalIntraCreditAsset(address)→(limit,currentBorrowUSD)
+LIM_SEL="0x7d170e26"  # getUserLimitIntraAsset(address)→(borrowLimitUSD,liqThresholdUSD)
+BORROWER_WATCH=["0xbc0995cae2218203262ed1b8557b7886d579e985","0x0c791e902d08b916218317d308156eb6a8a2d6d2","0xfd561fbd4dd43ea04733adfa31949b25c0595818","0xd7c19693f9ca21511847b1707242773d37c1c391","0xeb76c926e848e0bab9323e998eea16c9076563a5","0xd05aa73ec4adfda929c52ef03db6e27f21da7005","0xbbcc95860e9a60b12dca99c78f82dda32dec6337","0x412b9646515cdb87d58041d31aa7f1f016b6fc6e","0x91c4094bb5e97a1c8968add7499b16e3bc2c3a87","0x6abaa3950d0e0f0b731d8e453ec0b2ca0237bc26","0x0e9b3cfab21f9b31d797fae2b34928ce38496b88","0xbabdc92221b4de2d8413412b6aa9798dd54afcbf","0x10982101db09142dfdec7ad75712093c45c075b3","0x2a3e8fd86a304168b8e7d187b63c07feb5efef83","0x902a21c0fa4e223e07d51ac2608fc19b7c303582","0xc7275255ae6da1bc1e103d6b5d16d39f7f252204","0xb6bd9f069ef653999ced2c8c7b0b8ec45f553fb5","0xc54347d6d873875795a49465fda7a047fb1d1b8b","0x2b6745618ff2ee48be7b52347c2d67c4c9eb0973","0x080c1ee5df627c56a849a04c46af1f533ee290bc","0x106f60267cd1368641633f86dec41a028dbcb147","0xdd2398e8bd9f8a1f34cc013b7d0ca5f85a08470d","0xc1f2a6ea484ab0f0041a158dc86e132d1612cdf4","0x556f8c585d4efe5f379e56fe373bdf9827f2f7cd","0x4d0bbd3bbcebbf7d826b00a57683f2fff643d184","0x77d6941a54ac5fa21930b871ac0183dc01b2ddd3","0x9610386e89a16809f1c341dbcfdb92ce69daed4a","0xb290781ada49ebb068615090dd04dbe8a9439c9b","0xbb9f02945073a2edf7b8632557f20414d96a9d20","0xf614497937555ef5d6ee945c15658ad46ba114c2","0x35d8a3d697df071e3de2d5f681198910d4c3e84a","0x5e5cc1a3ad7202408f2a37b2b8d69f414c7235bd","0x8c5ce7cd747971736cf67c7b80033607581fc3b1","0xa4147540b0552fd5ec5e66490f4b9e38786ddc33","0x6666a49b7339998dfbc494f649710a1f3cd66666","0x0cb9964d54f66f576567c45e5cbba591e24bbb11","0xda50a0ff48eda9b67a8fb2ba8274eec1e6351843","0xd22dbc1f123a363cc68f1c4d383fc4575f9067d1"]
 BFC_ERC20="0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c"
 
 def get(u):
@@ -169,6 +174,28 @@ def validator_check(old,row):
         for x in prev-curset: alert("P1",f"★검증자 이탈 {x[:12]}")
     row["_val_addrs"]=",".join(sorted(curset))
 
+def bifi_health_check(old,row):
+    # 대형 차입자 워치리스트 전수 → UNDERWATER 자동집계(직접 확인 불필요)
+    print("\n# BiFi 청산건전성 자동추적(대형 차입자 워치리스트):")
+    def w(r,i): return int(r[2+i*64:2+(i+1)*64],16)/1e18 if r and len(r)>=2+(i+1)*64 and r!="0x" else None
+    borrowers=0; uw=0; uwdebt=0; uwlist=[]
+    for a in BORROWER_WATCH:
+        c=rpc(MGR_MANAGER,CRD_SEL+a[2:].rjust(64,"0")); borrow=w(c,1)
+        if borrow is None or borrow<=100: continue  # 100달러 미만 dust 제외
+        borrowers+=1
+        l=rpc(MGR_MANAGER,LIM_SEL+a[2:].rjust(64,"0")); liq=w(l,1)
+        if liq is not None and borrow>liq: uw+=1; uwdebt+=borrow; uwlist.append((a[:12],borrow,liq))
+    row["bifi_borrowers"]=borrowers; row["bifi_uw_count"]=uw; row["bifi_uw_debt"]=round(uwdebt)
+    print(f"  차입자 {borrowers}명 · UNDERWATER {uw}명 · 부채합 ${uwdebt:,.0f}")
+    for ad,b,li in sorted(uwlist,key=lambda t:-t[1])[:5]: print(f"    {ad} 차입 ${b:,.0f} > 임계 ${li:,.0f}")
+    prev=_int(old.get("bifi_uw_count")) if old else None
+    if prev is not None and uw>prev: alert("P2",f"BiFi UNDERWATER 증가 {prev}→{uw}명(부채 ${uwdebt:,.0f}) — 신규 청산권 발생")
+    if uwdebt>2_000_000: alert("P1",f"★BiFi UNDERWATER 부채 급증 ${uwdebt:,.0f} — 청산리스크 확대")
+
+def _int(v):
+    try: return int(float(v))
+    except: return None
+
 def shell_check():
     print("\n# 스테이징 껍데기 11개 (자금유입=신제품 런칭):"); act=0
     for a in STAGED_SHELLS:
@@ -255,6 +282,7 @@ def summary():
 CSV_COLS=["date","price_usd","price_krw","bfc_mcap_usd","bifi_price_usd","bifi_price_krw","bifi_mcap_usd","upbit_bfc","bithumb_bfc","exch_total","exch_net_flow","treasury_bfc",
  "jpyc_supply","btcusd_supply","btcusd_holders","stbfc_supply","wstbfc_supply","cbbtc_supply","brbtc_supply",
  "bifi_bfc_pool","bifi_wstbfc","bifi_btcusd","bifi_borrow_btcusd","bifi_borrow_usdc","bifi_borrow_usdt","bifi_borrow_dai","bifi_borrow_dollar",
+ "bifi_borrowers","bifi_uw_count","bifi_uw_debt",
  "val_count","val_total_stake","nakamoto33","shells_active","jpysc_found","defi_tvl_usd","alert_p1","alert_p2","data_quality","chain_txns","chain_addrs"]
 def append_csv(row):
     row=dict(row); row["date"]=datetime.date.today().isoformat()
@@ -281,6 +309,7 @@ def main():
     toksnap=token_check(old,row)
     bifi_check(row)
     validator_check(old,row)
+    bifi_health_check(old,row)
     row["shells_active"]=shell_check()
     kt,jf=new_token_scan(old); row["jpysc_found"]=jf
     krw=exchange_check(cur,old); row["price_krw"]=krw if krw else ""

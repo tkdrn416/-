@@ -43,6 +43,7 @@ CATALOG=[
  ("coll_total_usd","BiFi 예치합계($)","$"),("bifi_borrow_dollar","BiFi 달러대출($)","$"),("util_pct","BiFi 이용률(%)","%"),
  ("coll_bfc_usd","BiFi BFC담보($)","$"),("coll_wstbfc_usd","BiFi wstBFC담보($)","$"),("coll_btcusd_usd","BiFi BtcUSD담보($)","$"),
  ("bifi_borrow_btcusd","대출 BtcUSD","$"),("bifi_borrow_usdc","대출 USDC","$"),("bifi_borrow_usdt","대출 USDT","$"),("bifi_borrow_dai","대출 DAI","$"),
+ ("bifi_uw_debt","BiFi 미청산 부채($)","$"),("bifi_uw_count","BiFi 미청산 건수","n"),("bifi_borrowers","BiFi 차입자수","n"),
  ("exch_total","거래소 보유(BFC)","BFC"),("exch_pct","거래소 보유비중(%)","%"),("btcusd_supply","BtcUSD 발행","BFC"),("jpyc_supply","일본 JPYC","BFC"),
  ("stbfc_supply","유동스테이킹(stBFC)","BFC"),("val_total_stake","검증자 스테이크","BFC"),("nakamoto33","Nakamoto","n"),("treasury_bfc","Treasury","BFC"),
  ("defi_tvl_usd","DefiLlama TVL($)","$"),
@@ -65,6 +66,10 @@ def signal_board(rows):
     else: chips.append(("거래소 순흐름","g",f"{_fmt(ef)}"))
     u=_num(cur.get("util_pct"))
     if u is not None: chips.append(("BiFi 이용률","r" if u>90 else ("y" if u>75 else "g"),f"{u:.0f}%"))
+    uw=_num(cur.get("bifi_uw_count")); uwd=_num(cur.get("bifi_uw_debt"))
+    if uw is not None:
+        c="r" if (uwd and uwd>2_000_000) else ("y" if uw>0 else "g")
+        chips.append(("BiFi 미청산(UW)",c,(f"{uw:.0f}명 ${_fmt(uwd)}" if uw>0 else "없음")))
     pu=_num(cur.get("price_usd")); pp=_num(prev.get("price_usd"))
     if pu is not None and pp: ch=(pu-pp)/pp*100; chips.append(("BFC 가격 24h","y" if abs(ch)>=10 else "g",f"{ch:+.1f}%"))
     col={"g":"#34d399","y":"#fbbf24","r":"#f87171"}; ico={"g":"🟢","y":"🟡","r":"🔴"}
@@ -114,7 +119,7 @@ def change_table(rows):
     M=[("price_usd","BFC 가격(USD)","$",True,0),("price_krw","BFC 가격(KRW)","원",True,0),("bifi_price_usd","BIFI 가격(USD)","$",True,0),
      ("exch_total","거래소 보유","",False,1_000_000),("exch_net_flow","거래소 순흐름","",False,1_000_000),("treasury_bfc","Treasury","",True,1),
      ("btcusd_supply","BtcUSD 발행","",True,200_000),("coll_total_usd","BiFi 예치($)","$",True,500_000),("bifi_borrow_dollar","BiFi 달러대출($)","$",True,100_000),
-     ("util_pct","BiFi 이용률","%",True,3),("jpyc_supply","JPYC","",True,200_000),("stbfc_supply","유동스테이킹","",True,1_000_000),
+     ("util_pct","BiFi 이용률","%",True,3),("bifi_uw_debt","BiFi 미청산 부채($)","$",False,100_000),("jpyc_supply","JPYC","",True,200_000),("stbfc_supply","유동스테이킹","",True,1_000_000),
      ("val_total_stake","검증자 스테이크","",True,1_000_000),("nakamoto33","Nakamoto","",True,1),("defi_tvl_usd","TVL","$",True,300_000)]
     out=['<table><tr><th>지표</th><th class="r">현재</th><th class="r">전일Δ</th><th class="r">전주Δ</th></tr>']
     for col,lab,u,gu,thr in M:
@@ -162,6 +167,7 @@ def generate():
     ]
     etc=[
         svg_chart(rows,[("util_pct","이용률%")],"BiFi 이용률(대출/예치)","%"),
+        svg_chart(rows,[("bifi_uw_debt","미청산부채$")],"BiFi 미청산(UNDERWATER) 부채 — 대형차입자 자동추적","$"),
         svg_chart(rows,[("coll_bfc_usd","BFC담보"),("coll_wstbfc_usd","wstBFC담보"),("coll_btcusd_usd","BtcUSD담보")],"BiFi 담보 구성(달러환산)","$"),
         svg_chart(rows,[("bifi_borrow_btcusd","BtcUSD"),("bifi_borrow_usdc","USDC"),("bifi_borrow_usdt","USDT"),("bifi_borrow_dai","DAI")],"달러대출 구성(개별)","$"),
         svg_chart(rows,[("jpyc_supply","JPYC")],"일본 JPYC 공급"),
