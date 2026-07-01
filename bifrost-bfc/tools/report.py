@@ -57,7 +57,7 @@ CATALOG=[
  ("bifi_borrow_btcusd","대출 BtcUSD","$"),("bifi_borrow_usdc","대출 USDC","$"),("bifi_borrow_usdt","대출 USDT","$"),("bifi_borrow_dai","대출 DAI","$"),
  ("bifi_uw_debt","BiFi 미청산 부채($)","$"),("bifi_uw_count","BiFi 미청산 건수","n"),("bifi_borrowers","BiFi 차입자수","n"),
  ("exch_total","거래소 보유(BFC)","BFC"),("htx_bfc","HTX 운영지갑(BFC)","BFC"),("exch_pct","거래소 보유비중(%)","%"),("btcusd_supply","BtcUSD 발행","BFC"),("jpyc_supply","일본 JPYC","BFC"),
- ("stbfc_supply","유동스테이킹(stBFC)","BFC"),("val_total_stake","검증자 스테이크","BFC"),("nakamoto33","Nakamoto","n"),("treasury_bfc","Treasury","BFC"),
+ ("stbfc_supply","유동스테이킹(stBFC)","BFC"),("val_total_stake","검증자 스테이크","BFC"),("nakamoto33","Nakamoto","n"),("treasury_bfc","Treasury","BFC"),("new_contracts","운용자 신규컨트랙트","n"),("shells_active","활성 껍데기","n"),
  ("defi_tvl_usd","DefiLlama TVL($)","$"),
 ]
 
@@ -69,6 +69,8 @@ def build_signals(rows):
     a1=_num(cur.get("alert_p1")) or 0
     chips.append(("P1 경보","r" if a1 else "g", f"{a1:.0f}건" if a1 else "없음"))
     tf=d("treasury_bfc"); chips.append(("Treasury 유출","r" if (tf is not None and tf<0) else "g", "유출!" if (tf is not None and tf<0) else "미집행 유지"))
+    nc=_num(cur.get("new_contracts"))
+    if nc is not None: chips.append(("운용자 신규컨트랙트","r" if nc>0 else "g", f"{nc:.0f}건!" if nc>0 else "없음"))
     sh=_num(cur.get("shells_active")); chips.append(("빈지갑 자금유입","r" if (sh and sh>0) else "g", f"{sh:.0f}/11" if sh is not None else "0/11"))
     jp=_num(cur.get("jpysc_found")); chips.append(("JPYSC 출현","y" if (jp and jp>0) else "g", "발견!" if (jp and jp>0) else "미발견"))
     ef=_num(cur.get("exch_net_flow"));
@@ -205,6 +207,7 @@ def generate():
         svg_chart(rows,[("stbfc_supply","stBFC")],"Biquid 유동스테이킹"),
         svg_chart(rows,[("val_total_stake","총스테이크")],"검증자 총 스테이크"),
         svg_chart(rows,[("defi_tvl_usd","TVL")],"DefiLlama TVL","$"),
+        svg_chart(rows,[("new_contracts","신규컨트랙트"),("shells_active","활성껍데기")],"운용자 신규 컨트랙트·활성 껍데기(물밑 신호)"),
         svg_chart(rows,[("alert_p1","P1"),("alert_p2","P2")],"일별 경보 건수"),
     ]
     dates=[r["date"] for r in rows]; series={key:[_num(r.get(key)) for r in rows] for key,_,_ in CATALOG}
