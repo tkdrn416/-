@@ -86,6 +86,8 @@
   <a href="#genesis">19. 제네시스 분배</a>
   <a href="#protocolmap">20. 프로토콜 맵·배포자</a>
   <a href="#validators">21. 검증자 24·탈중앙성</a>
+  <a href="#governance">22. 온체인 거버넌스</a>
+  <a href="#compete">23. 경쟁 포지셔닝</a>
   <h2>종합</h2>
   <a href="#risk">🛡️ 리스크 종합</a>
   <a href="#verdict">🎯 결론·투자 논지</a>
@@ -1046,6 +1048,33 @@
   </div>
   </details>
   <p class="small muted">[실측확정] Full 13~15 = self-bond 정확히 4,002,78x BFC 정액·위임 0·위임자 0 → 재단/팀 자체노드(candidate_state A형). 전체 풀 주소+위임구조는 <code>data/validators-snapshot.md</code>.</p>
+
+  <!-- ===== 거버넌스 ===== -->
+  <h2 class="sec" id="governance"><span class="n">22</span>온체인 거버넌스 <span class="badge b-warn">완성도 보강</span></h2>
+  <p class="small muted">TL;DR — <b>Substrate형 온체인 거버넌스(BFC 홀더 투표 + 협의회/기술위)이나, 협의회를 재단이 임명하는 '전환기' 구조</b> → 현시점 실질 통제권은 재단. 검증자 권력집중(§21)과 함께 "재단 통제" 논지를 뒷받침.</p>
+  <table>
+    <tr><th>축</th><th>메커니즘(공식문서)</th><th>감시 함의</th></tr>
+    <tr><td><b>투표 주체</b></td><td class="wrap"><b>BFC 홀더</b>가 제안·투표(aye/nay). 모든 거버넌스는 홀더 결정을 거침. <b>컨빅션 투표(최대 448x 락 배수)</b>로 장기 락업에 가중.</td><td class="wrap">토큰 가중 → 대량보유(재단·거래소 커스터디 §17·§18)가 표심 좌우 가능. 448x 배수는 소수 장기락커에 큰 영향력.</td></tr>
+    <tr><td><b>제안·referendum</b></td><td class="wrap">제안 해시 생성→launch기 최다지지 제안이 referendum화→voting기 토큰투표→기간말 가중승인.</td><td class="wrap"><b>온체인 추적 가능</b> — referendum/council 이벤트가 물밑 파라미터 변경(인플레·CDP비율·신규담보) 조기신호. <span class="muted">(monitor 감시후보)</span></td></tr>
+    <tr><td><b>General Council</b></td><td class="wrap">거버넌스 관리·악성 referendum 취소·기술위 선임·treasury 감독. <b>초기엔 재단이 임명</b>, 향후 홀더 선출제로 전환 "예정".</td><td class="wrap"><b>★ 현재 협의회=재단 임명 = 사실상 재단 통제.</b> "선출제 전환" 실제 이행 여부가 탈중앙화 진척의 핵심 지표.</td></tr>
+    <tr><td><b>Technical Committee</b></td><td class="wrap">협의회가 선임. 협의회 제안 거부권·긴급 fast-track 권한.</td><td class="wrap">긴급 fast-track = 정상 투표기간 우회 가능 → 관리키 리스크(§리스크)와 결합 시 신속 파라미터 변경 표면.</td></tr>
+    <tr><td><b>Treasury(거버넌스)</b></td><td class="wrap">협의회 관리. 취소된 제안·노드 슬래싱 BFC 적립.</td><td class="wrap">§15-F의 인플레 Treasury(<code>0x6d6f…</code>)와 별개 개념일 수 있음 — 거버넌스 treasury 지출도 추적 대상.</td></tr>
+  </table>
+  <p class="small muted">근거: docs.bifrostnetwork.com/bifrost-network/governance(BFC 네트워크 전용 문서 — Bifrost <b>Finance</b>(BNC)의 Polkadot Gov2/Subsquare 거버넌스와 혼동 금지, <a href="#disamb">§혼동방지</a>). 확인: 메커니즘 구조 / 미확인: 현 협의회 구성원 실명·선출제 전환 일정.</p>
+
+  <!-- ===== 경쟁 포지셔닝 ===== -->
+  <h2 class="sec" id="compete"><span class="n">23</span>경쟁 포지셔닝 (BTCFi) <span class="badge b-warn">완성도 보강</span></h2>
+  <p class="small muted">TL;DR — <b>Bifrost BTCFi는 규모 면에서 군소 플레이어</b>(체인 TVL ~$12M)로, Rootstock·Stacks·Merlin·Babylon 대비 2~3자릿수 작음. 차별점은 <b>①네이티브 BtcUSD CDP ②일본 규제 포지셔닝</b>이나, BTCFi 시장 자체가 2026년 TVL 74% 급감한 역풍 국면. verdict의 "차별화 포지셔닝" 강세논거를 벤치마크로 정량화.</p>
+  <table>
+    <tr><th>프로젝트</th><th>유형</th><th>대략 규모(2026)</th><th>BTC연결·보안모델</th><th>Bifrost 대비</th></tr>
+    <tr><td><b>Bifrost(BFC)</b></td><td class="wrap">EVM L1 + BtcUSD CDP·BiFi 렌딩</td><td class="wrap">체인 TVL <b>~$12M</b></td><td class="wrap">CCCP 브릿지(릴레이어 과반서명)+네이티브 BtcUSD</td><td class="wrap">— (기준)</td></tr>
+    <tr><td>Babylon</td><td class="wrap">네이티브 BTC 스테이킹</td><td class="wrap">TVL <b>~$5.6B</b></td><td class="wrap">네이티브 BTC 셀프커스터디 스테이킹</td><td class="wrap">규모 ~450배·수수료 실매출</td></tr>
+    <tr><td>Merlin Chain</td><td class="wrap">BTC L2</td><td class="wrap">TVL <b>~$1.7B</b>(최대 BTC L2)</td><td class="wrap">L2, 150+ dApp</td><td class="wrap">규모 ~140배</td></tr>
+    <tr><td>Rootstock(RSK)</td><td class="wrap">BTC 사이드체인 + BTC담보 스테이블</td><td class="wrap">TVL <b>~$600M</b></td><td class="wrap">머지마이닝(BTC 해시레이트 60%+)</td><td class="wrap">규모 ~50배·보안모델 우위</td></tr>
+    <tr><td>Stacks(sBTC)</td><td class="wrap">BTC L2 + sBTC 렌딩(Granite)</td><td class="wrap">BTCFi 내 최대 DeFi TVL</td><td class="wrap">Nakamoto 업그레이드(BTC 파이널리티)</td><td class="wrap">DeFi 활성·유동성 우위</td></tr>
+    <tr><td>tBTC(Threshold)</td><td class="wrap">비수탁 랩드BTC</td><td class="wrap">공급 <b>~$500M+</b></td><td class="wrap">threshold ECDSA(비수탁)</td><td class="wrap">BTC 브릿지 신뢰모델 우위</td></tr>
+  </table>
+  <p class="small muted">정량 비교: <b>Bifrost는 BTCFi 규모 경쟁에서 열위</b>(TVL 2~3자릿수 차). 생존 논거는 규모가 아니라 <b>일본 규제우위 틈새 + 자체 스테이블(BtcUSD) 수직통합</b>. 단 BTCFi 전반이 2026 TVL −74% 국면이라 시장 역풍이 공통 리스크. 출처: Spark/DEXTools/Eco BTCFi 2026 리서치·각 프로젝트 공시(규모는 시점변동 개략치).</p>
 
   <!-- ===== 리스크 종합 ===== -->
   <h2 class="sec" id="risk">🛡️ 리스크 종합 · 감사·언락·관리키·규제 <span class="badge b-warn">완성도 보강</span></h2>
