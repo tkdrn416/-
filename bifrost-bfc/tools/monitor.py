@@ -33,7 +33,7 @@ WATCH=[
  ("Boost볼트 0xbc0995ca","0xbc0995cae2218203262ed1b8557b7886d579e985","BiFi볼트"),
  ("BiFi BFC풀(#3리저브) 0x4bAE7","0x4bae7ba39e4e71660307dce780f1ec9b7b7666ee","재단핵심"),
  ("일본 JPYC venue 0x6894Ae31","0x6894ae31cae97f228590f6dc7bbea7449f4db980","일본"),
- ("유동성/MM허브 0x09FCED81(다venue순환)","0x09fced818439182812f13b006114da4382c4470e","유동성허브"),
+ ("HTX 운영지갑 0x09FCED81(MM활발)","0x09fced818439182812f13b006114da4382c4470e","거래소"),
 ]
 EXCH_ADDRS=[a for _,a,c in WATCH if c=="거래소"]
 TOKEN_WATCH=[
@@ -104,6 +104,7 @@ def balances(cur,old,row):
         v=cur[a]; d=v-old.get(a,v) if old else 0
         if "업비트" in lab: up+=v
         if "빗썸" in lab: bt+=v
+        if "HTX" in lab: htx+=v
         th=CAT_THRESH.get(cat,DEFAULT_THRESH); flag=""
         if old and abs(d)>=th:
             flag=" ⚠️"
@@ -112,12 +113,11 @@ def balances(cur,old,row):
             elif cat=="거래소": alert("P2",f"거래소 출금 {lab} {fmt(d)} BFC")
             else: alert("P2",f"{cat} 잔액변동 {lab} {fmt(d)} BFC")
         print(f"{lab:<32}{cat:<18}{v:>16,.0f}{fmt(d):>14}{flag}")
-    row["upbit_bfc"]=round(up); row["bithumb_bfc"]=round(bt); row["exch_total"]=round(up+bt)
-    row["mmhub_bfc"]=round(cur.get("0x09fced818439182812f13b006114da4382c4470e",0))
+    row["upbit_bfc"]=round(up); row["bithumb_bfc"]=round(bt); row["htx_bfc"]=round(htx); row["exch_total"]=round(up+bt+htx)
     row["treasury_bfc"]=round(cur.get("0x6d6f646c70792f74727372790000000000000000",0))
     if old:
         prev_exch=sum(old.get(a,0) for a in EXCH_ADDRS)
-        row["exch_net_flow"]=round((up+bt)-prev_exch)
+        row["exch_net_flow"]=round((up+bt+htx)-prev_exch)
         print(f"  └ 거래소 순흐름(전 실행 대비): {fmt(row['exch_net_flow'])} BFC")
 
 def token_check(old,row):
@@ -280,7 +280,7 @@ def summary():
     print("═"*56)
     return len(p1),len(p2)
 
-CSV_COLS=["date","price_usd","price_krw","bfc_mcap_usd","bifi_price_usd","bifi_price_krw","bifi_mcap_usd","upbit_bfc","bithumb_bfc","mmhub_bfc","exch_total","exch_net_flow","treasury_bfc",
+CSV_COLS=["date","price_usd","price_krw","bfc_mcap_usd","bifi_price_usd","bifi_price_krw","bifi_mcap_usd","upbit_bfc","bithumb_bfc","htx_bfc","exch_total","exch_net_flow","treasury_bfc",
  "jpyc_supply","btcusd_supply","btcusd_holders","stbfc_supply","wstbfc_supply","cbbtc_supply","brbtc_supply",
  "bifi_bfc_pool","bifi_wstbfc","bifi_btcusd","bifi_borrow_btcusd","bifi_borrow_usdc","bifi_borrow_usdt","bifi_borrow_dai","bifi_borrow_dollar",
  "bifi_borrowers","bifi_uw_count","bifi_uw_debt",
