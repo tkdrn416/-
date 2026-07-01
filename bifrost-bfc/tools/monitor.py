@@ -59,7 +59,7 @@ BTCUSD_TOKEN="0x6906ccda405926fc3f04240187dd4fad5df6d555"; BTCUSD_HANDLER="0xcf2
 DOLLAR_HANDLERS=[("btcusd","0xcf2fc1d354018a39d5ef036aa865ad8cbf7b611e"),("usdc","0x168b2d7dd6b9812392f99ba01a14db03ed06dedc"),
  ("usdt","0xed7b0974dc5d98b9e7c83695c415d68b8781b0f8"),("dai","0x2168dab12a6a93181bbad9c9dc769307c36fb45c")]
 BORROW_SEL="0x3763d0db"  # getBorrowTotalAmount()
-BIFI_CG="https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=0x2791BfD60D232150Bff86b39B7146c0eaAA2BA81&vs_currencies=usd,krw"
+BIFI_CG="https://api.coingecko.com/api/v3/simple/token_price/ethereum?contract_addresses=0x2791BfD60D232150Bff86b39B7146c0eaAA2BA81&vs_currencies=usd,krw&include_market_cap=true"
 STAKING_PRECOMPILE="0x0000000000000000000000000000000000000400"; CANDIDATE_POOL_SEL="0x96b41b5b"
 BFC_ERC20="0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c"
 
@@ -87,7 +87,7 @@ def rnd(v): return round(v) if v is not None else ""   # None은 빈칸(차트�
 
 def snapshot():
     snap={"_ts":int(time.time())}; st=get("/api/v2/stats")
-    snap["_price"]=float(st.get('coin_price') or 0)
+    snap["_price"]=float(st.get('coin_price') or 0); snap["_mcap"]=float(st.get('market_cap') or 0)
     snap["_total_txns"]=int(st.get('total_transactions') or 0); snap["_total_addr"]=int(st.get('total_addresses') or 0)
     for lab,a,cat in WATCH: snap[a]=bal(a)
     return snap
@@ -175,19 +175,20 @@ def shell_check():
         c=get(f"/api/v2/addresses/{a}/counters"); tt=int(c.get('token_transfers_count') or 0); bl=bal(a)
         if tt>0 or bl>0: act+=1; print(f"  ⚠️ 활성화! {a[:12]} xfers={tt} bal={bl:,.0f}"); alert("P1",f"★신제품 런칭! 껍데기 {a[:12]} 활성화(xfers={tt},bal={bl:,.0f})")
     if act==0: print("  전부 빈 상태(런칭 신호 없음).")
+    return act
 
 def new_token_scan(old):
     print("\n# 신규 토큰 출현 스캔(JPYSC·신규 브릿지):")
-    known=set(filter(None,(old.get("known_tokens") or "").split("|"))); cur=set(); n=0
+    known=set(filter(None,(old.get("known_tokens") or "").split("|"))); cur=set(); n=0; jpysc=0
     for q in NEW_TOKEN_QUERIES:
         for it in (get(f"/api/v2/tokens?q={q}").get('items') or [])[:12]:
             addr=(it.get('address') or '').lower(); sym=it.get('symbol') or ''
             if not addr: continue
             cur.add(addr)
-            if 'JPYSC' in (sym+(it.get('name') or '')).upper(): n+=1; print(f"  🚨 JPYSC! {sym} {addr[:14]}"); alert("P1",f"🚨 JPYSC 계열 토큰 등장! {sym} {addr[:14]}")
+            if 'JPYSC' in (sym+(it.get('name') or '')).upper(): n+=1; jpysc=1; print(f"  🚨 JPYSC! {sym} {addr[:14]}"); alert("P1",f"🚨 JPYSC 계열 토큰 등장! {sym} {addr[:14]}")
             elif known and addr not in known: n+=1; print(f"  ⚠️ 신규 {sym} {addr[:14]}"); alert("P2",f"신규 토큰 {sym} {addr[:14]}")
     if n==0: print("  신규 없음(JPYSC 미등장).")
-    return "|".join(sorted(cur))
+    return "|".join(sorted(cur)), jpysc
 
 def exchange_check(cur,old):
     print("\n# 거래소 시세·입출금:")
@@ -207,7 +208,9 @@ def bifi_price(row):
     # BIFI = 파이랩의 BiFi 거버넌스토큰(곡괭이토큰). 컨트랙트로 조회(Beefy BIFI 혼동 회피)
     d=get_url(BIFI_CG) or {}
     v=d.get("0x2791bfd60d232150bff86b39b7146c0eaaa2ba81") or {}
-    if v.get("usd"): row["bifi_price_usd"]=v.get("usd"); row["bifi_price_krw"]=v.get("krw"); print(f"\n# BIFI 토큰(곡괭이) 가격: ${v.get('usd')} / {v.get('krw')}원")
+    if v.get("usd"):
+        row["bifi_price_usd"]=v.get("usd"); row["bifi_price_krw"]=v.get("krw"); row["bifi_mcap_usd"]=round(v.get("usd_market_cap") or 0)
+        print(f"\n# BIFI 토큰(곡괭이) 가격: ${v.get('usd')} / {v.get('krw')}원 · 시총 ${row['bifi_mcap_usd']:,.0f}")
     else: print("\n# BIFI 가격: 조회 실패(칼럼 공백)")
 
 def defi_tvl(row):
@@ -249,10 +252,10 @@ def summary():
     print("═"*56)
     return len(p1),len(p2)
 
-CSV_COLS=["date","price_usd","price_krw","bifi_price_usd","bifi_price_krw","upbit_bfc","bithumb_bfc","exch_total","exch_net_flow","treasury_bfc",
+CSV_COLS=["date","price_usd","price_krw","bfc_mcap_usd","bifi_price_usd","bifi_price_krw","bifi_mcap_usd","upbit_bfc","bithumb_bfc","exch_total","exch_net_flow","treasury_bfc",
  "jpyc_supply","btcusd_supply","btcusd_holders","stbfc_supply","wstbfc_supply","cbbtc_supply","brbtc_supply",
  "bifi_bfc_pool","bifi_wstbfc","bifi_btcusd","bifi_borrow_btcusd","bifi_borrow_usdc","bifi_borrow_usdt","bifi_borrow_dai","bifi_borrow_dollar",
- "val_count","val_total_stake","nakamoto33","defi_tvl_usd","alert_p1","alert_p2","data_quality","chain_txns","chain_addrs"]
+ "val_count","val_total_stake","nakamoto33","shells_active","jpysc_found","defi_tvl_usd","alert_p1","alert_p2","data_quality","chain_txns","chain_addrs"]
 def append_csv(row):
     row=dict(row); row["date"]=datetime.date.today().isoformat()
     nonempty=lambda r:sum(1 for k in CSV_COLS if str(r.get(k,"")).strip()!="")
@@ -271,15 +274,15 @@ def append_csv(row):
 def main():
     save="--no-save" not in sys.argv
     cur=snapshot(); old=json.load(open(BASE)) if os.path.exists(BASE) else {}
-    row={"chain_txns":cur["_total_txns"],"chain_addrs":cur["_total_addr"],"price_usd":cur["_price"]}
+    row={"chain_txns":cur["_total_txns"],"chain_addrs":cur["_total_addr"],"price_usd":cur["_price"],"bfc_mcap_usd":round(cur["_mcap"])}
     print(f"# BFC 모니터 {datetime.date.today()}  price=${cur['_price']:.6f}  txns={cur['_total_txns']:,}")
     print(f"# 전 baseline 대비 ~{(cur['_ts']-old['_ts'])/3600:.1f}h" if old.get("_ts") else "# (첫 실행 — baseline 생성, Δ·집합diff는 다음 실행부터)")
     balances(cur,old,row)
     toksnap=token_check(old,row)
     bifi_check(row)
     validator_check(old,row)
-    shell_check()
-    kt=new_token_scan(old)
+    row["shells_active"]=shell_check()
+    kt,jf=new_token_scan(old); row["jpysc_found"]=jf
     krw=exchange_check(cur,old); row["price_krw"]=krw if krw else ""
     bifi_price(row)
     defi_tvl(row)
