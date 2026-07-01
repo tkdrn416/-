@@ -31,11 +31,19 @@ WATCH=[
  ("볼트운용 EOA 0xaff29bed","0xaff29bedb24cc4979477f271f8a426590855cfca","운용자네트워크"),
  ("클러스터컨트롤러 0xb878526f","0xb878526f6d1174be9e75d1f617ae9271e4f42285","운용자네트워크"),
  ("Boost볼트 0xbc0995ca","0xbc0995cae2218203262ed1b8557b7886d579e985","BiFi볼트"),
- ("BiFi BFC풀(#3리저브) 0x4bAE7","0x4bae7ba39e4e71660307dce780f1ec9b7b7666ee","재단핵심"),
+ ("BiFi BFC풀(#3리저브) 0x4bAE7","0x4bae7ba39e4e71660307dce780f1ec9b7b7666ee","BiFi풀"),
  ("일본 JPYC venue 0x6894Ae31","0x6894ae31cae97f228590f6dc7bbea7449f4db980","일본"),
  ("HTX 운영지갑 0x09FCED81(MM활발)","0x09fced818439182812f13b006114da4382c4470e","거래소"),
 ]
 EXCH_ADDRS=[a for _,a,c in WATCH if c=="거래소"]
+# 물밑 프로젝트 조기신호 = 운용/배포 EOA가 '새 컨트랙트'를 배포하는 순간(기존 껍데기11개 재사용 가정에 의존하지 않음)
+OPERATOR_EOAS=[
+ ("가스허브 0x81c22bec","0x81c22bec01c83e5bff125d3a52634dbef60d93d4"),
+ ("볼트운용 0xaff29bed","0xaff29bedb24cc4979477f271f8a426590855cfca"),
+ ("클러스터컨트롤 0xb878526f","0xb878526f6d1174be9e75d1f617ae9271e4f42285"),
+ ("BTCFi배포자 0xa30b97a5","0xa30b97a5485388d776c24c50dc82516726bb7a9b"),
+ ("제네시스배포자 0xdd505f3","0xdd505f3edb9b574d139e2f9d8b89deb6495de369"),
+]
 TOKEN_WATCH=[
  ("Unified JPYC 총공급","0x84122a4a75bfe65ef455dba5f6d43d61359ca77e",500_000,"jpyc_supply"),
  ("BtcUSD 총공급","0x6906ccda405926fc3f04240187dd4fad5df6d555",500_000,"btcusd_supply"),
@@ -196,14 +204,65 @@ def bifi_health_check(old,row):
 def _int(v):
     try: return int(float(v))
     except: return None
+def _flt(v):
+    try: return float(v)
+    except: return None
 
-def shell_check():
-    print("\n# 스테이징 껍데기 11개 (자금유입=신제품 런칭):"); act=0
+def deployer_scan(old,row):
+    # 핵심 감시: 운용/배포 EOA의 신규 컨트랙트 배포 = 물밑 프로젝트의 가장 이른 신호
+    # (껍데기11개 재사용 가정에 안 갇힘 — 완전 새 주소 배포도 포착)
+    print("\n# 운용자/배포자 EOA 신규 컨트랙트 배포 스캔(물밑 조기신호):")
+    known=set(filter(None,(old.get("seen_contracts") or "").split("|"))); cur=set(known); newc=0
+    for lab,a in OPERATOR_EOAS:
+        items=(get(f"/api/v2/addresses/{a}/transactions") or {}).get('items') or []
+        for it in items[:30]:
+            cc=it.get('created_contract') or {}
+            h=(cc.get('hash') or '').lower()
+            if not h: continue
+            cur.add(h)
+            if known and h not in known:
+                newc+=1; print(f"  🚨 신규 컨트랙트 {lab} → {h[:16]}")
+                alert("P1",f"★운용자 신규 컨트랙트 배포! {lab}→{h[:14]} — 물밑 프로젝트/신제품 가능")
+    if newc==0: print(f"  신규 배포 없음(추적중 컨트랙트 {len(cur)}개).")
+    row["new_contracts"]=newc
+    return "|".join(sorted(cur))
+
+def slow_drift_check(row):
+    # 누적드리프트: 단발Δ가 임계 아래로 '쪼개진' 완만한 유출/유입을 history.csv 기준선(~7행 전)으로 포착
+    if not os.path.exists(HIST): return
+    try: hist=list(csv.DictReader(open(HIST)))
+    except: return
+    if len(hist)<3: print("\n# 누적드리프트: 데이터 부족(3행+부터)"); return
+    base=hist[-7] if len(hist)>=7 else hist[0]; span=min(len(hist),7)
+    print(f"\n# 누적드리프트 점검(최근 {span}행 대비):")
+    def dv(k): a=_flt(row.get(k)); b=_flt(base.get(k)); return (a-b) if (a is not None and b is not None) else None
+    checks=[("exch_total","거래소 보유",10_000_000,False),("btcusd_supply","BtcUSD 발행",1_000_000,None),
+            ("bifi_borrow_dollar","BiFi 달러대출",1_000_000,None),("treasury_bfc","Treasury",1,False)]
+    any_hit=False
+    for k,lab,thr,updown in checks:
+        d=dv(k)
+        if d is None or abs(d)<thr: continue
+        any_hit=True; print(f"  ⚠️ {lab} {span}행 누적 {fmt(d)}")
+        if k=="treasury_bfc" and d<0: alert("P1",f"★Treasury 누적 유출 {fmt(d)}(최근 {span}행) — 단발 임계 아래로 분할 집행 정황")
+        elif k=="exch_total" and d>0: alert("P2",f"거래소 누적 순유입 {fmt(d)}(최근 {span}행) — 완만한 매도압 축적")
+        else: alert("P2",f"{lab} 누적 변동 {fmt(d)}(최근 {span}행)")
+    if not any_hit: print("  완만한 누적드리프트 없음.")
+
+def shell_check(old,row):
+    # 자금유입/토큰전송/tx 증가 = 신제품 런칭. tx는 기준선 대비 '증가'로 판정(셋업7tx 프록시 오탐 방지)
+    print("\n# 스테이징 껍데기 11개 (자금·전송·tx 변화=신제품 런칭):"); act=0; state={}
     for a in STAGED_SHELLS:
-        c=get(f"/api/v2/addresses/{a}/counters"); tt=int(c.get('token_transfers_count') or 0); bl=bal(a)
-        if tt>0 or bl>0: act+=1; print(f"  ⚠️ 활성화! {a[:12]} xfers={tt} bal={bl:,.0f}"); alert("P1",f"★신제품 런칭! 껍데기 {a[:12]} 활성화(xfers={tt},bal={bl:,.0f})")
+        c=get(f"/api/v2/addresses/{a}/counters"); tt=int(c.get('token_transfers_count') or 0)
+        tx=int(c.get('transactions_count') or 0); bl=bal(a); k=a.lower()
+        state["sh_"+k]=f"{tt},{tx}"; ptt,ptx=0,0
+        pv=(old.get("sh_"+k) or "").split(",")
+        if len(pv)==2: ptt,ptx=_int(pv[0]) or 0,_int(pv[1]) or 0
+        # 활성 신호: 잔액>0 / 토큰전송 발생 / 기준선 대비 tx 증가(신규 상호작용)
+        if bl>0 or tt>0 or (old and tx>ptx):
+            act+=1; print(f"  ⚠️ 활성화! {a[:12]} xfers={tt} tx={tx}(전 {ptx}) bal={bl:,.0f}")
+            alert("P1",f"★신제품 런칭! 껍데기 {a[:12]} 활성화(xfers={tt},tx {ptx}→{tx},bal={bl:,.0f})")
     if act==0: print("  전부 빈 상태(런칭 신호 없음).")
-    return act
+    row["shells_active"]=act; return state
 
 def new_token_scan(old):
     print("\n# 신규 토큰 출현 스캔(JPYSC·신규 브릿지):")
@@ -272,9 +331,13 @@ def burn_check(old):
 def summary():
     print("\n"+"═"*56)
     p1=[m for p,m in ALERTS if p=="P1"]; p2=[m for p,m in ALERTS if p=="P2"]
-    if not ALERTS: print("🔔 오늘의 경보 요약:  ✅ 이상 무 — 전부 평소 범위")
+    fail=FETCH["fail"]
+    if not ALERTS:
+        if fail==0: print("🔔 오늘의 경보 요약:  ✅ 이상 무 — 전부 평소 범위(조회 100% 성공=확인됨)")
+        else: print(f"🔔 오늘의 경보 요약:  ⚠️ 경보 0건이나 조회실패 {fail}건 — '이상 무' 아님, '일부 미확인'. 실패지표는 재실행 확인 필요")
     else:
-        print(f"🔔 오늘의 경보 요약:  ⚠️ 사건 {len(ALERTS)}건 (P1 {len(p1)}·P2 {len(p2)})")
+        note=f" · ⚠️조회실패 {fail}건(미확인 존재)" if fail else ""
+        print(f"🔔 오늘의 경보 요약:  ⚠️ 사건 {len(ALERTS)}건 (P1 {len(p1)}·P2 {len(p2)}){note}")
         for m in p1: print(f"  🔴 P1  {m}")
         for m in p2: print(f"  🟡 P2  {m}")
     print("═"*56)
@@ -284,7 +347,7 @@ CSV_COLS=["date","price_usd","price_krw","bfc_mcap_usd","bifi_price_usd","bifi_p
  "jpyc_supply","btcusd_supply","btcusd_holders","stbfc_supply","wstbfc_supply","cbbtc_supply","brbtc_supply",
  "bifi_bfc_pool","bifi_wstbfc","bifi_btcusd","bifi_borrow_btcusd","bifi_borrow_usdc","bifi_borrow_usdt","bifi_borrow_dai","bifi_borrow_dollar",
  "bifi_borrowers","bifi_uw_count","bifi_uw_debt",
- "val_count","val_total_stake","nakamoto33","shells_active","jpysc_found","defi_tvl_usd","alert_p1","alert_p2","data_quality","chain_txns","chain_addrs"]
+ "val_count","val_total_stake","nakamoto33","shells_active","new_contracts","jpysc_found","defi_tvl_usd","alert_p1","alert_p2","data_quality","chain_txns","chain_addrs"]
 def append_csv(row):
     row=dict(row); row["date"]=datetime.date.today().isoformat()
     nonempty=lambda r:sum(1 for k in CSV_COLS if str(r.get(k,"")).strip()!="")
@@ -311,12 +374,14 @@ def main():
     bifi_check(row)
     validator_check(old,row)
     bifi_health_check(old,row)
-    row["shells_active"]=shell_check()
+    shellstate=shell_check(old,row)
+    sc=deployer_scan(old,row)
     kt,jf=new_token_scan(old); row["jpysc_found"]=jf
     krw=exchange_check(cur,old); row["price_krw"]=krw if krw else ""
     bifi_price(row)
     defi_tvl(row)
     github_check(old); burn=burn_check(old)
+    slow_drift_check(row)
     p1,p2=summary()
     row["alert_p1"]=p1; row["alert_p2"]=p2
     row["data_quality"]=f"{FETCH['ok']}/{FETCH['ok']+FETCH['fail']}"
@@ -326,6 +391,7 @@ def main():
         for k,v in toksnap.items():
             if v is not None: cur["tok_"+k]=v
         cur["known_tokens"]=kt; cur["val_addrs"]=row.pop("_val_addrs","")
+        cur["seen_contracts"]=sc; cur.update(shellstate)
         cur.update(github_check.tags)
         if burn is not None: cur["burn_dead"]=burn
         json.dump(cur,open(BASE,"w"))
