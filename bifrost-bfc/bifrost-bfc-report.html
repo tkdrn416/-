@@ -97,6 +97,7 @@
   <a href="#signals">🔔 감시 신호</a>
   <h2>부록</h2>
   <a href="#method">방법론·신뢰도</a>
+  <a href="#changelog">정정 이력</a>
   <a href="#open">미해결 과제</a>
   <a href="#sources">출처</a>
 </nav>
@@ -144,11 +145,7 @@
     <li><b>물밑 프로젝트 신호:</b> 운용자가 <b>2026년 빈 업그레이더블-프록시 볼트 껍데기 11개</b>를 미리 배포·소유권설정만 하고 자금 미투입 = <b>런칭 대비 스테이징</b>. <b>이 껍데기가 자금 받는 순간 = 신제품 출시</b> → <code>tools/monitor.py</code> 자동 감지. → §15-F</li>
     <li><b>★ 일본 JPYC 온체인 가동 확인:</b> <b>Unified JPYC 65.5M(~$440K)</b>이 Polygon/ETH에서 Bifrost로 브릿지돼 실재(HashPort 4% 렌딩 예치 풀로 추정). Bifrost 상에선 소수 렌딩 인프라 컨트랙트가 집계·보유 — 실제 일반 예치자는 HashPort 레이어에 있어 온체인 개별식별 불가. <b>BtcUSD는 오늘(6-30) 하루 -1.96M 대형 상환</b>(8.06M→6.11M, EOA 6곳 redeem). → 일본 사업 온체인 가동 중이나 초기·소규모. → §13·§7</li>
   </ol></div>
-  <div class="callout warn"><b>🔍 비판적 자기검토 — 정정 3건 (2026-06-30):</b> <ol style="margin:6px 0 0 0">
-    <li><b>"JPYC=운용자 네트워크 운영" 철회:</b> venue JPYC 입금자는 컨트랙트 5개(내 운용망 주소 아님), 가스허브 연결고리는 약함. <b>HashPort 렌딩 인프라</b>로 재해석.</li>
-    <li><b>BtcUSD "점진 수축"→"오늘 단일 -1.96M 상환"으로 정정:</b> 전일까지 8.06M, 오늘 하루 redemption 웨이브.</li>
-    <li><b>청산 이벤트 재검증(2026-06-30 갱신):</b> 의심했던 "미식별 희귀이벤트"는 추적 결과 <b>브릿지 BrBFC mint/burn으로 확정(청산 무관)</b> → BiFi 로그(~4,000건)에 Liquidate류 이벤트 타입 자체가 없음. <b>샘플 범위 내 청산 0건</b>(아카이브 전수는 미완). 키퍼 비활성 = 32건 미청산 잔존이 뒷받침. → §15-L</li>
-  </ol></div>
+  <p class="small muted">※ 조사 과정에서의 자기정정·철회 이력은 <a href="#changelog">부록: 정정 이력</a>에 통합 정리(본문은 최종 확정 사실만 기술).</p>
 
   <div class="callout ok"><b>🧩 구조적 종합 — 심층 라운드 결정판 (2026-06-30)</b>
   <ol style="margin:6px 0 0 0">
@@ -472,7 +469,8 @@
     <tr><td><b>DEX 경유</b></td><td class="wrap">Everdex 라우터 경유(단 결제자금 자체가 재단/운용지갑발 = 외부 신규자금 아님)</td></tr>
   </table>
   <div class="callout warn"><b>캐비엇:</b> wstBFC→BFC 1.137x 가정(시점변동) · 대출(borrow) 미차감(총공급 기준) · BiFi BtcUSD/USDC 풀 예치는 BFC 아니라 제외 · "네이티브 보유" EOA의 재단◆는 초기배분 추정(funder 미전수검증, 거래소출금/OTC 일부 가능) · BiFi예치/스테이커는 외부 유저 다수(재단 미플래그). <b>※ 「검증자 stash」 행(#35 <code>0xffFaAC</code>·#36 <code>0x330d76</code>·#39 <code>0x355b78</code> = F14/F15/F13)의 ~6.7~6.8M은 stash 계정의 네이티브 잔액으로, candidate_state self-bond(정확히 4.00M, §21)와는 다른 지표</b>(잔액≠본딩액). §21이 정정한 "6.8M 자기본딩" 오류와 혼동 말 것.</div>
-  <table>
+  <details><summary class="small"><b>전체 100위 표 펼치기</b> — 상위: #1 업비트콜드 332M · #2 빗썸콜드 137M · #3~ BiFi/스테이킹 고래 (클릭하여 전체 열람)</summary>
+  <table style="margin-top:8px">
     <tr><th>#</th><th class="num">eff BFC</th><th>재단</th><th>분류</th><th>주소</th><th>소스</th></tr>
     <tr><td>1</td><td class="num">332,484,206</td><td></td><td class="wrap">업비트콜드</td><td><code>0x50f187ef4447da6e5ff1d740439e91175bac955e</code></td><td class="small">네이티브</td></tr>
     <tr><td>2</td><td class="num">137,482,292</td><td></td><td class="wrap">빗썸콜드</td><td><code>0xdcd52f5f5af5022edefd59fd5353f4da3f2c8935</code></td><td class="small">네이티브</td></tr>
@@ -575,6 +573,7 @@
     <tr><td>99</td><td class="num">2,975,000</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0x34bfac2b1d4bf4e2ed70226195fb4013c6a05543</code></td><td class="small">네이티브</td></tr>
     <tr><td>100</td><td class="num">2,973,500</td><td><span class="badge b-warn">◆재단</span></td><td class="wrap">네이티브 보유(초기배분 추정)</td><td><code>0xe6db5714b6317090ed2f5b1862495af3d10ce010</code></td><td class="small">네이티브</td></tr>
   </table>
+  </details>
   <p class="small"><b>요지:</b> 거래소 커스터디(#1·2)를 빼면 상위는 <b>BiFi 예치/스테이킹 고래(#3~6,11,12,14…)</b>와 초기배분 휴면(네이티브). 네이티브-only 리스트엔 없던 BiFi 예치자 다수가 실질 상위. 상세 → data/native-holders-analysis(8차)·foundation-tracking.</p>
 
   <h2 class="sec" id="foundation"><span class="n">15-F</span>★ 재단 추적 · 물밑 프로젝트 감지</h2>
@@ -610,7 +609,7 @@
     <tr><td><b>④ 스테이징 껍데기</b></td><td class="wrap">11개 업그레이더블 프록시 볼트 <b>전부 token_xfers=0·잔액=0</b></td><td class="wrap">신규 제품 자금 미투입 = <b>런칭 아직 없음</b></td></tr>
   </table>
   <p class="small"><b>가스허브 <code>0x81c22bec</code> 정체 규명(2026-06-30 실측):</b> 정기 대형수취 EOA를 추적하니 <b>전부 초고빈도 릴레이어/오라클</b>이었다 — <code>0xB454DD…</code>(<b>989,802 tx</b>)·<code>0xCD95FA…</code>(<b>905,581 tx</b>)·<code>0xC9B111…</code>(124,378)·<code>0xA4aF08…</code>(104,636)이 각각 짝 컨트랙트에 <code>0xc9807539</code>를 수십만~약100만회 제출. <b>Bifrost 공식문서상 CCCP 릴레이어가 "가격정보 피드"를 전파하고 오라클이 "검증자 구조에 내장"</b>(외부 오라클 미사용)되는데, 이 EOA들이 바로 그 <b>프로토콜 핵심 릴레이어/오라클 운영자</b>. → <b>가스허브 = 팀의 릴레이어/오라클 가스 트레저리</b>(크로스체인 프로토콜을 돌리는 ~6 릴레이어를 상시 충전).</p>
-  <div class="callout warn"><b>⚠️ 정정의 정정(2회 검증):</b> 직전 라운드 "가스허브→Everdex <b>결정적 연결</b>"을 과장이라 철회했으나, <b>재검증 결과 Everdex 자체는 실재·가동 확정</b>: <code>0x7Ace89E2</code> 호출 메서드가 <code>0x38ed1739</code>(swapExactTokensForTokens)·<code>0x7ff36ab5</code>(swapExactETHForTokens) 등 <b>Uniswap-V2 라우터 시그니처</b>이고, <b>2026-06-30 오늘도 다수 유저가 스왑</b>(token_transfers 272,957·공식문서 docs.bifrostnetwork.com/everdex). 정확한 결론: <b>Everdex는 실가동 DEX가 맞고, 다만 가스허브의 <i>본질</i>은 릴레이어/오라클 충전이며 Everdex로 간 3,500 BFC는 부수적 소액 토핑</b>(이걸 "결정적 연결"로 비중둔 게 과장이었음). 진짜 감시대상은 볼트운용 EOA 신규배포·스테이징 껍데기 11개.</div>
+  <div class="callout info"><b>Everdex 실가동 확정 · 가스허브와의 관계:</b> Everdex <code>0x7Ace89E2</code>는 <code>0x38ed1739</code>(swapExactTokensForTokens)·<code>0x7ff36ab5</code>(swapExactETHForTokens) 등 <b>Uniswap-V2 라우터 시그니처</b>로 <b>2026-06-30에도 다수 유저 스왑</b>(token_transfers 272,957·docs.bifrostnetwork.com/everdex). 다만 가스허브 <code>0x81c22bec</code>의 <i>본질</i>은 릴레이어/오라클 충전이며 Everdex행 3,500 BFC는 부수적 소액 토핑 — <b>가스허브↔Everdex를 "결정적 연결"로 볼 근거는 아님</b>. 진짜 감시대상은 볼트운용 EOA 신규배포·스테이징 껍데기 11개. <span class="muted">(이 항목은 초판 과장 서술의 정정 — 상세는 <a href="#changelog">정정 이력</a>)</span></div>
   <p class="small muted">현 국면 트리거 3개: (a) Treasury 첫 출금 (b) 껍데기 11개 중 자금 유입 (c) 볼트운용 EOA(<code>0xaff29bed</code>·<code>0xb878526f</code>)의 신규 컨트랙트 배포 → 모두 <code>tools/monitor.py</code> 자동 감지.</p>
   <h4>★ 신제품 런칭 조기경보 워치리스트 — 빈 프록시 볼트 껍데기 11개 (전체)</h4>
   <p class="small">운용 EOA가 2026-01~04 배포한 업그레이더블 프록시 볼트로, <b>현재 전부 token_transfers=0·잔액=0</b>(자금 미투입). <b>이 중 하나라도 토큰/자금을 받기 시작 = 신제품 런칭 순간</b>. 유일 예외 <code>0x11d91B18</code>는 <code>upgradeTo</code>+<code>transferOwnership</code> 7tx만(프록시 셋업, 자금 0).</p>
@@ -994,7 +993,7 @@
     <li><b>★ 거버넌스 집중 리스크:</b> 위임의 78%가 단일 Biquid LST 풀 경유(위 §8) → <b>그 풀의 위임배분 정책 하나가 다수 검증자의 순위를 좌우</b>. LST 운영주체가 사실상 위임권력 보유(슬래싱·검열 시 시스템 광범위 영향).</li>
     <li><b>스테이킹 명목수익률(추정):</b> 코드 인플레 연 13%(전체 공급 기준). <b>신규 발행이 스테이커(공급의 29.3%)에게 집중 분배된다고 가정하면 스테이커 명목 APR ≈ 13% ÷ 0.293 ≈ 최대 ~44%</b>. 단 인플레 일부는 treasury·collator 보상으로 배분되므로 <b>실제 스테이커 수익은 이보다 낮은 두 자릿수 추정</b>(고정 APR 없음·개인별 변동·정확 분배비율 미공개). 그래도 단순 스테이킹이 두 자릿수라 BTCFi Boost JPYC 4%·Oasys ~40% APY와 경쟁 가능 — LST(Biquid)로 스테이킹+DeFi 동시 추구가 합리적(→ 단일 수익 스택 형성 원인).</li>
   </ul></div>
-  <div class="callout info"><b>★ 위임의 정체 = 대부분 Biquid 유동스테이킹(2026-06-30 실측):</b> Biquid LST 풀이 <code>totalPooledBFC()</code> <b>268.8M BFC</b>를 검증자에 내부 위임(공식문서 확인) → <b>위임 344.76M의 약 78%가 직접 위임이 아니라 Biquid 풀 경유.</b> 즉 "D형 retail 위임"의 상당분은 개별 사용자가 아니라 <b>stBFC 홀더(130명)가 맡긴 LST 물량</b>이 검증자로 재위임된 것. (§8 Biquid 참조)</div>
+  <p class="small muted">※ 위임 344.76M의 약 78%가 Biquid LST 풀(<code>totalPooledBFC</code> 268.8M) 경유라는 핵심 사실은 위 Nakamoto 박스 및 <a href="#defi">§8</a>에서 상술.</p>
   <h4>자금출처·시점 보조단서 (위 분류와 교차)</h4>
   <table>
     <tr><th>단서</th><th>노드</th><th>근거</th></tr>
@@ -1005,7 +1004,8 @@
     <tr><td>기명(주소 미공개)</td><td class="wrap">BitTrade·AI Fusion Capital·KICA·DeSpread</td><td class="wrap">발표만, 주소 비공개 → 정확매핑 불가</td></tr>
   </table>
   <p class="small muted">감시: ① 신규 stash 등장(F7형)+기명 발표(KICA/DeSpread/AIF) 시점 교차 ② A형(F13~15) 위임자수 0→양수 = 외부개방 신호 ③ C형 위임자수 급변 = 기관 진입/이탈 신호.</p>
-  <div class="two">
+  <details><summary class="small"><b>검증자 24노드 controller/stash 주소 전체 펼치기</b> (Basic 9 + Full 15)</summary>
+  <div class="two" style="margin-top:8px">
   <div>
     <h4>Basic 노드 (9) — controller / stash</h4>
     <table>
@@ -1043,6 +1043,7 @@
     </table>
   </div>
   </div>
+  </details>
   <p class="small muted">[실측확정] Full 13~15 = self-bond 정확히 4,002,78x BFC 정액·위임 0·위임자 0 → 재단/팀 자체노드(candidate_state A형). 전체 풀 주소+위임구조는 <code>data/validators-snapshot.md</code>.</p>
 
   <!-- ===== 결론 ===== -->
@@ -1159,6 +1160,22 @@
     <tr><td><span class="badge b-ok">확인</span></td><td class="wrap">업비트/빗썸 클러스터, 3.25M=초기배분(2023-02), 팀 배포자 2명, BtcUSD 발행량/홀더, 검증자 24주소, Treasury, 컨트랙트 주소 풀셋, 코빗 상장, 메인넷 스펙</td></tr>
     <tr><td><span class="badge b-warn">추정</span></td><td class="wrap">#3=BTCFi 리저브(용도), WBFC·claim·DEX 컨트랙트(메서드 기반), 초기배분 군집의 투자자/팀 구분, 휴면 EOA 분류</td></tr>
     <tr><td><span class="badge b-bad">미확인/한계</span></td><td class="wrap">실 genesis allocation 명단(raw chainspec 비공개), 컨트랙트 소스 미검증, 배포자 실세계 신원, 검증자 실명매핑(Substrate identity 부재). <span class="muted">※ 위임자 분포는 candidate_state로 해소(§21)</span></td></tr>
+  </table>
+
+  <h2 class="sec" id="changelog">📝 부록 · 정정 이력 (changelog)</h2>
+  <p class="small muted">본 조사는 적대적 자기검토를 반복했고, 그 과정에서 초기 결론을 여러 번 정정·철회했다. 본문은 <b>최종 확정 사실만</b> 기술하고, 조사 투명성을 위해 주요 정정 이력을 여기에 통합한다(가장 최근이 위).</p>
+  <table>
+    <tr><th>날짜</th><th>정정 전(초기 결론)</th><th>정정 후(최종)</th><th>계기/근거</th></tr>
+    <tr><td>06-30</td><td class="wrap">거래소 운영지갑 <code>0x09FCED81</code> = "크로스벤치 MM 허브, HTX 아님"</td><td class="wrap"><b>HTX 운영지갑 확정</b>(4.41M 네이티브·MM/treasury 활발)</td><td class="wrap"><b>사용자 제공 결정타</b>: 업비트 트래블룰 VASP 인증(<code>0xff91c31d</code> 목적지=등록 VASP인 HTX). <b>규제 VASP 인증(오프체인 ground-truth) > 온체인 행태 추론</b></td></tr>
+    <tr><td>06-30</td><td class="wrap">"가스허브→Everdex <b>결정적 연결</b>"</td><td class="wrap">Everdex는 실가동 DEX 맞으나, 가스허브 본질은 <b>릴레이어/오라클 충전</b>이며 Everdex행 3,500 BFC는 부수 토핑</td><td class="wrap">가스허브 대형수취 EOA 재추적 → 전부 초고빈도 릴레이어/오라클(989K·905K tx). "결정적 연결"은 과장이었음</td></tr>
+    <tr><td>06-30</td><td class="wrap">"JPYC = 운용자 네트워크가 운영"</td><td class="wrap"><b>HashPort 렌딩 인프라</b>로 재해석(venue 입금자=컨트랙트 5개, 운용망 주소 아님)</td><td class="wrap">가스허브 연결고리가 약함을 재확인</td></tr>
+    <tr><td>06-30</td><td class="wrap">BtcUSD "점진 수축"</td><td class="wrap">"<b>오늘 단일 -1.96M 상환</b>"(전일까지 8.06M, 당일 redemption 웨이브)</td><td class="wrap">일자별 잔액 재확인</td></tr>
+    <tr><td>06-30</td><td class="wrap">의심 "미식별 희귀 청산이벤트"</td><td class="wrap"><b>브릿지 BrBFC mint/burn으로 확정(청산 무관)</b> — BiFi 로그(~4,000건)에 Liquidate 이벤트 타입 부재, 샘플 범위 청산 0건</td><td class="wrap">이벤트 시그니처 추적, 키퍼 비활성 = 32건 미청산 잔존이 뒷받침</td></tr>
+    <tr><td>06-30</td><td class="wrap">BiFi 청산 "3% 하락 시 대량 청산"(초판)</td><td class="wrap">초판이 12시장 중 4개만 조회한 과대산출. <b>3% 하락=신규청산 1건($1.4K)뿐</b>, 깊은 하락도 대부분 Boost 볼트 1개 합산</td><td class="wrap">12개 dollar handler 전수 재조회(→§15-L)</td></tr>
+    <tr><td>06-30</td><td class="wrap">검증자 self-bond "6.8M"(stash 잔액 기반)</td><td class="wrap">stash 네이티브 잔액≠본딩액. <code>candidate_state</code> 실측 <b>정확히 4.00M</b>(A형 F13~15)</td><td class="wrap">precompile <code>candidate_state</code> 직접 디코드(→§21)</td></tr>
+    <tr><td>06-30</td><td class="wrap">스테이킹 APR "13% ÷ 29.3% ≈ 명목 13%"</td><td class="wrap">산식 오류 정정: <b>13% ÷ 0.293 ≈ 최대 ~44%</b>(실제는 treasury/collator 배분으로 더 낮은 두 자릿수)</td><td class="wrap">라운드-2 산식 검토</td></tr>
+    <tr><td>06-30</td><td class="wrap">"낮은 ETH 잔액 → 휴면 리저브"</td><td class="wrap">잔액≠휴면. <code>0xfa24b321</code>(248M)은 2026-05까지 BFC 활발 분배 중</td><td class="wrap">휴면 판정은 <b>실제 전송 이력</b>으로(→방법론 경고)</td></tr>
+    <tr><td>06-30</td><td class="wrap"><code>0xd7c19693</code> "청산 회피 후 exit"</td><td class="wrap"><b>동적 포지션</b>(재차입 반복, 현재 UNDERWATER $266K>$216K)</td><td class="wrap">포지션 시계열 재조회</td></tr>
   </table>
 
   <h2 class="sec" id="open">미해결 / 다음 분석 후보</h2>
