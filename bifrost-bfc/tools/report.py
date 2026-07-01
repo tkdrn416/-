@@ -62,44 +62,51 @@ CATALOG=[
 ]
 
 def build_signals(rows):
-    """신호칩 계산 — signal_board·verdict 공용(로직 단일화). 반환: [(라벨,색g/y/r,값텍스트)]"""
+    """신호칩 계산 — signal_board·verdict 공용(로직 단일화). 반환: [(라벨,색g/y/r,값텍스트,tier)]
+    tier '물밑'=재단/운용 부정활동 신호(최우선), '시장'=가격/유동성 신호."""
     cur=rows[-1]; prev=rows[-2] if len(rows)>1 else {}
     d=lambda k:(_num(cur.get(k))-_num(prev.get(k))) if _num(cur.get(k)) is not None and _num(prev.get(k)) is not None else None
     chips=[]
     a1=_num(cur.get("alert_p1")) or 0
-    chips.append(("P1 경보","r" if a1 else "g", f"{a1:.0f}건" if a1 else "없음"))
-    tf=d("treasury_bfc"); chips.append(("Treasury 유출","r" if (tf is not None and tf<0) else "g", "유출!" if (tf is not None and tf<0) else "미집행 유지"))
-    nc=_num(cur.get("new_contracts"))
-    if nc is not None: chips.append(("운용자 신규컨트랙트","r" if nc>0 else "g", f"{nc:.0f}건!" if nc>0 else "없음"))
-    sh=_num(cur.get("shells_active")); chips.append(("빈지갑 자금유입","r" if (sh and sh>0) else "g", f"{sh:.0f}/11" if sh is not None else "0/11"))
-    jp=_num(cur.get("jpysc_found")); chips.append(("JPYSC 출현","y" if (jp and jp>0) else "g", "발견!" if (jp and jp>0) else "미발견"))
+    chips.append(("P1 경보","r" if a1 else "g", f"{a1:.0f}건" if a1 else "없음","물밑"))
+    tf=d("treasury_bfc"); chips.append(("Treasury 유출","r" if (tf is not None and tf<0) else "g", "유출!" if (tf is not None and tf<0) else "미집행 유지","물밑"))
+    nc=_num(cur.get("new_contracts")); dnc=d("new_contracts")
+    if nc is not None:
+        if dnc and dnc>0: chips.append(("운용자 신규컨트랙트","r",f"+{dnc:.0f}건 신규!","물밑"))
+        elif nc>0: chips.append(("운용자 신규컨트랙트","y",f"{nc:.0f}건(기존)","물밑"))
+        else: chips.append(("운용자 신규컨트랙트","g","없음","물밑"))
+    sh=_num(cur.get("shells_active")); chips.append(("빈지갑 자금유입","r" if (sh and sh>0) else "g", f"{sh:.0f}/11" if sh is not None else "0/11","물밑"))
+    jp=_num(cur.get("jpysc_found")); chips.append(("JPYSC 출현","y" if (jp and jp>0) else "g", "발견!" if (jp and jp>0) else "미발견","물밑"))
     ef=_num(cur.get("exch_net_flow"));
-    if ef is None: chips.append(("거래소 순흐름","g","—"))
-    elif ef>5_000_000: chips.append(("거래소 순유입","r",f"+{_fmt(ef)} 매도압"))
-    elif ef>0: chips.append(("거래소 순유입","y",f"+{_fmt(ef)}"))
-    else: chips.append(("거래소 순흐름","g",f"{_fmt(ef)}"))
+    if ef is None: chips.append(("거래소 순흐름","g","—","시장"))
+    elif ef>5_000_000: chips.append(("거래소 순유입","r",f"+{_fmt(ef)} 매도압","시장"))
+    elif ef>0: chips.append(("거래소 순유입","y",f"+{_fmt(ef)}","시장"))
+    else: chips.append(("거래소 순흐름","g",f"{_fmt(ef)}","시장"))
     u=_num(cur.get("util_pct"))
-    if u is not None: chips.append(("BiFi 이용률","r" if u>90 else ("y" if u>75 else "g"),f"{u:.0f}%"))
+    if u is not None: chips.append(("BiFi 이용률","r" if u>90 else ("y" if u>75 else "g"),f"{u:.0f}%","시장"))
     uw=_num(cur.get("bifi_uw_count")); uwd=_num(cur.get("bifi_uw_debt"))
     if uw is not None:
         c="r" if (uwd and uwd>2_000_000) else ("y" if uw>0 else "g")
-        chips.append(("BiFi 미청산(UW)",c,(f"{uw:.0f}명 ${_fmt(uwd)}" if uw>0 else "없음")))
+        chips.append(("BiFi 미청산(UW)",c,(f"{uw:.0f}명 ${_fmt(uwd)}" if uw>0 else "없음"),"시장"))
     pu=_num(cur.get("price_usd")); pp=_num(prev.get("price_usd"))
-    if pu is not None and pp: ch=(pu-pp)/pp*100; chips.append(("BFC 가격 24h","y" if abs(ch)>=10 else "g",f"{ch:+.1f}%"))
+    if pu is not None and pp: ch=(pu-pp)/pp*100; chips.append(("BFC 가격 24h","y" if abs(ch)>=10 else "g",f"{ch:+.1f}%","시장"))
     return chips
 
 def verdict(rows):
-    """상단 go/no-go 지시문 — 빨강/노랑 칩만 뽑아 '오늘 확인할 것'으로 요약."""
+    """상단 go/no-go — 위협등급(물밑>시장)으로 그룹핑해 '무엇을 먼저 볼지' 명시."""
     chips=build_signals(rows)
-    reds=[l for l,c,_ in chips if c=="r"]; yels=[l for l,c,_ in chips if c=="y"]
-    if reds:   return ("r", f"⚠️ 오늘 확인 필요 — {', '.join(reds)}"+(f" · 주의: {', '.join(yels)}" if yels else ""))
-    if yels:   return ("y", f"🟡 관찰 권장 — {', '.join(yels)} (긴급 아님)")
+    ur=[l for l,c,_,t in chips if c=="r" and t=="물밑"]; mr=[l for l,c,_,t in chips if c=="r" and t=="시장"]
+    uy=[l for l,c,_,t in chips if c=="y" and t=="물밑"]; my=[l for l,c,_,t in chips if c=="y" and t=="시장"]
+    if ur: return ("r", f"🔴 물밑활동 의심 — {', '.join(ur)}"+(f" · 시장: {', '.join(mr)}" if mr else "")+(f" · 관찰: {', '.join(uy+my)}" if (uy+my) else ""))
+    if mr: return ("r", f"🔴 시장신호 확인 필요 — {', '.join(mr)}"+(f" · 관찰: {', '.join(uy+my)}" if (uy+my) else ""))
+    if uy: return ("y", f"🟡 물밑 관찰 권장 — {', '.join(uy)} (긴급 아님)"+(f" · 시장: {', '.join(my)}" if my else ""))
+    if my: return ("y", f"🟡 관찰 권장 — {', '.join(my)} (긴급 아님)")
     return ("g", "✅ 이상 없음 — 특이신호 0. 오늘은 스킵 가능(가격/추세만 확인).")
 
 def signal_board(rows):
     chips=build_signals(rows)
     col={"g":"#34d399","y":"#fbbf24","r":"#f87171"}; ico={"g":"🟢","y":"🟡","r":"🔴"}
-    cells="".join(f'<div class="chip" style="border-color:{col[c]}"><div class="ci">{ico[c]} {lab}</div><div class="cv" style="color:{col[c]}">{val}</div></div>' for lab,c,val in chips)
+    cells="".join(f'<div class="chip" style="border-color:{col[c]}"><div class="ci">{ico[c]} {lab}</div><div class="cv" style="color:{col[c]}">{val}</div></div>' for lab,c,val,t in chips)
     return f'<div class="sigboard">{cells}</div>'
 
 def svg_chart(rows,cols,title,unit="",colors=None,h=190):
@@ -125,7 +132,7 @@ def svg_chart(rows,cols,title,unit="",colors=None,h=190):
     elif npts<3: g.append(f'<text x="{W-PADR}" y="18" fill="#6b7280" font-size="9" text-anchor="end">데이터 {npts}p·추세는 3회+</text>')
     for k in range(4):
         yv=lo+(hi-lo)*k/3; yy=Y(yv)
-        g.append(f'<line x1="{PADL}" y1="{yy:.0f}" x2="{W-PADR}" y2="{yy:.0f}" stroke="#1b212b"/><text x="{PADL-6}" y="{yy+3:.0f}" fill="#6b7280" font-size="9" text-anchor="end">{_fmt(yv,unit)}</text>')
+        g.append(f'<line x1="{PADL}" y1="{yy:.0f}" x2="{W-PADR}" y2="{yy:.0f}" stroke="#1b212b"/><text x="{PADL-6}" y="{yy+3:.0f}" fill="#6b7280" font-size="9" text-anchor="end">{_fmtc(yv,unit)}</text>')
     fd,ld=drawn[0][1][0][0],drawn[0][1][-1][0]
     g.append(f'<text x="{PADL}" y="{H-6}" fill="#6b7280" font-size="9">{fd}</text><text x="{W-PADR}" y="{H-6}" fill="#6b7280" font-size="9" text-anchor="end">{ld}</text>')
     for si,(lab,pts) in enumerate(drawn):
@@ -232,10 +239,14 @@ def generate():
         kpi("coll_total_usd","BiFi 예치(달러)",lambda v:f'${v/1e6:,.2f}M',"$",True,500_000),
         kpi("bifi_borrow_dollar","BiFi 달러대출",lambda v:f'${v/1e6:,.2f}M',"$",True,100_000),
         kpi("util_pct","BiFi 이용률",lambda v:f'{v:.1f}%',"%",False),
-        kpi("nakamoto33","나카모토계수",lambda v:f'{v:.0f}',"",True),
+        kpi("treasury_bfc","재단 Treasury(출금=신호)",lambda v:f'{v/1e6:,.2f}M',"",True,1),
     ])
     fx=f'<span class="muted small">· 원화: BFC {_num(last.get("price_krw")) or "—"}원 / BIFI {_num(last.get("bifi_price_krw")) or "—"}원</span>'
     vd=verdict(rows)
+    try:
+        y,mo,dd=map(int,str(last.get("date")).split("-")); age=(datetime.date.today()-datetime.date(y,mo,dd)).days
+    except: age=None
+    stale=f'<div class="verdict v-r">⚠️ 데이터 {age}일 지연 — 최신 데이터 기준일 <b>{last.get("date")}</b> · monitor.py 실행 확인 필요(아래 신호는 과거값일 수 있음)</div>' if (age and age>=1) else ''
     head="""<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bifrost(BFC) 데일리 추적 리포트</title><style>
 body{margin:0;background:#0f1115;color:#e6e8ee;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic",sans-serif;line-height:1.55;font-size:14px;padding:20px 26px 80px;max-width:1180px;margin:0 auto}
@@ -248,6 +259,7 @@ h1{font-size:22px;margin:.2em 0} h2{font-size:16px;margin:22px 0 8px;border-top:
 .sigboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
 .chip{background:#161b22;border:1px solid #333;border-left-width:4px;border-radius:8px;padding:8px 11px} .chip .ci{font-size:11px;color:#9aa3b2} .chip .cv{font-size:15px;font-weight:800;margin-top:2px}
 .charts{display:grid;grid-template-columns:1fr 1fr;gap:12px} @media(max-width:820px){.charts{grid-template-columns:1fr}}
+@media(max-width:560px){.verdict{font-size:14px;padding:11px 13px} .sigboard{grid-template-columns:1fr 1fr} .grid{grid-template-columns:1fr 1fr}}
 .ch{background:#171a21;border:1px solid #2a2f3a;border-radius:10px;padding:6px}
 table{border-collapse:collapse;width:100%;font-size:12.5px;margin:8px 0} th,td{border:1px solid #2a2f3a;padding:5px 8px;text-align:left} th{background:#1d212b} td.r,th.r{text-align:right}
 tr.hot td{background:rgba(251,191,36,.10)} td.wrap{white-space:normal} .small{font-size:11.5px} .muted{color:#9aa3b2}
@@ -256,8 +268,9 @@ details summary{cursor:pointer;font-size:14px;color:#cbd5e1;margin:8px 0} .build
 .builder label{display:inline-block;font-size:11.5px;margin:2px 8px 2px 0;color:#cbd5e1;white-space:nowrap} .builder .btn{background:#1d2531;color:#cbd5e1;border:1px solid #4da3ff;border-radius:6px;padding:4px 12px;font-size:12px;cursor:pointer;margin:6px 6px 0 0}
 </style></head><body>"""
     body=f"""<h1>Bifrost (BFC) 데일리 추적 리포트</h1>
-<p class="lead">자동생성 {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')} · 누적 {len(rows)}p · 데이터품질 {last.get('data_quality','—')} {fx}
+<p class="lead">데이터 기준일 <b>{last.get('date','—')}</b> · 자동생성 {datetime.datetime.now().strftime('%Y-%m-%d %H:%M')} · 누적 {len(rows)}p · 데이터품질 {last.get('data_quality','—')} {fx}
  · <a href="bifrost-bfc-report.html" style="color:#4da3ff">📄 상세 리포트</a> · <a href="data/history.csv" style="color:#4da3ff">📊 전체 CSV</a></p>
+{stale}
 <div class="verdict v-{vd[0]}">{vd[1]}</div>
 <div class="narr"><b>오늘 한 줄:</b> {narrative(rows)}</div>
 <h2>🚦 상태 보드 (한눈에)</h2>{signal_board(rows)}
