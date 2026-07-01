@@ -44,7 +44,7 @@ CATALOG=[
  ("coll_bfc_usd","BiFi BFC담보($)","$"),("coll_wstbfc_usd","BiFi wstBFC담보($)","$"),("coll_btcusd_usd","BiFi BtcUSD담보($)","$"),
  ("bifi_borrow_btcusd","대출 BtcUSD","$"),("bifi_borrow_usdc","대출 USDC","$"),("bifi_borrow_usdt","대출 USDT","$"),("bifi_borrow_dai","대출 DAI","$"),
  ("bifi_uw_debt","BiFi 미청산 부채($)","$"),("bifi_uw_count","BiFi 미청산 건수","n"),("bifi_borrowers","BiFi 차입자수","n"),
- ("exch_total","거래소 보유(BFC)","BFC"),("exch_pct","거래소 보유비중(%)","%"),("btcusd_supply","BtcUSD 발행","BFC"),("jpyc_supply","일본 JPYC","BFC"),
+ ("exch_total","거래소 보유(BFC)","BFC"),("htx_bfc","HTX 보유(BFC)","BFC"),("exch_pct","거래소 보유비중(%)","%"),("btcusd_supply","BtcUSD 발행","BFC"),("jpyc_supply","일본 JPYC","BFC"),
  ("stbfc_supply","유동스테이킹(stBFC)","BFC"),("val_total_stake","검증자 스테이크","BFC"),("nakamoto33","Nakamoto","n"),("treasury_bfc","Treasury","BFC"),
  ("defi_tvl_usd","DefiLlama TVL($)","$"),
 ]
@@ -161,7 +161,7 @@ def generate():
         svg_chart(rows,[("bifi_price_usd","BIFI/USD")],"BIFI 곡괭이토큰 (USD)","$"),
         svg_chart(rows,[("bifi_mcap_usd","BIFI 시총")],"BIFI 시가총액 (USD)","$"),
         svg_chart(rows,[("coll_total_usd","예치($)"),("bifi_borrow_dollar","대출($)")],"★ BiFi 예치 vs 대출 (달러)","$"),
-        svg_chart(rows,[("exch_total","거래소합"),("upbit_bfc","업비트"),("bithumb_bfc","빗썸")],"거래소 보유 BFC(순유입=매도압)"),
+        svg_chart(rows,[("exch_total","거래소합"),("upbit_bfc","업비트"),("bithumb_bfc","빗썸"),("htx_bfc","HTX")],"거래소 보유 BFC(순유입=매도압)"),
         svg_chart(rows,[("treasury_bfc","Treasury")],"재단 Treasury(출금=P1 신호)"),
         svg_chart(rows,[("btcusd_supply","BtcUSD")],"BtcUSD 발행(=CDP 부채)"),
     ]
