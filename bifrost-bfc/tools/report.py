@@ -203,10 +203,12 @@ def generate():
         svg_chart(rows,[("bifi_uw_debt","미청산부채$")],"⑤ BiFi 미청산(UNDERWATER) 부채 — 자동추적","$"),
         svg_chart(rows,[("btcusd_supply","BtcUSD")],"⑥ BtcUSD 발행 (=CDP 부채)"),
         svg_chart(rows,[("price_usd","BFC/USD")],"BFC 가격 (USD)","$"),
+        svg_chart(rows,[("price_krw","BFC/KRW")],"BFC 가격 (원)","원"),
     ]
     etc=[
         svg_chart(rows,[("bfc_mcap_usd","BFC 시총")],"BFC 시가총액 (USD)","$"),
         svg_chart(rows,[("bifi_price_usd","BIFI/USD")],"BIFI 곡괭이토큰 (USD)","$"),
+        svg_chart(rows,[("bifi_price_krw","BIFI/KRW")],"BIFI 곡괭이토큰 (원)","원"),
         svg_chart(rows,[("bifi_mcap_usd","BIFI 시총")],"BIFI 시가총액 (USD)","$"),
         svg_chart(rows,[("coll_bfc_usd","BFC담보"),("coll_wstbfc_usd","wstBFC담보"),("coll_btcusd_usd","BtcUSD담보")],"BiFi 담보 구성(달러환산)","$"),
         svg_chart(rows,[("bifi_borrow_btcusd","BtcUSD"),("bifi_borrow_usdc","USDC"),("bifi_borrow_usdt","USDT"),("bifi_borrow_dai","DAI")],"달러대출 구성(개별)","$"),
@@ -279,9 +281,9 @@ details summary{cursor:pointer;font-size:14px;color:#cbd5e1;margin:8px 0} .build
 <div class="grid">{kpis}</div>
 <h2>📈 핵심 차트 <span class="muted small">(미션 6대 감시 + 가격)</span></h2><div class="charts">{''.join(core)}</div>
 <details><summary>📊 전일/전주 대비 변화 표 (정밀 수치 — 노란 배경=유의미 변동)</summary>{change_table(rows)}</details>
-<details{alopen}><summary>🔻 기타 차트 (이용률·담보구성·대출구성·JPYC·스테이킹·검증자·TVL·경보)</summary><div class="charts">{''.join(etc)}</div></details>
+<details open><summary>🔻 기타 차트 (시총·BIFI·원화가격·담보구성·대출구성·JPYC·스테이킹·검증자·TVL·물밑신호·경보)</summary><div class="charts">{''.join(etc)}</div></details>
 <h2>🔔 최근 경보 (P1/P2)</h2><table><tr><th>시각</th><th>등급</th><th>내용</th></tr>{albox}</table>
-<details><summary>🛠 커스텀 차트 빌더 (심화 — 원하는 지표 골라 겹쳐 비교)</summary>
+<details open><summary>🛠 커스텀 차트 빌더 (선택형 — 원하는 지표 골라 겹쳐 비교·원화/달러·지수화)</summary>
 <div class="builder"><div id="picks"></div>
  <div><button class="btn" onclick="draw()">그리기</button><button class="btn" onclick="preset('cmp')">예치vs대출($)</button><button class="btn" onclick="preset('price')">BFC/BIFI 가격</button>
   <label style="border-left:1px solid #333;padding-left:10px"><input type="checkbox" id="idx"> 지수화(첫값=100, 단위 다른 지표 비교)</label></div>
