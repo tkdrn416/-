@@ -11,7 +11,7 @@ RPC="https://public-01.mainnet.bifrostnetwork.com/rpc"
 HERE=os.path.dirname(os.path.abspath(__file__))
 DATA=os.path.join(HERE,"..","data")
 BASE=os.path.join(DATA,"monitor-baseline.json"); HIST=os.path.join(DATA,"history.csv"); LOG=os.path.join(DATA,"monitor-events.log")
-ALERTS=[]; FETCH={"ok":0,"fail":0}
+ALERTS=[]; FETCH={"ok":0,"fail":0}; GH_FETCH={"ok":0,"fail":0}  # GitHub은 별도 카운트(일부 환경서 프록시 차단 → 온체인 품질과 분리)
 def alert(p,m): ALERTS.append((p,m))
 CIRC=1_390_000_000  # 큐레이션 유통량(스테이킹비율 분모)
 BTCUSD_VAULT="0xd85eb87cab9041ad00764b95796702b1104f42d7"  # BtcUSD 최대홀더(브릿지볼트)
@@ -255,8 +255,10 @@ def slow_drift_check(row):
     for k,lab,thr,updown in checks:
         d=dv(k)
         if d is None or abs(d)<thr: continue
+        # Treasury 상승분은 인플레 적립(정상)이므로 무시 — '유출(감소)'일 때만 신호
+        if k=="treasury_bfc" and d>=0: continue
         any_hit=True; print(f"  ⚠️ {lab} {span}행 누적 {fmt(d)}")
-        if k=="treasury_bfc" and d<0: alert("P1",f"★Treasury 누적 유출 {fmt(d)}(최근 {span}행) — 단발 임계 아래로 분할 집행 정황")
+        if k=="treasury_bfc": alert("P1",f"★Treasury 누적 유출 {fmt(d)}(최근 {span}행) — 단발 임계 아래로 분할 집행 정황")
         elif k=="exch_total" and d>0: alert("P2",f"거래소 누적 순유입 {fmt(d)}(최근 {span}행) — 완만한 매도압 축적")
         else: alert("P2",f"{lab} 누적 변동 {fmt(d)}(최근 {span}행)")
     if not any_hit: print("  완만한 누적드리프트 없음.")
@@ -336,9 +338,16 @@ def defi_tvl(row):
             row["defi_tvl_usd"]=round(c.get('tvl') or 0); print(f"\n# DefiLlama 체인 TVL: ${row['defi_tvl_usd']:,.0f}"); return
     print("\n# DefiLlama: Bifrost Network 체인 미발견(칼럼 공백)")
 
+def get_url_gh(u,timeout=15):
+    # GitHub 전용 fetch — 실패를 GH_FETCH로 카운트(온체인 data_quality와 분리)
+    try:
+        req=urllib.request.Request(u,headers={"User-Agent":"Mozilla/5.0"})
+        r=json.load(urllib.request.urlopen(req,timeout=timeout)); GH_FETCH["ok"]+=1; return r
+    except: GH_FETCH["fail"]+=1; return None
+
 def github_check(old):
     for repo in ["bifrost-node","bifrost-relayer.rs"]:
-        rel=get_url(f"https://api.github.com/repos/bifrost-platform/{repo}/releases/latest")
+        rel=get_url_gh(f"https://api.github.com/repos/bifrost-platform/{repo}/releases/latest")
         tag=(rel or {}).get('tag_name')
         if tag:
             key=f"gh_{repo}"
@@ -354,7 +363,7 @@ def github_dev_check(old,row):
     print("\n# GitHub 제품 브랜치 추적(RWA·CCCP 등 신제품 조기신호):")
     hits=0
     for repo,br in GH_BRANCHES:
-        r=get_url(f"https://api.github.com/repos/bifrost-platform/{repo}/commits?sha={br}&per_page=1")
+        r=get_url_gh(f"https://api.github.com/repos/bifrost-platform/{repo}/commits?sha={br}&per_page=1")
         c=(r or [{}])[0] if isinstance(r,list) else {}
         sha=(c.get('sha') or "")[:8]; msg=((c.get('commit') or {}).get('message') or "").splitlines()[0][:70] if c else ""
         if not sha: continue
@@ -370,7 +379,9 @@ def github_dev_check(old,row):
                 alert("P2",f"{repo}/{br} 헤드 변경({sha})")
         print(f"  {repo}/{br}: {sha} {msg}")
         github_dev_check.heads[key]=sha
-    if hits==0: print("  추적 브랜치 헤드 변경 없음.")
+    if GH_FETCH["ok"]==0 and GH_FETCH["fail"]>0:
+        print("  ⛔ GitHub 조회가 이 환경에서 전부 차단됨(프록시) — 브랜치/릴리스 추적 불가. 개발동향은 WebFetch로 수동확인 필요.")
+    elif hits==0: print("  추적 브랜치 헤드 변경 없음.")
 github_dev_check.heads={}
 
 def burn_check(old):
@@ -395,6 +406,8 @@ def summary():
         print(f"🔔 오늘의 경보 요약:  ⚠️ 사건 {len(ALERTS)}건 (P1 {len(p1)}·P2 {len(p2)}){note}")
         for m in p1: print(f"  🔴 P1  {m}")
         for m in p2: print(f"  🟡 P2  {m}")
+    if GH_FETCH["ok"]==0 and GH_FETCH["fail"]>0:
+        print(f"  ⛔ GitHub 추적: 이 환경서 차단({GH_FETCH['fail']}건 실패) — 개발동향은 수동확인(온체인 품질과 무관)")
     print("═"*56)
     return len(p1),len(p2)
 
