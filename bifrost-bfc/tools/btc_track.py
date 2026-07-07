@@ -19,14 +19,26 @@ VAULT="0x59d36e5c61b1c4b55e250be9bc2dc5efa75603c6"   # BTC 담보볼트(잠금)
 BTCUSD="0x6906ccda405926fc3f04240187dd4fad5df6d555"  # Bitcoin USD 스테이블
 ZERO="0x0000000000000000000000000000000000000000"
 TRACK_MIN=1.0   # 추적대상 기준: 누적 1 BTC 이상 예치한/예치했던 지갑(잠금유지·전액인출 모두 포함)
+# 비트코인 L1 커스터디(유저 제보 앵커로 확립): Fireblocks P2WSH. 잔액≈Bifrost BTC볼트 잠금.
+#   예치=여기로 입금(sender=예치자 BTC지갑) / 인출=여기서 출금(수취=예치자 BTC지갑, Bifrost 소각과 시각대조로 귀속)
+BTC_CUSTODY="bc1qrrsnncu05rlappc4txuuf0rfltyc3crvewe49gqah83yaf3x4p7smnz47x"
+MEMPOOL="https://mempool.space/api"
 DATA=os.path.join(os.path.dirname(__file__),"..","data")
 STATE=os.path.join(DATA,"btc-depositors.json")
+L1STATE=os.path.join(DATA,"btc-l1-state.json")
 
 def get(u):
     for _ in range(3):
         try: return json.load(urllib.request.urlopen(API+u,timeout=25))
         except Exception: time.sleep(0.5)
     return {}
+def mget(u):
+    for _ in range(3):
+        try:
+            req=urllib.request.Request(MEMPOOL+u,headers={"User-Agent":"Mozilla/5.0"})
+            return json.load(urllib.request.urlopen(req,timeout=25))
+        except Exception: time.sleep(0.6)
+    return None
 def rpc(method,params):
     try:
         req=urllib.request.Request(RPC,data=json.dumps({"jsonrpc":"2.0","id":1,"method":method,"params":params}).encode(),headers={"Content-Type":"application/json"})
@@ -56,8 +68,48 @@ def scan_transfers(maxpages=40):
         time.sleep(0.12)
     return mint,dep,wd,n
 
+def btc_l1_check(save=True):
+    """비트코인 L1 커스터디 감시 — 잔액·신규 예치(입금)·신규 인출(출금) 경보."""
+    s=mget(f"/address/{BTC_CUSTODY}")
+    if not s:
+        print("\n# 비트코인 L1 커스터디: 조회 실패(mempool.space)"); return
+    cs=s["chain_stats"]; bal=(cs["funded_txo_sum"]-cs["spent_txo_sum"])/1e8
+    txn=cs["tx_count"]
+    print(f"\n# 비트코인 L1 커스터디(bc1qrrsnncu…) 잔액 {bal:,.4f} BTC · tx {txn}")
+    old=json.load(open(L1STATE)) if os.path.exists(L1STATE) else {}
+    seen=set(old.get("seen_txids",[])); first=not seen
+    txs=mget(f"/address/{BTC_CUSTODY}/txs") or []   # 최신 ~50건
+    new_dep=[]; new_wd=[]
+    for t in txs:
+        txid=t.get("txid")
+        if not txid or txid in seen: continue
+        intoc=sum(v["value"] for v in t.get("vout",[]) if v.get("scriptpubkey_address")==BTC_CUSTODY)
+        outofc=sum(v["prevout"]["value"] for v in t.get("vin",[]) if v.get("prevout",{}).get("scriptpubkey_address")==BTC_CUSTODY)
+        if intoc>outofc:   # 예치(신규 자본 유입)
+            sd=[v["prevout"].get("scriptpubkey_address") for v in t.get("vin",[]) if v.get("prevout",{}).get("scriptpubkey_address")!=BTC_CUSTODY]
+            new_dep.append(((intoc-outofc)/1e8, sd[0] if sd else "?"))
+        elif outofc>intoc: # 인출(이탈)
+            rc=[v.get("scriptpubkey_address") for v in t.get("vout",[]) if v.get("scriptpubkey_address")!=BTC_CUSTODY and v["value"]>1e6]
+            new_wd.append(((outofc-intoc)/1e8, rc[0] if rc else "?"))
+        seen.add(txid)
+    if first:
+        print(f"  (첫 실행 — 커스터디 tx {len(txs)}건 시드, 다음 실행부터 신규분 경보)")
+    else:
+        for amt,who in new_dep:
+            tag="P2" if amt>=1 else ""
+            print(f"  ➕ 신규 BTC 예치 {amt:.4f} BTC ← {who[:20]}"+(f"  [{tag} ≥1BTC 신규 자본]" if tag else ""))
+        for amt,who in new_wd:
+            print(f"  ➖ BTC 인출(이탈) {amt:.4f} BTC → {who[:20]}"+("  [P1 대량 이탈]" if amt>=5 else "  [P2 이탈]"))
+        if not new_dep and not new_wd: print("  변화 없음(신규 예치·인출 없음)")
+    if save:
+        os.makedirs(DATA,exist_ok=True)
+        json.dump({"balance":round(bal,8),"tx_count":txn,
+                   "seen_txids":list(seen)[-300:]},open(L1STATE,"w"))
+
 def main():
     save="--no-save" not in sys.argv
+    if "--l1" in sys.argv:   # 비트코인 L1만 빠르게 점검
+        btc_l1_check(save); return
     mint,dep,wd,n=scan_transfers()
     # 시스템/볼트 자기자신·0x0 제외
     SYS={VAULT,UBTC.lower(),ZERO}
@@ -102,5 +154,6 @@ def main():
                    "track_min":TRACK_MIN,"tracked":sorted(track.keys()),
                    "depositors":snap},open(STATE,"w"),indent=1)
         print(f"\n[btc-depositors.json 저장 · 예치자 {len(snap)}명]")
+    btc_l1_check(save)   # 비트코인 L1 커스터디 감시(잔액·신규 예치/인출)
 
 if __name__=="__main__": main()
