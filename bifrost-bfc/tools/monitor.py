@@ -36,6 +36,14 @@ WATCH=[
  ("HTX 운영지갑 0x09FCED81(MM활발)","0x09fced818439182812f13b006114da4382c4470e","거래소"),
 ]
 EXCH_ADDRS=[a for _,a,c in WATCH if c=="거래소"]
+# 거래소 '내부 배관'(집계 컨트랙트·경유 EOA) — 여기서 콜드/핫으로 온 입금은 거래소가 제 자금을
+# 스스로 정리(consolidation)한 것이라 '외부 신규유입(매도압)'이 아님. 순흐름 출처분해에 사용.
+#   빗썸: 집계컨트랙트 0x34d5113b → 경유EOA 0xe6260d → 경유EOA 0x3c6d2363(테스트후전송) → 빗썸콜드
+EXCH_CLUSTER={
+ "0x34d5113b0ae7192adcbe7cc053b836372a3a195e",  # 빗썸 집계 컨트랙트
+ "0xe6260d675b10221df70693c87cb07e6a9dcfc67e",  # 빗썸 경유 EOA
+ "0x3c6d2363bd55b5672dd1e11eee9409e67dc72cff",  # 빗썸 경유 EOA(대량전송 전 0.979 테스트)
+}
 # 물밑 프로젝트 조기신호 = 운용/배포 EOA가 '새 컨트랙트'를 배포하는 순간(기존 껍데기11개 재사용 가정에 의존하지 않음)
 OPERATOR_EOAS=[
  ("가스허브 0x81c22bec","0x81c22bec01c83e5bff125d3a52634dbef60d93d4"),
@@ -115,6 +123,26 @@ def snapshot():
     for lab,a,cat in WATCH: snap[a]=bal(a)
     return snap
 
+def exch_inflow_attribution(since_ts):
+    # 추적 거래소 지갑들로 since_ts(직전 실행) 이후 들어온 입금을 '외부신규' vs '거래소내부배관'으로 분해.
+    # 잔액스냅샷으론 경유지갑이 항상 0이라 상쇄 불가 → 입금 tx의 from 주소로 판별해야 정확.
+    internal=external=0.0; ok=True
+    for a in EXCH_ADDRS:
+        j=get(f"/api?module=account&action=txlist&address={a}&sort=desc&page=1&offset=50")
+        res=j.get("result") if isinstance(j,dict) else None
+        if not isinstance(res,list): ok=False; continue
+        for t in res:
+            try:
+                if int(t["timeStamp"])<=since_ts: break        # desc 정렬 → 이후론 전부 과거
+                if t["to"].lower()!=a.lower(): continue          # 입금만
+                if t.get("isError")=="1" or t.get("txreceipt_status")=="0": continue
+                v=int(t["value"])/1e18
+                if v<=0: continue
+                if t["from"].lower() in EXCH_CLUSTER: internal+=v
+                else: external+=v
+            except Exception: pass
+    return internal,external,ok
+
 def balances(cur,old,row):
     print(f"\n{'라벨':<32}{'카테고리':<18}{'잔액BFC':>16}{'Δ':>14}")
     up=bt=htx=0
@@ -136,8 +164,20 @@ def balances(cur,old,row):
     row["treasury_bfc"]=round(cur.get("0x6d6f646c70792f74727372790000000000000000",0))
     if old:
         prev_exch=sum(old.get(a,0) for a in EXCH_ADDRS)
-        row["exch_net_flow"]=round((up+bt+htx)-prev_exch)
-        print(f"  └ 거래소 순흐름(전 실행 대비): {fmt(row['exch_net_flow'])} BFC")
+        nf=round((up+bt+htx)-prev_exch); row["exch_net_flow"]=nf
+        print(f"  └ 거래소 순흐름(전 실행 대비): {fmt(nf)} BFC")
+        # 순유입이 있으면 그 유입이 '외부 신규'인지 '거래소 자체 내부배관'인지 tx 출처로 분해
+        if nf>0 and old.get("_ts"):
+            intl,extl,ok=exch_inflow_attribution(int(old["_ts"]))
+            row["exch_external_in"]=round(extl); row["exch_internal_in"]=round(intl)
+            if ok:
+                print(f"     ├ 유입 출처분해: 외부신규 {fmt(round(extl))} · 거래소내부배관 {fmt(round(intl))} BFC")
+                if intl>0 and extl<intl*0.1:
+                    print(f"     └ 대부분 거래소 자체 정리(내부배관)발 → 신규 매도압 아님")
+                elif extl>0:
+                    print(f"     └ 외부신규 {fmt(round(extl))} = 실질 매도압 후보(내부배관 제외)")
+            else:
+                print(f"     └ (유입 출처분해 일부 실패 — explorer txlist 조회 실패)")
 
 def token_check(old,row):
     print("\n# 토큰 공급 추세:"); snap={}
@@ -411,7 +451,7 @@ def summary():
     print("═"*56)
     return len(p1),len(p2)
 
-CSV_COLS=["date","price_usd","price_krw","bfc_mcap_usd","bifi_price_usd","bifi_price_krw","bifi_mcap_usd","upbit_bfc","bithumb_bfc","htx_bfc","exch_total","exch_net_flow","treasury_bfc",
+CSV_COLS=["date","price_usd","price_krw","bfc_mcap_usd","bifi_price_usd","bifi_price_krw","bifi_mcap_usd","upbit_bfc","bithumb_bfc","htx_bfc","exch_total","exch_net_flow","exch_external_in","exch_internal_in","treasury_bfc",
  "jpyc_supply","btcusd_supply","btcusd_holders","stbfc_supply","wstbfc_supply","cbbtc_supply","brbtc_supply",
  "bifi_bfc_pool","bifi_wstbfc","bifi_btcusd","bifi_borrow_btcusd","bifi_borrow_usdc","bifi_borrow_usdt","bifi_borrow_dai","bifi_borrow_dollar",
  "bifi_borrowers","bifi_uw_count","bifi_uw_debt",
