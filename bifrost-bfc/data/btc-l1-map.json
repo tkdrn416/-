@@ -3,80 +3,49 @@
  "custody_note": "Fireblocks P2WSH 커스터디. 잔액≈Bifrost BTC볼트 잠금(73.9 BTC). 수령167.2/유출93.3 BTC, tx232.",
  "map": [
   {
-   "evm": "0x85b44cf6d007e8a6ca16ee277e33c3223bb7db92",
+   "evm": "0x85b44cf6",
    "btc": "bc1qspf7kwhkh8jwh0c3upl0zffl0jjf0f6tyswuuc",
    "amt": 23.964,
-   "onward": "개인/OTC(bc1qsah3u..20.1, 1C3TuByh..3.84) — CEX 아님"
+   "verified": "+16분",
+   "onward": "개인 bc1qsah3u 20.1 + 1C3TuByh 3.85 (거래소 아님)"
   },
   {
-   "evm": "0xc1d9958a4a4a591963defe26cfe11dad80d12ed6",
+   "evm": "0xc1d9958a",
    "btc": "bc1q5rmuepj3gl7tw83pqj00qrae6m4gvrv5h6756e",
    "amt": 20.945,
-   "onward": "거래소급 핫월렛 캐시아웃(bc1qm34ls tx226만, 335umQ4 tx3.7만)"
+   "verified": "+8/+10분",
+   "onward": "자가허브 bc1q4shkxks 32.8(재예치) + 개인 1PB12oq 20.9 — 자가순환"
   },
   {
-   "evm": "0xcca259780b2fbfa18f4ce3afb868f1be53220df6",
-   "btc": "bc1qdjeftdzxwr5a25uzzrcqvmtgalnmpxxc8l9alv",
-   "amt": 9.988,
-   "onward": "미이동·보유중(잔액9.989)"
-  },
-  {
-   "evm": "0x667c81c6079cfae0c7365a9e50ce92500d4cbff2",
+   "evm": "0x667c81c6",
    "btc": "bc1qtkljjmkv5kepagnzhg4ycxw37frmzhv2xzaeul",
    "amt": 5.1,
-   "onward": "대형서비스/거래소(bc1p2mlw 등)"
+   "verified": "+2분",
+   "onward": "자가허브 bc1qayvs22h 회귀 + 개인 — 자가순환"
   },
   {
-   "evm": "0x854d83c08eb943926c3d87ad3b6e58bbd566cd9a",
+   "evm": "0x854d83c0",
    "btc": "bc1q8hj8yk70rtg5vfsg4w4tsdqyjgatkw67df3ges",
    "amt": 1.996,
-   "onward": "커스터디 재순환+개인지갑"
+   "verified": "+16분",
+   "onward": "커스터디 재순환 + 개인"
   },
   {
-   "evm": "0x41d96d44964a00705cea43dc35a02e84106113f1",
+   "evm": "0x41d96d44",
    "btc": "bc1qsq0x7xx5lexs6uu43n70jche7e58y8sy7e0wvf",
    "amt": 1.0,
-   "onward": "거래소급 핫월렛(bc1qm34ls tx226만)"
+   "verified": "+27분",
+   "onward": "개인 2곳 1 BTC씩"
+  },
+  {
+   "evm": "0xcca25978",
+   "btc": "bc1qdjeftdzxwr5a25uzzrcqvmtgalnmpxxc8l9alv",
+   "amt": 9.988,
+   "verified": "미검증(금액만)",
+   "onward": "미이동·보유중(잔액9.989)"
   }
  ],
- "deposit_sources": [
-  {
-   "evm": "0xc1d9958a…",
-   "btc_src": "bc1q4shkxks…(허브)",
-   "btc_wd": "bc1q5rmuepj…",
-   "note": "자가순환: 인출→허브→재예치 반복 트레이더"
-  },
-  {
-   "evm": "0xed4c0f59(15)",
-   "btc_src": "bc1qt8gydre…",
-   "note": "개인지갑 출처"
-  },
-  {
-   "evm": "0x08ff598c(10.2)",
-   "btc_src": "bc1qvtgekc…",
-   "note": "개인지갑 출처"
-  },
-  {
-   "evm": "0xd28b47b7(10.07)",
-   "btc_src": "bc1q5wjkw3f…",
-   "note": "개인지갑 출처"
-  },
-  {
-   "evm": "0x75af8ae8(7.09)",
-   "btc_src": "bc1qtfjydhx…",
-   "note": "개인지갑 출처"
-  },
-  {
-   "evm": "0x2d323610/0xf0585acc(5)",
-   "btc_src": "bc1q7aqsxks…",
-   "note": "개인지갑 출처"
-  },
-  {
-   "evm": "0x667c81c6…",
-   "btc_src": "bc1qayvs22h…(허브)",
-   "btc_wd": "bc1qtkljjmk…",
-   "note": "자가허브"
-  }
- ],
- "verdict": "예치 출처 back-hop이 전부 저-tx 개인 지갑 → 독립 고래들(재단 시딩/시빌 아님). 커스터디 입금 114건·인출 11건 확인."
+ "verdict": "인출측 5개만 시각검증 확정. 인출 BTC 첫홉=개인/자가허브(거래소 아님). 0xc1d9958a·0x667c81c6 자가순환. 예치측·시빌판정 미확정.",
+ "shared_intermediary": "1C3TuByh5ZqL9Lyj7FWhAh3CLSzi9nx6cr (0x85b44cf6·0x667c81c6 양쪽 등장)",
+ "retracted": "예치측 개별매핑(0xed4c0f59→bc1qt8gydre 등) 철회 — 민팅 분할+시각검증 실패. '거래소 캐시아웃' 서술 철회(집계버그). 시빌/시딩 판정 유보."
 }
