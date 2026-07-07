@@ -81,6 +81,7 @@
   <a href="#native-holders">15. 네이티브 홀더 TOP100</a>
   <a href="#foundation" style="padding-left:20px">15-F. 재단 추적·물밑 감지</a>
   <a href="#liquidation" style="padding-left:20px">15-L. BiFi 청산 분석</a>
+  <a href="#btc-depositors" style="padding-left:20px">15-B. ₿ BTC 예치지갑 추적</a>
   <a href="#eth-holders">16. ETH ERC-20 홀더</a>
   <a href="#exch">17. 거래소 클러스터</a>
   <a href="#concentration">18. 집중도·배분·free float</a>
@@ -946,6 +947,38 @@
   </ul>
   <p class="small">→ <b>"청산 대기 5천만개"가 아니라 영구 정체된 휴면 부실</b>(달러규모 작아 시스템 위협 아님). 단 32개가 현재가에서 borrow&gt;marginCall인데 미청산 잔존하는 사실 = 키퍼 비활성/비유동 정황(유효).</p>
   <p class="small muted">캐비엇: wstBFC→BFC ×1.1367(실측)·오라클가 시점값·marginCall 0.97(순 wstBFC서 검증)·로그 최근 2,000건 기준.</p>
+
+  <!-- ===== BTC 예치지갑 추적 ===== -->
+  <h2 class="sec" id="btc-depositors"><span class="n">15-B</span>₿ BTCFi BTC 예치지갑 추적 <span class="badge b-warn">신규</span></h2>
+  <p class="lead">TL;DR — 바이프로스트 BTCFi에 <b>native BTC를 맡긴 지갑을 온체인으로 전수 식별</b>. 예치자 <b>87명·누적 ~90 BTC</b>, 현재 담보볼트 잠금 <b>73.70 BTC</b>. <b>추적대상 = 누적 1 BTC 이상 예치한/예치했던 14개 지갑(누적 154.38 BTC)</b> — 8개 잠금유지(73.3 BTC)·6개 전액인출(exit). <b>주목: <code>0x85b44cf6</code>가 2026-06-30 담보볼트에서 23.96 BTC를 빼 비트코인 L1으로 반출</b>(대형 이탈). 예치자들은 전부 이더리움 미사용 = <b>BTC L1 브릿지로만 유입된 바이프로스트 전용 지갑</b>(주소재활용으로 타 서비스 추적 불가 → BTC L1·내부 활동으로 추적).</p>
+
+  <h4>메커니즘 (온체인 규명)</h4>
+  <p class="small">비트코인 L1 → 브릿지 → <b>Unified BTC</b>(심볼 BTC, <code>0xB000F62A</code>, 8dec, 유저 랩드BTC) 민팅(from 0x0) → 사용자가 <b>담보볼트 <code>0x59d36e5C</code></b>에 예치(lock) → <b>BtcUSD</b>(<code>0x6906ccda…</code>) 발행/차입. <span class="muted">담보볼트가 Unified BTC의 99.7%(73.70 BTC) 보유. BrBTC(<code>0xcb4e4f67</code>)는 시스템 내부 회계용이라 개인 신원 미노출 → <b>Unified BTC 전송 전수스캔으로 예치자 식별</b>.</span></p>
+
+  <h4>★ 추적대상 — 1 BTC 이상 예치한/예치했던 14개 지갑</h4>
+  <table>
+    <tr><th>지갑</th><th>누적예치</th><th>순예치(현담보)</th><th>상태</th><th>비고</th></tr>
+    <tr><td><code>0xc1d9958a</code></td><td>33.83 BTC</td><td><b>10.90</b></td><td>잠금유지</td><td class="wrap">최대 예치자. 33.8 예치·22.9 인출 반복(활발 회전). 최근활동 2025-11</td></tr>
+    <tr><td><code>0x85b44cf6</code></td><td>24.00 BTC</td><td>0.00</td><td><b style="color:var(--bad)">전액인출(exit)</b></td><td class="wrap">★<b>2026-06-30 23.96 BTC 볼트서 인출→0x0 소각=BTC L1 반출</b>(~$1.5M 이탈). 2025-07 예치분 전량 회수. BtcUSD 자가민팅 정황=운영자/MM 가능성 병존</td></tr>
+    <tr><td><code>0xed4c0f59</code></td><td>15.00 BTC</td><td><b>15.00</b></td><td>잠금유지</td><td class="wrap">인출 0·최근활동 2026-07-07. 현시점 최대 순담보</td></tr>
+    <tr><td><code>0x08ff598c</code></td><td>10.20 BTC</td><td><b>10.20</b></td><td>잠금유지</td><td class="wrap">인출 0 (2026-06-30)</td></tr>
+    <tr><td><code>0x667c81c6</code></td><td>10.20 BTC</td><td>0.00</td><td><b style="color:var(--bad)">전액인출(exit)</b></td><td class="wrap">447K BFC 대형 홀더와 동일 주소. 2025-12 전액 회수</td></tr>
+    <tr><td><code>0xd28b47b7</code></td><td>10.07 BTC</td><td><b>10.07</b></td><td>잠금유지</td><td class="wrap">인출 0 (2026-06-30)</td></tr>
+    <tr><td><code>0x1b7c5d5e</code></td><td>10.00 BTC</td><td><b>10.00</b></td><td>잠금유지</td><td class="wrap">인출 0 (2026-01)</td></tr>
+    <tr><td><code>0x74035774</code></td><td>9.999 BTC</td><td>0.00</td><td><b style="color:var(--bad)">전액인출(exit)</b></td><td class="wrap">2025-12 회수</td></tr>
+    <tr><td><code>0xcca25978</code></td><td>9.99 BTC</td><td>0.00</td><td><b style="color:var(--bad)">전액인출(exit)</b></td><td class="wrap">2026-06-30 회수</td></tr>
+    <tr><td><code>0x75af8ae8</code></td><td>7.09 BTC</td><td><b>7.09</b></td><td>잠금유지</td><td class="wrap">인출 0 (2026-06-30)</td></tr>
+    <tr><td><code>0x2d323610</code></td><td>5.01 BTC</td><td><b>5.01</b></td><td>잠금유지</td><td class="wrap">인출 0 (2026-06-30)</td></tr>
+    <tr><td><code>0xf0585acc</code></td><td>5.00 BTC</td><td><b>5.00</b></td><td>잠금유지</td><td class="wrap">인출 0 (2026-06-30)</td></tr>
+    <tr><td><code>0x854d83c0</code></td><td>3.00 BTC</td><td>0.00</td><td><b style="color:var(--bad)">전액인출(exit)</b></td><td class="wrap">2025-02 회수(최초기 예치자)</td></tr>
+    <tr><td><code>0x41d96d44</code></td><td>1.00 BTC</td><td>0.00</td><td><b style="color:var(--bad)">전액인출(exit)</b></td><td class="wrap">1 BTC 예치·전액 회수</td></tr>
+  </table>
+  <p class="small muted">합계 누적예치 154.38 BTC(재예치 포함 총유량) · 현 순담보 8개 지갑 ≈ 73.3 BTC(볼트 잠금 73.70과 정합). <b style="color:var(--bad)">전액인출(exit)</b> 6개 지갑의 회수분(합 ~58 BTC 유량)은 BTC L1 반출 또는 타 서비스 이동 후보 → 다음 추적 대상.</p>
+
+  <div class="callout warn"><b>해석 캐비엇:</b> ①상위 일부(특히 <code>0x85b44cf6</code>=BtcUSD 자가민팅, 정확히 떨어지는 예치·인출 왕복)는 <b>재단/MM 시딩·운영지갑일 가능성</b>이 있어 "순수 외부 예치자"와 분류가 남음. ②이 지갑들은 <b>이더리움에서 미사용</b>(ETH 0·tx 0·WBTC/cbBTC/LBTC/tBTC 없음)이라, 같은 0x 주소로 타 BTC 서비스를 쓰는지는 확인 불가 — <b>"다른 BTC 서비스" 추적은 비트코인 L1 반출처 분석으로만 가능</b>(브릿지 커스터디 매핑 필요). ③담보볼트·민터 컨트랙트가 <b>미검증</b>이라 per-user 담보 getter 부재 → 전송 전수스캔(민팅/예치/인출)으로 순담보를 재구성.</div>
+
+  <h4>추적 방법·감시 신호</h4>
+  <p class="small"><b>도구:</b> <code>tools/btc_track.py</code> — Unified BTC 전송 전수스캔 → 지갑별 민팅(브릿지-in)·예치·인출·순담보·BtcUSD 스냅샷 + <code>data/btc-depositors.json</code> baseline diff. <b>감시 신호:</b> ①<b>신규 예치자 ≥1 BTC 등장</b>(신규 자본 유입) ②<b>기존 지갑 추가 예치</b> ③<b>대량 인출(exit)</b> — 특히 잠금유지 8개 지갑의 볼트 회수(=디레버리징/이탈, <code>0x85b44cf6</code> 23.96 BTC 선례) ④<b>담보볼트 총잠금(73.70 BTC) 급변</b>. <span class="muted">현재 수동 추적 단계 — 며칠 안정화 후 데일리 루프 편입 예정.</span></p>
 
   <h2 class="sec" id="eth-holders"><span class="n">16</span>ETH ERC-20 홀더 (★원조 토큰·레거시 — 추가분석 제외)</h2>
   <p class="small">홀더 ~3,619명 · totalSupply 40억(소각분 포함) · 전송누계 111,008 / txs 56,044. <b>※ ETH ERC-20측은 레거시/무의미로 판단 → 이후 분석 스코프에서 제외(네이티브 메인넷 3068 중심). 아래는 참고용 스냅샷.</b></p>

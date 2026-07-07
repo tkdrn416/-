@@ -1,6 +1,23 @@
 {
  "date": "2026-07-07",
  "vault_locked": 73.69811597,
+ "track_min": 1.0,
+ "tracked": [
+  "0x08ff598c3fda3a30e53e83fd0a8fc20bcb70ac92",
+  "0x1b7c5d5e8b2abb2469f058445faaaf2a4e199d39",
+  "0x2d3236103e8124368da8fb2d46a11425c3253a44",
+  "0x41d96d44964a00705cea43dc35a02e84106113f1",
+  "0x667c81c6079cfae0c7365a9e50ce92500d4cbff2",
+  "0x74035774b911615056ceb4a72a6d173a8b547810",
+  "0x75af8ae8bff1eb70ecbb5c259d22a61850cc6639",
+  "0x854d83c08eb943926c3d87ad3b6e58bbd566cd9a",
+  "0x85b44cf6d007e8a6ca16ee277e33c3223bb7db92",
+  "0xc1d9958a4a4a591963defe26cfe11dad80d12ed6",
+  "0xcca259780b2fbfa18f4ce3afb868f1be53220df6",
+  "0xd28b47b78451f956ed7599ae5641400b7df0f0d7",
+  "0xed4c0f5990e5680f7f718e629c6d3b9f1e95965d",
+  "0xf0585acc5e45681191777dd5affc21820027c973"
+ ],
  "depositors": {
   "0xc1d9958a4a4a591963defe26cfe11dad80d12ed6": {
    "minted": 32.83711741,
@@ -121,18 +138,18 @@
    "net": 0.00218816,
    "btcusd": 0.0
   },
-  "0x4deb64dd67df8f346b9fa26dd389e96405c3a3f1": {
-   "minted": 0.109,
-   "deposited": 0.109,
-   "withdrawn": 0,
-   "net": 0.109,
-   "btcusd": 0.0
-  },
   "0x5a0e6aab1c92bb8476cde067ab734141deff9ae7": {
    "minted": 0.109,
    "deposited": 0.109,
    "withdrawn": 0.1089998,
    "net": 2e-07,
+   "btcusd": 0.0
+  },
+  "0x4deb64dd67df8f346b9fa26dd389e96405c3a3f1": {
+   "minted": 0.109,
+   "deposited": 0.109,
+   "withdrawn": 0,
+   "net": 0.109,
    "btcusd": 0.0
   },
   "0x7e854d773d1cbcad6d8babb2e2667bd99671d19e": {
@@ -366,7 +383,14 @@
    "net": 2e-08,
    "btcusd": 5.8309
   },
-  "0x539f406caf207f41807eb8d276fddfe215c0a21c": {
+  "0xc1a29da29f34b03cd55c2f2984f152c5b17d02f3": {
+   "minted": 0.003,
+   "deposited": 0.003,
+   "withdrawn": 0.003,
+   "net": 0.0,
+   "btcusd": 0.0
+  },
+  "0xfb9e935a7ea1c81269feee6e883ba52c940cd7da": {
    "minted": 0.003,
    "deposited": 0.003,
    "withdrawn": 0.003,
@@ -387,14 +411,7 @@
    "net": 6.65e-06,
    "btcusd": 0.0
   },
-  "0xc1a29da29f34b03cd55c2f2984f152c5b17d02f3": {
-   "minted": 0.003,
-   "deposited": 0.003,
-   "withdrawn": 0.003,
-   "net": 0.0,
-   "btcusd": 0.0
-  },
-  "0xfb9e935a7ea1c81269feee6e883ba52c940cd7da": {
+  "0x539f406caf207f41807eb8d276fddfe215c0a21c": {
    "minted": 0.003,
    "deposited": 0.003,
    "withdrawn": 0.003,
@@ -415,28 +432,7 @@
    "net": 0.00155,
    "btcusd": 0.0
   },
-  "0xb04fb4b2482520f9cf07ee01205e9ec119ed7219": {
-   "minted": 0.0015,
-   "deposited": 0.0015,
-   "withdrawn": 0.0015,
-   "net": 0.0,
-   "btcusd": 0.0002
-  },
-  "0xc2108c80dfd798054c082fcec59de247a866006d": {
-   "minted": 0.0015,
-   "deposited": 0.0015,
-   "withdrawn": 0,
-   "net": 0.0015,
-   "btcusd": 0.0
-  },
-  "0x41a4d660280ad5c8afe6e84dbe5305ff6693a4b8": {
-   "minted": 0.0015,
-   "deposited": 0.0015,
-   "withdrawn": 0,
-   "net": 0.0015,
-   "btcusd": 0.0
-  },
-  "0xa408fc4c46f9df56bebd4834904a4a5d1d36ba53": {
+  "0x92db03ba453ba4886528dba645a3fafa39ec3dc1": {
    "minted": 0.0015,
    "deposited": 0.0015,
    "withdrawn": 0.0015,
@@ -457,35 +453,35 @@
    "net": 0.0015,
    "btcusd": 0.0
   },
-  "0x92db03ba453ba4886528dba645a3fafa39ec3dc1": {
+  "0xc2108c80dfd798054c082fcec59de247a866006d": {
+   "minted": 0.0015,
+   "deposited": 0.0015,
+   "withdrawn": 0,
+   "net": 0.0015,
+   "btcusd": 0.0
+  },
+  "0xa408fc4c46f9df56bebd4834904a4a5d1d36ba53": {
    "minted": 0.0015,
    "deposited": 0.0015,
    "withdrawn": 0.0015,
    "net": 0.0,
    "btcusd": 0.0003
   },
-  "0x63d92e6aa05026b4d827ccb7bf1ff3a689a85191": {
-   "minted": 0.001,
-   "deposited": 0.001,
-   "withdrawn": 0.001,
+  "0xb04fb4b2482520f9cf07ee01205e9ec119ed7219": {
+   "minted": 0.0015,
+   "deposited": 0.0015,
+   "withdrawn": 0.0015,
    "net": 0.0,
-   "btcusd": 0.0
+   "btcusd": 0.0002
   },
-  "0xebd2395e0f7f6021d0738008e53e32cbda033ff2": {
-   "minted": 0.001,
-   "deposited": 0.001,
-   "withdrawn": 0.001,
-   "net": 0.0,
+  "0x41a4d660280ad5c8afe6e84dbe5305ff6693a4b8": {
+   "minted": 0.0015,
+   "deposited": 0.0015,
+   "withdrawn": 0,
+   "net": 0.0015,
    "btcusd": 0.0
   },
   "0xcac630002f0d8456f5927912a7e2bc60bdeb59e4": {
-   "minted": 0.001,
-   "deposited": 0.001,
-   "withdrawn": 0.001,
-   "net": 0.0,
-   "btcusd": 0.0
-  },
-  "0x8630b0174cf8d010062730be86c64907fe4c8237": {
    "minted": 0.001,
    "deposited": 0.001,
    "withdrawn": 0.001,
@@ -499,7 +495,7 @@
    "net": 0.0,
    "btcusd": 0.0
   },
-  "0xc4893eee107b9f799c737a7f2a555005dfecf483": {
+  "0x63d92e6aa05026b4d827ccb7bf1ff3a689a85191": {
    "minted": 0.001,
    "deposited": 0.001,
    "withdrawn": 0.001,
@@ -507,6 +503,27 @@
    "btcusd": 0.0
   },
   "0x59a3b4b68fef0904d8a70c4139d758330d425579": {
+   "minted": 0.001,
+   "deposited": 0.001,
+   "withdrawn": 0.001,
+   "net": 0.0,
+   "btcusd": 0.0
+  },
+  "0x8630b0174cf8d010062730be86c64907fe4c8237": {
+   "minted": 0.001,
+   "deposited": 0.001,
+   "withdrawn": 0.001,
+   "net": 0.0,
+   "btcusd": 0.0
+  },
+  "0xebd2395e0f7f6021d0738008e53e32cbda033ff2": {
+   "minted": 0.001,
+   "deposited": 0.001,
+   "withdrawn": 0.001,
+   "net": 0.0,
+   "btcusd": 0.0
+  },
+  "0xc4893eee107b9f799c737a7f2a555005dfecf483": {
    "minted": 0.001,
    "deposited": 0.001,
    "withdrawn": 0.001,
@@ -541,13 +558,6 @@
    "net": 1.4e-06,
    "btcusd": 0.0
   },
-  "0x6ff9e876ee2828f495be2f0560dc3abbdb5725eb": {
-   "minted": 0.00016,
-   "deposited": 0.00016,
-   "withdrawn": 0.00015996,
-   "net": 4e-08,
-   "btcusd": 0.0
-  },
   "0x3fb6175e1afd5eaea129087de9aa46a5a494fe91": {
    "minted": 0.00016,
    "deposited": 0.00016,
@@ -555,11 +565,32 @@
    "net": 0.0,
    "btcusd": 0.1703
   },
+  "0x6ff9e876ee2828f495be2f0560dc3abbdb5725eb": {
+   "minted": 0.00016,
+   "deposited": 0.00016,
+   "withdrawn": 0.00015996,
+   "net": 4e-08,
+   "btcusd": 0.0
+  },
   "0xe2df2f2e736d837f2fa31cc4bbe65219bab8a4ef": {
    "minted": 0,
    "deposited": 2e-08,
    "withdrawn": 2e-08,
    "net": 0.0,
+   "btcusd": 0.0
+  },
+  "0x0000000000000000000000000000000000000100": {
+   "minted": 0.01110104,
+   "deposited": 0,
+   "withdrawn": 0,
+   "net": 0,
+   "btcusd": 0.0
+  },
+  "0xf8861afe6a37554b307ff5946ea0b99ad0d6a780": {
+   "minted": 0.000159,
+   "deposited": 0,
+   "withdrawn": 0,
+   "net": 0,
    "btcusd": 0.0
   },
   "0x3dacfba2a2a7526e4397ff691df1873c50efb542": {
@@ -571,13 +602,6 @@
   },
   "0xc878da8823c4dbe62344e3492520ef8eeefb20c0": {
    "minted": 1.776e-05,
-   "deposited": 0,
-   "withdrawn": 0,
-   "net": 0,
-   "btcusd": 0.0
-  },
-  "0x10b90bb0d4d2203b48eebda707f1ac7d290988d3": {
-   "minted": 0.0015,
    "deposited": 0,
    "withdrawn": 0,
    "net": 0,
@@ -597,15 +621,8 @@
    "net": 0,
    "btcusd": 0.0
   },
-  "0xf8861afe6a37554b307ff5946ea0b99ad0d6a780": {
-   "minted": 0.000159,
-   "deposited": 0,
-   "withdrawn": 0,
-   "net": 0,
-   "btcusd": 0.0
-  },
-  "0x0000000000000000000000000000000000000100": {
-   "minted": 0.01110104,
+  "0x10b90bb0d4d2203b48eebda707f1ac7d290988d3": {
+   "minted": 0.0015,
    "deposited": 0,
    "withdrawn": 0,
    "net": 0,

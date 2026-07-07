@@ -18,6 +18,7 @@ UBTC="0xB000F62Ae7FB5E1D93E7358258B1abA754E0166A"    # Unified BTC 토큰(=유�
 VAULT="0x59d36e5c61b1c4b55e250be9bc2dc5efa75603c6"   # BTC 담보볼트(잠금)
 BTCUSD="0x6906ccda405926fc3f04240187dd4fad5df6d555"  # Bitcoin USD 스테이블
 ZERO="0x0000000000000000000000000000000000000000"
+TRACK_MIN=1.0   # 추적대상 기준: 누적 1 BTC 이상 예치한/예치했던 지갑(잠금유지·전액인출 모두 포함)
 DATA=os.path.join(os.path.dirname(__file__),"..","data")
 STATE=os.path.join(DATA,"btc-depositors.json")
 
@@ -74,6 +75,13 @@ def main():
         if dep.get(a,0)>=0.01 or net>=0.01:  # 유의미분만 표시(먼지 테스터 생략)
             print(f"{a:44}{dep.get(a,0):>12,.5f}{wd.get(a,0):>10,.4f}{net:>12,.5f}{bu:>12,.2f}")
         time.sleep(0.03)
+    # 추적대상(≥1 BTC 예치) 명시 — 잠금유지/전액인출(exit) 구분
+    track={a:v for a,v in snap.items() if v["deposited"]>=TRACK_MIN}
+    print(f"\n=== ★추적대상(누적예치 ≥{TRACK_MIN} BTC): {len(track)}명 · 누적 {sum(v['deposited'] for v in track.values()):.2f} BTC ===")
+    for a,v in sorted(track.items(),key=lambda x:-x[1]['deposited']):
+        st="잠금유지" if v['net']>=0.01 else "전액인출(exit)"
+        print(f"  {a}  누적{v['deposited']:>8.3f} 순{v['net']:>8.3f} BTC  {st}")
+
     # 이전 baseline과 diff(신규 예치자/추가 예치/인출 감지)
     if os.path.exists(STATE):
         old=json.load(open(STATE)).get("depositors",{})
@@ -91,6 +99,7 @@ def main():
     if save:
         os.makedirs(DATA,exist_ok=True)
         json.dump({"date":today,"vault_locked":round(erc20bal(UBTC,VAULT,8),8),
+                   "track_min":TRACK_MIN,"tracked":sorted(track.keys()),
                    "depositors":snap},open(STATE,"w"),indent=1)
         print(f"\n[btc-depositors.json 저장 · 예치자 {len(snap)}명]")
 
