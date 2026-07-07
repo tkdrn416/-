@@ -1,0 +1,42 @@
+{
+ "custody": "bc1qrrsnncu05rlappc4txuuf0rfltyc3crvewe49gqah83yaf3x4p7smnz47x",
+ "custody_note": "Fireblocks P2WSH 커스터디. 잔액≈Bifrost BTC볼트 잠금(73.9 BTC). 수령167.2/유출93.3 BTC, tx232.",
+ "map": [
+  {
+   "evm": "0x85b44cf6d007e8a6ca16ee277e33c3223bb7db92",
+   "btc": "bc1qspf7kwhkh8jwh0c3upl0zffl0jjf0f6tyswuuc",
+   "amt": 23.964,
+   "onward": "개인/OTC(bc1qsah3u..20.1, 1C3TuByh..3.84) — CEX 아님"
+  },
+  {
+   "evm": "0xc1d9958a4a4a591963defe26cfe11dad80d12ed6",
+   "btc": "bc1q5rmuepj3gl7tw83pqj00qrae6m4gvrv5h6756e",
+   "amt": 20.945,
+   "onward": "거래소급 핫월렛 캐시아웃(bc1qm34ls tx226만, 335umQ4 tx3.7만)"
+  },
+  {
+   "evm": "0xcca259780b2fbfa18f4ce3afb868f1be53220df6",
+   "btc": "bc1qdjeftdzxwr5a25uzzrcqvmtgalnmpxxc8l9alv",
+   "amt": 9.988,
+   "onward": "미이동·보유중(잔액9.989)"
+  },
+  {
+   "evm": "0x667c81c6079cfae0c7365a9e50ce92500d4cbff2",
+   "btc": "bc1qtkljjmkv5kepagnzhg4ycxw37frmzhv2xzaeul",
+   "amt": 5.1,
+   "onward": "대형서비스/거래소(bc1p2mlw 등)"
+  },
+  {
+   "evm": "0x854d83c08eb943926c3d87ad3b6e58bbd566cd9a",
+   "btc": "bc1q8hj8yk70rtg5vfsg4w4tsdqyjgatkw67df3ges",
+   "amt": 1.996,
+   "onward": "커스터디 재순환+개인지갑"
+  },
+  {
+   "evm": "0x41d96d44964a00705cea43dc35a02e84106113f1",
+   "btc": "bc1qsq0x7xx5lexs6uu43n70jche7e58y8sy7e0wvf",
+   "amt": 1.0,
+   "onward": "거래소급 핫월렛(bc1qm34ls tx226만)"
+  }
+ ]
+}

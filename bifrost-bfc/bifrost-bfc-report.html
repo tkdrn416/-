@@ -977,6 +977,19 @@
 
   <div class="callout warn"><b>해석 캐비엇:</b> ①상위 일부(특히 <code>0x85b44cf6</code>=BtcUSD 자가민팅, 정확히 떨어지는 예치·인출 왕복)는 <b>재단/MM 시딩·운영지갑일 가능성</b>이 있어 "순수 외부 예치자"와 분류가 남음. ②이 지갑들은 <b>이더리움에서 미사용</b>(ETH 0·tx 0·WBTC/cbBTC/LBTC/tBTC 없음)이라, 같은 0x 주소로 타 BTC 서비스를 쓰는지는 확인 불가 — <b>"다른 BTC 서비스" 추적은 비트코인 L1 반출처 분석으로만 가능</b>(브릿지 커스터디 매핑 필요). ③담보볼트·민터 컨트랙트가 <b>미검증</b>이라 per-user 담보 getter 부재 → 전송 전수스캔(민팅/예치/인출)으로 순담보를 재구성.</div>
 
+  <h4>🔗 비트코인 L1 추적 — 커스터디 규명 + EVM↔BTC 지갑 매핑 + 이후 행선지 <span class="badge b-info">돌파</span></h4>
+  <p class="small">Bifrost 온체인엔 비트코인 주소가 안 남지만(위 캐비엇②), <b>인출 금액·시각을 비트코인 L1과 대조</b>해 각 예치자의 BTC 지갑을 특정. 검증: <code>0x85b44cf6</code> 23.96402 BTC 소각(2026-06-30 06:40) → <b>17분 뒤 비트코인서 정확히 23.96402 BTC가 <code>bc1qspf7…</code>로 지급</b>(금액·시각 일치). 그 지급 tx의 입력 = <b>Bifrost 커스터디 <code>bc1qrrsnncu…</code></b>(Fireblocks P2WSH). 커스터디 <b>현 잔액 73.92 BTC = Unified BTC 볼트 잠금(73.70)과 일치</b>(총 232 tx·예치 25·인출 11) → BTCFi 전체를 뒷받침하는 커스터디로 확정.</p>
+  <table>
+    <tr><th>EVM 예치자</th><th>BTC 수취지갑</th><th>인출 후 BTC 행선지(활동)</th></tr>
+    <tr><td><code>0x85b44cf6</code> (24 BTC)</td><td class="wrap"><code>bc1qspf7…</code></td><td class="wrap">개인/OTC 분산(<code>bc1qsah3u…</code> 20.1 + <code>1C3TuByh…</code> 3.84) — <b>거래소 아님, 자가보관</b></td></tr>
+    <tr><td><code>0xc1d9958a</code> (~21 BTC)</td><td class="wrap"><code>bc1q5rmuepj…</code> <span class="muted">(총 53.8 BTC 굴린 대형 개인)</span></td><td class="wrap"><b style="color:var(--warn)">거래소급 핫월렛 캐시아웃</b>(<code>bc1qm34ls…</code> tx 226만·<code>335umQ4…</code> tx 3.7만) = 매도·현금화 정황</td></tr>
+    <tr><td><code>0xcca25978</code> (9.99 BTC)</td><td class="wrap"><code>bc1qdjeftdz…</code></td><td class="wrap"><b>미이동·보유중</b>(잔액 9.989, 2026-06-30 인출 후 그대로 홀딩)</td></tr>
+    <tr><td><code>0x667c81c6</code> (5.1 BTC)</td><td class="wrap"><code>bc1qtkljjmk…</code></td><td class="wrap">대형 서비스/거래소급 목적지(<code>bc1p2mlw…</code>)</td></tr>
+    <tr><td><code>0x41d96d44</code> (1 BTC)</td><td class="wrap"><code>bc1qsq0x7x…</code></td><td class="wrap"><b style="color:var(--warn)">거래소급 핫월렛</b>(<code>bc1qm34ls…</code> tx 226만)</td></tr>
+    <tr><td><code>0x854d83c0</code> (2 BTC)</td><td class="wrap"><code>bc1q8hj8yk7…</code></td><td class="wrap">일부 커스터디 재순환 + 개인지갑</td></tr>
+  </table>
+  <p class="small muted"><b>판독:</b> 인출자 행동은 2갈래 — ①<b>거래소 캐시아웃</b>(<code>0xc1d9958a</code>·<code>0x41d96d44</code>·<code>0x667c81c6</code> → tx 수백만짜리 거래소 핫월렛 = 매도/현금화) ②<b>자가 보관/홀딩</b>(<code>0x85b44cf6</code> 개인분산·<code>0xcca25978</code> 인출후 미이동). <b>방법:</b> 인출(소각) 금액·시각 ↔ 커스터디 출금 대조 → BTC 수취지갑 특정 → next-hop 추적. <b>한계:</b> 커스터디 주소는 유저 제보(브릿지 UI 표시 BTC주소)로 확보 — 공식 미공개. 목적지 "거래소급"은 tx수·throughput 규모 기준 추정(정확한 거래소명은 태깅 부재로 미확정). 예치(입금)측 자금출처 25건도 동일 방식으로 추적 가능(진행 예정). 저장: <code>data/btc-l1-map.json</code>.</p>
+
   <h4>추적 방법·감시 신호</h4>
   <p class="small"><b>도구:</b> <code>tools/btc_track.py</code> — Unified BTC 전송 전수스캔 → 지갑별 민팅(브릿지-in)·예치·인출·순담보·BtcUSD 스냅샷 + <code>data/btc-depositors.json</code> baseline diff. <b>감시 신호:</b> ①<b>신규 예치자 ≥1 BTC 등장</b>(신규 자본 유입) ②<b>기존 지갑 추가 예치</b> ③<b>대량 인출(exit)</b> — 특히 잠금유지 8개 지갑의 볼트 회수(=디레버리징/이탈, <code>0x85b44cf6</code> 23.96 BTC 선례) ④<b>담보볼트 총잠금(73.70 BTC) 급변</b>. <span class="muted">현재 수동 추적 단계 — 며칠 안정화 후 데일리 루프 편입 예정.</span></p>
 
