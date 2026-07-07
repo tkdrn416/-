@@ -38,5 +38,45 @@
    "amt": 1.0,
    "onward": "거래소급 핫월렛(bc1qm34ls tx226만)"
   }
- ]
+ ],
+ "deposit_sources": [
+  {
+   "evm": "0xc1d9958a…",
+   "btc_src": "bc1q4shkxks…(허브)",
+   "btc_wd": "bc1q5rmuepj…",
+   "note": "자가순환: 인출→허브→재예치 반복 트레이더"
+  },
+  {
+   "evm": "0xed4c0f59(15)",
+   "btc_src": "bc1qt8gydre…",
+   "note": "개인지갑 출처"
+  },
+  {
+   "evm": "0x08ff598c(10.2)",
+   "btc_src": "bc1qvtgekc…",
+   "note": "개인지갑 출처"
+  },
+  {
+   "evm": "0xd28b47b7(10.07)",
+   "btc_src": "bc1q5wjkw3f…",
+   "note": "개인지갑 출처"
+  },
+  {
+   "evm": "0x75af8ae8(7.09)",
+   "btc_src": "bc1qtfjydhx…",
+   "note": "개인지갑 출처"
+  },
+  {
+   "evm": "0x2d323610/0xf0585acc(5)",
+   "btc_src": "bc1q7aqsxks…",
+   "note": "개인지갑 출처"
+  },
+  {
+   "evm": "0x667c81c6…",
+   "btc_src": "bc1qayvs22h…(허브)",
+   "btc_wd": "bc1qtkljjmk…",
+   "note": "자가허브"
+  }
+ ],
+ "verdict": "예치 출처 back-hop이 전부 저-tx 개인 지갑 → 독립 고래들(재단 시딩/시빌 아님). 커스터디 입금 114건·인출 11건 확인."
 }
