@@ -53,7 +53,7 @@ OPERATOR_EOAS=[
  ("제네시스배포자 0xdd505f3","0xdd505f3edb9b574d139e2f9d8b89deb6495de369"),
 ]
 TOKEN_WATCH=[
- ("Unified JPYC 총공급","0x84122a4a75bfe65ef455dba5f6d43d61359ca77e",500_000,"jpyc_supply"),
+ ("Unified JPYC 총공급","0x84122a4a75bfe65ef455dba5f6d43d61359ca77e",5_000_000,"jpyc_supply"),  # 1 JPYC=1엔 → ¥500만(~$33K) 이상만 유의
  ("BtcUSD 총공급","0x6906ccda405926fc3f04240187dd4fad5df6d555",500_000,"btcusd_supply"),
  ("Unified cbBTC(테스트)","0x74b73fd2ee237e9219df30dffdb206d237cbfc00",1,"cbbtc_supply"),
  ("BrBTC 네이티브BTC브릿지(테스트)","0xcb4e4f67b33eebfc17c82cf6e8c0b56d269aeb79",1,"brbtc_supply"),
