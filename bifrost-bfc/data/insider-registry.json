@@ -1,170 +1,176 @@
 {
- "note": "내부자(팀/어드바이저 할당) 레지스트리 — 2023 제네시스 배분트리(0x4077→중간풀 0x3ad3b4df·0x3ba7d96c·0x41c2cEb4·0xd6eae8d3)서 ≥500K BFC 수령한 개인지갑. Bifrost 팀/어드바이저 연례 베스팅 물량(공지: 2024-01-31 19.1M 등). sold_pct=수령대비 현재 유출%(매도/이전 정황).",
+ "note": "내부자(팀/어드바이저 할당) 레지스트리 — 2023 제네시스 배분트리(0x4077→중간풀 0x3ad3b4df·0x3ba7d96c·0x41c2cEb4·0xd6eae8d3)서 ≥500K BFC 수령한 개인지갑. Bifrost 팀/어드바이저 연례 베스팅 물량(공지: 2024-01-31 19.1M 등). outflow_pct(=구'sold_pct')=수령대비 현재 유출%. ★검증결과 이는 '매도'가 아니라 컨솔리데이션 허브로의 이전이 다수(거래소 직접입금 미검출).",
  "as_of": "2026-07-08",
  "source": "커뮤니티 공지(Binance Square 2024-01-31 팀·어드바이저 19,106,852 BFC 배분; DropsTab 베스팅) + 온체인 배분트리 전수추적",
  "count": 22,
  "total_received": 156304617,
  "total_current": 93220126,
- "total_sold_pct": 40.4,
  "insiders": [
   {
    "addr": "0xbbCc95860E9a60b12dcA99c78f82DDA32DEC6337",
    "received": 27000000,
    "current": 445300,
-   "sold_pct": 98.0,
-   "status": "대량매도"
+   "status": "대량유출",
+   "outflow_pct": 98.0
   },
   {
    "addr": "0x902a21c0Fa4e223e07d51ac2608fC19B7C303582",
    "received": 17500000,
    "current": 7822965,
-   "sold_pct": 55.0,
-   "status": "일부매도(2차풀 겸)"
+   "status": "일부유출(2차풀 겸)",
+   "outflow_pct": 55.0
   },
   {
    "addr": "0x5EeFFDbCDf6d269AE249e445b95BfFaDC0673cc7",
    "received": 16493730,
    "current": 16494730,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0xf6ac30649a26130E2D1c6875E935a1FA67Cee76c",
    "received": 14000000,
    "current": 14001000,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0xd7C451b4A52DAFd95be3302d05eE70d097139A87",
    "received": 11000000,
    "current": 11000500,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0x9825F45906387bDcAE71832Ee274CD76D33D8cA6",
    "received": 8500000,
    "current": 8500000,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0x21478f5320c0cDd45184FC36342fCA82DB3ef670",
    "received": 7678047,
    "current": 8,
-   "sold_pct": 100.0,
-   "status": "전량매도"
+   "status": "전량유출",
+   "outflow_pct": 100.0
   },
   {
    "addr": "0xb60959DCEC93816485aEFA34681E0DBf92093e92",
    "received": 5278438,
    "current": 437,
-   "sold_pct": 100.0,
-   "status": "전량매도"
+   "status": "전량유출",
+   "outflow_pct": 100.0
   },
   {
    "addr": "0x831Da993C5Ca87b3148Ff3c9C15EfEd4C379D071",
    "received": 5250000,
    "current": 474900,
-   "sold_pct": 91.0,
-   "status": "대량매도"
+   "status": "대량유출",
+   "outflow_pct": 91.0
   },
   {
    "addr": "0xBcC4Ee15D25aa49b4b115D9E1cDAafEe7B944dcb",
    "received": 3880000,
    "current": 9709,
-   "sold_pct": 100.0,
-   "status": "전량매도"
+   "status": "전량유출",
+   "outflow_pct": 100.0
   },
   {
    "addr": "0xE08dfb35aC277Ed0fdCf3fC0FA52bfdF992236A3",
    "received": 3580000,
    "current": 3580000,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0xA877784Dbb3006d7625F6Cb0d70FC9A85a559ff3",
    "received": 3369655,
    "current": 3369655,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0xbe9a5B7B79DF1d7F54444764DAad5BFee95007A6",
    "received": 3256254,
    "current": 256029,
-   "sold_pct": 92.0,
-   "status": "대량매도"
+   "status": "대량유출",
+   "outflow_pct": 92.0
   },
   {
    "addr": "0x91764daDC948417aaC03dF508c35c79A4766C3EB",
    "received": 3253000,
    "current": 3253000,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0x9A9b4417Eaa5dfB9145Bc5b4CA3deFac41c57199",
    "received": 3252500,
    "current": 3252500,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0x1b6282ACd98c661B32efE139D2A57Af06Ad3f449",
    "received": 3152000,
    "current": 3152000,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0x9c012E888e927712E21808BCEceEb78ca5dEf459",
    "received": 3112599,
    "current": 3012599,
-   "sold_pct": 3.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 3.0
   },
   {
    "addr": "0xe6DB5714b6317090ed2f5B1862495aF3D10ce010",
    "received": 2973500,
    "current": 2973500,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0x96012B936374831660bc3660f2efc772eEFb3eE1",
    "received": 2957899,
    "current": 2957899,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0xEDd5454666009c66F7F331b6CcA5119bD15d7b83",
    "received": 2956895,
    "current": 2956895,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0x18a68c346Bab5507Eb60Ca902B095C48B7A0361E",
    "received": 2956500,
    "current": 2956500,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   },
   {
    "addr": "0x7DB817c00439FE073209C7b3748031028F789cB7",
    "received": 2750000,
    "current": 2750000,
-   "sold_pct": 0.0,
-   "status": "보유"
+   "status": "보유",
+   "outflow_pct": 0.0
   }
  ],
  "pending": [
   "개별 팀 vs 어드바이저 vs 투자자 구분은 재단 미공개로 불가",
   "매도(sold)의 실제 행선지(거래소 직접 vs 개인지갑 경유) 미세추적 필요",
   "중간풀 0x902a21c0은 2차분배 겸해 순수개인 아닐 수 있음"
- ]
+ ],
+ "verification_2026-07-08": {
+  "finding": "잔액감소(sold_pct)는 '매도'가 아니라 '유출(이전)'. 매도 상위 6명 유출처를 2홉 추적한 결과 직접 거래소 입금 0.",
+  "destinations": "주로 다단계 컨솔리데이션 허브(0xd1e8fb7d·0x42e350e4·0x515918b1)로 집결 + 일부 BiFi풀(0x4bae7·0xbbCc9586의 12M)·BtcUSD볼트(0xd85eb87c)로 재배치.",
+  "interpretation": "내부자 할당이 활발히 '이동·집결'되나 시장 덤핑은 미확인(OTC/재커스터디/매도준비 가능성 병존). sold_pct는 'outflow_pct'로 읽어야 함.",
+  "caveat": "2홉 이내 미검출일 뿐 더 깊은 홉에서 거래소行 가능성 배제 못함. 컨솔리데이션 허브들의 종착 추적이 다음 과제."
+ },
+ "total_outflow_pct": 40.4
 }

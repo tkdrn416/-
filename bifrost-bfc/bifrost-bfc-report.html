@@ -85,6 +85,7 @@
   <a href="#eth-holders">16. ETH ERC-20 홀더</a>
   <a href="#exch">17. 거래소 클러스터</a>
   <a href="#concentration">18. 집중도·배분·free float</a>
+  <a href="#real-exposure" style="padding-left:20px">18-W. 실질 익스포저·내부자 추적</a>
   <a href="#genesis">19. 제네시스 분배</a>
   <a href="#protocolmap">20. 프로토콜 맵·배포자</a>
   <a href="#validators">21. 검증자 24·탈중앙성</a>
@@ -1071,6 +1072,32 @@
     <tr><td><b>= 실질 자유유통(free float)</b></td><td class="num"><b>≤619M</b></td><td class="num"><b>≤45%</b></td><td><b>TOP100 밖 추가 휴면물량 감안 시 더 낮음(상한)</b></td></tr>
   </table>
   <p class="small muted"><b>해석:</b> 유통의 <b>55%+가 거래소 커스터디·3년 휴면 초기배분·국고에 묶임</b> = "free float 적다"는 주장을 수치로 확정. 게다가 자유유통 619M 중에서도 <b>스테이킹·Biquid LST·BiFi 예치에 묶인 부분만큼</b>은 즉시 매도에 언본딩이 필요(스테이킹 총량 405.65M에는 거래소·휴면분도 일부 포함되므로 619M의 부분집합으로 단순계상은 불가) → <b>실제 활성 거래가능 물량은 619M보다 더 작음</b>. ⟹ 거래소 의존도·저유동·초기배분 overhang(45.9M+ 즉시 이동가능)이 가격 변동성·매도압력의 구조적 원천.</p>
+
+  <!-- ===== 실질 익스포저 & 내부자 추적 ===== -->
+  <h2 class="sec" id="real-exposure"><span class="n">18-W</span>실질 익스포저 랭킹 & 내부자(팀/어드바이저) 추적 <span class="badge b-warn">신규</span></h2>
+  <p class="lead">TL;DR — <b>네이티브 잔액 랭킹은 최대 고래를 통째로 놓친다.</b> BFC를 <b>스테이킹(stBFC)→wstBFC→BiFi 담보 예치</b>하면 지갑 잔액은 0이지만 실질 익스포저는 거대. 실질(네이티브+stBFC+wstBFC+BiFi예치, ×1.1367 BFC환산) 재계산 시 <b>실질 #1 = <code>0xbc0995ca</code>(Boost볼트/재단MM) ≈149.7M BFC·네이티브 0</b>(네이티브 1위 개인의 9배). 또한 상위 "개인"으로 보이던 다수가 실은 <b>2023 제네시스 배분트리에서 나온 팀/어드바이저 할당(내부자)</b>임을 배분트리 전수추적으로 확정.</p>
+
+  <h4>실질 익스포저 TOP (네이티브만으론 안 보이는 숨은 고래)</h4>
+  <table>
+    <tr><th>실질BFC환산</th><th class="num">네이티브</th><th class="num">BiFi예치</th><th>정체</th></tr>
+    <tr><td class="num"><b>149.7M</b></td><td class="num">0</td><td class="num">131.7M</td><td class="wrap"><code>0xbc0995ca</code> Boost볼트(재단MM) — <b>실질 최대고래·네이티브 0</b></td></tr>
+    <tr><td class="num">19.4M</td><td class="num">0.6M</td><td class="num">16.5M</td><td class="wrap"><code>0xd7c19693</code> 대형차입자(개인고래 잠정)</td></tr>
+    <tr><td class="num">17.9M</td><td class="num">~0</td><td class="num">15.7M</td><td class="wrap"><code>0xeb76c926</code> 순환클러스터(재단)</td></tr>
+    <tr><td class="num">16.0M</td><td class="num">0.7M</td><td class="num">13.5M</td><td class="wrap"><code>0x0c791e90</code> 순환클러스터(재단)</td></tr>
+    <tr><td class="num">12.3M</td><td class="num">5K</td><td class="num">10.8M</td><td class="wrap"><code>0xd05aa73e</code> 개인고래(빗썸 8.5M 출금→BiFi예치)</td></tr>
+  </table>
+  <p class="small muted">집계: BiFi 담보볼트(<code>0xf9B2f6D2</code>)에 <b>228.9M wstBFC</b>가 예치돼 있고 개별 예치자 지분은 BiFi 내부회계에 있어 토큰홀더 목록엔 안 보임 → wstBFC 전송 전수스캔으로 per-user 재구성. 데일리 루프는 집계(228.9M)만 추적했고 <b>개별 숨은고래는 이번에 신규 포착</b>. 저장: <code>data/whale-registry.json</code>.</p>
+
+  <h4>★ 내부자(팀/어드바이저 할당) — 22개 지갑 별도 추적</h4>
+  <p class="small">Bifrost는 <b>팀·어드바이저에게 매년(1월경) 물량 배분</b>을 공지해 왔다(예: 2024-01-31 <b>19,106,852 BFC</b> 팀·어드바이저 배분 — Binance Square; 토크노믹스상 Team 20%·Advisors·Ecosystem·Reserve는 1년 락업+선형 47개월 베스팅, DropsTab 기준 2025-11 완납). 이 물량의 온체인 착지점을 <b>2023 제네시스 배분트리(<code>0x4077</code>→중간풀 4개)에서 ≥500K 수령한 개인지갑</b>으로 전수추적해 <b>내부자 22명(총수령 156.3M BFC)</b>을 분리·집계.</p>
+  <table>
+    <tr><th>구분</th><th class="num">지갑수</th><th class="num">BFC</th><th>내용</th></tr>
+    <tr><td><b>보유(유출&lt;20%)</b></td><td class="num">15</td><td class="num">84.2M</td><td class="wrap">할당 대부분 원지갑에 그대로 — <code>0x5EeFFDbC</code>(16.5M)·<code>0xf6ac3064</code>(14M)·<code>0xd7C451b4</code>(11M) 등</td></tr>
+    <tr><td><b>대량유출(≥80%)</b></td><td class="num">6</td><td class="num">52.3M(수령)</td><td class="wrap"><code>0xbbCc9586</code>(27M·98%)·<code>0x21478f53</code>(7.7M·100%)·<code>0xb60959DC</code>(5.3M·100%)·<code>0x831Da993</code>·<code>0xBcC4Ee15</code>·<code>0xbe9a5B7B</code></td></tr>
+    <tr><td>일부유출</td><td class="num">1</td><td class="num">17.5M</td><td class="wrap"><code>0x902a21c0</code>(55%·2차풀 겸)</td></tr>
+  </table>
+  <div class="callout warn"><b>★ 검증 — "내부자 매도"는 미확인(중요):</b> 유출 상위 6명의 행선지를 <b>2홉 추적한 결과 거래소 직접입금 0.</b> 유출분은 대부분 <b>다단계 컨솔리데이션 허브</b>(<code>0xd1e8fb7d</code>·<code>0x42e350e4</code>·<code>0x515918b1</code>)로 집결되고, 일부는 오히려 <b>BiFi풀 재예치</b>(<code>0xbbCc9586</code>의 12M)·BtcUSD볼트로 재배치됨. 즉 <b>잔액 감소(유출율 40%)는 '시장 덤핑'이 아니라 '이동·집결'</b>이며, OTC·재커스터디·매도준비 가능성이 병존한다. <b>단 2홉 이내 미검출일 뿐 더 깊은 홉에서 거래소行 가능성은 배제 못함</b>(컨솔리데이션 허브 종착추적이 잔여 과제). <span class="muted">— 방법론 교훈: 잔액변화·내부거래 단독귀속은 '매도'로 단정 불가, 발신자-tx 다홉 추적으로만 확증.</span></div>
+  <p class="small muted"><b>추적 자동화:</b> <code>tools/btc_track.py</code> <code>insider_check()</code> — 22개 내부자 잔액 감소 감시(≥1M=P1·이하 P2 경보), <code>data/insider-registry.json</code> 갱신. <b>함의:</b> §19 overhang에 더해, <b>내부자 84M이 아직 원지갑 보유</b> = 향후 유출 시 잠재 매도압. 단 현재까진 거래소 덤핑 미확인이라 <b>"오버행 존재하나 아직 시장으로는 안 나옴"</b>이 정확한 상태.</p>
 
   <h2 class="sec" id="genesis"><span class="n">19</span>제네시스/초기 배분 (잠재 매도 overhang)</h2>
   <div class="callout ok"><b>초기 배분 확정 (잔액이력 검증)</b> — TOP50 중 <b>14개 지갑이 ~3.25M BFC 균등 청크 = 45.9M</b>. 각 지갑 잔액이력이 <b>단 1건, 블록 613703(2023-02-03 = 메인넷 직후)</b> → 1회 수령 후 3년 휴면. = 초기 토큰 배분 확정.</div>
