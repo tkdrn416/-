@@ -156,7 +156,7 @@ def insider_check(save=True):
     if not os.path.exists(INSIDER_REG):
         print("\n# 내부자 추적: 레지스트리 없음(insider-registry.json)"); return
     reg=json.load(open(INSIDER_REG)); ins=reg.get("insiders",[])
-    print(f"\n# 내부자(팀/어드바이저 할당) 추적 {len(ins)}명 · 누적매도율 {reg.get('total_sold_pct')}%")
+    print(f"\n# 내부자(팀/어드바이저 할당) 추적 {len(ins)}명 · 누적유출율 {reg.get('total_outflow_pct',reg.get('total_sold_pct'))}%")
     prev={x["addr"].lower():x for x in ins}
     cur_bals={}; newsell=[]
     for r in ins:
@@ -183,7 +183,7 @@ def insider_check(save=True):
     if save and cur_bals:
         for r in ins: r["current"]=round(cur_bals.get(r["addr"].lower(),r["current"]))
         recv=reg.get("total_received",1); reg["total_current"]=sum(r["current"] for r in ins)
-        reg["total_sold_pct"]=round((recv-reg["total_current"])/recv*100,1) if recv else 0
+        reg["total_outflow_pct"]=round((recv-reg["total_current"])/recv*100,1) if recv else 0
         json.dump(reg,open(INSIDER_REG,"w"),ensure_ascii=False,indent=1)
 
 def erc20bal_native(a):
