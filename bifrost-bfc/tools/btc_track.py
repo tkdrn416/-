@@ -106,10 +106,42 @@ def btc_l1_check(save=True):
         json.dump({"balance":round(bal,8),"tx_count":txn,
                    "seen_txids":list(seen)[-300:]},open(L1STATE,"w"))
 
+INSIDER_REG=os.path.join(DATA,"insider-registry.json")
+def insider_check(save=True):
+    """내부자(팀/어드바이저 할당) 지갑 감시 — 잔액 감소=신규 매도/이전 경보."""
+    if not os.path.exists(INSIDER_REG):
+        print("\n# 내부자 추적: 레지스트리 없음(insider-registry.json)"); return
+    reg=json.load(open(INSIDER_REG)); ins=reg.get("insiders",[])
+    print(f"\n# 내부자(팀/어드바이저 할당) 추적 {len(ins)}명 · 누적매도율 {reg.get('total_sold_pct')}%")
+    prev={x["addr"].lower():x for x in ins}
+    cur_bals={}; newsell=[]
+    for r in ins:
+        a=r["addr"]; bal=erc20bal_native(a)
+        cur_bals[a.lower()]=bal
+        old=r.get("current",0)
+        if bal < old-1000:   # 1000 BFC 이상 감소 = 신규 유출
+            drop=old-bal; newsell.append((a,drop,bal))
+    if newsell:
+        for a,drop,bal in sorted(newsell,key=lambda x:-x[1]):
+            tier="P1" if drop>=1_000_000 else "P2"
+            print(f"  🔴 [{tier}] 내부자 매도/이전 {a[:14]} -{drop:,.0f} BFC (잔액 {bal:,.0f})")
+    else:
+        print("  변화 없음(신규 내부자 매도 없음)")
+    if save and cur_bals:
+        for r in ins: r["current"]=round(cur_bals.get(r["addr"].lower(),r["current"]))
+        recv=reg.get("total_received",1); reg["total_current"]=sum(r["current"] for r in ins)
+        reg["total_sold_pct"]=round((recv-reg["total_current"])/recv*100,1) if recv else 0
+        json.dump(reg,open(INSIDER_REG,"w"),ensure_ascii=False,indent=1)
+
+def erc20bal_native(a):
+    r=rpc("eth_getBalance",[a,"latest"]); return int(r,16)/1e18 if r else 0.0
+
 def main():
     save="--no-save" not in sys.argv
     if "--l1" in sys.argv:   # 비트코인 L1만 빠르게 점검
         btc_l1_check(save); return
+    if "--insider" in sys.argv:  # 내부자만 점검
+        insider_check(save); return
     mint,dep,wd,n=scan_transfers()
     # 시스템/볼트 자기자신·0x0 제외
     SYS={VAULT,UBTC.lower(),ZERO}
@@ -155,5 +187,6 @@ def main():
                    "depositors":snap},open(STATE,"w"),indent=1)
         print(f"\n[btc-depositors.json 저장 · 예치자 {len(snap)}명]")
     btc_l1_check(save)   # 비트코인 L1 커스터디 감시(잔액·신규 예치/인출)
+    insider_check(save)  # 내부자(팀/어드바이저 할당) 매도/이전 감시
 
 if __name__=="__main__": main()
