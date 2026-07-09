@@ -1,0 +1,35 @@
+{
+ "note": "실질 BFC 익스포저(네이티브+stBFC+wstBFC지갑+BiFi예치, ×1.1367 BFC환산) 통합랭킹 + 3분류. 1차(refinement 필요).",
+ "as_of": "2026-07-08",
+ "rate_wstbfc_bfc": 1.1367,
+ "classify_logic": "①재단/거래소=알려진 거래소·재단인프라 또는 재단출처+시장활동無. ②개인고래=거래소 출처(매수/출금)+시장활동, 재단출처 아님. ③내부자=재단(배분/트레저리/보상)에서 큰 물량 수령 이력 + 거래소/DEX 활동 병존(개인처럼 보이나 재단발).",
+ "ranking_real_exposure": [
+  {"addr":"0xbc0995cae2218203262ed1b8557b7886d579e985","real_bfc":149744254,"native":0,"bifi_wstbfc":131735950,"cat":1,"label":"Boost볼트(재단MM) — 실질 #1·네이티브0 숨은최대고래"},
+  {"addr":"0xd7c19693f9ca21511847b1707242773d37c1c391","real_bfc":19401077,"native":604118,"bifi_wstbfc":16536429,"cat":2,"label":"대형차입자·거래소활동(개인고래 잠정)"},
+  {"addr":"0xeb76c926e848e0bab9323e998eea16c9076563a5","real_bfc":17872762,"native":4998,"bifi_wstbfc":15718980,"cat":1,"label":"순환클러스터(재단)"},
+  {"addr":"0x5eeffdbcdf6d269ae249e445b95bffadc0673cc7","real_bfc":16494730,"native":16494730,"bifi_wstbfc":0,"cat":1,"label":"배분/할당(비활성) — 단일 16.5M 수령·이동無"},
+  {"addr":"0x0c791e902d08b916218317d308156eb6a8a2d6d2","real_bfc":15974510,"native":672036,"bifi_wstbfc":13462192,"cat":1,"label":"순환클러스터(재단)"},
+  {"addr":"0xb68a0a0121be78f25a7d147394d90c35f2e34c5d","real_bfc":14017724,"native":14017724,"bifi_wstbfc":0,"cat":3,"label":"내부자후보 — 재단출처+DEX활동"},
+  {"addr":"0xf6ac30649a26130e2d1c6875e935a1fa67cee76c","real_bfc":14001000,"native":14001000,"bifi_wstbfc":0,"cat":1,"label":"배분/할당(비활성) — 단일 14M·이동無"},
+  {"addr":"0xd05aa73ec4adfda929c52ef03db6e27f21da7005","real_bfc":12272877,"native":5285,"bifi_wstbfc":10792287,"cat":2,"label":"개인고래 — 빗썸 8.5M 출금 후 BiFi예치"},
+  {"addr":"0x5dec180f0d414b4f3606e759c408a6b3561b1b2e","real_bfc":11810189,"native":11810189,"bifi_wstbfc":0,"cat":1,"label":"배분/할당 — 배분컨트랙트4077발(2023-01)"},
+  {"addr":"0xd7c451b4a52dafd95be3302d05ee70d097139a87","real_bfc":11000500,"native":11000500,"bifi_wstbfc":0,"cat":1,"label":"배분/할당(비활성)"},
+  {"addr":"0xc8beda62ee1cdf299a96be7c5d48d9b3956bc571","real_bfc":10809131,"native":10809131,"bifi_wstbfc":0,"cat":1,"label":"배분/할당(비활성)"},
+  {"addr":"0x41c2ceb45eae87355b7e3fce88db134da1c0bdaa","real_bfc":9606633,"native":9606633,"bifi_wstbfc":0,"cat":3,"label":"내부자후보 — 배분컨트랙트4077서 35.5M 수령 + DEX/재단 활동(2차 배분허브)"},
+  {"addr":"0x902a21c0fa4e223e07d51ac2608fc19b7c303582","real_bfc":7822965,"native":7822965,"bifi_wstbfc":0,"cat":1,"label":"배분/할당 — 0x41c2cEb4서 17.5M 수령"},
+  {"addr":"0x4d0bbd3bbcebbf7d826b00a57683f2fff643d184","real_bfc":5710340,"native":0,"bifi_wstbfc":5023612,"cat":3,"label":"내부자후보 — 순환클러스터(0x0c791e90)발 + 거래소/DEX"},
+  {"addr":"0xfd561fbd4dd43ea04733adfa31949b25c0595818","real_bfc":4946075,"native":101068,"bifi_wstbfc":4262345,"cat":2,"label":"개인고래 — 빗썸/업비트 출처+BiFi예치"},
+  {"addr":"0x71d69296c07f54ef8a9d7ff64b143c91ded27166","real_bfc":1027000,"native":0,"bifi_wstbfc":903613,"cat":3,"label":"내부자후보 — 0xec58951e(미확정 컨트랙트) 7.1M + 업비트"},
+  {"addr":"0x966935b4a73b4ded858eb0bbbbde144c9a649eb0","real_bfc":1048000,"native":61220,"bifi_wstbfc":922138,"cat":2,"label":"개인고래 — 빗썸 출처"},
+  {"addr":"0x23dbcc32c6bee0e60465650f073003de5c9876e0","real_bfc":2453484,"native":3829,"bifi_wstbfc":2155059,"cat":2,"label":"개인고래 — 빗썸집계(0x34d5113b) 출처"},
+  {"addr":"0x6666a49b7339998dfbc494f649710a1f3cd66666","real_bfc":1533000,"native":0,"bifi_wstbfc":1348463,"cat":2,"label":"개인고래(추정) — vanity주소·시장활동"},
+  {"addr":"0xadf77d87eaa506ee05d095cd9b8d862d70e55e43","real_bfc":1012000,"native":0,"bifi_wstbfc":890152,"cat":2,"label":"개인고래(추정) — 업비트 활동"}
+ ],
+ "pending_refinement": [
+  "0xec58951e21e0f465eb8b146e3e889af33524a872 정체 미확정(스테이킹/보상 라우터 vs 재단보상) — 0x71d69296·0xadf77d87 분류 좌우",
+  "내부자 정밀조건: 재단발 수령이 '비정기·큰 단발(노동대가성)'인지 vs '정기 베스팅'인지 트랜잭션 시계열 검증 필요",
+  "배분/할당(비활성) 지갑들도 과거 거래소/DEX 활동 있으면 내부자로 재분류 — 전체 tx이력 딥스캔 필요",
+  "검증자 직접위임(405M 총스테이크 중 비-liquid) 층 미집계",
+  "0xd7c19693(대형차입자) 개인 vs 내부자 재판정"
+ ]
+}
