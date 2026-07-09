@@ -107,6 +107,50 @@ def btc_l1_check(save=True):
                    "seen_txids":list(seen)[-300:]},open(L1STATE,"w"))
 
 INSIDER_REG=os.path.join(DATA,"insider-registry.json")
+# 흐름보존 추적용 주소셋 — commingling 허브 오귀속 방지(2026-07-08 크리틱 교훈)
+FLOW_EXCH={"0x50f187ef4447da6e5ff1d740439e91175bac955e","0x081a4ee55739f0da8abb8af40d07687527a268c3",
+ "0xdcd52f5f5af5022edefd59fd5353f4da3f2c8935","0x39528d59132920ab0a637129d90cf9fb3650084d",
+ "0x09fced818439182812f13b006114da4382c4470e","0x34d5113b0ae7192adcbe7cc053b836372a3a195e"}
+FLOW_TERM={"0x4bae7ba39e4e71660307dce780f1ec9b7b7666ee":"BiFi","0xf9b2f6d2a61923e61ad9f6daa78f52b7e1722b12":"BiFi",
+ "0xd85eb87cab9041ad00764b95796702b1104f42d7":"BtcUSD","0x386f2f5d9a97659c86f3ca9b8b11fc3f76efddae":"wstBFC",
+ "0xeff8378c6419b50c9d87f749f6852d96d4cc5ae4":"stBFC"}
+_flow_cache={}
+def _addr_io(a):
+    """주소 총유입·유출(by dest). eth 익스플로러 API. 캐시."""
+    if a in _flow_cache: return _flow_cache[a]
+    al=a.lower(); inn=0.0; out={}
+    for ep in ("transactions","internal-transactions"):
+        nxt=None
+        for _ in range(3):
+            u=f"/api/v2/addresses/{a}/{ep}"+("?"+urllib.parse.urlencode(nxt) if nxt else "")
+            d=get(u); its=d.get("items",[]) if isinstance(d,dict) else []
+            if not its: break
+            for t in its:
+                f=(t.get("from") or {}).get("hash","").lower(); to=(t.get("to") or {}).get("hash","").lower()
+                v=int(t.get("value",0))/1e18
+                if v<=0: continue
+                if to==al: inn+=v
+                if f==al and to!=al: out[to]=out.get(to,0)+v
+            nxt=d.get("next_page_params")
+            if not nxt: break
+            time.sleep(0.02)
+    _flow_cache[a]=(inn,out); return inn,out
+def trace_conserve(start,carry,maxhop=4,dust=50000):
+    """흐름보존 다홉 추적 — 운반량 비례배분. commingling 허브(총유출>3×유입)는 '미결'로 중단.
+       naive '최대유출 따라가기'의 무관 대형엣지 오귀속을 방지."""
+    term={"거래소확정":0.0,"BiFi/스테이킹":0.0,"BtcUSD":0.0,"commingling미결":0.0,"정체/소멸":0.0}
+    def rec(node,amt,hop,seen):
+        if amt<dust: term["정체/소멸"]+=amt; return
+        if node in FLOW_EXCH: term["거래소확정"]+=amt; return
+        if node in FLOW_TERM: term["BtcUSD" if FLOW_TERM[node]=="BtcUSD" else "BiFi/스테이킹"]+=amt; return
+        if hop<=0 or node in seen: term["commingling미결"]+=amt; return
+        inn,out=_addr_io(node); tout=sum(out.values())
+        if tout<=0: term["정체/소멸"]+=amt; return
+        if tout>3*max(inn,amt)+1_000_000:   # 초고volume 허브 = 내 돈 희석 → 중단
+            term["commingling미결"]+=amt; return
+        for to,v in out.items(): rec(to,amt*(v/tout),hop-1,seen|{node})
+    rec(start.lower(),float(carry),maxhop,set())
+    return term
 def insider_check(save=True):
     """내부자(팀/어드바이저 할당) 지갑 감시 — 잔액 감소=신규 매도/이전 경보."""
     if not os.path.exists(INSIDER_REG):
@@ -123,8 +167,17 @@ def insider_check(save=True):
             drop=old-bal; newsell.append((a,drop,bal))
     if newsell:
         for a,drop,bal in sorted(newsell,key=lambda x:-x[1]):
-            tier="P1" if drop>=1_000_000 else "P2"
-            print(f"  🔴 [{tier}] 내부자 매도/이전 {a[:14]} -{drop:,.0f} BFC (잔액 {bal:,.0f})")
+            # 흐름보존 추적으로 행선지 분류 — '유출=매도' 단정 방지(2026-07-08 교훈)
+            t=trace_conserve(a,drop) if drop>=500_000 else None
+            if t:
+                ex=t["거래소확정"]; rd=t["BiFi/스테이킹"]+t["BtcUSD"]; un=t["commingling미결"]+t["정체/소멸"]
+                # 확정 거래소도달 클 때만 P1(진짜 매도압), 재배치는 저강도
+                tier="P1" if ex>=500_000 else ("P2" if drop>=1_000_000 else "P3")
+                print(f"  🔴 [{tier}] 내부자 유출 {a[:14]} -{drop:,.0f} BFC (잔액 {bal:,.0f})")
+                print(f"        └ 행선지: 거래소확정 {ex:,.0f} · 재배치(BiFi/BtcUSD) {rd:,.0f} · 미결 {un:,.0f}")
+                if ex>=500_000: print(f"        ⚠️ [P1경보] ★내부자 실매도 정황 — 거래소 확정도달 {ex:,.0f} BFC")
+            else:
+                print(f"  🟡 [P3] 내부자 소액유출 {a[:14]} -{drop:,.0f} BFC (잔액 {bal:,.0f}, 행선지추적 생략)")
     else:
         print("  변화 없음(신규 내부자 매도 없음)")
     if save and cur_bals:
